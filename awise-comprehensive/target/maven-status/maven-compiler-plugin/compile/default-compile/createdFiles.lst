@@ -1,0 +1,14 @@
+com\awise\comprehensive\service\impl\AwCustomEnServiceImpl.class
+com\awise\comprehensive\mapper\AwPartnerMapper.class
+com\awise\comprehensive\service\IAwCustomEnService.class
+com\awise\comprehensive\controller\AwCustomController.class
+com\awise\comprehensive\service\impl\AwCustomServiceImpl.class
+com\awise\comprehensive\mapper\AwCustomMapper.class
+com\awise\comprehensive\service\IAwPartnerService.class
+com\awise\comprehensive\service\IAwCustomService.class
+com\awise\comprehensive\domain\AwPartner.class
+com\awise\comprehensive\controller\AwPartnerController.class
+com\awise\comprehensive\mapper\AwCustomEnMapper.class
+com\awise\comprehensive\domain\AwCustom.class
+com\awise\comprehensive\service\impl\AwPartnerServiceImpl.class
+com\awise\comprehensive\domain\AwCustomEn.class
