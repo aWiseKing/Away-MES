@@ -1,11 +1,9 @@
 package com.awise.storage.domain;
 
-import com.ruoyi.common.annotation.Excel;
-import com.ruoyi.common.core.domain.BaseEntity;
+import com.away.common.annotation.Excel;
+import com.away.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-
-import java.util.List;
 
 /**
  * 刀具信息对象 aw_toolinformation

@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.enums.BusinessType;
+import com.away.common.annotation.Log;
+import com.away.common.core.controller.BaseController;
+import com.away.common.core.domain.AjaxResult;
+import com.away.common.enums.BusinessType;
 import com.awise.comprehensive.domain.AwPartner;
 import com.awise.comprehensive.service.IAwPartnerService;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
+import com.away.common.utils.poi.ExcelUtil;
+import com.away.common.core.page.TableDataInfo;
 
 /**
  * 合作方信息Controller

@@ -2,8 +2,8 @@ package com.awise.comprehensive.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import com.ruoyi.common.annotation.Excel;
-import com.ruoyi.common.core.domain.BaseEntity;
+import com.away.common.annotation.Excel;
+import com.away.common.core.domain.BaseEntity;
 
 /**
  * 客户信息对象 aw_partner

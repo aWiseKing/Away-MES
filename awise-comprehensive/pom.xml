@@ -3,8 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>ruoyi</artifactId>
-        <groupId>com.ruoyi</groupId>
+        <artifactId>away</artifactId>
+        <groupId>com.away</groupId>
         <version>3.8.5</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -15,8 +15,8 @@
     <dependencies>
         <!-- 公共模块-->
         <dependency>
-            <groupId>com.ruoyi</groupId>
-            <artifactId>ruoyi-common</artifactId>
+            <groupId>com.away</groupId>
+            <artifactId>away-common</artifactId>
         </dependency>
     </dependencies>
 

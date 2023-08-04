@@ -1,7 +1,7 @@
 <p align="center">
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">久欣时代订单流程系统 v0.6</h1>
-<h4 align="center">基于SpringBoot+Vue前后端分离的订单管理系统</h4>
+<h4 align="center">基于若依的SpringBoot+Vue前后端分离版本的订单管理系统</h4>
 
 ## 平台简介
 

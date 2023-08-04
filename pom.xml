@@ -4,16 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
-    <groupId>com.ruoyi</groupId>
-    <artifactId>ruoyi</artifactId>
+    <groupId>com.away</groupId>
+    <artifactId>away</artifactId>
     <version>3.8.5</version>
 
-    <name>ruoyi</name>
-    <url>http://www.ruoyi.vip</url>
-    <description>若依管理系统</description>
+    <name>away</name>
+
+    <description>away管理系统</description>
     
     <properties>
-        <ruoyi.version>3.8.5</ruoyi.version>
+        <away.version>3.8.5</away.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -137,77 +137,77 @@
 
             <!-- 定时任务-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>ruoyi-quartz</artifactId>
-                <version>${ruoyi.version}</version>
+                <groupId>com.away</groupId>
+                <artifactId>away-quartz</artifactId>
+                <version>${away.version}</version>
             </dependency>
 
             <!-- 代码生成-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>ruoyi-generator</artifactId>
-                <version>${ruoyi.version}</version>
+                <groupId>com.away</groupId>
+                <artifactId>away-generator</artifactId>
+                <version>${away.version}</version>
             </dependency>
 
             <!-- 核心模块-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>ruoyi-framework</artifactId>
-                <version>${ruoyi.version}</version>
+                <groupId>com.away</groupId>
+                <artifactId>away-framework</artifactId>
+                <version>${away.version}</version>
             </dependency>
 
             <!-- 系统模块-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>ruoyi-system</artifactId>
-                <version>${ruoyi.version}</version>
+                <groupId>com.away</groupId>
+                <artifactId>away-system</artifactId>
+                <version>${away.version}</version>
             </dependency>
 
             <!-- 通用工具-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>ruoyi-common</artifactId>
-                <version>${ruoyi.version}</version>
+                <groupId>com.away</groupId>
+                <artifactId>away-common</artifactId>
+                <version>${away.version}</version>
             </dependency>
 
             <!-- 存储中心-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
+                <groupId>com.away</groupId>
                 <artifactId>awise-storage</artifactId>
-                <version>${ruoyi.version}</version>
+                <version>${away.version}</version>
             </dependency>
 
             <!-- 综合管理-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
+                <groupId>com.away</groupId>
                 <artifactId>awise-comprehensive</artifactId>
-                <version>${ruoyi.version}</version>
+                <version>${away.version}</version>
             </dependency>
 
             <!-- 订单中心-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
+                <groupId>com.away</groupId>
                 <artifactId>awise-order</artifactId>
-                <version>${ruoyi.version}</version>
+                <version>${away.version}</version>
             </dependency>
 
             <!-- 财务中心-->
             <dependency>
-                <groupId>com.ruoyi</groupId>
+                <groupId>com.away</groupId>
                 <artifactId>awise-finance</artifactId>
-                <version>${ruoyi.version}</version>
+                <version>${away.version}</version>
             </dependency>
 
         </dependencies>
     </dependencyManagement>
 
     <modules>
-        <module>ruoyi-admin</module>
-        <module>ruoyi-framework</module>
-        <module>ruoyi-system</module>
-        <module>ruoyi-quartz</module>
-        <module>ruoyi-generator</module>
-        <module>ruoyi-common</module>
+        <module>away-admin</module>
+        <module>away-framework</module>
+        <module>away-system</module>
+        <module>away-quartz</module>
+        <module>away-generator</module>
+        <module>away-common</module>
         <module>awise-storage</module>
         <module>awise-comprehensive</module>
         <module>awise-order</module>

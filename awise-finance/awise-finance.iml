@@ -11,7 +11,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="ruoyi-common" />
+    <orderEntry type="module" module-name="away-common" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context-support:5.3.20" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.3.20" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:5.3.20" level="project" />
