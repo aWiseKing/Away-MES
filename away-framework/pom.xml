@@ -64,6 +64,26 @@
             <groupId>com.away</groupId>
             <artifactId>awise-storage</artifactId>
         </dependency>
+        <!-- 综合管理-->
+        <dependency>
+            <groupId>com.away</groupId>
+            <artifactId>awise-comprehensive</artifactId>
+        </dependency>
+        <!-- 财务中心-->
+        <dependency>
+            <groupId>com.away</groupId>
+            <artifactId>awise-finance</artifactId>
+        </dependency>
+        <!-- 订单中心-->
+        <dependency>
+            <groupId>com.away</groupId>
+            <artifactId>awise-order</artifactId>
+        </dependency>
+        <!-- 文件系统-->
+        <dependency>
+            <groupId>com.away</groupId>
+            <artifactId>awise-file</artifactId>
+        </dependency>
 
     </dependencies>
 

@@ -14,11 +14,13 @@
         <module name="away-quartz" />
         <module name="away-generator" />
         <module name="awise-storage" />
+        <module name="awise-file" />
         <module name="awise-finance" />
         <module name="away-framework" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="away" target="1.8" />
       <module name="away-admin" target="1.8" />
       <module name="away-common" target="1.8" />
       <module name="away-framework" target="1.8" />
@@ -26,6 +28,7 @@
       <module name="away-quartz" target="1.8" />
       <module name="away-system" target="1.8" />
       <module name="awise-comprehensive" target="1.8" />
+      <module name="awise-file" target="1.8" />
       <module name="awise-finance" target="1.8" />
       <module name="awise-order" target="1.8" />
       <module name="awise-storage" target="1.8" />

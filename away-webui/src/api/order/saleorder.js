@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询订单列表
 export function listSaleorder(query) {
   return request({
-    url: '/order/saleorder/list',
+    url: '/order/saleorder/enlist',
     method: 'get',
     params: query
   })

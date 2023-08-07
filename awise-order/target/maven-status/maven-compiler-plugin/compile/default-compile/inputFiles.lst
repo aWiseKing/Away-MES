@@ -6,10 +6,14 @@ F:\programme\java\jxsd\awise-order\src\main\java\com\awise\order\service\impl\Aw
 F:\programme\java\jxsd\awise-order\src\main\java\com\awise\order\domain\AwContract.java
 F:\programme\java\jxsd\awise-order\src\main\java\com\awise\order\mapper\AwSaleorderMapper.java
 F:\programme\java\jxsd\awise-order\src\main\java\com\awise\order\service\IAwProductService.java
+F:\programme\java\jxsd\awise-order\src\main\java\com\awise\order\mapper\AwSaleorderEnMapper.java
 F:\programme\java\jxsd\awise-order\src\main\java\com\awise\order\controller\AwSaleorderController.java
 F:\programme\java\jxsd\awise-order\src\main\java\com\awise\order\domain\AwProduct.java
 F:\programme\java\jxsd\awise-order\src\main\java\com\awise\order\service\impl\AwContractServiceImpl.java
+F:\programme\java\jxsd\awise-order\src\main\java\com\awise\order\service\IAwSaleorderEnService.java
 F:\programme\java\jxsd\awise-order\src\main\java\com\awise\order\controller\AwProductController.java
+F:\programme\java\jxsd\awise-order\src\main\java\com\awise\order\service\impl\AwSaleorderEnServiceImpl.java
 F:\programme\java\jxsd\awise-order\src\main\java\com\awise\order\domain\AwSaleorder.java
 F:\programme\java\jxsd\awise-order\src\main\java\com\awise\order\mapper\AwProductMapper.java
 F:\programme\java\jxsd\awise-order\src\main\java\com\awise\order\mapper\AwContractMapper.java
+F:\programme\java\jxsd\awise-order\src\main\java\com\awise\order\domain\AwSaleorderEn.java

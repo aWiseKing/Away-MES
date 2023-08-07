@@ -1,8 +1,12 @@
 package com.awise.order.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.awise.order.domain.AwSaleorderEn;
+import com.awise.order.service.IAwSaleorderEnService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +39,9 @@ public class AwSaleorderController extends BaseController
     @Autowired
     private IAwSaleorderService awSaleorderService;
 
+    @Autowired
+    private IAwSaleorderEnService awSaleorderEnService;
+
     /**
      * 查询订单列表
      */
@@ -44,6 +51,18 @@ public class AwSaleorderController extends BaseController
     {
         startPage();
         List<AwSaleorder> list = awSaleorderService.selectAwSaleorderList(awSaleorder);
+        return getDataTable(list);
+    }
+
+    /**
+     * 查询订单列表实体
+     */
+    @PreAuthorize("@ss.hasPermi('order:saleorder:enlist')")
+    @GetMapping("/enlist")
+    public TableDataInfo list(AwSaleorderEn awSaleorderEn)
+    {
+        startPage();
+        List<AwSaleorderEn> list = awSaleorderEnService.selectAwSaleorderEnList(awSaleorderEn);
         return getDataTable(list);
     }
 
@@ -79,8 +98,10 @@ public class AwSaleorderController extends BaseController
     public AjaxResult add(@RequestBody AwSaleorder awSaleorder)
     {
         Date now_date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
-        awSaleorder.setId(now_date.toString()+awSaleorder.hashCode());
+
+        awSaleorder.setId(sdf.format(now_date)+awSaleorder.hashCode());
         awSaleorder.setIsDel("0");
         awSaleorder.setCreateTime(now_date);
         return toAjax(awSaleorderService.insertAwSaleorder(awSaleorder));

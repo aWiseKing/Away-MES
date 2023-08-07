@@ -72,22 +72,34 @@
     <el-table v-loading="loading" :data="saleorderList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="订单id" align="center" prop="id" />
-      <el-table-column label="下单日期" align="center" prop="createTime" width="180">
+      <el-table-column label="创建日期" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="创建人" align="center" prop="createUserName" />
+      <el-table-column label="下单日期" align="center" prop="createTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.orderDate, '{y}-{m}-{d}') }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="需求数量" align="center" prop="number" />
       <el-table-column label="要求交期" align="center" prop="requiredDeliveryTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.requiredDeliveryTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="客户名称" align="center" prop="customerID" />
+      <el-table-column label="客户名称" align="center" prop="customername" />
       <el-table-column label="当前订单状态" align="center" prop="state" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-view"
+            @click="handleView(scope.row)"
+            v-hasPermi="['order:saleorder:edit']"
+          >查看</el-button>
           <el-button
             size="mini"
             type="text"
@@ -120,6 +132,14 @@
         <el-form-item label="创建人" prop="createUserName">
           <div>{{ form.createUserName }}</div>
         </el-form-item>
+        <el-form-item label="下单日期" prop="orderDate">
+          <el-date-picker clearable
+            v-model="form.orderDate"
+            type="date"
+            value-format="yyyy-MM-dd"
+            placeholder="请选择下单日期">
+          </el-date-picker>
+        </el-form-item>
         <el-form-item label="需求数量" prop="number">
           <el-input v-model="form.number" placeholder="请输入需求数量" />
         </el-form-item>
@@ -132,19 +152,67 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item label="客户信息" prop="customerID">
-          <el-input v-model="form.customerID" placeholder="请输入客户信息" />
+          <el-select v-model="form.customerID" placeholder="请选择订单客户">
+            <el-option
+              v-for="item in customs"
+              :key="item.id"
+              :label = "item.name"
+              :value = "item.id"
+            >
+          </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="产品信息" prop="productID">
-          <el-input v-model="form.productID" placeholder="请输入产品信息" />
+          <el-select v-model="form.productID" placeholder="请选择产品">
+            <el-option
+              v-for="item in products"
+              :key="item.id"
+              :label = "item.name"
+              :value = "String(item.id)"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="材料是否客供" prop="iscustomersuppliedmaterials">
+          <el-radio-group v-model="form.iscustomersuppliedmaterials">
+            <el-radio v-for="item in iscustomersuppliedmaterials" :key="item.key" :label="item.key">{{ item.value }}</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item v-if="form.iscustomersuppliedmaterials == 1" label="客供材料编号" prop="customersuppliedmaterialsID">
+          <el-select v-model="form.customersuppliedmaterialsID" placeholder="请选择客供材料">
+            <el-option
+              v-for="item in customersuppliedmaterialss"
+              :key="item.id"
+              :label = "item.customer+'的'+item.material"
+              :value = "String(item.id)"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="合同信息" prop="contractID">
-          <el-input v-model="form.contractID" placeholder="请输入合同信息" />
+          <el-select v-model="form.contractID" placeholder="请选择合同信息">
+            <el-option
+              v-for="item in contracts"
+              :key="item.id"
+              :label = "item.name"
+              :value = "String(item.id)"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="发票信息" prop="invoiceID">
-          <el-input v-model="form.invoiceID" placeholder="请输入发票信息" />
+          <el-select v-model="form.invoiceID" placeholder="请选择合同信息">
+            <el-option
+              v-for="item in invoices"
+              :key="item.id"
+              :label = "item.name"
+              :value = "String(item.id)"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="订单状态" prop="state">
-          <el-select v-model="form.state" placeholder="请选择">
+          <el-select v-model="form.state" value-key="value" placeholder="请选择订单状态">
             <el-option
               v-for="item in state_options"
               :key="item.key"
@@ -153,17 +221,65 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="备注" prop="note">
+          <el-input v-model="form.note" placeholder="备注" />
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+    <!-- 查看订单详细信息 -->
+    <el-dialog :title="view_form.id" :visible.sync="view_open" width="900px" append-to-body>
+      <el-descriptions column="2" border>
+          <el-descriptions-item label="创建时间">{{ view_form.createTime }}</el-descriptions-item>
+          <el-descriptions-item label="创建人">{{ view_form.createUserName }}</el-descriptions-item>
+      </el-descriptions>
+      <el-descriptions title="合同信息" column="2" border>
+        <el-descriptions-item label="订单编号">{{ view_form.id }}</el-descriptions-item>
+        <el-descriptions-item label="下单日期">{{ view_form.orderDate }}</el-descriptions-item>
+        <el-descriptions-item label="客户编号">{{ view_form.customerID }}</el-descriptions-item>
+        <el-descriptions-item label="客户名称">{{ view_form.customername }}</el-descriptions-item>
+        <el-descriptions-item label="产品编号">{{ view_form.productID }}</el-descriptions-item>
+        <el-descriptions-item label="产品名称">{{ view_form.productname }}</el-descriptions-item>
+        <el-descriptions-item label="产品图纸"  span="2"></el-descriptions-item>
+        <el-descriptions-item label="需求数量">{{ view_form.number }}</el-descriptions-item>
+        <el-descriptions-item label="要求交期">{{ view_form.requiredDeliveryTime }}</el-descriptions-item>
+        <el-descriptions-item label="客供材料">{{ view_form.iscustomersuppliedmaterials==0?"否":"是" }}</el-descriptions-item>
+        <el-descriptions-item label="材料入库编号">{{ view_form.customersuppliedmaterialsID }}</el-descriptions-item>
+        <el-descriptions-item label="合同编号">{{ view_form.contractID }}</el-descriptions-item>
+        <el-descriptions-item label="合同金额">{{ view_form.contractmoney }}</el-descriptions-item>
+        <el-descriptions-item label="合同附件"  span="2"></el-descriptions-item>
+      </el-descriptions>
+      <el-descriptions title="发票信息" column="2" border>
+        <el-descriptions-item label="发票类型">{{ view_form.invoiceType }}</el-descriptions-item>
+        <el-descriptions-item label="发票编号">{{ view_form.invoiceID }}</el-descriptions-item>
+        <el-descriptions-item label="开票时间">{{ view_form.invoiceCreateTime }}</el-descriptions-item>
+        <el-descriptions-item label="开票数量">{{ view_form.invoiceNumer }}</el-descriptions-item>
+        <el-descriptions-item label="税率">{{ view_form.taxRate }}</el-descriptions-item>
+        <el-descriptions-item label="税费">{{ view_form.taxation }}</el-descriptions-item>
+        <el-descriptions-item label="销售单价(不含税)">{{ view_form.salesUnitPriceExcludingTax }}</el-descriptions-item>
+        <el-descriptions-item label="销售单价(含税)">{{ view_form.salesUnitPriceIncludingTax }}</el-descriptions-item>
+        <el-descriptions-item label="销售金额(不含税)">{{ view_form.consumptionAmountExcludingTax }}</el-descriptions-item>
+        <el-descriptions-item label="销售金额(含税)">{{ view_form.consumptionAmountIncludingTax }}</el-descriptions-item>
+        <el-descriptions-item label="对账日期">{{ view_form.reconciliationDate }}</el-descriptions-item>
+        <el-descriptions-item label="客户对账人员">{{ view_form.customerReconciliationPersonnel }}</el-descriptions-item>
+      </el-descriptions>
+      <el-descriptions column="2" border>
+        <el-descriptions-item label="备注" span="2">{{ view_form.note }}</el-descriptions-item>
+      </el-descriptions>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { listSaleorder, getSaleorder, delSaleorder, addSaleorder, updateSaleorder } from "@/api/order/saleorder";
+import { listCustom } from "@/api/comprehensive/custom"
+import { listInvoice } from "@/api/finance/invoice"
+import { listProduct } from "@/api/order/product"
+import { listCustomersuppliedmaterials } from "@/api/storage/customersuppliedmaterials"
+import { listContract } from "@/api/order/contract"
 
 export default {
   name: "Saleorder",
@@ -187,6 +303,8 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      // 是否显示订单详细信息
+      view_open: false,
       // 是否新建
       isadd: true,
       // 查询参数
@@ -200,7 +318,7 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        createTime: [
+        orderDate: [
           { required: true, message: "下单日期不能为空", trigger: "blur" }
         ],
         createUserName: [
@@ -218,18 +336,35 @@ export default {
         productID: [
           { required: true, message: "产品信息不能为空", trigger: "blur" }
         ],
+        iscustomersuppliedmaterials:[
+          { required: true, message: "请选择是否客供材料", trigger: "blur" }
+        ],
         state: [
           { required: true, message: "当前订单状态不能为空", trigger: "change" }
         ],
       },
       // 订单状态
       state_options:[
-        {key:0,value:"未发布"},
-        {key:1,value:"发布"},
-        {key:2,value:"暂停"},
-        {key:3,value:"完成"},
-        {key:4,value:"取消"}
-      ]
+        {key:"0",value:"未发布"},
+        {key:"1",value:"发布"},
+        {key:"2",value:"暂停"},
+        {key:"3",value:"完成"},
+        {key:"4",value:"取消"}
+      ],
+      // 材料是否客供
+      iscustomersuppliedmaterials:[{key:0,value:"否"},{key:1, value:"是"}],
+      // 客户信息
+      customs:[],
+      // 发票信息
+      invoices:[],
+      // 产品信息
+      products:[],
+      // 库存客供材料信息
+      customersuppliedmaterialss:[],
+      // 合同信息
+      contracts:[],
+      // 订单详细查看
+      view_form:[]
     };
   },
   created() {
@@ -241,10 +376,42 @@ export default {
       this.loading = true;
       listSaleorder(this.queryParams).then(response => {
         this.saleorderList = response.rows;
+        console.log(response.rows);
         this.total = response.total;
         this.loading = false;
       });
     },
+    /** 查询客户信息 */
+    getListCustom(){
+      listCustom({}).then(response => {
+        this.customs = response.rows;
+      })
+    },
+    /** 查询发票信息 */
+    getListInvoice(){
+      listInvoice({}).then(response => {
+        this.invoices = response.rows;
+      })
+    },
+    /** 查询产品信息 */
+    getListProduct(){
+      listProduct({}).then(response => {
+        this.products = response.rows;
+      })
+    },
+    /** 查询库存客供材料信息*/
+    getListCustomersuppliedmaterials(){
+      listCustomersuppliedmaterials({}).then(response => {
+        this.customersuppliedmaterialss = response.rows;
+      })
+    },
+    /** 查询合同信息*/
+    getListContract(){
+      listContract({}).then(response => {
+        this.contracts = response.rows;
+      })
+    }
+    ,
     // 取消按钮
     cancel() {
       this.open = false;
@@ -261,6 +428,7 @@ export default {
         productID: null,
         contractID: null,
         invoiceID: null,
+        iscustomersuppliedmaterials:0,
         state: null
       };
       this.resetForm("form");
@@ -281,9 +449,18 @@ export default {
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
+    /** 查看详细按钮 */
+    handleView(row){
+      this.view_form = row;
+      this.view_open = true
+    },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
+      this.getListCustom();
+      this.getListInvoice();
+      this.getListProduct();
+      this.getListCustomersuppliedmaterials();
       this.form.createUserName = document.cookie.split("username=")[1].split(";")[0]
       this.open = true;
       this.title = "添加订单";
@@ -291,6 +468,10 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
+      this.getListCustom();
+      this.getListInvoice();
+      this.getListProduct();
+      this.getListCustomersuppliedmaterials();
       const id = row.id || this.ids
       getSaleorder(id).then(response => {
         this.form = response.data;

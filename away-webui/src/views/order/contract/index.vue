@@ -95,8 +95,16 @@
         <el-form-item label="合同金额" prop="money">
           <el-input v-model="form.money" placeholder="请输入合同金额" />
         </el-form-item>
-        <el-form-item label="合同附件地址URL" prop="contractURL">
-          <el-input v-model="form.contractURL" placeholder="请输入合同附件地址URL" />
+        <el-form-item label="合同附件上传" prop="contractURL">
+          <el-upload
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :file-list="fileList"
+            :auto-upload="false"
+            list-type="picture">
+            <el-button size="small" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+          </el-upload>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -242,6 +250,14 @@ export default {
       this.download('order/contract/export', {
         ...this.queryParams
       }, `contract_${new Date().getTime()}.xlsx`)
+    },
+    // 附件上传
+    handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+    // 附件下载
+    handlePreview(file) {
+      console.log(file);
     }
   }
 };

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
-    <output url="file://$MODULE_DIR$/../away-admin/target/classes" />
-    <output-test url="file://$MODULE_DIR$/../away-admin/target/test-classes" />
-    <content url="file://$MODULE_DIR$/../away-admin">
-      <sourceFolder url="file://$MODULE_DIR$/../away-admin/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../away-admin/src/main/resources" type="java-resource" />
-      <excludeFolder url="file://$MODULE_DIR$/../away-admin/target" />
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -142,6 +142,7 @@
     <orderEntry type="module" module-name="away-generator" />
     <orderEntry type="library" name="Maven: org.apache.velocity:velocity-engine-core:2.3" level="project" />
     <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.2" level="project" />
+    <orderEntry type="module" module-name="awise-file" />
     <orderEntry type="module" module-name="awise-storage" />
     <orderEntry type="module" module-name="awise-comprehensive" />
     <orderEntry type="module" module-name="awise-order" />

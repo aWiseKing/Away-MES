@@ -60,6 +60,11 @@
             <groupId>com.away</groupId>
             <artifactId>away-generator</artifactId>
         </dependency>
+        <!-- 文件系统-->
+        <dependency>
+            <groupId>com.away</groupId>
+            <artifactId>awise-file</artifactId>
+        </dependency>
 
         <!-- 存储中心-->
         <dependency>

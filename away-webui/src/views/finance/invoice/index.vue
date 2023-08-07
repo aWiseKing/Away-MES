@@ -234,6 +234,7 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        id:[{ required: true, message: "发票编号不能为空", trigger: "blur" }]
       }
     };
   },

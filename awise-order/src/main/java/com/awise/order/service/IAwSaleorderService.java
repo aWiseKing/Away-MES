@@ -9,7 +9,7 @@ import com.awise.order.domain.AwSaleorder;
  * @author awise
  * @date 2023-08-03
  */
-public interface IAwSaleorderService 
+public interface IAwSaleorderService
 {
     /**
      * 查询订单

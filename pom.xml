@@ -170,6 +170,13 @@
                 <version>${away.version}</version>
             </dependency>
 
+            <!-- 文件管理-->
+            <dependency>
+                <groupId>com.away</groupId>
+                <artifactId>awise-file</artifactId>
+                <version>${away.version}</version>
+            </dependency>
+
             <!-- 存储中心-->
             <dependency>
                 <groupId>com.away</groupId>
@@ -212,6 +219,7 @@
         <module>awise-comprehensive</module>
         <module>awise-order</module>
         <module>awise-finance</module>
+        <module>awise-file</module>
     </modules>
     <packaging>pom</packaging>
 

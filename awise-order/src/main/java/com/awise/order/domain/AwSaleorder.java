@@ -22,6 +22,10 @@ public class AwSaleorder extends BaseEntity
     @Excel(name = "创建人")
     private String createUserName;
 
+    /** 下单日期 */
+    @Excel(name = "下单日期")
+    private String orderDate;
+
     /** 需求数量 */
     @Excel(name = "需求数量")
     private Long number;
@@ -46,9 +50,21 @@ public class AwSaleorder extends BaseEntity
     @Excel(name = "发票信息")
     private String invoiceID;
 
+    /** 客供材料否 */
+    @Excel(name = "客供材料否")
+    private Long iscustomersuppliedmaterials;
+
+    /** 发票信息 */
+    @Excel(name = "客供材料编号")
+    private String customersuppliedmaterialsID;
+
     /** 当前订单状态 */
     @Excel(name = "当前订单状态")
     private String state;
+
+    /** 备注 */
+    @Excel(name = "备注")
+    private String note;
 
     /** 删除否 */
     @Excel(name = "删除否")
@@ -68,6 +84,14 @@ public class AwSaleorder extends BaseEntity
 
     public void setCreateUserName(String createUserName) {
         this.createUserName = createUserName;
+    }
+
+    public String getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(String orderDate) {
+        this.orderDate = orderDate;
     }
 
     public Long getNumber() {
@@ -118,12 +142,36 @@ public class AwSaleorder extends BaseEntity
         this.invoiceID = invoiceID;
     }
 
+    public Long getIscustomersuppliedmaterials() {
+        return iscustomersuppliedmaterials;
+    }
+
+    public void setIscustomersuppliedmaterials(Long iscustomersuppliedmaterials) {
+        this.iscustomersuppliedmaterials = iscustomersuppliedmaterials;
+    }
+
+    public String getCustomersuppliedmaterialsID() {
+        return customersuppliedmaterialsID;
+    }
+
+    public void setCustomersuppliedmaterialsID(String customersuppliedmaterialsID) {
+        this.customersuppliedmaterialsID = customersuppliedmaterialsID;
+    }
+
     public String getState() {
         return state;
     }
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public String getIsDel() {
@@ -140,13 +188,17 @@ public class AwSaleorder extends BaseEntity
             .append("id", getId())
             .append("createTime", getCreateTime())
             .append("createUserName", getCreateUserName())
+            .append("orderDate", getOrderDate())
             .append("number", getNumber())
             .append("requiredDeliveryTime", getRequiredDeliveryTime())
             .append("customerID", getCustomerID())
             .append("productID", getProductID())
             .append("contractID", getContractID())
             .append("invoiceID", getInvoiceID())
+            .append("iscustomersuppliedmaterials", getIscustomersuppliedmaterials())
+            .append("customersuppliedmaterialsID", getCustomersuppliedmaterialsID())
             .append("state", getState())
+            .append("note", getNote())
             .append("isDel", getIsDel())
             .toString();
     }

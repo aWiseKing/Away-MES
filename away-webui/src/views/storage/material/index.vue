@@ -139,7 +139,6 @@
           <el-input v-model="form.name" placeholder="请输入材料名称" />
         </el-form-item>
         <el-form-item label="材料分类" prop="typeID">
-          <el-input v-model="form.typeID" placeholder="请选择材料分类"/>
           <el-select v-model="form.typeID" placeholder="请选择材料分类">
             <el-option
               v-for="item in formtypes"
@@ -150,7 +149,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="规格类型" prop="specificationsID">
-          <el-select v-model="form.specificationsID" placeholder="请输入材料规格">
+          <el-select v-model="form.specificationsID" placeholder="请选择材料规格">
             <el-option
               v-for="item in formspecifications"
               :key="item.id"
