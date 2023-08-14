@@ -65,9 +65,14 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="产品图号" align="center" prop="id" />
       <el-table-column label="产品名称" align="center" prop="name" />
-      <el-table-column label="产品图纸附件地址URL" align="center" prop="drawingURL" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-view"
+            @click="handleView(scope.row)"
+          >查看</el-button>
           <el-button
             size="mini"
             type="text"
@@ -103,8 +108,17 @@
         <el-form-item label="产品名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入产品名称" />
         </el-form-item>
-        <el-form-item label="产品图纸附件地址URL" prop="drawingURL">
-          <el-input v-model="form.drawingURL" placeholder="请输入产品图纸附件地址URL" />
+        <el-form-item label="产品图纸附件" prop="drawingURL">
+          <el-upload
+            ref="upload"
+            :file-list="fileList"
+            action="String"
+            :http-request="fileUpdate"
+            :auto-upload="false"
+            list-type="picture">
+            <el-button size="small" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+          </el-upload>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -112,11 +126,28 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+
+    <!-- 预览产品对话框 -->
+    <el-dialog :title="view_form.id" :visible.sync="view_open" width="800px" append-to-body>
+      <el-descriptions :column="2" border>
+          <el-descriptions-item label="产品图号">{{ view_form.id }}</el-descriptions-item>
+          <el-descriptions-item label="产品名称">{{ view_form.name }}</el-descriptions-item>
+          <el-descriptions-item label="产品图纸附件" :span="2">
+            <el-carousel :interval="4000" type="card" height="200px">
+              <el-carousel-item v-for="item in view_form.files" :key="item">
+                <el-image  :src="item" :preview-src-list="[item]">
+                </el-image>
+              </el-carousel-item>
+            </el-carousel>
+          </el-descriptions-item>
+      </el-descriptions>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { listProduct, getProduct, delProduct, addProduct, updateProduct } from "@/api/order/product";
+import { fileDownload,fileUpdate } from "@/api/file/file"
 
 export default {
   name: "Product",
@@ -140,6 +171,10 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      // 是否显示详细信息
+      view_open: false,
+      // 详细信息表单
+      view_form: [],
       // 是否新建
       isadd: true,
       // 查询参数
@@ -152,7 +187,12 @@ export default {
       form: {},
       // 表单校验
       rules: {
-      }
+      },
+      // 文件列表
+      fileList:[],
+            // 订单详细查看
+      view_form:[]
+
     };
   },
   created() {
@@ -167,6 +207,24 @@ export default {
         this.total = response.total;
         this.loading = false;
       });
+    },
+    /** 文件上传 */
+    async fileUpdate(){
+      let file_list = this.$refs.upload.uploadFiles;
+      let num = 0
+      let formData = new FormData();
+      for(num in file_list){
+        formData.append('files', file_list[num].raw);
+      }
+      let response = await fileUpdate(formData)
+      this.form.drawingURL=response
+    },
+    /** 文件下载 */
+    async fileDown(file_name){
+      let response = await fileDownload(file_name)
+      let blob = response
+      let tmp_url = window.URL.createObjectURL(blob)
+      this.view_form.files.push(tmp_url);
     },
     // 取消按钮
     cancel() {
@@ -198,6 +256,21 @@ export default {
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
+    /** 查看产品详细信息 */
+    handleView(row){
+      const id = row.id || this.ids
+      getProduct(id).then(async response => {
+        this.view_form = response.data;
+        this.view_form.files = [];
+        let num = 0;
+        let urls = response.data.drawingURL.split(";");
+        urls.pop();
+        for(num in urls){
+          await this.fileDown(urls[num]);
+        }
+        this.view_open = true;
+      });
+    },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
@@ -217,17 +290,18 @@ export default {
       });
     },
     /** 提交按钮 */
-    submitForm() {
-      this.$refs["form"].validate(valid => {
+    async submitForm() {
+      await this.fileUpdate()
+      this.$refs["form"].validate(async valid => {
         if (valid) {
           if (!this.isadd) {
-            updateProduct(this.form).then(response => {
+            await updateProduct(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addProduct(this.form).then(response => {
+            await addProduct(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();

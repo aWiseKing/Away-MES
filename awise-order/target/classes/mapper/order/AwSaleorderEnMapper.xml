@@ -68,7 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "未知类型"
         END as state,
         aw_contract.money,
-        aw_contract.contractURL,
+        aw_contract.contractURL as contractURL,
         aw_contract.id AS contractid,
         aw_customersuppliedmaterials.id as customersuppliedmaterialsID,
         aw_customersuppliedmaterials.number as customersuppliedmaterialnumber,
@@ -88,7 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         aw_invoice.customerReconciliationPersonnel,
         aw_product.`name` as productname,
         aw_product.id AS productID,
-        aw_product.drawingURL,
+        aw_product.drawingURL as productdrawingURL,
         aw_partner.id AS customerID,
         aw_partner.`name` AS customername,
         aw_partner.nameAbbrevation AS customernameAbbrevation,

@@ -224,6 +224,18 @@
         <el-form-item label="备注" prop="note">
           <el-input v-model="form.note" placeholder="备注" />
         </el-form-item>
+        <el-divider>
+          <span style="font-size: 1.2em;">附加信息</span>
+        </el-divider>
+        <div style="display: flex;flex-direction: column;justify-content:center;align-items: center;"><el-button v-if="additionals.length<1" size="mini" type="primary" icon="el-icon-plus" @click="handleAddAdditional"></el-button></div>
+        <el-form-item :label="'附加信息'+(index+1)"  v-for="item,index in additionals" :key="index">
+          <el-row :gutter="15">
+            <el-col :span="7"><el-input maxlength="5" v-model="item.key" placeholder="字段名"/></el-col>
+            <el-col :span="7"><el-input maxlength="5" v-model="item.value" placeholder="值"/></el-col>
+            <el-col :span="4"><el-button size="mini" type="primary" icon="el-icon-plus" @click="handleAddAdditional"></el-button></el-col>
+            <el-col :span="4"><el-button size="mini" type="danger" icon="el-icon-minus" @click="headledDeladditional(index,item)"></el-button></el-col>
+          </el-row>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -232,27 +244,41 @@
     </el-dialog>
     <!-- 查看订单详细信息 -->
     <el-dialog :title="view_form.id" :visible.sync="view_open" width="900px" append-to-body>
-      <el-descriptions column="2" border>
+      <el-descriptions :column="2" border>
           <el-descriptions-item label="创建时间">{{ view_form.createTime }}</el-descriptions-item>
           <el-descriptions-item label="创建人">{{ view_form.createUserName }}</el-descriptions-item>
       </el-descriptions>
-      <el-descriptions title="合同信息" column="2" border>
+      <el-descriptions title="合同信息" :column="2" border>
         <el-descriptions-item label="订单编号">{{ view_form.id }}</el-descriptions-item>
         <el-descriptions-item label="下单日期">{{ view_form.orderDate }}</el-descriptions-item>
         <el-descriptions-item label="客户编号">{{ view_form.customerID }}</el-descriptions-item>
         <el-descriptions-item label="客户名称">{{ view_form.customername }}</el-descriptions-item>
         <el-descriptions-item label="产品编号">{{ view_form.productID }}</el-descriptions-item>
         <el-descriptions-item label="产品名称">{{ view_form.productname }}</el-descriptions-item>
-        <el-descriptions-item label="产品图纸"  span="2"></el-descriptions-item>
+        <el-descriptions-item label="产品图纸"  :span="2">
+          <el-carousel :interval="4000" type="card" height="200px">
+            <el-carousel-item v-for="item in view_form.productfiles" :key="item">
+              <el-image  :src="item" :preview-src-list="[item]">
+              </el-image>
+            </el-carousel-item>
+          </el-carousel>
+        </el-descriptions-item>
         <el-descriptions-item label="需求数量">{{ view_form.number }}</el-descriptions-item>
         <el-descriptions-item label="要求交期">{{ view_form.requiredDeliveryTime }}</el-descriptions-item>
         <el-descriptions-item label="客供材料">{{ view_form.iscustomersuppliedmaterials==0?"否":"是" }}</el-descriptions-item>
         <el-descriptions-item label="材料入库编号">{{ view_form.customersuppliedmaterialsID }}</el-descriptions-item>
         <el-descriptions-item label="合同编号">{{ view_form.contractID }}</el-descriptions-item>
         <el-descriptions-item label="合同金额">{{ view_form.contractmoney }}</el-descriptions-item>
-        <el-descriptions-item label="合同附件"  span="2"></el-descriptions-item>
+        <el-descriptions-item label="合同附件"  :span="2">
+          <el-carousel :interval="4000" type="card" height="200px">
+            <el-carousel-item v-for="item in view_form.contractfiles" :key="item">
+              <el-image  :src="item" :preview-src-list="[item]">
+              </el-image>
+            </el-carousel-item>
+          </el-carousel>
+        </el-descriptions-item>
       </el-descriptions>
-      <el-descriptions title="发票信息" column="2" border>
+      <el-descriptions title="发票信息" :column="2" border>
         <el-descriptions-item label="发票类型">{{ view_form.invoiceType }}</el-descriptions-item>
         <el-descriptions-item label="发票编号">{{ view_form.invoiceID }}</el-descriptions-item>
         <el-descriptions-item label="开票时间">{{ view_form.invoiceCreateTime }}</el-descriptions-item>
@@ -266,8 +292,11 @@
         <el-descriptions-item label="对账日期">{{ view_form.reconciliationDate }}</el-descriptions-item>
         <el-descriptions-item label="客户对账人员">{{ view_form.customerReconciliationPersonnel }}</el-descriptions-item>
       </el-descriptions>
-      <el-descriptions column="2" border>
-        <el-descriptions-item label="备注" span="2">{{ view_form.note }}</el-descriptions-item>
+      <el-descriptions :column="2" border>
+        <el-descriptions-item label="备注" :span="2">{{ view_form.note }}</el-descriptions-item>
+      </el-descriptions>
+      <el-descriptions v-if="additionals.length>0" title="附加信息" :column="2" border>
+        <el-descriptions-item v-for="item,index in additionals" :key="index" :label="item.key" :span="2">{{ item.value }}</el-descriptions-item>
       </el-descriptions>
     </el-dialog>
   </div>
@@ -280,6 +309,9 @@ import { listInvoice } from "@/api/finance/invoice"
 import { listProduct } from "@/api/order/product"
 import { listCustomersuppliedmaterials } from "@/api/storage/customersuppliedmaterials"
 import { listContract } from "@/api/order/contract"
+import { fileDownload } from "@/api/file/file"
+import { listAdditional, delAdditional, addAdditional, updateAdditional } from "@/api/order/additional";
+
 
 export default {
   name: "Saleorder",
@@ -364,7 +396,11 @@ export default {
       // 合同信息
       contracts:[],
       // 订单详细查看
-      view_form:[]
+      view_form:[],
+      // 附加信息列表
+      additionals:[],
+      // 需要删除附加信息列表
+      del_additionals:[]
     };
   },
   created() {
@@ -376,7 +412,6 @@ export default {
       this.loading = true;
       listSaleorder(this.queryParams).then(response => {
         this.saleorderList = response.rows;
-        console.log(response.rows);
         this.total = response.total;
         this.loading = false;
       });
@@ -410,8 +445,32 @@ export default {
       listContract({}).then(response => {
         this.contracts = response.rows;
       })
-    }
-    ,
+    },
+    /** 产品图纸下载 */
+    async productFileDown(file_name){
+      let response = await fileDownload(file_name)
+      let blob = response
+      let tmp_url = window.URL.createObjectURL(blob)
+      this.view_form.productfiles.push(tmp_url);
+    },
+    /** 合同附件下载 */
+    async customerFileDown(file_name){
+      let response = await fileDownload(file_name)
+      let blob = response
+      let tmp_url = window.URL.createObjectURL(blob)
+      this.view_form.contractfiles.push(tmp_url);
+    },
+    /** 获取订单对应附加信息 */
+    async getListAdditional(id){
+      this.additionals = []
+      let response = await listAdditional({saleorderID:id});
+      let datas = response.rows;
+      let num = 0;
+      for(num in datas){
+        let line = datas[num];
+        this.additionals.push({"id":line.id,"saleorderID":line.saleorderID,"key":line.key,"value":line.value})
+      }
+    },
     // 取消按钮
     cancel() {
       this.open = false;
@@ -443,23 +502,65 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
+    // 添加附加信息
+    handleAddAdditional(){
+      this.additionals.push({"key":"","value":""});
+    },
+    // 删除附加信息
+    headledDeladditional(index,item){
+      this.additionals.splice(index,1);
+      if(item.id != null){
+        this.del_additionals.push(item.id);
+      }
+    },
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
+    /** 查看产品详细信息 */
+    async handleProductView(row){
+      if(row.productdrawingURL==null){
+        return 0;
+      }else{
+      let urls = row.productdrawingURL.split(";");
+      urls.pop();
+      let num = 0
+      for(num in urls){
+        await this.productFileDown(urls[num]);
+      }}
+    },
+    /** 查看合同详细信息 */
+    async handleCustomerView(row){
+      if(row.contractURL==null){
+        return 0;
+      }else{
+      let urls = row.contractURL.split(";");
+      urls.pop();
+      let num = 0
+      for(num in urls){
+        await this.customerFileDown(urls[num]);
+      }}
+    },
     /** 查看详细按钮 */
-    handleView(row){
+    async handleView(row){
       this.view_form = row;
+      this.view_form.productfiles = [];
+      this.view_form.contractfiles = [];
+      await this.handleProductView(row);
+      await this.handleCustomerView(row);
+      await this.getListAdditional(row.id);
       this.view_open = true
     },
     /** 新增按钮操作 */
     handleAdd() {
+      this.additionals = [];
       this.reset();
       this.getListCustom();
       this.getListInvoice();
       this.getListProduct();
+      this.getListContract();
       this.getListCustomersuppliedmaterials();
       this.form.createUserName = document.cookie.split("username=")[1].split(";")[0]
       this.open = true;
@@ -467,10 +568,12 @@ export default {
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
+      this.del_additionals = [];
       this.reset();
       this.getListCustom();
       this.getListInvoice();
       this.getListProduct();
+      this.getListContract();
       this.getListCustomersuppliedmaterials();
       const id = row.id || this.ids
       getSaleorder(id).then(response => {
@@ -478,19 +581,23 @@ export default {
         this.open = true;
         this.title = "修改订单";
       });
+      this.getListAdditional(id);
     },
     /** 提交按钮 */
-    submitForm() {
-      this.$refs["form"].validate(valid => {
+    async submitForm() {
+      let saleorderID;
+      this.$refs["form"].validate(async valid => {
         if (valid) {
           if (this.form.id != null) {
-            updateSaleorder(this.form).then(response => {
+            saleorderID = this.form.id;
+            await updateSaleorder(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addSaleorder(this.form).then(response => {
+            await addSaleorder(this.form).then(response => {
+              saleorderID = response.id;
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -498,16 +605,57 @@ export default {
           }
         }
       });
+      // 插入或更新附加信息
+      if(this.additionals.length > 0){
+        let tmp_additional_add_form = [];
+        let tmp_additional_update_form = [];
+        let num = 0;
+        for(num in this.additionals){
+          if(this.additionals[num].id != null){
+            tmp_additional_update_form.push(this.additionals[num]);
+          }else if(this.additionals.id == null){
+            let tmp = this.additionals[num]
+            tmp["saleorderID"] = saleorderID;
+            tmp_additional_add_form.push(tmp);
+          }
+        };
+
+        if(tmp_additional_add_form.length>0){
+
+          let num = 0;
+          for(num in tmp_additional_add_form){
+            let response = await addAdditional(tmp_additional_add_form[num]);
+          }
+        }
+        if(tmp_additional_update_form.length>0){
+          let num = 0;
+          for(num in tmp_additional_update_form){
+            let response = await updateAdditional(tmp_additional_update_form[num]);
+          }
+        }
+        if(this.del_additionals.length>0){
+          let num;
+          for(num in this.del_additionals){
+            let response = await delAdditional(this.del_additionals[num])
+          }
+        }
+
+      }
     },
     /** 删除按钮操作 */
-    handleDelete(row) {
+    async handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除订单编号为"' + ids + '"的数据项？').then(function() {
-        return delSaleorder(ids);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      let that = this;
+      await this.$modal.confirm('是否确认删除订单编号为"' + ids + '"的数据项？').then(async ()=> {
+        let num = 0;
+        await that.getListAdditional(ids);
+        for(num in this.additionals){
+          await delAdditional(this.additionals[num].id)
+        }
+        return await delSaleorder(ids);
+      })
+      await this.getList();
+      this.$modal.msgSuccess("删除成功");
     },
     /** 导出按钮操作 */
     handleExport() {

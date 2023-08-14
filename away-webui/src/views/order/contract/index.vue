@@ -57,9 +57,14 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="合同编号" align="center" prop="id" />
       <el-table-column label="合同金额" align="center" prop="money" />
-      <el-table-column label="合同附件地址URL" align="center" prop="contractURL" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-view"
+            @click="handleView(scope.row)"
+          >查看</el-button>
           <el-button
             size="mini"
             type="text"
@@ -97,9 +102,10 @@
         </el-form-item>
         <el-form-item label="合同附件上传" prop="contractURL">
           <el-upload
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
+            ref="upload"
             :file-list="fileList"
+            action="String"
+            :http-request="fileUpdate"
             :auto-upload="false"
             list-type="picture">
             <el-button size="small" type="primary">点击上传</el-button>
@@ -112,12 +118,28 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+
+    <!-- 预览合同对话框 -->
+    <el-dialog :title="view_form.id" :visible.sync="view_open" width="800px" append-to-body>
+      <el-descriptions :column="2" border>
+          <el-descriptions-item label="合同编号">{{ view_form.id }}</el-descriptions-item>
+          <el-descriptions-item label="合同金额">{{ view_form.money }}</el-descriptions-item>
+          <el-descriptions-item label="合同附件" :span="2">
+            <el-carousel :interval="4000" type="card" height="200px">
+              <el-carousel-item v-for="item in view_form.files" :key="item">
+                <el-image  :src="item" :preview-src-list="[item]">
+                </el-image>
+              </el-carousel-item>
+            </el-carousel>
+          </el-descriptions-item>
+      </el-descriptions>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { listContract, getContract, delContract, addContract, updateContract } from "@/api/order/contract";
-
+import { fileDownload,fileUpdate } from "@/api/file/file"
 export default {
   name: "Contract",
   data() {
@@ -140,6 +162,10 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      // 是否显示详细信息
+      view_open: false,
+      // 详细信息表单
+      view_form: [],
       // 是否新建
       isadd: true,
       // 查询参数
@@ -151,7 +177,12 @@ export default {
       form: {},
       // 表单校验
       rules: {
-      }
+        id: [
+          { required: true, message: "合同编号不能为空", trigger: "blur" }
+        ],
+      },
+      // 文件列表
+      fileList:[]
     };
   },
   created() {
@@ -167,6 +198,24 @@ export default {
         this.loading = false;
       });
     },
+    /** 文件上传 */
+    async fileUpdate(){
+      let file_list = this.$refs.upload.uploadFiles;
+      let num = 0
+      let formData = new FormData();
+      for(num in file_list){
+        formData.append('files', file_list[num].raw);
+      }
+      let response = await fileUpdate(formData)
+      this.form.contractURL=response
+    },
+    /** 文件下载 */
+    async fileDown(file_name){
+      let response = await fileDownload(file_name)
+      let blob = response
+      let tmp_url = window.URL.createObjectURL(blob)
+      this.view_form.files.push(tmp_url);
+    },
     // 取消按钮
     cancel() {
       this.open = false;
@@ -179,7 +228,9 @@ export default {
         money: null,
         contractURL: null
       };
+      this.fileList = [];
       this.resetForm("form");
+
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -196,6 +247,21 @@ export default {
       this.ids = selection.map(item => item.id)
       this.single = selection.length!==1
       this.multiple = !selection.length
+    },
+    /** 查看合同详细信息 */
+    handleView(row){
+      const id = row.id || this.ids
+      getContract(id).then(async response => {
+        this.view_form = response.data;
+        this.view_form.files = [];
+        let num = 0;
+        let urls = response.data.contractURL.split(";");
+        urls.pop();
+        for(num in urls){
+          await this.fileDown(urls[num]);
+        }
+        this.view_open = true;
+      });
     },
     /** 新增按钮操作 */
     handleAdd() {
@@ -216,17 +282,18 @@ export default {
       });
     },
     /** 提交按钮 */
-    submitForm() {
-      this.$refs["form"].validate(valid => {
+    async submitForm() {
+      await this.fileUpdate()
+      this.$refs["form"].validate(async valid => {
         if (valid) {
           if (!this.isadd) {
-            updateContract(this.form).then(response => {
+            await  updateContract(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addContract(this.form).then(response => {
+            await addContract(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -251,14 +318,6 @@ export default {
         ...this.queryParams
       }, `contract_${new Date().getTime()}.xlsx`)
     },
-    // 附件上传
-    handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-    // 附件下载
-    handlePreview(file) {
-      console.log(file);
-    }
   }
 };
 </script>

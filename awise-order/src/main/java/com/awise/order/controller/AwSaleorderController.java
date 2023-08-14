@@ -104,7 +104,8 @@ public class AwSaleorderController extends BaseController
         awSaleorder.setId(sdf.format(now_date)+awSaleorder.hashCode());
         awSaleorder.setIsDel("0");
         awSaleorder.setCreateTime(now_date);
-        return toAjax(awSaleorderService.insertAwSaleorder(awSaleorder));
+        AjaxResult ajaxResult = toAjax(awSaleorderService.insertAwSaleorder(awSaleorder)).put("id",awSaleorder.getId());
+        return ajaxResult;
     }
 
     /**
