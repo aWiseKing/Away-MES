@@ -1,0 +1,10 @@
+com\awise\produce\mapper\AwProductiontasksMapper.class
+com\awise\produce\service\impl\AwProductiontasklistServiceImpl.class
+com\awise\produce\service\IAwProductiontasklistService.class
+com\awise\produce\controller\AwProductiontasklistController.class
+com\awise\produce\mapper\AwProductiontasklistMapper.class
+com\awise\produce\controller\AwProductiontasksController.class
+com\awise\produce\domain\AwProductiontasks.class
+com\awise\produce\domain\AwProductiontasklist.class
+com\awise\produce\service\IAwProductiontasksService.class
+com\awise\produce\service\impl\AwProductiontasksServiceImpl.class

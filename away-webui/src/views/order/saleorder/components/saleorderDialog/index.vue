@@ -72,7 +72,10 @@ export default {
   name:"saleorderDialog",
   data(){
     return {
-      view_form:[]
+      view_open:false,
+      view_form:[],
+      additionals:[],
+      row:[]
     }
   },
   created() {
@@ -145,7 +148,7 @@ export default {
     },
     // 取消按钮
     cancel() {
-      this.open = false;
+      this.view_open = false;
       this.reset();
     },
     // 表单重置
@@ -164,21 +167,6 @@ export default {
       };
       this.resetForm("form");
     },
-    /** 搜索按钮操作 */
-    handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
-    },
-    /** 重置按钮操作 */
-    resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
-    },
-    // 添加附加信息
-    handleAddAdditional(){
-      this.additionals.push({"key":"","value":""});
-    },
-
     /** 查看产品详细信息 */
     async handleProductView(row){
       if(row.productdrawingURL==null){
@@ -205,6 +193,7 @@ export default {
     },
     /** 查看详细按钮 */
     async handleView(row){
+      this.view_form = row;
       this.view_form.productfiles = [];
       this.view_form.contractfiles = [];
       await this.handleProductView(row);

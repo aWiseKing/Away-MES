@@ -2,18 +2,12 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="下单日期" prop="createTime">
-        <el-date-picker clearable
-          v-model="queryParams.createTime"
-          type="date"
-          value-format="yyyy-MM-dd"
+        <el-date-picker clearable v-model="queryParams.createTime" type="date" value-format="yyyy-MM-dd"
           placeholder="请选择下单日期">
         </el-date-picker>
       </el-form-item>
       <el-form-item label="要求交期" prop="requiredDeliveryTime">
-        <el-date-picker clearable
-          v-model="queryParams.requiredDeliveryTime"
-          type="date"
-          value-format="yyyy-MM-dd"
+        <el-date-picker clearable v-model="queryParams.requiredDeliveryTime" type="date" value-format="yyyy-MM-dd"
           placeholder="请选择要求交期">
         </el-date-picker>
       </el-form-item>
@@ -25,46 +19,20 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['order:saleorder:add']"
-        >新增</el-button>
+        <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
+          v-hasPermi="['order:saleorder:add']">新增</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['order:saleorder:edit']"
-        >修改</el-button>
+        <el-button type="success" plain icon="el-icon-edit" size="mini" :disabled="single" @click="handleUpdate"
+          v-hasPermi="['order:saleorder:edit']">修改</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['order:saleorder:remove']"
-        >删除</el-button>
+        <el-button type="danger" plain icon="el-icon-delete" size="mini" :disabled="multiple" @click="handleDelete"
+          v-hasPermi="['order:saleorder:remove']">删除</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['order:saleorder:export']"
-        >导出</el-button>
+        <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport"
+          v-hasPermi="['order:saleorder:export']">导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -93,149 +61,154 @@
       <el-table-column label="当前订单状态" align="center" prop="state" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-view"
-            @click="handleView(scope.row)"
-            v-hasPermi="['order:saleorder:edit']"
-          >查看</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['order:saleorder:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['order:saleorder:remove']"
-          >删除</el-button>
+          <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)"
+            v-hasPermi="['order:saleorder:edit']">查看</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
+            v-hasPermi="['order:saleorder:edit']">修改</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
+            v-hasPermi="['order:saleorder:remove']">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+    <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
+      @pagination="getList" />
 
     <!-- 添加或修改订单对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" width="900px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="创建人" prop="createUserName">
-          <div>{{ form.createUserName }}</div>
-        </el-form-item>
-        <el-form-item label="下单日期" prop="orderDate">
-          <el-date-picker clearable
-            v-model="form.orderDate"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="请选择下单日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="需求数量" prop="number">
-          <el-input v-model="form.number" placeholder="请输入需求数量" />
-        </el-form-item>
-        <el-form-item label="要求交期" prop="requiredDeliveryTime">
-          <el-date-picker clearable
-            v-model="form.requiredDeliveryTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="请选择要求交期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="客户信息" prop="customerID">
-          <el-select v-model="form.customerID" placeholder="请选择订单客户">
-            <el-option
-              v-for="item in customs"
-              :key="item.id"
-              :label = "item.name"
-              :value = "item.id"
-            >
-          </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="产品信息" prop="productID">
-          <el-select v-model="form.productID" placeholder="请选择产品">
-            <el-option
-              v-for="item in products"
-              :key="item.id"
-              :label = "item.name"
-              :value = "String(item.id)"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="材料是否客供" prop="iscustomersuppliedmaterials">
-          <el-radio-group v-model="form.iscustomersuppliedmaterials">
-            <el-radio v-for="item in iscustomersuppliedmaterials" :key="item.key" :label="item.key">{{ item.value }}</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item v-if="form.iscustomersuppliedmaterials == 1" label="客供材料编号" prop="customersuppliedmaterialsID">
-          <el-select v-model="form.customersuppliedmaterialsID" placeholder="请选择客供材料">
-            <el-option
-              v-for="item in customersuppliedmaterialss"
-              :key="item.id"
-              :label = "item.customer+'的'+item.material"
-              :value = "String(item.id)"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="合同信息" prop="contractID">
-          <el-select v-model="form.contractID" placeholder="请选择合同信息">
-            <el-option
-              v-for="item in contracts"
-              :key="item.id"
-              :label = "item.name"
-              :value = "String(item.id)"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="发票信息" prop="invoiceID">
-          <el-select v-model="form.invoiceID" placeholder="请选择合同信息">
-            <el-option
-              v-for="item in invoices"
-              :key="item.id"
-              :label = "item.name"
-              :value = "String(item.id)"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="订单状态" prop="state">
-          <el-select v-model="form.state" value-key="value" placeholder="请选择订单状态">
-            <el-option
-              v-for="item in state_options"
-              :key="item.key"
-              :label="item.value"
-              :value="item.key">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="备注" prop="note">
-          <el-input v-model="form.note" placeholder="备注" />
-        </el-form-item>
+        <!-- 第一行 创建人 下单日期 -->
+        <el-row :gutter="12">
+          <el-col :span="12">
+            <el-form-item label="创建人" prop="createUserName">
+              <div>{{ form.createUserName }}</div>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="下单日期" prop="orderDate">
+              <el-date-picker clearable v-model="form.orderDate" type="date" value-format="yyyy-MM-dd"
+                placeholder="请选择下单日期">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <!-- 第二行 需求数量 要求交期 -->
+        <el-row :gutter="12">
+          <el-col :span="12">
+            <el-form-item label="需求数量" prop="number">
+              <el-row :gutter="15">
+                <el-col :span="15">
+                  <el-input type="number" v-model="form.number" placeholder="请输入需求数量" />
+                </el-col>
+              </el-row>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="要求交期" prop="requiredDeliveryTime">
+              <el-date-picker clearable v-model="form.requiredDeliveryTime" type="date" value-format="yyyy-MM-dd"
+                placeholder="请选择要求交期">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <!-- 第三行 客户信息 产品信息 -->
+        <el-row :gutter="12">
+          <el-col :span="12">
+            <el-form-item label="客户信息" prop="customerID">
+              <el-select v-model="form.customerID" placeholder="请选择订单客户">
+                <el-option v-for="item in customs" :key="item.id" :label="item.name" :value="item.id">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="产品信息" prop="productID">
+              <el-select v-model="form.productID" placeholder="请选择产品">
+                <el-option v-for="item in products" :key="item.id" :label="item.name" :value="String(item.id)">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <!-- 第四行 材料是否客供 客供材料信息 -->
+        <el-row :gutter="12">
+          <el-col :span="12">
+            <el-form-item label-width="auto" label="材料是否客供" prop="iscustomersuppliedmaterials">
+              <el-radio-group v-model="form.iscustomersuppliedmaterials">
+                <el-radio v-for="item in iscustomersuppliedmaterials" :key="item.key" :label="item.key">{{ item.value
+                }}</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item v-if="form.iscustomersuppliedmaterials == 1" label-width="auto" label="客供材料编号"
+              prop="customersuppliedmaterialsID">
+              <el-select v-model="form.customersuppliedmaterialsID" placeholder="请选择客供材料">
+                <el-option v-for="item in customersuppliedmaterialss" :key="item.id"
+                  :label="item.customer + '的' + item.material" :value="String(item.id)">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <!-- 第五行 合同信息 发票信息 -->
+        <el-row :gutter="12">
+          <el-col :span="12">
+            <el-form-item label="合同信息" prop="contractID">
+              <el-select v-model="form.contractID" placeholder="请选择合同信息">
+                <el-option v-for="item in contracts" :key="item.id" :label="item.name" :value="String(item.id)">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="发票信息" prop="invoiceID">
+              <el-select v-model="form.invoiceID" placeholder="请选择合同信息">
+                <el-option v-for="item in invoices" :key="item.id" :label="item.name" :value="String(item.id)">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <!-- 第六行 订单状态 -->
+        <el-row :gutter="12">
+          <el-col :span="12">
+            <el-form-item label="订单状态" prop="state">
+              <el-select v-model="form.state" value-key="value" placeholder="请选择订单状态">
+                <el-option v-for="item in state_options" :key="item.key" :label="item.value" :value="item.key">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <!-- 第七行 备注 -->
+        <el-row :gutter="12">
+          <el-col :span="22">
+            <el-form-item label="备注" prop="note">
+              <el-input v-model="form.note" type="textarea" placeholder="备注" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <!-- 附加信息 -->
         <el-divider>
           <span style="font-size: 1.2em;">附加信息</span>
         </el-divider>
-        <div style="display: flex;flex-direction: column;justify-content:center;align-items: center;"><el-button v-if="additionals.length<1" size="mini" type="primary" icon="el-icon-plus" @click="handleAddAdditional"></el-button></div>
-        <el-form-item :label="'附加信息'+(index+1)"  v-for="item,index in additionals" :key="index">
-          <el-row :gutter="15">
-            <el-col :span="7"><el-input maxlength="5" v-model="item.key" placeholder="字段名"/></el-col>
-            <el-col :span="7"><el-input maxlength="5" v-model="item.value" placeholder="值"/></el-col>
-            <el-col :span="4"><el-button size="mini" type="primary" icon="el-icon-plus" @click="handleAddAdditional"></el-button></el-col>
-            <el-col :span="4"><el-button size="mini" type="danger" icon="el-icon-minus" @click="headledDeladditional(index,item)"></el-button></el-col>
-          </el-row>
-        </el-form-item>
+        <div style="display: flex;flex-direction: column;justify-content:center;align-items: center;"><el-button
+            v-if="additionals.length < 1" size="mini" type="primary" icon="el-icon-plus"
+            @click="handleAddAdditional"></el-button></div>
+        <div style="display: flex;flex-direction: column;align-items: center;max-height: 200px;overflow-y: auto;" >
+          <el-form-item label-width="auto" :label="'附加信息' + (index + 1)" v-for="item, index in additionals" :key="index">
+            <el-row :gutter="10">
+              <el-col :span="6"><el-input maxlength="5" v-model="item.key" placeholder="字段名" /></el-col>
+              <el-col :span="6"><el-input maxlength="5" v-model="item.value" placeholder="值" /></el-col>
+              <el-col :span="6">
+                <el-button size="mini" type="text" icon="el-icon-plus" @click="handleAddAdditional">新增</el-button>
+                <el-button size="mini" type="text" icon="el-icon-minus"
+                  @click="headledDeladditional(index, item)">删除</el-button></el-col>
+            </el-row>
+          </el-form-item>
+        </div>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -243,62 +216,7 @@
       </div>
     </el-dialog>
     <!-- 查看订单详细信息 -->
-    <el-dialog :title="view_form.id" :visible.sync="view_open" width="900px" append-to-body>
-      <el-descriptions :column="2" border>
-          <el-descriptions-item label="创建时间">{{ view_form.createTime }}</el-descriptions-item>
-          <el-descriptions-item label="创建人">{{ view_form.createUserName }}</el-descriptions-item>
-      </el-descriptions>
-      <el-descriptions title="合同信息" :column="2" border>
-        <el-descriptions-item label="订单编号">{{ view_form.id }}</el-descriptions-item>
-        <el-descriptions-item label="下单日期">{{ view_form.orderDate }}</el-descriptions-item>
-        <el-descriptions-item label="客户编号">{{ view_form.customerID }}</el-descriptions-item>
-        <el-descriptions-item label="客户名称">{{ view_form.customername }}</el-descriptions-item>
-        <el-descriptions-item label="产品编号">{{ view_form.productID }}</el-descriptions-item>
-        <el-descriptions-item label="产品名称">{{ view_form.productname }}</el-descriptions-item>
-        <el-descriptions-item label="产品图纸"  :span="2">
-          <el-carousel :interval="4000" type="card" height="200px">
-            <el-carousel-item v-for="item in view_form.productfiles" :key="item">
-              <el-image  :src="item" :preview-src-list="[item]">
-              </el-image>
-            </el-carousel-item>
-          </el-carousel>
-        </el-descriptions-item>
-        <el-descriptions-item label="需求数量">{{ view_form.number }}</el-descriptions-item>
-        <el-descriptions-item label="要求交期">{{ view_form.requiredDeliveryTime }}</el-descriptions-item>
-        <el-descriptions-item label="客供材料">{{ view_form.iscustomersuppliedmaterials==0?"否":"是" }}</el-descriptions-item>
-        <el-descriptions-item label="材料入库编号">{{ view_form.customersuppliedmaterialsID }}</el-descriptions-item>
-        <el-descriptions-item label="合同编号">{{ view_form.contractID }}</el-descriptions-item>
-        <el-descriptions-item label="合同金额">{{ view_form.contractmoney }}</el-descriptions-item>
-        <el-descriptions-item label="合同附件"  :span="2">
-          <el-carousel :interval="4000" type="card" height="200px">
-            <el-carousel-item v-for="item in view_form.contractfiles" :key="item">
-              <el-image  :src="item" :preview-src-list="[item]">
-              </el-image>
-            </el-carousel-item>
-          </el-carousel>
-        </el-descriptions-item>
-      </el-descriptions>
-      <el-descriptions title="发票信息" :column="2" border>
-        <el-descriptions-item label="发票类型">{{ view_form.invoiceType }}</el-descriptions-item>
-        <el-descriptions-item label="发票编号">{{ view_form.invoiceID }}</el-descriptions-item>
-        <el-descriptions-item label="开票时间">{{ view_form.invoiceCreateTime }}</el-descriptions-item>
-        <el-descriptions-item label="开票数量">{{ view_form.invoiceNumer }}</el-descriptions-item>
-        <el-descriptions-item label="税率">{{ view_form.taxRate }}</el-descriptions-item>
-        <el-descriptions-item label="税费">{{ view_form.taxation }}</el-descriptions-item>
-        <el-descriptions-item label="销售单价(不含税)">{{ view_form.salesUnitPriceExcludingTax }}</el-descriptions-item>
-        <el-descriptions-item label="销售单价(含税)">{{ view_form.salesUnitPriceIncludingTax }}</el-descriptions-item>
-        <el-descriptions-item label="销售金额(不含税)">{{ view_form.consumptionAmountExcludingTax }}</el-descriptions-item>
-        <el-descriptions-item label="销售金额(含税)">{{ view_form.consumptionAmountIncludingTax }}</el-descriptions-item>
-        <el-descriptions-item label="对账日期">{{ view_form.reconciliationDate }}</el-descriptions-item>
-        <el-descriptions-item label="客户对账人员">{{ view_form.customerReconciliationPersonnel }}</el-descriptions-item>
-      </el-descriptions>
-      <el-descriptions :column="2" border>
-        <el-descriptions-item label="备注" :span="2">{{ view_form.note }}</el-descriptions-item>
-      </el-descriptions>
-      <el-descriptions v-if="additionals.length>0" title="附加信息" :column="2" border>
-        <el-descriptions-item v-for="item,index in additionals" :key="index" :label="item.key" :span="2">{{ item.value }}</el-descriptions-item>
-      </el-descriptions>
-    </el-dialog>
+    <saleorderDialog ref="saleorderDialog" />
   </div>
 </template>
 
@@ -311,6 +229,7 @@ import { listCustomersuppliedmaterials } from "@/api/storage/customersuppliedmat
 import { listContract } from "@/api/order/contract"
 import { fileDownload } from "@/api/file/file"
 import { listAdditional, delAdditional, addAdditional, updateAdditional } from "@/api/order/additional";
+import SaleorderDialog from "./components/saleorderDialog/index";
 
 
 export default {
@@ -368,7 +287,7 @@ export default {
         productID: [
           { required: true, message: "产品信息不能为空", trigger: "blur" }
         ],
-        iscustomersuppliedmaterials:[
+        iscustomersuppliedmaterials: [
           { required: true, message: "请选择是否客供材料", trigger: "blur" }
         ],
         state: [
@@ -376,32 +295,36 @@ export default {
         ],
       },
       // 订单状态
-      state_options:[
-        {key:"0",value:"未发布"},
-        {key:"1",value:"发布"},
-        {key:"2",value:"暂停"},
-        {key:"3",value:"完成"},
-        {key:"4",value:"取消"}
+      state_options: [
+        { key: "0", value: "未发布" },
+        { key: "1", value: "发布" },
+        { key: "2", value: "暂停" },
+        { key: "3", value: "完成" },
+        { key: "4", value: "取消" }
       ],
       // 材料是否客供
-      iscustomersuppliedmaterials:[{key:0,value:"否"},{key:1, value:"是"}],
+      iscustomersuppliedmaterials: [{ key: 0, value: "否" }, { key: 1, value: "是" }],
       // 客户信息
-      customs:[],
+      customs: [],
       // 发票信息
-      invoices:[],
+      invoices: [],
       // 产品信息
-      products:[],
+      products: [],
       // 库存客供材料信息
-      customersuppliedmaterialss:[],
+      customersuppliedmaterialss: [],
       // 合同信息
-      contracts:[],
+      contracts: [],
       // 订单详细查看
-      view_form:[],
+      view_form: [],
       // 附加信息列表
-      additionals:[],
+      additionals: [],
       // 需要删除附加信息列表
-      del_additionals:[]
+      del_additionals: [],
+      view_row: []
     };
+  },
+  components: {
+    "saleorderDialog": SaleorderDialog
   },
   created() {
     this.getList();
@@ -417,58 +340,58 @@ export default {
       });
     },
     /** 查询客户信息 */
-    getListCustom(){
+    getListCustom() {
       listCustom({}).then(response => {
         this.customs = response.rows;
       })
     },
     /** 查询发票信息 */
-    getListInvoice(){
+    getListInvoice() {
       listInvoice({}).then(response => {
         this.invoices = response.rows;
       })
     },
     /** 查询产品信息 */
-    getListProduct(){
+    getListProduct() {
       listProduct({}).then(response => {
         this.products = response.rows;
       })
     },
     /** 查询库存客供材料信息*/
-    getListCustomersuppliedmaterials(){
+    getListCustomersuppliedmaterials() {
       listCustomersuppliedmaterials({}).then(response => {
         this.customersuppliedmaterialss = response.rows;
       })
     },
     /** 查询合同信息*/
-    getListContract(){
+    getListContract() {
       listContract({}).then(response => {
         this.contracts = response.rows;
       })
     },
     /** 产品图纸下载 */
-    async productFileDown(file_name){
+    async productFileDown(file_name) {
       let response = await fileDownload(file_name)
       let blob = response
       let tmp_url = window.URL.createObjectURL(blob)
       this.view_form.productfiles.push(tmp_url);
     },
     /** 合同附件下载 */
-    async customerFileDown(file_name){
+    async customerFileDown(file_name) {
       let response = await fileDownload(file_name)
       let blob = response
       let tmp_url = window.URL.createObjectURL(blob)
       this.view_form.contractfiles.push(tmp_url);
     },
     /** 获取订单对应附加信息 */
-    async getListAdditional(id){
+    async getListAdditional(id) {
       this.additionals = []
-      let response = await listAdditional({saleorderID:id});
+      let response = await listAdditional({ saleorderID: id });
       let datas = response.rows;
       let num = 0;
-      for(num in datas){
+      for (num in datas) {
         let line = datas[num];
-        this.additionals.push({"id":line.id,"saleorderID":line.saleorderID,"key":line.key,"value":line.value})
+        this.additionals.push({ "id": line.id, "saleorderID": line.saleorderID, "key": line.key, "value": line.value })
       }
     },
     // 取消按钮
@@ -480,14 +403,14 @@ export default {
     reset() {
       this.form = {
         id: null,
-        createUserName: null,
+        createUserName: document.cookie.split("username=")[1].split(";")[0],
         number: null,
         requiredDeliveryTime: null,
         customerID: null,
         productID: null,
         contractID: null,
         invoiceID: null,
-        iscustomersuppliedmaterials:0,
+        iscustomersuppliedmaterials: 0,
         state: null
       };
       this.resetForm("form");
@@ -503,55 +426,51 @@ export default {
       this.handleQuery();
     },
     // 添加附加信息
-    handleAddAdditional(){
-      this.additionals.push({"key":"","value":""});
+    handleAddAdditional() {
+      this.additionals.push({ "key": "", "value": "" });
     },
     // 删除附加信息
-    headledDeladditional(index,item){
-      this.additionals.splice(index,1);
-      if(item.id != null){
+    headledDeladditional(index, item) {
+      this.additionals.splice(index, 1);
+      if (item.id != null) {
         this.del_additionals.push(item.id);
       }
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 查看产品详细信息 */
-    async handleProductView(row){
-      if(row.productdrawingURL==null){
+    async handleProductView(row) {
+      if (row.productdrawingURL == null) {
         return 0;
-      }else{
-      let urls = row.productdrawingURL.split(";");
-      urls.pop();
-      let num = 0
-      for(num in urls){
-        await this.productFileDown(urls[num]);
-      }}
+      } else {
+        let urls = row.productdrawingURL.split(";");
+        urls.pop();
+        let num = 0
+        for (num in urls) {
+          await this.productFileDown(urls[num]);
+        }
+      }
     },
     /** 查看合同详细信息 */
-    async handleCustomerView(row){
-      if(row.contractURL==null){
+    async handleCustomerView(row) {
+      if (row.contractURL == null) {
         return 0;
-      }else{
-      let urls = row.contractURL.split(";");
-      urls.pop();
-      let num = 0
-      for(num in urls){
-        await this.customerFileDown(urls[num]);
-      }}
+      } else {
+        let urls = row.contractURL.split(";");
+        urls.pop();
+        let num = 0
+        for (num in urls) {
+          await this.customerFileDown(urls[num]);
+        }
+      }
     },
     /** 查看详细按钮 */
-    async handleView(row){
-      this.view_form = row;
-      this.view_form.productfiles = [];
-      this.view_form.contractfiles = [];
-      await this.handleProductView(row);
-      await this.handleCustomerView(row);
-      await this.getListAdditional(row.id);
-      this.view_open = true
+    async handleView(row) {
+      await this.$refs.saleorderDialog.handleView(row);
     },
     /** 新增按钮操作 */
     handleAdd() {
@@ -562,7 +481,6 @@ export default {
       this.getListProduct();
       this.getListContract();
       this.getListCustomersuppliedmaterials();
-      this.form.createUserName = document.cookie.split("username=")[1].split(";")[0]
       this.open = true;
       this.title = "添加订单";
     },
@@ -606,36 +524,36 @@ export default {
         }
       });
       // 插入或更新附加信息
-      if(this.additionals.length > 0){
+      if (this.additionals.length > 0) {
         let tmp_additional_add_form = [];
         let tmp_additional_update_form = [];
         let num = 0;
-        for(num in this.additionals){
-          if(this.additionals[num].id != null){
+        for (num in this.additionals) {
+          if (this.additionals[num].id != null) {
             tmp_additional_update_form.push(this.additionals[num]);
-          }else if(this.additionals.id == null){
+          } else if (this.additionals.id == null) {
             let tmp = this.additionals[num]
             tmp["saleorderID"] = saleorderID;
             tmp_additional_add_form.push(tmp);
           }
         };
 
-        if(tmp_additional_add_form.length>0){
+        if (tmp_additional_add_form.length > 0) {
 
           let num = 0;
-          for(num in tmp_additional_add_form){
+          for (num in tmp_additional_add_form) {
             let response = await addAdditional(tmp_additional_add_form[num]);
           }
         }
-        if(tmp_additional_update_form.length>0){
+        if (tmp_additional_update_form.length > 0) {
           let num = 0;
-          for(num in tmp_additional_update_form){
+          for (num in tmp_additional_update_form) {
             let response = await updateAdditional(tmp_additional_update_form[num]);
           }
         }
-        if(this.del_additionals.length>0){
+        if (this.del_additionals.length > 0) {
           let num;
-          for(num in this.del_additionals){
+          for (num in this.del_additionals) {
             let response = await delAdditional(this.del_additionals[num])
           }
         }
@@ -646,10 +564,10 @@ export default {
     async handleDelete(row) {
       const ids = row.id || this.ids;
       let that = this;
-      await this.$modal.confirm('是否确认删除订单编号为"' + ids + '"的数据项？').then(async ()=> {
+      await this.$modal.confirm('是否确认删除订单编号为"' + ids + '"的数据项？').then(async () => {
         let num = 0;
         await that.getListAdditional(ids);
-        for(num in this.additionals){
+        for (num in this.additionals) {
           await delAdditional(this.additionals[num].id)
         }
         return await delSaleorder(ids);

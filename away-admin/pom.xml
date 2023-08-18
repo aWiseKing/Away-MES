@@ -90,6 +90,12 @@
             <artifactId>awise-finance</artifactId>
         </dependency>
 
+        <!-- 生产中心-->
+        <dependency>
+            <groupId>com.away</groupId>
+            <artifactId>awise-produce</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

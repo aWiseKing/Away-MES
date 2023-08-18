@@ -205,6 +205,13 @@
                 <version>${away.version}</version>
             </dependency>
 
+            <!-- 生产中心-->
+            <dependency>
+                <groupId>com.away</groupId>
+                <artifactId>awise-produce</artifactId>
+                <version>${away.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -220,6 +227,7 @@
         <module>awise-order</module>
         <module>awise-finance</module>
         <module>awise-file</module>
+        <module>awise-produce</module>
     </modules>
     <packaging>pom</packaging>
 

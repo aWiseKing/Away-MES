@@ -147,5 +147,6 @@
     <orderEntry type="module" module-name="awise-comprehensive" />
     <orderEntry type="module" module-name="awise-order" />
     <orderEntry type="module" module-name="awise-finance" />
+    <orderEntry type="module" module-name="awise-produce" />
   </component>
 </module>

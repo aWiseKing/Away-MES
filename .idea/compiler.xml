@@ -15,6 +15,7 @@
         <module name="away-generator" />
         <module name="awise-storage" />
         <module name="awise-file" />
+        <module name="awise-produce" />
         <module name="awise-finance" />
         <module name="away-framework" />
       </profile>
@@ -31,6 +32,7 @@
       <module name="awise-file" target="1.8" />
       <module name="awise-finance" target="1.8" />
       <module name="awise-order" target="1.8" />
+      <module name="awise-produce" target="1.8" />
       <module name="awise-storage" target="1.8" />
       <module name="ruoyi" target="1.8" />
     </bytecodeTargetLevel>
