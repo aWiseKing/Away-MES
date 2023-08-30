@@ -54,7 +54,7 @@
       </el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button v-if="scope.row.id != null" type="text" size="mini" icon="el-icon-view" @click="console.log('测试')">详细</el-button>
+          <el-button v-if="scope.row.id != null" type="text" size="mini" icon="el-icon-view" @click="jumpDetailPage(scope.row)">详细</el-button>
           <el-button type="text" size="mini" icon="el-icon-plus" @click="handleAddProductiontasks()">新增</el-button>
           <el-button type="text" size="mini" icon="el-icon-minus" @click="handleRemoveProductiontasks(scope.$index,scope.row)">删除</el-button>
         </template>
@@ -68,6 +68,7 @@
 <script>
 import { listSaleorder } from "@/api/order/saleorder";
 import { listProductiontasks, delProductiontasks, addProductiontasks, updateProductiontasks } from "@/api/produce/productiontasks";
+import { listProcessingtechnology, getProcessingtechnology, delProcessingtechnology, addProcessingtechnology, updateProcessingtechnology } from "@/api/produce/processingtechnology";
 
 export default {
   name:"ProductiontasksDialog",
@@ -100,9 +101,11 @@ export default {
     }
   },
   created(){
+    this.loading = true;
     this.reset();
     this.getListSaleorder();
     this.getListProductiontasks(this.proformid);
+    this.loading = false;
   },
   methods:{
     /** 查询销售订单列表 */
@@ -112,6 +115,12 @@ export default {
         this.saleorder_list = response.rows;
         this.loading = false;
       })
+    },
+    /** 跳转详情页面 */
+    async jumpDetailPage(row){
+      let id = row.id;
+      this.$router.push({ name:"Processingprocess", query:{ id:id} })
+
     },
     /** 提交需修改或添加的任务 */
     async submitUpDateOrAddProductiontasks(){

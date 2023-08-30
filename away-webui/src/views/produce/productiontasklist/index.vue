@@ -97,7 +97,7 @@
 
 <script>
 import { listProductiontasklist, getProductiontasklist, delProductiontasklist, addProductiontasklist, updateProductiontasklist } from "@/api/produce/productiontasklist";
-import { listProductiontasks,removeByProductionTasksFormIDs } from "@/api/produce/productiontasks";
+import { removeByProductionTasksFormIDs } from "@/api/produce/productiontasks";
 import ProductiontasksDialog from "./components/productiontasksDialog/index";
 
 export default {

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.awise.produce.mapper.AwProcessingtechnologyMapper">
+    
+    <resultMap type="AwProcessingtechnology" id="AwProcessingtechnologyResult">
+        <result property="id"    column="id"    />
+        <result property="productionTasksID"    column="productionTasksID"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="founder"    column="founder"    />
+        <result property="cuttingSize"    column="cuttingSize"    />
+        <result property="numberProducibleParts"    column="numberProducibleParts"    />
+    </resultMap>
+
+    <sql id="selectAwProcessingtechnologyVo">
+        select id, productionTasksID, createTime, founder, cuttingSize, numberProducibleParts from aw_processingtechnology
+    </sql>
+
+    <select id="selectAwProcessingtechnologyList" parameterType="AwProcessingtechnology" resultMap="AwProcessingtechnologyResult">
+        <include refid="selectAwProcessingtechnologyVo"/>
+        <where>  
+            <if test="productionTasksID != null "> and productionTasksID = #{productionTasksID}</if>
+            <if test="createTime != null "> and createTime = #{createTime}</if>
+            <if test="founder != null  and founder != ''"> and founder = #{founder}</if>
+            <if test="cuttingSize != null "> and cuttingSize = #{cuttingSize}</if>
+            <if test="numberProducibleParts != null  and numberProducibleParts != ''"> and numberProducibleParts = #{numberProducibleParts}</if>
+        </where>
+    </select>
+    
+    <select id="selectAwProcessingtechnologyById" parameterType="String" resultMap="AwProcessingtechnologyResult">
+        <include refid="selectAwProcessingtechnologyVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectAwProcessingtechnologyByProductionTasksID" parameterType="String" resultMap="AwProcessingtechnologyResult">
+        <include refid="selectAwProcessingtechnologyVo"/>
+        where ProductionTasksID = #{ProductionTasksID}
+    </select>
+    <insert id="insertAwProcessingtechnology" parameterType="AwProcessingtechnology">
+        insert into aw_processingtechnology
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="productionTasksID != null">productionTasksID,</if>
+            <if test="createTime != null">createTime,</if>
+            <if test="founder != null and founder != ''">founder,</if>
+            <if test="cuttingSize != null">cuttingSize,</if>
+            <if test="numberProducibleParts != null">numberProducibleParts,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="productionTasksID != null">#{productionTasksID},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="founder != null and founder != ''">#{founder},</if>
+            <if test="cuttingSize != null">#{cuttingSize},</if>
+            <if test="numberProducibleParts != null">#{numberProducibleParts},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAwProcessingtechnology" parameterType="AwProcessingtechnology">
+        update aw_processingtechnology
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productionTasksID != null">productionTasksID = #{productionTasksID},</if>
+            <if test="createTime != null">createTime = #{createTime},</if>
+            <if test="founder != null and founder != ''">founder = #{founder},</if>
+            <if test="cuttingSize != null">cuttingSize = #{cuttingSize},</if>
+            <if test="numberProducibleParts != null">numberProducibleParts = #{numberProducibleParts},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAwProcessingtechnologyById" parameterType="String">
+        delete from aw_processingtechnology where id = #{id}
+    </delete>
+
+    <delete id="deleteAwProcessingtechnologyByIds" parameterType="String">
+        delete from aw_processingtechnology where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
