@@ -221,9 +221,7 @@ export default {
     },
     /** 文件下载 */
     async fileDown(file_name){
-      let response = await fileDownload(file_name)
-      let blob = response
-      let tmp_url = window.URL.createObjectURL(blob)
+      let tmp_url = await fileDownload(file_name)
       this.view_form.files.push(tmp_url);
     },
     // 取消按钮

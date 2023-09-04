@@ -9,13 +9,16 @@ export function fileUpdate(query) {
   })
 }
 // 下载文件
-export function fileDownload(query) {
-  return request({
-    url: '/awise/file/download/'+query,
+export async function fileDownload(query) {
+  let response = await request({
+    url: '/awise/file/download/' + query,
     method: 'get',
     responseType: 'blob'
 
   })
+  let blob = response
+  let tmp_url = window.URL.createObjectURL(blob)
+  return tmp_url
 }
 
 // 删除文件

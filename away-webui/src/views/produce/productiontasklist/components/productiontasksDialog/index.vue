@@ -129,7 +129,7 @@ export default {
           for(num in this.productiontasks_list){
             let tmp_productiontasks = this.productiontasks_list[num];
             if(tmp_productiontasks.saleOrderID==null){
-              continue;
+              continue; 
             }
             if(tmp_productiontasks.id == null){
               tmp_productiontasks.productionTasksFormID = this.produceformid

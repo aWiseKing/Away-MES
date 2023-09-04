@@ -2,7 +2,9 @@
   <div class="app-container home">
     <div style="font-size: 60px;display: flex;justify-content: center;align-items: center;">
       <div>
-        <div></div>
+        <div>
+          <el-empty description="首页"></el-empty>
+        </div>
       </div>
     </div>
   </div>
