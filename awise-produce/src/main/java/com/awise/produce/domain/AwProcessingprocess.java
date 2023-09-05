@@ -58,6 +58,10 @@ public class AwProcessingprocess extends BaseEntity
     @Excel(name = "工序外协#0为不外协1为外协#")
     private String outsourcing;
 
+    /** 状态 */
+    @Excel(name = "状态")
+    private String status;
+
     public void setId(Long id) 
     {
         this.id = id;
@@ -158,6 +162,14 @@ public class AwProcessingprocess extends BaseEntity
         return outsourcing;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -172,6 +184,7 @@ public class AwProcessingprocess extends BaseEntity
             .append("taktTime", getTaktTime())
             .append("laborCost", getLaborCost())
             .append("outsourcing", getOutsourcing())
+            .append("status", getStatus())
             .toString();
     }
 }

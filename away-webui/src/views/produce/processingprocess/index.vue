@@ -40,7 +40,7 @@
       <el-table v-loading="loading" :data="processingprocessList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="工序编号" align="center" prop="id" />
-        <el-table-column label="加工工艺信息" align="center" prop="processingTechnologyID" />
+        <el-table-column label="加工工艺" align="center" prop="processingTechnologyID" />
         <el-table-column label="工序序号" align="center" prop="number" />
         <el-table-column label="工序名称" align="center" prop="name" />
         <el-table-column label="所用工装" align="center" prop="usedTooling" />
@@ -65,43 +65,81 @@
       <!-- 添加或修改加工工序信息对话框 -->
       <el-dialog :title="title" :visible.sync="open" :close-on-click-modal="false" width="900px" append-to-body>
         <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-          <el-form-item label="工序序号" prop="number">
-            <el-input v-model="form.number" placeholder="请输入工序序号" />
-          </el-form-item>
-          <el-form-item label="加工工艺信息" prop="processingTechnologyID">
-            <el-input v-model="form.processingTechnologyID" placeholder="请输入加工工艺信息" />
-          </el-form-item>
-          <el-form-item label="工序名称" prop="name">
-            <el-input v-model="form.name" placeholder="请输入工序名称" />
-          </el-form-item>
-          <el-form-item label="工序内容">
-            <editor v-model="form.content" :min-height="192" />
-          </el-form-item>
-          <el-form-item label="工序简图" prop="diagramURL">
-            <el-upload ref="upload" :file-list="fileList" action="String" :http-request="fileUpdate" :auto-upload="false"
-              list-type="picture">
-              <el-button size="small" type="primary">点击上传</el-button>
-              <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-            </el-upload>
-          </el-form-item>
-          <el-form-item label="所用工装" prop="usedTooling">
-            <el-input v-model="form.usedTooling" placeholder="请输入所用工装" />
-          </el-form-item>
-          <el-form-item label="准备工时" prop="preparationHours">
-            <el-input v-model="form.preparationHours" placeholder="请输入准备工时" />
-          </el-form-item>
-          <el-form-item label="单件工时" prop="taktTime">
-            <el-input v-model="form.taktTime" placeholder="请输入单件工时" />
-          </el-form-item>
-          <el-form-item label="工时成本" prop="laborCost">
-            <el-input v-model="form.laborCost" placeholder="请输入工时成本" />
-          </el-form-item>
-          <el-form-item label="工序外协" prop="outsourcing">
-            <el-input v-model="form.outsourcing" placeholder="请输入工序外协" />
-            <el-radio-group v-model="form.outsourcing">
-              <el-radio v-for="item in isoutsourced" :key="item.key" :label="item.key">{{ item.value }}</el-radio>
-            </el-radio-group>
-          </el-form-item>
+          <el-row :gutter="12">
+            <el-col :span="12">
+              <el-form-item label="工序序号" prop="number">
+                <el-input v-model="form.number" placeholder="请输入工序序号" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="加工工艺" prop="processingTechnologyID">
+                <el-input disabled v-model="form.processingTechnologyID" placeholder="请输入加工工艺" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row :gutter="12">
+            <el-col :span="12">
+              <el-form-item label="工序名称" prop="name">
+                <el-input v-model="form.name" placeholder="请输入工序名称" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="所用工装" prop="usedTooling">
+                <el-input v-model="form.usedTooling" placeholder="请输入所用工装" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row :gutter="12">
+            <el-col :span="12">
+              <el-form-item label="准备工时" prop="preparationHours">
+                <el-input v-model="form.preparationHours" placeholder="请输入准备工时" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="单件工时" prop="taktTime">
+                <el-input v-model="form.taktTime" placeholder="请输入单件工时" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row :gutter="12">
+            <el-col :span="12">
+              <el-form-item label="工时成本" prop="laborCost">
+                <el-input v-model="form.laborCost" placeholder="请输入工时成本" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="工序外协" prop="outsourcing">
+                <el-radio-group v-model="form.outsourcing">
+                  <el-radio v-for="item in isoutsourced" :key="item.key" :label="item.key">{{ item.value }}</el-radio>
+                </el-radio-group>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row :gutter="12">
+            <el-col :span="12">
+              <el-form-item label="状态">
+                <el-input v-model="form.status" placeholder="请输入状态" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row :gutter="12">
+            <el-col :span="24">
+              <el-form-item label="工序内容">
+                <editor v-model="form.content" :min-height="192" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row :gutter="12">
+            <el-col :span="24">
+              <el-form-item label="工序简图" prop="diagramURL">
+                <el-upload ref="upload" :file-list="fileList" action="String" :http-request="fileUpdate" :auto-upload="false"
+                  list-type="picture">
+                  <el-button size="small" type="primary">点击上传</el-button>
+                  <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                </el-upload>
+              </el-form-item>
+            </el-col>
+          </el-row>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -113,9 +151,10 @@
       <el-dialog :title="title" :visible.sync="view_open" width="900px" append-to-body>
         <el-descriptions :column="2" border>
           <el-descriptions-item label="工序序号">{{ view_form.number }}</el-descriptions-item>
-          <el-descriptions-item label="加工工艺信息">{{ view_form.processingTechnologyID }}</el-descriptions-item>
+          <el-descriptions-item label="加工工艺">{{ view_form.processingTechnologyID }}</el-descriptions-item>
 
-          <el-descriptions-item label="工序名称">{{ view_form.name }}</el-descriptions-item>
+          <el-descriptions-item label="工序名称" :span="2">{{ view_form.name }}</el-descriptions-item>
+          <el-descriptions-item label="状态">{{ view_form.status }}</el-descriptions-item>
           <el-descriptions-item label="所用工装">{{ view_form.usedTooling }}</el-descriptions-item>
           <el-descriptions-item label="工序名称">{{ view_form.name }}</el-descriptions-item>
           <el-descriptions-item label="所用工装">{{ view_form.usedTooling }}</el-descriptions-item>
@@ -183,6 +222,7 @@ export default {
         preparationHours: null,
         taktTime: null,
         laborCost: null,
+        status:null,
         outsourcing: null
       },
       // 表单参数
@@ -192,7 +232,7 @@ export default {
       // 表单校验
       rules: {
         processingTechnologyID: [
-          { required: true, message: "加工工艺信息不能为空", trigger: "blur" }
+          { required: true, message: "加工工艺不能为空", trigger: "blur" }
         ],
         number: [
           { required: true, message: "工序序号不能为空", trigger: "blur" }
@@ -295,7 +335,8 @@ export default {
         preparationHours: null,
         taktTime: null,
         laborCost: null,
-        outsourcing: null
+        outsourcing: null,
+        status: null
       };
       this.fileList = []
       this.resetForm("form");
