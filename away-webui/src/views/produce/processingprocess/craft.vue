@@ -188,15 +188,15 @@ export default {
   justify-content: center;
   align-items: center;
   width:100%;
-  height: 100vh;
-  background: rgb(221, 223, 226);
+  height: 100%;
 }
 .dialog{
   width: 420px;
   background: rgba(2555,255,255,1);
   padding: 12px 12px 12px 12px;
   border-radius: 12px;
-  box-shadow: 2px 2px 2px rgb(160, 160, 160);
+  margin-top: 200px;
+  box-shadow: 0px 0px 4px rgb(160, 160, 160);
 }
 .dialog-footer{
   display: flex;
