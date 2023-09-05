@@ -20,7 +20,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwProcessingprocessVo">
-        select id, processingTechnologyID, number, name, content, diagramURL, usedTooling, preparationHours, taktTime, laborCost, outsourcing,status from aw_processingprocess
+        SELECT
+        id,
+        processingTechnologyID,
+        number,
+        NAME,
+        content,
+        diagramURL,
+        usedTooling,
+        preparationHours,
+        taktTime,
+        laborCost,
+        outsourcing,
+        CASE STATUS
+        WHEN 0 THEN
+        "未发布"
+        WHEN 1 THEN
+        "发布"
+        WHEN 2 THEN
+        "生产中"
+        WHEN 3 THEN
+        "生产完成"
+        WHEN 4 THEN
+        "质检中"
+        WHEN 5 THEN
+        "生产合格"
+        WHEN 6 THEN
+        "生产不合格" ELSE "未知状态"
+        END  AS `status`
+        FROM
+        aw_processingprocess
     </sql>
 
     <select id="selectAwProcessingprocessList" parameterType="AwProcessingprocess" resultMap="AwProcessingprocessResult">

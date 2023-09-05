@@ -47,7 +47,11 @@
         <el-table-column label="准备工时" align="center" prop="preparationHours" />
         <el-table-column label="单件工时" align="center" prop="taktTime" />
         <el-table-column label="工时成本" align="center" prop="laborCost" />
-        <el-table-column label="工序外协" align="center" prop="outsourcing" />
+        <el-table-column label="工序外协" align="center" prop="outsourcing" >
+          <template slot-scope="scope">
+            {{ getValue(isoutsourced,scope.row.outsourcing) }}
+          </template>
+        </el-table-column>
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)">详细</el-button>
@@ -118,7 +122,14 @@
           <el-row :gutter="12">
             <el-col :span="12">
               <el-form-item label="状态">
-                <el-input v-model="form.status" placeholder="请输入状态" />
+                <el-select v-model="form.status" placeholder="请选择状态">
+                  <el-option
+                    v-for="item,index in state_options"
+                    :key="index"
+                    :label="item.value"
+                    :value="item.key"
+                  ></el-option>
+                </el-select>
               </el-form-item>
             </el-col>
           </el-row>
@@ -156,13 +167,11 @@
           <el-descriptions-item label="工序名称" :span="2">{{ view_form.name }}</el-descriptions-item>
           <el-descriptions-item label="状态">{{ view_form.status }}</el-descriptions-item>
           <el-descriptions-item label="所用工装">{{ view_form.usedTooling }}</el-descriptions-item>
-          <el-descriptions-item label="工序名称">{{ view_form.name }}</el-descriptions-item>
-          <el-descriptions-item label="所用工装">{{ view_form.usedTooling }}</el-descriptions-item>
 
           <el-descriptions-item label="准备工时">{{ view_form.preparationHours }}</el-descriptions-item>
           <el-descriptions-item label="单件工时">{{ view_form.taktTime }}</el-descriptions-item>
           <el-descriptions-item label="工时成本">{{ view_form.laborCost }}</el-descriptions-item>
-          <el-descriptions-item label="工序外协">{{ view_form.laborCost }}</el-descriptions-item>
+          <el-descriptions-item label="工序外协">{{ getValue(isoutsourced,view_form.outsourcing) }}</el-descriptions-item>
 
           <el-descriptions-item label="工序内容" :span="2"><div v-html="view_form.content"></div></el-descriptions-item>
           <el-descriptions-item label="产品图纸" :span="2">
@@ -183,7 +192,7 @@
 import { listProcessingprocess, getProcessingprocess, delProcessingprocess, addProcessingprocess, updateProcessingprocess } from "@/api/produce/processingprocess";
 import { getProcessingtechnology } from "@/api/produce/processingtechnology";
 import Craft from "./craft.vue";
-import { fileUpdate, fileDownload, fileDelete } from "@/api/file/file";
+import { fileUpdate, fileDownload, fileDelete,fileReturn } from "@/api/file/file";
 
 export default {
   name: "Processingprocess",
@@ -209,6 +218,16 @@ export default {
       open: false,
       // 是否显示详细信息
       view_open: false,
+       // 工序状态
+       state_options: [
+        { key: "0", value: "未发布" },
+        { key: "1", value: "发布" },
+        { key: "2", value: "生产中" },
+        { key: "3", value: "生产完成" },
+        { key: "4", value: "质检中" },
+        { key: "5", value: "生产合格" },
+        { key: "6", value: "生产不合格" }
+      ],
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -304,6 +323,7 @@ export default {
     /** 文件上传 */
     async fileUpdate() {
       let file_list = this.$refs.upload.uploadFiles;
+      console.log(file_list);
       let num = 0
       let formData = new FormData();
       for (num in file_list) {
@@ -379,14 +399,22 @@ export default {
       this.title = "添加加工工序信息";
     },
     /** 修改按钮操作 */
-    handleUpdate(row) {
+    async handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
-      getProcessingprocess(id).then(response => {
+      await getProcessingprocess(id).then(async response => {
         this.form = response.data;
+        let num = 0;
+        let urls = response.data.diagramURL.split(";");
+        urls.pop();
+        for (num in urls) {
+          let tmp_url = await fileDownload(urls[num]);
+          this.fileList.push({'url': tmp_url})
+        }
         this.open = true;
         this.title = "修改加工工序信息";
       });
+      console.log(this.$refs.upload.uploadFiles);
     },
     /** 提交按钮 */
     async submitForm() {
@@ -424,6 +452,16 @@ export default {
       this.download('produce/processingprocess/export', {
         ...this.queryParams
       }, `processingprocess_${new Date().getTime()}.xlsx`)
+    },
+    // 取出key对应的value
+    getValue(dict,key){
+      let num = 0
+      for(num in dict){
+        if(dict[num]["key"] == key){
+          return dict[num]["value"]
+        }
+      }
+      return "未知状态"
     }
   }
 };

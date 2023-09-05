@@ -16,6 +16,7 @@ export async function fileDownload(query) {
     responseType: 'blob'
 
   })
+  console.log(response);
   let blob = response
   let tmp_url = window.URL.createObjectURL(blob)
   return tmp_url
@@ -29,4 +30,3 @@ export function fileDelete(query) {
     params: query
   })
 }
-
