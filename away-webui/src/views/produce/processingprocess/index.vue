@@ -47,9 +47,9 @@
         <el-table-column label="准备工时" align="center" prop="preparationHours" />
         <el-table-column label="单件工时" align="center" prop="taktTime" />
         <el-table-column label="工时成本" align="center" prop="laborCost" />
-        <el-table-column label="工序外协" align="center" prop="outsourcing" >
+        <el-table-column label="工序外协" align="center" prop="outsourcing">
           <template slot-scope="scope">
-            {{ getValue(isoutsourced,scope.row.outsourcing) }}
+            {{ getValue(isoutsourced, scope.row.outsourcing) }}
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -68,6 +68,15 @@
 
       <!-- 添加或修改加工工序信息对话框 -->
       <el-dialog :title="title" :visible.sync="open" :close-on-click-modal="false" width="900px" append-to-body>
+        <el-row :gutter="12">
+          <el-col :span="12">
+            <el-select v-model="processtemplate" placeholder="模板工序">
+                  <el-option v-for="item, index in processtemplate_list" :key="index" :label="item.name" @click.native="setProcesstemplate(item)"
+                    :value="item.key"></el-option>
+                </el-select>
+          </el-col>
+        </el-row>
+
         <el-form ref="form" :model="form" :rules="rules" label-width="80px">
           <el-row :gutter="12">
             <el-col :span="12">
@@ -123,12 +132,8 @@
             <el-col :span="12">
               <el-form-item label="状态">
                 <el-select v-model="form.status" placeholder="请选择状态">
-                  <el-option
-                    v-for="item,index in state_options"
-                    :key="index"
-                    :label="item.value"
-                    :value="item.key"
-                  ></el-option>
+                  <el-option v-for="item, index in state_options" :key="index" :label="item.value"
+                    :value="item.key"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
@@ -143,8 +148,8 @@
           <el-row :gutter="12">
             <el-col :span="24">
               <el-form-item label="工序简图" prop="diagramURL">
-                <el-upload ref="upload" :file-list="fileList" action="String" :http-request="fileUpdate" :auto-upload="false"
-                  list-type="picture">
+                <el-upload ref="upload" :file-list="fileList" action="String" :http-request="fileUpdate"
+                  :auto-upload="false" list-type="picture">
                   <el-button size="small" type="primary">点击上传</el-button>
                   <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                 </el-upload>
@@ -171,9 +176,11 @@
           <el-descriptions-item label="准备工时">{{ view_form.preparationHours }}</el-descriptions-item>
           <el-descriptions-item label="单件工时">{{ view_form.taktTime }}</el-descriptions-item>
           <el-descriptions-item label="工时成本">{{ view_form.laborCost }}</el-descriptions-item>
-          <el-descriptions-item label="工序外协">{{ getValue(isoutsourced,view_form.outsourcing) }}</el-descriptions-item>
+          <el-descriptions-item label="工序外协">{{ getValue(isoutsourced, view_form.outsourcing) }}</el-descriptions-item>
 
-          <el-descriptions-item label="工序内容" :span="2"><div v-html="view_form.content"></div></el-descriptions-item>
+          <el-descriptions-item label="工序内容" :span="2">
+            <div v-html="view_form.content"></div>
+          </el-descriptions-item>
           <el-descriptions-item label="产品图纸" :span="2">
             <el-carousel :interval="4000" type="card" height="200px">
               <el-carousel-item v-for="item in view_form.files" :key="item">
@@ -190,9 +197,10 @@
 
 <script>
 import { listProcessingprocess, getProcessingprocess, delProcessingprocess, addProcessingprocess, updateProcessingprocess } from "@/api/produce/processingprocess";
+import { listProcesstemplate } from "@/api/produce/processtemplate";
 import { getProcessingtechnology } from "@/api/produce/processingtechnology";
 import Craft from "./craft.vue";
-import { fileUpdate, fileDownload, fileDelete,fileReturn } from "@/api/file/file";
+import { fileUpdate, fileDownload, fileDelete } from "@/api/file/file";
 
 export default {
   name: "Processingprocess",
@@ -218,8 +226,8 @@ export default {
       open: false,
       // 是否显示详细信息
       view_open: false,
-       // 工序状态
-       state_options: [
+      // 工序状态
+      state_options: [
         { key: "0", value: "未发布" },
         { key: "1", value: "发布" },
         { key: "2", value: "生产中" },
@@ -241,13 +249,13 @@ export default {
         preparationHours: null,
         taktTime: null,
         laborCost: null,
-        status:null,
+        status: null,
         outsourcing: null
       },
       // 表单参数
       form: {},
       // 预览表单
-      view_form:{},
+      view_form: {},
       // 表单校验
       rules: {
         processingTechnologyID: [
@@ -288,6 +296,11 @@ export default {
         { key: "0", value: "否" },
         { key: "1", value: "是" }
       ],
+      // 当前模板工序
+      processtemplate:null,
+      // 模板工序列表
+      processtemplate_list:[]
+
     };
   },
   components: {
@@ -320,6 +333,12 @@ export default {
         this.loading = false;
       });
     },
+    /** 查询模板工序列表 */
+    getListProcesstemplate(){
+      listProcesstemplate().then((response)=>{
+        this.processtemplate_list = response.rows;
+      })
+    },
     /** 文件上传 */
     async fileUpdate() {
       let file_list = this.$refs.upload.uploadFiles;
@@ -337,6 +356,19 @@ export default {
       let tmp = await fileDownload(file_name)
       this.view_form.files.push(tmp.getUrl());
     },
+    // 设置模板
+    async setProcesstemplate(processtemplate){
+      Object.keys(processtemplate).forEach((key)=>{
+        this.form[key] = processtemplate[key]
+      });
+      let num = 0;
+      let urls = processtemplate.diagramURL.split(";");
+      urls.pop();
+      for (num in urls) {
+        let tmp = await fileDownload(urls[num]);
+        this.fileList.push({ 'url': tmp.getUrl(), "raw": tmp.getFile() })
+      }
+    },
     // 取消按钮
     cancel() {
       this.open = false;
@@ -344,6 +376,7 @@ export default {
     },
     // 表单重置
     reset() {
+      this.processtemplate = null
       this.form = {
         id: null,
         processingTechnologyID: this.processingTechnologyID,
@@ -401,6 +434,7 @@ export default {
     /** 修改按钮操作 */
     async handleUpdate(row) {
       this.reset();
+      this.getListProcesstemplate();
       const id = row.id || this.ids
       await getProcessingprocess(id).then(async response => {
         this.form = response.data;
@@ -409,12 +443,11 @@ export default {
         urls.pop();
         for (num in urls) {
           let tmp = await fileDownload(urls[num]);
-          this.fileList.push({'url': tmp.getUrl(),"raw":tmp.getFile()})
+          this.fileList.push({ 'url': tmp.getUrl(), "raw": tmp.getFile() })
         }
         this.open = true;
         this.title = "修改加工工序信息";
       });
-      console.log(this.$refs.upload.uploadFiles);
     },
     /** 提交按钮 */
     async submitForm() {
@@ -454,10 +487,10 @@ export default {
       }, `processingprocess_${new Date().getTime()}.xlsx`)
     },
     // 取出key对应的value
-    getValue(dict,key){
+    getValue(dict, key) {
       let num = 0
-      for(num in dict){
-        if(dict[num]["key"] == key){
+      for (num in dict) {
+        if (dict[num]["key"] == key) {
           return dict[num]["value"]
         }
       }
