@@ -211,8 +211,8 @@ export default {
     },
     /** 文件下载 */
     async fileDown(file_name){
-      let tmp_url = await fileDownload(file_name)
-      this.view_form.files.push(tmp_url);
+      let tmp = await fileDownload(file_name)
+      this.view_form.files.push(tmp.getUrl());
     },
     // 取消按钮
     cancel() {
@@ -273,8 +273,15 @@ export default {
       this.reset();
       this.isadd = false;
       const id = row.id || this.ids
-      getContract(id).then(response => {
+      getContract(id).then(async response => {
         this.form = response.data;
+        let num = 0;
+        let urls = response.data.contractURL.split(";");
+        urls.pop();
+        for (num in urls) {
+          let tmp = await fileDownload(urls[num]);
+          this.fileList.push({'url': tmp.getUrl(),"raw":tmp.getFile()})
+        }
         this.open = true;
         this.title = "修改合同存储";
       });

@@ -35,7 +35,7 @@ export default {
   },
   data() {
     return {
-      title: '管理系统',
+      title: 'Away-MES',
       logo: logoImg
     }
   }

@@ -1,7 +1,7 @@
 {
   "name": "away",
   "version": "3.8.5",
-  "description": "away管理系统",
+  "description": "Away-MES",
   "author": "away",
   "license": "MIT",
   "scripts": {

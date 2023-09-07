@@ -124,13 +124,13 @@ export default {
     },
     /** 产品图纸下载 */
     async productFileDown(file_name) {
-      let tmp_url = await fileDownload(file_name);
-      this.view_form.productfiles.push(tmp_url);
+      let tmp = await fileDownload(file_name);
+      this.view_form.productfiles.push(tmp.getUrl());
     },
     /** 合同附件下载 */
     async customerFileDown(file_name) {
-      let tmp_url = await fileDownload(file_name);
-      this.view_form.contractfiles.push(tmp_url);
+      let tmp = await fileDownload(file_name);
+      this.view_form.contractfiles.push(tmp.getUrl());
     },
     /** 获取订单对应附加信息 */
     async getListAdditional(id) {

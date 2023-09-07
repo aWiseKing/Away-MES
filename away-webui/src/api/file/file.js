@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import FileDown from './FileDown'
 
 // 上传文件
 export function fileUpdate(query) {
@@ -9,17 +10,19 @@ export function fileUpdate(query) {
   })
 }
 // 下载文件
-export async function fileDownload(query) {
+export async function fileDownload(query,responseType="blob") {
   let response = await request({
     url: '/awise/file/download/' + query,
     method: 'get',
-    responseType: 'blob'
+    responseType: responseType
 
   })
-  console.log(response);
+
   let blob = response
+  let file = new File([blob],query)
   let tmp_url = window.URL.createObjectURL(blob)
-  return tmp_url
+  let file_down = new FileDown(tmp_url,file);
+  return file_down;
 }
 
 // 删除文件
@@ -30,3 +33,6 @@ export function fileDelete(query) {
     params: query
   })
 }
+
+
+

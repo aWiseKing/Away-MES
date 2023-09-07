@@ -133,7 +133,7 @@
         <!-- 第四行 材料是否客供 客供材料信息 -->
         <el-row :gutter="12">
           <el-col :span="12">
-            <el-form-item label-width="auto" label="材料是否客供" prop="iscustomersuppliedmaterials">
+            <el-form-item label-width="200" label="材料是否客供" prop="iscustomersuppliedmaterials">
               <el-radio-group v-model="form.iscustomersuppliedmaterials">
                 <el-radio v-for="item in iscustomersuppliedmaterials" :key="item.key" :label="item.key">{{ item.value
                 }}</el-radio>
@@ -141,7 +141,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item v-if="form.iscustomersuppliedmaterials == 1" label-width="auto" label="客供材料编号"
+            <el-form-item v-if="form.iscustomersuppliedmaterials == 1" label-width="200" label="客供材料编号"
               prop="customersuppliedmaterialsID">
               <el-select v-model="form.customersuppliedmaterialsID" placeholder="请选择客供材料">
                 <el-option v-for="item in customersuppliedmaterialss" :key="item.id"
@@ -196,17 +196,20 @@
         <div style="display: flex;flex-direction: column;justify-content:center;align-items: center;"><el-button
             v-if="additionals.length < 1" size="mini" type="primary" icon="el-icon-plus"
             @click="handleAddAdditional"></el-button></div>
-        <div style="display: flex;flex-direction: column;align-items: center;max-height: 200px;overflow-y: auto;" >
-          <el-form-item label-width="auto" :label="'附加信息' + (index + 1)" v-for="item, index in additionals" :key="index">
-            <el-row :gutter="10">
-              <el-col :span="6"><el-input maxlength="5" v-model="item.key" placeholder="字段名" /></el-col>
-              <el-col :span="6"><el-input maxlength="5" v-model="item.value" placeholder="值" /></el-col>
-              <el-col :span="6">
-                <el-button size="mini" type="text" icon="el-icon-plus" @click="handleAddAdditional">新增</el-button>
-                <el-button size="mini" type="text" icon="el-icon-minus"
-                  @click="headledDeladditional(index, item)">删除</el-button></el-col>
-            </el-row>
-          </el-form-item>
+        <div style="display: flex;flex-direction: column;align-items: center;max-height: 200px;overflow-y: auto;">
+          <div v-for="item, index in additionals" :key="index">
+            <el-form-item label-width="200" :label="'附加信息' + (index + 1)">
+              <el-row :gutter="10">
+                <el-col :span="6"><el-input maxlength="5" v-model="item.key" placeholder="字段名" /></el-col>
+                <el-col :span="6"><el-input maxlength="5" v-model="item.value" placeholder="值" /></el-col>
+                <el-col :span="6">
+                  <el-button size="mini" type="text" icon="el-icon-plus" @click="handleAddAdditional">新增</el-button>
+                  <el-button size="mini" type="text" icon="el-icon-minus"
+                    @click="headledDeladditional(index, item)">删除</el-button></el-col>
+              </el-row>
+            </el-form-item>
+          </div>
+
         </div>
 
       </el-form>
@@ -371,13 +374,13 @@ export default {
     },
     /** 产品图纸下载 */
     async productFileDown(file_name) {
-      let tmp_url = await fileDownload(file_name);
-      this.view_form.productfiles.push(tmp_url);
+      let tmp = await fileDownload(file_name);
+      this.view_form.productfiles.push(tmp.getUrl());
     },
     /** 合同附件下载 */
     async customerFileDown(file_name) {
-      let tmp_url = await fileDownload(file_name);
-      this.view_form.contractfiles.push(tmp_url);
+      let tmp = await fileDownload(file_name);
+      this.view_form.contractfiles.push(tmp.getUrl());
     },
     /** 获取订单对应附加信息 */
     async getListAdditional(id) {
