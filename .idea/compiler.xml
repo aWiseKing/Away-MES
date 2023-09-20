@@ -6,18 +6,19 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="awise-order" />
-        <module name="away-system" />
         <module name="awise-comprehensive" />
-        <module name="away-common" />
+        <module name="awise-qrcode" />
         <module name="away-admin" />
         <module name="away-quartz" />
         <module name="away-generator" />
-        <module name="awise-storage" />
         <module name="awise-file" />
-        <module name="awise-produce" />
         <module name="awise-finance" />
         <module name="away-framework" />
+        <module name="awise-order" />
+        <module name="away-system" />
+        <module name="away-common" />
+        <module name="awise-storage" />
+        <module name="awise-produce" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -33,6 +34,7 @@
       <module name="awise-finance" target="1.8" />
       <module name="awise-order" target="1.8" />
       <module name="awise-produce" target="1.8" />
+      <module name="awise-qrcode" target="1.8" />
       <module name="awise-storage" target="1.8" />
       <module name="ruoyi" target="1.8" />
     </bytecodeTargetLevel>

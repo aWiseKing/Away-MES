@@ -84,6 +84,11 @@
             <groupId>com.away</groupId>
             <artifactId>awise-file</artifactId>
         </dependency>
+        <!-- 二维码管理 -->
+        <dependency>
+            <groupId>com.away</groupId>
+            <artifactId>awise-qrcode</artifactId>
+        </dependency>
 
     </dependencies>
 

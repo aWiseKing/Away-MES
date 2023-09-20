@@ -129,3 +129,11 @@ xss:
   excludes: /system/notice
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+
+# 配置二维码部分
+qrcode:
+  url: xxxx
+  size: 48
+  filepath: f:/file/
+  multiple: 30
+  filetype: png

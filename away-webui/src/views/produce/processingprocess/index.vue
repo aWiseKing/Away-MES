@@ -55,6 +55,15 @@
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)">详细</el-button>
+            <el-popover
+              placement="top-start"
+              width="130"
+              trigger="click"
+              >
+              <el-Image style="width: 120px;height: 120px;" :src="qrcode" :preview-src-list="[qrcode]"></el-Image>
+              <el-button slot="reference" size="mini" type="text" icon="el-icon-share" @click="getProcessingProcessQrcode(scope.row)">二维码</el-button>
+            </el-popover>
+
             <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
               v-hasPermi="['produce:processingprocess:edit']">修改</el-button>
             <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
@@ -191,6 +200,7 @@
           </el-descriptions-item>
         </el-descriptions>
       </el-dialog>
+
     </div>
   </div>
 </template>
@@ -199,6 +209,7 @@
 import { listProcessingprocess, getProcessingprocess, delProcessingprocess, addProcessingprocess, updateProcessingprocess } from "@/api/produce/processingprocess";
 import { listProcesstemplate } from "@/api/produce/processtemplate";
 import { getProcessingtechnology } from "@/api/produce/processingtechnology";
+import { getProcessingProcessQrcode } from "@/api/qrcode/qrcode";
 import Craft from "./craft.vue";
 import { fileUpdate, fileDownload, fileDelete } from "@/api/file/file";
 
@@ -299,7 +310,9 @@ export default {
       // 当前模板工序
       processtemplate:null,
       // 模板工序列表
-      processtemplate_list:[]
+      processtemplate_list:[],
+      // 二维码
+      qrcode:null
 
     };
   },
@@ -337,6 +350,14 @@ export default {
     getListProcesstemplate(){
       listProcesstemplate().then((response)=>{
         this.processtemplate_list = response.rows;
+      })
+    },
+    /** 获取工序对应二维码 */
+    getProcessingProcessQrcode(row){
+      console.log(row);
+      getProcessingProcessQrcode({"processingprocessID":row.id}).then(async response => {
+        let tmp = await fileDownload(response.date);
+        this.qrcode = tmp.getUrl()
       })
     },
     /** 文件上传 */
@@ -427,6 +448,7 @@ export default {
     },
     /** 新增按钮操作 */
     handleAdd() {
+      this.getListProcesstemplate();
       this.reset();
       this.open = true;
       this.title = "添加加工工序信息";
