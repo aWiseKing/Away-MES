@@ -38,7 +38,7 @@
         FROM
         aw_city
         GROUP BY
-        city
+        economize,city
         ) citys
         GROUP BY
         economize

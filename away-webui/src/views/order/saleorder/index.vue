@@ -502,62 +502,69 @@ export default {
     },
     /** 提交按钮 */
     async submitForm() {
-      let saleorderID;
-      this.$refs["form"].validate(async valid => {
+      let saleorderID = null;
+      await this.$refs["form"].validate(async valid => {
         if (valid) {
           if (this.form.id != null) {
             saleorderID = this.form.id;
-            await updateSaleorder(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
+            await updateSaleorder(this.form)
+            this.$modal.msgSuccess("修改成功");
+            this.open = false;
+            this.getList();
           } else {
-            await addSaleorder(this.form).then(response => {
-              saleorderID = response.id;
-              this.$modal.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
+            let response = await addSaleorder(this.form)
+            saleorderID = response.id;
+            this.$modal.msgSuccess("新增成功");
+            this.open = false;
+            this.getList();
           }
+          // 插入或更新附加信息
+          if (saleorderID == null) {
+            }
+          else {
+            if (this.additionals.length > 0) {
+              let tmp_additional_add_form = [];
+              let tmp_additional_update_form = [];
+              let num = 0;
+              // 区分是需要更新还是需要新增
+              for (num in this.additionals) {
+                if (this.additionals[num].id != null) {
+                  tmp_additional_update_form.push(this.additionals[num]);
+                } else if (this.additionals.id == null) {
+                  let tmp = this.additionals[num]
+                  tmp["saleorderID"] = saleorderID;
+                  tmp_additional_add_form.push(tmp);
+                }
+              };
+              // 新增信息
+              if (tmp_additional_add_form.length > 0) {
+
+                let num = 0;
+                for (num in tmp_additional_add_form) {
+                  let response = await addAdditional(tmp_additional_add_form[num]);
+                }
+              }
+              // 更新信息
+              if (tmp_additional_update_form.length > 0) {
+                let num = 0;
+                for (num in tmp_additional_update_form) {
+                  let response = await updateAdditional(tmp_additional_update_form[num]);
+                }
+              }
+              if (this.del_additionals.length > 0) {
+                let num;
+                for (num in this.del_additionals) {
+                  let response = await delAdditional(this.del_additionals[num])
+                }
+              }
+
+            }
+          }
+
+
         }
       });
-      // 插入或更新附加信息
-      if (this.additionals.length > 0) {
-        let tmp_additional_add_form = [];
-        let tmp_additional_update_form = [];
-        let num = 0;
-        for (num in this.additionals) {
-          if (this.additionals[num].id != null) {
-            tmp_additional_update_form.push(this.additionals[num]);
-          } else if (this.additionals.id == null) {
-            let tmp = this.additionals[num]
-            tmp["saleorderID"] = saleorderID;
-            tmp_additional_add_form.push(tmp);
-          }
-        };
 
-        if (tmp_additional_add_form.length > 0) {
-
-          let num = 0;
-          for (num in tmp_additional_add_form) {
-            let response = await addAdditional(tmp_additional_add_form[num]);
-          }
-        }
-        if (tmp_additional_update_form.length > 0) {
-          let num = 0;
-          for (num in tmp_additional_update_form) {
-            let response = await updateAdditional(tmp_additional_update_form[num]);
-          }
-        }
-        if (this.del_additionals.length > 0) {
-          let num;
-          for (num in this.del_additionals) {
-            let response = await delAdditional(this.del_additionals[num])
-          }
-        }
-
-      }
     },
     /** 删除按钮操作 */
     async handleDelete(row) {

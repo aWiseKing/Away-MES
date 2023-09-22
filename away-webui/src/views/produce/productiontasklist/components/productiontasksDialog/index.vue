@@ -54,8 +54,8 @@
       </el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button v-if="scope.row.id != null" type="text" size="mini" icon="el-icon-view" @click="jumpDetailPage(scope.row)">详细</el-button>
-          <el-button type="text" size="mini" icon="el-icon-plus" @click="handleAddProductiontasks()">新增</el-button>
+          <el-button v-if="scope.row.id != null && scope.row.status == '1'" type="text" size="mini" icon="el-icon-view" @click="jumpDetailPage(scope.row)">详细</el-button>
+          <el-button type="text" size="mini" icon="el-icon-plus" @click="handleAddProductiontasks()">{{ scope.row.state }}新增</el-button>
           <el-button type="text" size="mini" icon="el-icon-minus" @click="handleRemoveProductiontasks(scope.$index,scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -68,7 +68,6 @@
 <script>
 import { listSaleorder } from "@/api/order/saleorder";
 import { listProductiontasks, delProductiontasks, addProductiontasks, updateProductiontasks } from "@/api/produce/productiontasks";
-import { listProcessingtechnology, getProcessingtechnology, delProcessingtechnology, addProcessingtechnology, updateProcessingtechnology } from "@/api/produce/processingtechnology";
 
 export default {
   name:"ProductiontasksDialog",
@@ -111,8 +110,9 @@ export default {
     /** 查询销售订单列表 */
     getListSaleorder(){
       this.loading = true;
-      listSaleorder({status:1}).then(response => {
+      listSaleorder({state:"1"}).then(response => {
         this.saleorder_list = response.rows;
+        console.log(this.saleorder_list);
         this.loading = false;
       })
     },
@@ -129,7 +129,7 @@ export default {
           for(num in this.productiontasks_list){
             let tmp_productiontasks = this.productiontasks_list[num];
             if(tmp_productiontasks.saleOrderID==null){
-              continue; 
+              continue;
             }
             if(tmp_productiontasks.id == null){
               tmp_productiontasks.productionTasksFormID = this.produceformid

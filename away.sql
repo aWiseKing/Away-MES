@@ -11,7 +11,7 @@
  Target Server Version : 50731
  File Encoding         : 65001
 
- Date: 05/09/2023 15:49:40
+ Date: 22/09/2023 10:31:25
 */
 
 SET NAMES utf8mb4;
@@ -29,13 +29,22 @@ CREATE TABLE `aw_additional`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_contacts_aw_saleorder_1`(`saleorderID`) USING BTREE,
   CONSTRAINT `aw_additional_ibfk_1` FOREIGN KEY (`saleorderID`) REFERENCES `aw_saleorder` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单附加信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单附加信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of aw_additional
 -- ----------------------------
 INSERT INTO `aw_additional` VALUES (1, '20230816605285972', '为', '发生的');
 INSERT INTO `aw_additional` VALUES (2, '20230816605285972', '大叔', '第三方');
+INSERT INTO `aw_additional` VALUES (3, '20230921312275685', 'fas', 'dsfs');
+INSERT INTO `aw_additional` VALUES (4, '20230921312275685', 'dsfsd', 'sdfsf');
+INSERT INTO `aw_additional` VALUES (5, '202309211017121338', 'fdfd', 'dfdf');
+INSERT INTO `aw_additional` VALUES (6, '202309211017121338', 'gfgf', 'fgfg');
+INSERT INTO `aw_additional` VALUES (7, '202309211017121338', 'sfs', 'fds');
+INSERT INTO `aw_additional` VALUES (8, '202309212071604568', '12', '123');
+INSERT INTO `aw_additional` VALUES (9, '202309212071604568', 'dsfa', 'sdafa');
+INSERT INTO `aw_additional` VALUES (10, '20230921531147933', '12312', '21312');
+INSERT INTO `aw_additional` VALUES (11, '20230921531147933', '32131', '12asd');
 
 -- ----------------------------
 -- Table structure for aw_city
@@ -2944,6 +2953,7 @@ CREATE TABLE `aw_contract`  (
 -- ----------------------------
 -- Records of aw_contract
 -- ----------------------------
+INSERT INTO `aw_contract` VALUES ('2131231', '123123', '1732183311.jpg;842358149.png;');
 INSERT INTO `aw_contract` VALUES ('测试合同变化001', '120000000', '1890866420.png;');
 
 -- ----------------------------
@@ -3087,17 +3097,18 @@ CREATE TABLE `aw_processingprocess`  (
   `taktTime` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '单件工时',
   `laborCost` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '工时成本',
   `outsourcing` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '工序外协#0为不外协1为外协#',
-  `status` varchar(4) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `status` varchar(4) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '状态',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_加工工序信息表_加工工艺信息表_1`(`processingTechnologyID`) USING BTREE,
   CONSTRAINT `aw_processingprocess_ibfk_1` FOREIGN KEY (`processingTechnologyID`) REFERENCES `aw_processingtechnology` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '加工工序信息表\r\n存储加工过程中每道工序的情况' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '加工工序信息表\r\n存储加工过程中每道工序的情况' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of aw_processingprocess
 -- ----------------------------
-INSERT INTO `aw_processingprocess` VALUES (1, '测试一下', 0, '测试', '<p>撒旦法盛大发的是</p>', '65124900.png;132001408.gif;', '1', '21', '12', '32', '1', '0');
+INSERT INTO `aw_processingprocess` VALUES (1, '测试一下', 0, '测试', '<p>撒旦法盛大发的是</p>', '699926833.png;1962333699.jpg;', '1', '21', '12', '32', '1', '未发布');
 INSERT INTO `aw_processingprocess` VALUES (2, '测试一下', 1, '3123', '<p><img src=\"/dev-api/profile/upload/2023/09/05/？？？_20230905124628A004.jpg\">是发大水发</p>', '1480249315.png;', '1', '1', '1', '1', '0', '0');
+INSERT INTO `aw_processingprocess` VALUES (3, '2131', 0, '打磨', '<p><img src=\"/dev-api/profile/upload/2023/09/05/？？？_20230905202054A001.jpg\">法师打发撒旦法</p>', '60665087.png;', '测试', '10', '10', '320', '1', '发布');
 
 -- ----------------------------
 -- Table structure for aw_processingtechnology
@@ -3118,6 +3129,7 @@ CREATE TABLE `aw_processingtechnology`  (
 -- ----------------------------
 -- Records of aw_processingtechnology
 -- ----------------------------
+INSERT INTO `aw_processingtechnology` VALUES ('2131', 5, '2023-09-05', 'admin', NULL, NULL);
 INSERT INTO `aw_processingtechnology` VALUES ('311', 3, '2023-08-30', 'admin', NULL, NULL);
 INSERT INTO `aw_processingtechnology` VALUES ('测试一下', 1, '2023-08-30', 'admin', NULL, NULL);
 
@@ -3126,20 +3138,22 @@ INSERT INTO `aw_processingtechnology` VALUES ('测试一下', 1, '2023-08-30', '
 -- ----------------------------
 DROP TABLE IF EXISTS `aw_processtemplate`;
 CREATE TABLE `aw_processtemplate`  (
-  `id` int(11) NOT NULL COMMENT '工序id',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '工序编号',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '工序名称',
-  `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工序内容',
-  `processDiagramURL` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工艺简图URL地址',
-  `usedTooling` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所用工装',
-  `preparationHours` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '准备工时',
-  `taktTime` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '单件工时',
-  `laborCost` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工时成本',
-  PRIMARY KEY (`id`, `name`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '工序模板信息表' ROW_FORMAT = Dynamic;
+  `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '工序内容',
+  `diagramURL` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工序简图URL',
+  `usedTooling` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '所用工装',
+  `preparationHours` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '准备工时',
+  `taktTime` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '单件工时',
+  `laborCost` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '工时成本',
+  `outsourcing` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '工序外协#0为不外协1为外协#',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '工序模板信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of aw_processtemplate
 -- ----------------------------
+INSERT INTO `aw_processtemplate` VALUES (1, '打磨', '<p>三大法师法</p>', '1899315738.jpg;', '123', '1231', '123', '123', '0');
 
 -- ----------------------------
 -- Table structure for aw_product
@@ -3168,13 +3182,14 @@ CREATE TABLE `aw_productiontasklist`  (
   `notes` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注信息',
   `status` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '状态',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '生产任务单' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '生产任务单' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of aw_productiontasklist
 -- ----------------------------
 INSERT INTO `aw_productiontasklist` VALUES (1, 'admin', '2023-08-18', NULL, '0');
 INSERT INTO `aw_productiontasklist` VALUES (2, 'admin', '2023-08-30', NULL, '0');
+INSERT INTO `aw_productiontasklist` VALUES (3, 'admin', '2023-09-05', NULL, '0');
 
 -- ----------------------------
 -- Table structure for aw_productiontasks
@@ -3193,15 +3208,57 @@ CREATE TABLE `aw_productiontasks`  (
   INDEX `fk_aw_Production tasks_aw_saleorder_1`(`saleOrderID`) USING BTREE,
   CONSTRAINT `aw_productiontasks_ibfk_1` FOREIGN KEY (`productionTasksFormID`) REFERENCES `aw_productiontasklist` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `aw_productiontasks_ibfk_2` FOREIGN KEY (`saleOrderID`) REFERENCES `aw_saleorder` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of aw_productiontasks
 -- ----------------------------
-INSERT INTO `aw_productiontasks` VALUES (1, 1, 0, '20230816605285972', '0', '0', NULL);
-INSERT INTO `aw_productiontasks` VALUES (2, 1, 1, '20230816605285972', '0', '0', NULL);
-INSERT INTO `aw_productiontasks` VALUES (3, 2, 0, '20230816605285972', '0', '0', NULL);
+INSERT INTO `aw_productiontasks` VALUES (1, 1, 0, '202308301864140539', '0', '1', NULL);
+INSERT INTO `aw_productiontasks` VALUES (2, 1, 1, '202308301864140539', '0', '0', NULL);
+INSERT INTO `aw_productiontasks` VALUES (3, 2, 0, '202308301864140539', '0', '0', NULL);
 INSERT INTO `aw_productiontasks` VALUES (4, 2, 1, '202308301864140539', '0', '0', NULL);
+INSERT INTO `aw_productiontasks` VALUES (5, 3, 0, '202308301864140539', '0', '0', NULL);
+INSERT INTO `aw_productiontasks` VALUES (6, 3, 1, '202308301864140539', '0', '0', NULL);
+INSERT INTO `aw_productiontasks` VALUES (7, 3, 2, '202308301864140539', '0', '0', NULL);
+
+-- ----------------------------
+-- Table structure for aw_qrcode
+-- ----------------------------
+DROP TABLE IF EXISTS `aw_qrcode`;
+CREATE TABLE `aw_qrcode`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '二维码唯一标识符',
+  `fileurl` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '文件地址',
+  `processingprocessID` int(255) NOT NULL COMMENT '工序对应编号',
+  `createTime` datetime NOT NULL COMMENT '创建时间',
+  `effectiveDuration` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '有效时长',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `fk_aw_qrcode_aw_processingprocess_1`(`processingprocessID`) USING BTREE,
+  CONSTRAINT `fk_aw_qrcode_aw_processingprocess_1` FOREIGN KEY (`processingprocessID`) REFERENCES `aw_processingprocess` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of aw_qrcode
+-- ----------------------------
+INSERT INTO `aw_qrcode` VALUES (5, '67037656-62de-4ad7-bdf6-38c53f65a409.png', 1, '2023-09-20 11:55:10', '10');
+INSERT INTO `aw_qrcode` VALUES (6, 'd9463240-f45d-4ff2-b887-b7d00ed1170c.png', 1, '2023-09-20 11:55:10', '10');
+INSERT INTO `aw_qrcode` VALUES (7, 'b6cf674c-645f-4ee1-94a6-b5b0e16b76d4.png', 1, '2023-09-20 11:56:14', '10');
+INSERT INTO `aw_qrcode` VALUES (8, 'c2af2008-5c8b-42ce-8d24-2ba98a206a97.png', 1, '2023-09-20 11:56:17', '10');
+INSERT INTO `aw_qrcode` VALUES (9, 'aa61db0b-95e8-4790-b7cf-560bb9593d82.png', 2, '2023-09-20 11:56:19', '10');
+INSERT INTO `aw_qrcode` VALUES (10, '7b202ad1-4463-4796-94cb-3a61ed582be3.png', 2, '2023-09-20 11:56:19', '10');
+INSERT INTO `aw_qrcode` VALUES (11, 'a7177635-0df7-4439-8abc-ae78bcfa6c55.png', 1, '2023-09-20 11:56:22', '10');
+INSERT INTO `aw_qrcode` VALUES (12, '75b137b4-c185-40e5-bf11-fe2c87e598aa.png', 1, '2023-09-20 11:58:45', '10');
+INSERT INTO `aw_qrcode` VALUES (13, '1cfd0b09-6a17-4f6c-970e-02d10f30a529.png', 1, '2023-09-20 11:59:10', '10');
+INSERT INTO `aw_qrcode` VALUES (14, 'bebbb74a-9761-4123-b032-0f7a9433553f.png', 2, '2023-09-20 11:59:15', '10');
+INSERT INTO `aw_qrcode` VALUES (15, '94dd5efe-340f-4350-abff-7a062cf95760.png', 1, '2023-09-20 12:00:25', '10');
+INSERT INTO `aw_qrcode` VALUES (16, '2303f113-363a-4f31-b2e9-54778361a8c7.png', 2, '2023-09-20 12:00:27', '10');
+INSERT INTO `aw_qrcode` VALUES (17, 'caeef9c4-1684-4c2e-bf30-311f5eb4e51b.png', 1, '2023-09-20 12:01:19', '10');
+INSERT INTO `aw_qrcode` VALUES (18, 'a03b1e72-d8d6-42ba-8dde-df01792bbec2.png', 2, '2023-09-20 12:01:21', '10');
+INSERT INTO `aw_qrcode` VALUES (19, '05e24c60-cdcb-4dd2-a6e6-8945bcbef380.png', 1, '2023-09-20 12:01:36', '10');
+INSERT INTO `aw_qrcode` VALUES (20, 'b4096fd9-1603-4b57-ae10-4d72fee33c4d.png', 2, '2023-09-20 12:01:38', '10');
+INSERT INTO `aw_qrcode` VALUES (21, 'd88a1735-204a-41bc-b516-c11d53cae841.png', 1, '2023-09-20 12:02:36', '10');
+INSERT INTO `aw_qrcode` VALUES (22, '6cddc8a1-51b5-474c-a341-e103e627a175.png', 1, '2023-09-20 12:02:46', '10');
+INSERT INTO `aw_qrcode` VALUES (23, '8766e84d-3dd8-4915-b569-0a0bb33f9ee9.png', 1, '2023-09-20 12:02:52', '10');
+INSERT INTO `aw_qrcode` VALUES (24, 'af4557c0-2cdf-4b81-9467-0ff8f05e8702.png', 2, '2023-09-20 12:02:55', '10');
 
 -- ----------------------------
 -- Table structure for aw_saleorder
@@ -3239,6 +3296,11 @@ CREATE TABLE `aw_saleorder`  (
 -- ----------------------------
 INSERT INTO `aw_saleorder` VALUES ('20230816605285972', '2023-08-16', 'admin', '2023-08-23', 10000, '2023-08-16', '测试客户编号001', '测试产品变化001', '测试合同变化001', NULL, 0, NULL, '0', NULL, '0');
 INSERT INTO `aw_saleorder` VALUES ('202308301864140539', '2023-08-30', 'admin', '2023-08-30', 1000, '2023-08-30', '测试客户编号001', '测试产品变化001', '测试合同变化001', NULL, 0, NULL, '1', NULL, '0');
+INSERT INTO `aw_saleorder` VALUES ('202309052040771397', '2023-09-05', 'admin', '2023-09-13', 101000, '2023-09-12', '测试客户编号001', '测试产品变化001', NULL, NULL, 0, NULL, '0', NULL, '0');
+INSERT INTO `aw_saleorder` VALUES ('202309211017121338', '2023-09-21', 'admin', '2023-09-28', 1231, '2023-09-28', '测试客户编号001', '测试产品变化001', NULL, NULL, 0, NULL, '0', NULL, '0');
+INSERT INTO `aw_saleorder` VALUES ('202309212071604568', '2023-09-21', 'admin', '2023-09-04', 12, '2023-09-27', '测试客户编号001', '测试产品变化001', NULL, NULL, 0, NULL, '0', NULL, '0');
+INSERT INTO `aw_saleorder` VALUES ('20230921312275685', '2023-09-21', 'admin', '2023-09-20', 10, '2023-09-26', '测试客户编号001', '测试产品变化001', NULL, NULL, 0, NULL, '0', NULL, '0');
+INSERT INTO `aw_saleorder` VALUES ('20230921531147933', '2023-09-21', 'admin', '2023-09-06', 10, '2023-09-20', '测试客户编号001', '测试产品变化001', NULL, NULL, 0, NULL, '0', NULL, '0');
 
 -- ----------------------------
 -- Table structure for aw_specifications
@@ -3337,7 +3399,7 @@ CREATE TABLE `gen_table`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`table_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '代码生成业务表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '代码生成业务表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of gen_table
@@ -3362,7 +3424,8 @@ INSERT INTO `gen_table` VALUES (26, 'aw_productiontasks', '生产任务', NULL, 
 INSERT INTO `gen_table` VALUES (27, 'aw_contacts', '联系人信息表\r\n存储合作方的联系人的联系信息\r\n存储  联系人姓名，电话，部门，职位', NULL, NULL, 'AwContacts', 'crud', 'com.ruoyi.system', 'system', 'contacts', '联系人信息\r\n存储合作方的联系人的联系信息\r\n存储  联系人姓名，电话，部门，职位', 'ruoyi', '0', '/', NULL, 'admin', '2023-08-18 11:58:12', '', NULL, NULL);
 INSERT INTO `gen_table` VALUES (28, 'aw_processingprocess', '加工工序信息', NULL, NULL, 'AwProcessingprocess', 'crud', 'com.awise.produce', 'produce', 'processingprocess', '加工工序信息\r\n存储加工过程中每道工序的情况', 'awise', '0', '/', '{\"parentMenuId\":2029}', 'admin', '2023-08-18 11:58:12', '', '2023-08-18 11:59:49', NULL);
 INSERT INTO `gen_table` VALUES (29, 'aw_processingtechnology', '加工工艺信息', NULL, NULL, 'AwProcessingtechnology', 'crud', 'com.awise.produce', 'produce', 'processingtechnology', '加工工艺信息', 'awise', '0', '/', '{\"parentMenuId\":2029}', 'admin', '2023-08-18 11:58:12', '', '2023-08-21 10:38:35', NULL);
-INSERT INTO `gen_table` VALUES (30, 'aw_processtemplate', '工序模板信息表', NULL, NULL, 'AwProcesstemplate', 'crud', 'com.ruoyi.system', 'system', 'processtemplate', '工序模板信息', 'ruoyi', '0', '/', NULL, 'admin', '2023-08-18 11:58:12', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (30, 'aw_processtemplate', '工序模板', NULL, NULL, 'AwProcesstemplate', 'crud', 'com.awise.produce', 'produce', 'processtemplate', '工序模板', 'awise', '0', '/', '{\"parentMenuId\":2029}', 'admin', '2023-08-18 11:58:12', '', '2023-09-07 17:41:52', NULL);
+INSERT INTO `gen_table` VALUES (31, 'aw_qrcode', '二维码', NULL, NULL, 'AwQrcode', 'crud', 'com.awise.qrcode', 'qrcode', 'qrcode', '二维码', 'awise', '0', '/', '{}', 'admin', '2023-09-18 02:27:58', '', '2023-09-18 02:29:03', NULL);
 
 -- ----------------------------
 -- Table structure for gen_table_column
@@ -3392,7 +3455,7 @@ CREATE TABLE `gen_table_column`  (
   `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`column_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 229 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 237 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of gen_table_column
@@ -3514,14 +3577,20 @@ INSERT INTO `gen_table_column` VALUES (217, '29', 'createTime', '创建日期', 
 INSERT INTO `gen_table_column` VALUES (218, '29', 'founder', '创建人', 'varchar(255)', 'String', 'founder', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2023-08-18 11:58:12', '', '2023-08-21 10:38:35');
 INSERT INTO `gen_table_column` VALUES (219, '29', 'cuttingSize', '下料尺寸', 'float', 'Long', 'cuttingSize', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-08-18 11:58:12', '', '2023-08-21 10:38:35');
 INSERT INTO `gen_table_column` VALUES (220, '29', 'numberProducibleParts', '可制件数', 'varchar(255)', 'String', 'numberProducibleParts', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2023-08-18 11:58:12', '', '2023-08-21 10:38:35');
-INSERT INTO `gen_table_column` VALUES (221, '30', 'id', '工序id', 'int(11)', 'Long', 'id', '1', '0', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-08-18 11:58:12', '', NULL);
-INSERT INTO `gen_table_column` VALUES (222, '30', 'name', '工序名称', 'varchar(255)', 'String', 'name', '1', '0', NULL, '1', NULL, NULL, NULL, 'LIKE', 'input', '', 2, 'admin', '2023-08-18 11:58:12', '', NULL);
-INSERT INTO `gen_table_column` VALUES (223, '30', 'content', '工序内容', 'varchar(255)', 'String', 'content', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'editor', '', 3, 'admin', '2023-08-18 11:58:12', '', NULL);
-INSERT INTO `gen_table_column` VALUES (224, '30', 'processDiagramURL', '工艺简图URL地址', 'varchar(255)', 'String', 'processDiagramURL', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2023-08-18 11:58:12', '', NULL);
-INSERT INTO `gen_table_column` VALUES (225, '30', 'usedTooling', '所用工装', 'varchar(255)', 'String', 'usedTooling', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-08-18 11:58:12', '', NULL);
-INSERT INTO `gen_table_column` VALUES (226, '30', 'preparationHours', '准备工时', 'varchar(255)', 'String', 'preparationHours', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2023-08-18 11:58:12', '', NULL);
-INSERT INTO `gen_table_column` VALUES (227, '30', 'taktTime', '单件工时', 'varchar(255)', 'String', 'taktTime', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 7, 'admin', '2023-08-18 11:58:12', '', NULL);
-INSERT INTO `gen_table_column` VALUES (228, '30', 'laborCost', '工时成本', 'varchar(255)', 'String', 'laborCost', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 8, 'admin', '2023-08-18 11:58:12', '', NULL);
+INSERT INTO `gen_table_column` VALUES (221, '30', 'id', '工序编号', 'int(11)', 'Long', 'id', '1', '0', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-08-18 11:58:12', '', '2023-09-07 17:41:52');
+INSERT INTO `gen_table_column` VALUES (222, '30', 'name', '工序名称', 'varchar(255)', 'String', 'name', '1', '0', '1', '1', '1', '1', '1', 'LIKE', 'input', '', 2, 'admin', '2023-08-18 11:58:12', '', '2023-09-07 17:41:52');
+INSERT INTO `gen_table_column` VALUES (223, '30', 'content', '工序内容', 'varchar(255)', 'String', 'content', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'editor', '', 3, 'admin', '2023-08-18 11:58:12', '', '2023-09-07 17:41:52');
+INSERT INTO `gen_table_column` VALUES (225, '30', 'usedTooling', '所用工装', 'varchar(255)', 'String', 'usedTooling', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-08-18 11:58:12', '', '2023-09-07 17:41:52');
+INSERT INTO `gen_table_column` VALUES (226, '30', 'preparationHours', '准备工时', 'varchar(255)', 'String', 'preparationHours', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2023-08-18 11:58:12', '', '2023-09-07 17:41:52');
+INSERT INTO `gen_table_column` VALUES (227, '30', 'taktTime', '单件工时', 'varchar(255)', 'String', 'taktTime', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 7, 'admin', '2023-08-18 11:58:12', '', '2023-09-07 17:41:52');
+INSERT INTO `gen_table_column` VALUES (228, '30', 'laborCost', '工时成本', 'varchar(255)', 'String', 'laborCost', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 8, 'admin', '2023-08-18 11:58:12', '', '2023-09-07 17:41:52');
+INSERT INTO `gen_table_column` VALUES (230, '30', 'diagramURL', '工序简图URL', 'varchar(255)', 'String', 'diagramURL', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 4, '', '2023-09-07 17:40:01', '', '2023-09-07 17:41:52');
+INSERT INTO `gen_table_column` VALUES (231, '30', 'outsourcing', '工序外协', 'varchar(3)', 'String', 'outsourcing', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 9, '', '2023-09-07 17:40:01', '', '2023-09-07 17:41:52');
+INSERT INTO `gen_table_column` VALUES (232, '31', 'id', '二维码唯一标识符', 'int(11)', 'Long', 'id', '1', '0', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-09-18 02:27:58', '', '2023-09-18 02:29:03');
+INSERT INTO `gen_table_column` VALUES (233, '31', 'fileurl', '文件地址', 'varchar(255)', 'String', 'fileurl', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2023-09-18 02:27:58', '', '2023-09-18 02:29:03');
+INSERT INTO `gen_table_column` VALUES (234, '31', 'processingprocessID', '工序对应编号', 'int(255)', 'Long', 'processingprocessID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-09-18 02:27:58', '', '2023-09-18 02:29:03');
+INSERT INTO `gen_table_column` VALUES (235, '31', 'createTime', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'datetime', '', 4, 'admin', '2023-09-18 02:27:58', '', '2023-09-18 02:29:03');
+INSERT INTO `gen_table_column` VALUES (236, '31', 'effectiveDuration', '有效时长', 'varchar(255)', 'String', 'effectiveDuration', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-09-18 02:27:58', '', '2023-09-18 02:29:03');
 
 -- ----------------------------
 -- Table structure for qrtz_blob_triggers
@@ -3965,7 +4034,7 @@ CREATE TABLE `sys_logininfor`  (
   PRIMARY KEY (`info_id`) USING BTREE,
   INDEX `idx_sys_logininfor_s`(`status`) USING BTREE,
   INDEX `idx_sys_logininfor_lt`(`login_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 292 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 323 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -4162,6 +4231,37 @@ INSERT INTO `sys_logininfor` VALUES (288, 'admin', '127.0.0.1', '内网IP', 'Chr
 INSERT INTO `sys_logininfor` VALUES (289, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-05 12:38:28');
 INSERT INTO `sys_logininfor` VALUES (290, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '验证码错误', '2023-09-05 12:39:27');
 INSERT INTO `sys_logininfor` VALUES (291, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-05 12:39:30');
+INSERT INTO `sys_logininfor` VALUES (292, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-05 16:13:26');
+INSERT INTO `sys_logininfor` VALUES (293, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-05 17:47:31');
+INSERT INTO `sys_logininfor` VALUES (294, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-05 19:37:07');
+INSERT INTO `sys_logininfor` VALUES (295, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '验证码已失效', '2023-09-05 20:09:42');
+INSERT INTO `sys_logininfor` VALUES (296, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-05 20:09:46');
+INSERT INTO `sys_logininfor` VALUES (297, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-06 08:24:20');
+INSERT INTO `sys_logininfor` VALUES (298, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-06 20:08:05');
+INSERT INTO `sys_logininfor` VALUES (299, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-07 16:18:41');
+INSERT INTO `sys_logininfor` VALUES (300, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '验证码已失效', '2023-09-07 18:27:25');
+INSERT INTO `sys_logininfor` VALUES (301, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '验证码错误', '2023-09-07 18:27:28');
+INSERT INTO `sys_logininfor` VALUES (302, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-07 18:27:30');
+INSERT INTO `sys_logininfor` VALUES (303, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-12 18:58:24');
+INSERT INTO `sys_logininfor` VALUES (304, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '验证码错误', '2023-09-13 17:56:09');
+INSERT INTO `sys_logininfor` VALUES (305, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-13 17:56:13');
+INSERT INTO `sys_logininfor` VALUES (306, 'admin', '127.0.0.1', '内网IP', 'Chrome Mobile', 'Android 8.x', '0', '登录成功', '2023-09-14 15:21:11');
+INSERT INTO `sys_logininfor` VALUES (307, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '退出成功', '2023-09-14 15:24:36');
+INSERT INTO `sys_logininfor` VALUES (308, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '验证码错误', '2023-09-14 15:24:46');
+INSERT INTO `sys_logininfor` VALUES (309, 'admin', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-09-14 15:29:01');
+INSERT INTO `sys_logininfor` VALUES (310, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '验证码已失效', '2023-09-14 15:30:03');
+INSERT INTO `sys_logininfor` VALUES (311, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '验证码错误', '2023-09-14 15:30:06');
+INSERT INTO `sys_logininfor` VALUES (312, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-14 15:30:10');
+INSERT INTO `sys_logininfor` VALUES (313, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-15 19:09:07');
+INSERT INTO `sys_logininfor` VALUES (314, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-18 02:24:43');
+INSERT INTO `sys_logininfor` VALUES (315, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-20 01:30:43');
+INSERT INTO `sys_logininfor` VALUES (316, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '验证码错误', '2023-09-20 09:34:07');
+INSERT INTO `sys_logininfor` VALUES (317, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-20 09:34:13');
+INSERT INTO `sys_logininfor` VALUES (318, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-20 10:42:52');
+INSERT INTO `sys_logininfor` VALUES (319, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-20 11:45:31');
+INSERT INTO `sys_logininfor` VALUES (320, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-20 16:45:31');
+INSERT INTO `sys_logininfor` VALUES (321, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-20 19:16:12');
+INSERT INTO `sys_logininfor` VALUES (322, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-21 20:12:49');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -4188,7 +4288,7 @@ CREATE TABLE `sys_menu`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2033 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2034 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -4306,6 +4406,7 @@ INSERT INTO `sys_menu` VALUES (2029, '生产中心', 0, 5, 'produce', NULL, NULL
 INSERT INTO `sys_menu` VALUES (2030, '生产任务', 2029, 0, 'form', 'produce/productiontasklist/index', NULL, 1, 0, 'C', '0', '0', '', 'druid', 'admin', '2023-08-15 09:28:52', 'admin', '2023-08-16 14:44:13', '');
 INSERT INTO `sys_menu` VALUES (2031, '工艺工序', 2029, 5, 'processingprocess', 'produce/processingprocess/index', '', 1, 0, 'C', '1', '0', '', 'tree-table', 'admin', '2023-08-21 10:56:17', 'admin', '2023-08-30 10:41:11', '');
 INSERT INTO `sys_menu` VALUES (2032, '工艺创建', 2029, 10, 'craft', 'produce/processingprocess/craft', NULL, 1, 0, 'C', '1', '0', NULL, '#', 'admin', '2023-08-21 11:26:58', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2033, '模板工序', 2029, 1, 'processtemplate', 'produce/processtemplate/index', NULL, 1, 0, 'C', '0', '0', NULL, 'table', 'admin', '2023-09-07 17:45:23', '', NULL, '');
 
 -- ----------------------------
 -- Table structure for sys_notice
@@ -4357,7 +4458,7 @@ CREATE TABLE `sys_oper_log`  (
   INDEX `idx_sys_oper_log_bt`(`business_type`) USING BTREE,
   INDEX `idx_sys_oper_log_s`(`status`) USING BTREE,
   INDEX `idx_sys_oper_log_ot`(`oper_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 894 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 946 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_oper_log
@@ -5156,6 +5257,58 @@ INSERT INTO `sys_oper_log` VALUES (890, '加工工序信息', 1, 'com.awise.prod
 INSERT INTO `sys_oper_log` VALUES (891, '加工工序信息', 1, 'com.awise.produce.controller.AwProcessingprocessController.add()', 'POST', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p>撒旦法师法三是打发斯蒂芬</p>\",\"diagramURL\":\"1975949058.png;\",\"laborCost\":\"123\",\"name\":\"测试\",\"number\":2,\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"123\",\"processingTechnologyID\":\"测试一下\",\"taktTime\":\"123\",\"usedTooling\":\"12\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'status\' doesn\'t have a default value\r\n### The error may exist in URL [jar:file:/F:/programme/java/jxsd/away-admin/target/away-admin.jar!/BOOT-INF/lib/awise-produce-3.8.5.jar!/mapper/produce/AwProcessingprocessMapper.xml]\r\n### The error may involve com.awise.produce.mapper.AwProcessingprocessMapper.insertAwProcessingprocess-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into aw_processingprocess          ( processingTechnologyID,             number,             name,             content,             diagramURL,             usedTooling,             preparationHours,             taktTime,             laborCost,             outsourcing )           values ( ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ? )\r\n### Cause: java.sql.SQLException: Field \'status\' doesn\'t have a default value\n; Field \'status\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'status\' doesn\'t have a default value', '2023-09-05 12:42:14', 4);
 INSERT INTO `sys_oper_log` VALUES (892, '加工工序信息', 1, 'com.awise.produce.controller.AwProcessingprocessController.add()', 'POST', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p>撒旦法师法三是打发斯蒂芬<img src=\\\"/dev-api/profile/upload/2023/09/05/？？？_20230905124402A002.jpg\\\"></p>\",\"diagramURL\":\"1837063316.png;\",\"laborCost\":\"123\",\"name\":\"测试\",\"number\":2,\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"123\",\"processingTechnologyID\":\"测试一下\",\"status\":\"沙发上分沙发上\",\"taktTime\":\"123\",\"usedTooling\":\"12\"}', NULL, 1, '\r\n### Error updating database.  Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column \'status\' at row 1\r\n### The error may exist in URL [jar:file:/F:/programme/java/jxsd/away-admin/target/away-admin.jar!/BOOT-INF/lib/awise-produce-3.8.5.jar!/mapper/produce/AwProcessingprocessMapper.xml]\r\n### The error may involve com.awise.produce.mapper.AwProcessingprocessMapper.insertAwProcessingprocess-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into aw_processingprocess          ( processingTechnologyID,             number,             name,             content,             diagramURL,             usedTooling,             preparationHours,             taktTime,             laborCost,             outsourcing,             status )           values ( ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ? )\r\n### Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column \'status\' at row 1\n; Data truncation: Data too long for column \'status\' at row 1; nested exception is com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column \'status\' at row 1', '2023-09-05 12:44:08', 5);
 INSERT INTO `sys_oper_log` VALUES (893, '加工工序信息', 1, 'com.awise.produce.controller.AwProcessingprocessController.add()', 'POST', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p><img src=\\\"/dev-api/profile/upload/2023/09/05/？？？_20230905124628A004.jpg\\\">是发大水发</p>\",\"diagramURL\":\"1480249315.png;\",\"laborCost\":\"1\",\"name\":\"3123\",\"number\":1,\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"1\",\"processingTechnologyID\":\"测试一下\",\"status\":\"0\",\"taktTime\":\"1\",\"usedTooling\":\"1\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-05 12:46:35', 9);
+INSERT INTO `sys_oper_log` VALUES (894, '加工工序信息', 2, 'com.awise.produce.controller.AwProcessingprocessController.edit()', 'PUT', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p>撒旦法盛大发的是</p>\",\"diagramURL\":\"145892904.jpg;\",\"id\":1,\"laborCost\":\"32\",\"name\":\"测试\",\"number\":0,\"outsourcing\":\"1\",\"params\":{},\"preparationHours\":\"21\",\"processingTechnologyID\":\"测试一下\",\"status\":\"未发布\",\"taktTime\":\"12\",\"usedTooling\":\"1\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-05 18:38:38', 30);
+INSERT INTO `sys_oper_log` VALUES (895, '加工工序信息', 2, 'com.awise.produce.controller.AwProcessingprocessController.edit()', 'PUT', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p>撒旦法盛大发的是</p>\",\"diagramURL\":\"1231203.png;240257832.jpg;\",\"id\":1,\"laborCost\":\"32\",\"name\":\"测试\",\"number\":0,\"outsourcing\":\"1\",\"params\":{},\"preparationHours\":\"21\",\"processingTechnologyID\":\"测试一下\",\"status\":\"未发布\",\"taktTime\":\"12\",\"usedTooling\":\"1\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-05 18:42:10', 15);
+INSERT INTO `sys_oper_log` VALUES (896, '加工工序信息', 2, 'com.awise.produce.controller.AwProcessingprocessController.edit()', 'PUT', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p>撒旦法盛大发的是</p>\",\"diagramURL\":\"853207648.png;\",\"id\":1,\"laborCost\":\"32\",\"name\":\"测试\",\"number\":0,\"outsourcing\":\"1\",\"params\":{},\"preparationHours\":\"21\",\"processingTechnologyID\":\"测试一下\",\"status\":\"未发布\",\"taktTime\":\"12\",\"usedTooling\":\"1\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-05 18:44:49', 12);
+INSERT INTO `sys_oper_log` VALUES (897, '合同存储', 1, 'com.awise.order.controller.AwContractController.add()', 'POST', 1, 'admin', NULL, '/order/contract', '127.0.0.1', '内网IP', '{\"contractURL\":\"1732183311.jpg;842358149.png;\",\"id\":\"2131231\",\"money\":\"123123\",\"params\":{}}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-05 20:11:29', 9);
+INSERT INTO `sys_oper_log` VALUES (898, '订单', 1, 'com.awise.order.controller.AwSaleorderController.add()', 'POST', 1, 'admin', NULL, '/order/saleorder', '127.0.0.1', '内网IP', '{\"createTime\":\"2023-09-05 20:14:06\",\"createUserName\":\"admin\",\"customerID\":\"测试客户编号001\",\"id\":\"202309052040771397\",\"isDel\":\"0\",\"iscustomersuppliedmaterials\":0,\"number\":101000,\"orderDate\":\"2023-09-13\",\"params\":{},\"productID\":\"测试产品变化001\",\"requiredDeliveryTime\":\"2023-09-12\",\"state\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200,\"id\":\"202309052040771397\"}', 0, NULL, '2023-09-05 20:14:06', 24);
+INSERT INTO `sys_oper_log` VALUES (899, '生产任务单', 1, 'com.awise.produce.controller.AwProductiontasklistController.add()', 'POST', 1, 'admin', NULL, '/produce/productiontasklist', '127.0.0.1', '内网IP', '{\"createTime\":\"2023-09-05 20:15:45\",\"founder\":\"admin\",\"id\":3,\"params\":{},\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200,\"id\":3}', 0, NULL, '2023-09-05 20:15:45', 20);
+INSERT INTO `sys_oper_log` VALUES (900, '生产任务', 1, 'com.awise.produce.controller.AwProductiontasksController.add()', 'POST', 1, 'admin', NULL, '/produce/productiontasks', '127.0.0.1', '内网IP', '{\"id\":5,\"outsourced\":\"0\",\"params\":{},\"productionTasksFormID\":3,\"saleOrderID\":\"20230816605285972\",\"serialNum\":0,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-05 20:15:45', 18);
+INSERT INTO `sys_oper_log` VALUES (901, '生产任务', 1, 'com.awise.produce.controller.AwProductiontasksController.add()', 'POST', 1, 'admin', NULL, '/produce/productiontasks', '127.0.0.1', '内网IP', '{\"id\":6,\"outsourced\":\"0\",\"params\":{},\"productionTasksFormID\":3,\"saleOrderID\":\"202308301864140539\",\"serialNum\":1,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-05 20:15:45', 3);
+INSERT INTO `sys_oper_log` VALUES (902, '生产任务', 1, 'com.awise.produce.controller.AwProductiontasksController.add()', 'POST', 1, 'admin', NULL, '/produce/productiontasks', '127.0.0.1', '内网IP', '{\"id\":7,\"outsourced\":\"0\",\"params\":{},\"productionTasksFormID\":3,\"saleOrderID\":\"202309052040771397\",\"serialNum\":2,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-05 20:15:45', 3);
+INSERT INTO `sys_oper_log` VALUES (903, '加工工艺信息', 1, 'com.awise.produce.controller.AwProcessingtechnologyController.add()', 'POST', 1, 'admin', NULL, '/produce/processingtechnology', '127.0.0.1', '内网IP', '{\"createTime\":\"2023-09-05 20:16:47\",\"founder\":\"admin\",\"id\":\"2131\",\"params\":{},\"productionTasksID\":5}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-05 20:16:47', 7);
+INSERT INTO `sys_oper_log` VALUES (904, '加工工序信息', 1, 'com.awise.produce.controller.AwProcessingprocessController.add()', 'POST', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p><img src=\\\"/dev-api/profile/upload/2023/09/05/？？？_20230905202054A001.jpg\\\">法师打发撒旦法</p>\",\"diagramURL\":\"1172186913.png;1259983338.jpg;\",\"laborCost\":\"320\",\"name\":\"打磨\",\"number\":0,\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"10\",\"processingTechnologyID\":\"2131\",\"status\":\"1\",\"taktTime\":\"10\",\"usedTooling\":\"测试\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-05 20:21:57', 17);
+INSERT INTO `sys_oper_log` VALUES (905, '加工工序信息', 2, 'com.awise.produce.controller.AwProcessingprocessController.edit()', 'PUT', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p><img src=\\\"/dev-api/profile/upload/2023/09/05/？？？_20230905202054A001.jpg\\\">法师打发撒旦法</p>\",\"diagramURL\":\"60665087.png;\",\"id\":3,\"laborCost\":\"320\",\"name\":\"打磨\",\"number\":0,\"outsourcing\":\"1\",\"params\":{},\"preparationHours\":\"10\",\"processingTechnologyID\":\"2131\",\"status\":\"发布\",\"taktTime\":\"10\",\"usedTooling\":\"测试\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-05 20:33:25', 5);
+INSERT INTO `sys_oper_log` VALUES (906, '加工工序信息', 2, 'com.awise.produce.controller.AwProcessingprocessController.edit()', 'PUT', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p>撒旦法盛大发的是</p>\",\"diagramURL\":\"699926833.png;1962333699.jpg;\",\"id\":1,\"laborCost\":\"32\",\"name\":\"测试\",\"number\":0,\"outsourcing\":\"1\",\"params\":{},\"preparationHours\":\"21\",\"processingTechnologyID\":\"测试一下\",\"status\":\"未发布\",\"taktTime\":\"12\",\"usedTooling\":\"1\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-07 16:41:56', 19);
+INSERT INTO `sys_oper_log` VALUES (907, '代码生成', 2, 'com.away.generator.controller.GenController.synchDb()', 'GET', 1, 'admin', NULL, '/tool/gen/synchDb/aw_processtemplate', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-07 17:40:01', 224);
+INSERT INTO `sys_oper_log` VALUES (908, '代码生成', 2, 'com.away.generator.controller.GenController.synchDb()', 'GET', 1, 'admin', NULL, '/tool/gen/synchDb/aw_processtemplate', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-07 17:41:05', 80);
+INSERT INTO `sys_oper_log` VALUES (909, '代码生成', 2, 'com.away.generator.controller.GenController.editSave()', 'PUT', 1, 'admin', NULL, '/tool/gen', '127.0.0.1', '内网IP', '{\"businessName\":\"processtemplate\",\"className\":\"AwProcesstemplate\",\"columns\":[{\"capJavaField\":\"Id\",\"columnComment\":\"工序编号\",\"columnId\":221,\"columnName\":\"id\",\"columnType\":\"int(11)\",\"createBy\":\"admin\",\"createTime\":\"2023-08-18 11:58:12\",\"dictType\":\"\",\"edit\":false,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isPk\":\"1\",\"javaField\":\"id\",\"javaType\":\"Long\",\"list\":false,\"params\":{},\"pk\":true,\"query\":false,\"queryType\":\"EQ\",\"required\":false,\"sort\":1,\"superColumn\":false,\"tableId\":30,\"updateBy\":\"\",\"updateTime\":\"2023-09-07 17:41:05\",\"usableColumn\":false},{\"capJavaField\":\"Name\",\"columnComment\":\"工序名称\",\"columnId\":222,\"columnName\":\"name\",\"columnType\":\"varchar(255)\",\"createBy\":\"admin\",\"createTime\":\"2023-08-18 11:58:12\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"1\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"name\",\"javaType\":\"String\",\"list\":true,\"params\":{},\"pk\":true,\"query\":true,\"queryType\":\"LIKE\",\"required\":true,\"sort\":2,\"superColumn\":false,\"tableId\":30,\"updateBy\":\"\",\"updateTime\":\"2023-09-07 17:41:05\",\"usableColumn\":false},{\"capJavaField\":\"Content\",\"columnComment\":\"工序内容\",\"columnId\":223,\"columnName\":\"content\",\"columnType\":\"varchar(255)\",\"createBy\":\"admin\",\"createTime\":\"2023-08-18 11:58:12\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"editor\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"content\",\"javaType\":\"String\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":3,\"superColumn\":false,\"tableId\":30,\"updateBy\":\"\",\"updateTime\":\"2023-09-07 17:41:05\",\"usableColumn\":false},{\"capJavaField\":\"DiagramURL\",\"columnComment\":\"工序简图URL\",\"columnId\":230,\"columnName\":\"diagramURL\",\"columnType\":\"varchar(255)\",\"createBy\":\"\",\"createTime\":\"2023-09-07 17:40:01\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-07 17:41:52', 57);
+INSERT INTO `sys_oper_log` VALUES (910, '代码生成', 8, 'com.away.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"aw_processtemplate\"}', NULL, 0, NULL, '2023-09-07 17:41:55', 266);
+INSERT INTO `sys_oper_log` VALUES (911, '代码生成', 8, 'com.away.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"aw_processtemplate\"}', NULL, 0, NULL, '2023-09-07 17:42:09', 67);
+INSERT INTO `sys_oper_log` VALUES (912, '菜单管理', 1, 'com.away.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', NULL, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"produce/processtemplate/index\",\"createBy\":\"admin\",\"icon\":\"table\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"模板工序\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2029,\"path\":\"processtemplate\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-07 17:45:23', 21);
+INSERT INTO `sys_oper_log` VALUES (913, '工序模板', 1, 'com.awise.produce.controller.AwProcesstemplateController.add()', 'POST', 1, 'admin', NULL, '/produce/processtemplate', '127.0.0.1', '内网IP', '{\"content\":\"<p>三大法师法</p>\",\"diagramURL\":\"1899315738.jpg;\",\"laborCost\":\"123\",\"name\":\"打磨\",\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"1231\",\"taktTime\":\"123\",\"usedTooling\":\"123\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-07 18:40:28', 23);
+INSERT INTO `sys_oper_log` VALUES (914, '代码生成', 6, 'com.away.generator.controller.GenController.importTableSave()', 'POST', 1, 'admin', NULL, '/tool/gen/importTable', '127.0.0.1', '内网IP', '{\"tables\":\"aw_qrcode\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-18 02:27:58', 242);
+INSERT INTO `sys_oper_log` VALUES (915, '代码生成', 2, 'com.away.generator.controller.GenController.editSave()', 'PUT', 1, 'admin', NULL, '/tool/gen', '127.0.0.1', '内网IP', '{\"businessName\":\"qrcode\",\"className\":\"AwQrcode\",\"columns\":[{\"capJavaField\":\"Id\",\"columnComment\":\"二维码唯一标识符\",\"columnId\":232,\"columnName\":\"id\",\"columnType\":\"int(11)\",\"createBy\":\"admin\",\"createTime\":\"2023-09-18 02:27:58\",\"dictType\":\"\",\"edit\":false,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isPk\":\"1\",\"javaField\":\"id\",\"javaType\":\"Long\",\"list\":false,\"params\":{},\"pk\":true,\"query\":false,\"queryType\":\"EQ\",\"required\":false,\"sort\":1,\"superColumn\":false,\"tableId\":31,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"Fileurl\",\"columnComment\":\"文件地址\",\"columnId\":233,\"columnName\":\"fileurl\",\"columnType\":\"varchar(255)\",\"createBy\":\"admin\",\"createTime\":\"2023-09-18 02:27:58\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"fileurl\",\"javaType\":\"String\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":2,\"superColumn\":false,\"tableId\":31,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"ProcessingprocessID\",\"columnComment\":\"工序对应编号\",\"columnId\":234,\"columnName\":\"processingprocessID\",\"columnType\":\"int(255)\",\"createBy\":\"admin\",\"createTime\":\"2023-09-18 02:27:58\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"processingprocessID\",\"javaType\":\"Long\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":3,\"superColumn\":false,\"tableId\":31,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"CreateTime\",\"columnComment\":\"创建时间\",\"columnId\":235,\"columnName\":\"createTime\",\"columnType\":\"datetime\",\"createBy\":\"admin\",\"createTime\":\"2023-09-18 02:27:58\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"datetime\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"i', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-18 02:29:03', 79);
+INSERT INTO `sys_oper_log` VALUES (916, '代码生成', 8, 'com.away.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"aw_qrcode\"}', NULL, 0, NULL, '2023-09-18 02:29:39', 259);
+INSERT INTO `sys_oper_log` VALUES (917, '生产任务单', 2, 'com.awise.produce.controller.AwProductiontasklistController.edit()', 'PUT', 1, 'admin', NULL, '/produce/productiontasklist', '127.0.0.1', '内网IP', '{\"createTime\":\"2023-08-18 00:00:00\",\"founder\":\"admin\",\"id\":1,\"params\":{},\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200,\"id\":1}', 0, NULL, '2023-09-20 19:22:15', 14);
+INSERT INTO `sys_oper_log` VALUES (918, '生产任务', 2, 'com.awise.produce.controller.AwProductiontasksController.edit()', 'PUT', 1, 'admin', NULL, '/produce/productiontasks', '127.0.0.1', '内网IP', '{\"id\":1,\"outsourced\":\"0\",\"params\":{},\"productionTasksFormID\":1,\"saleOrderID\":\"20230816605285972\",\"serialNum\":0,\"status\":\"1\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-20 19:22:16', 14);
+INSERT INTO `sys_oper_log` VALUES (919, '生产任务', 2, 'com.awise.produce.controller.AwProductiontasksController.edit()', 'PUT', 1, 'admin', NULL, '/produce/productiontasks', '127.0.0.1', '内网IP', '{\"id\":2,\"outsourced\":\"0\",\"params\":{},\"productionTasksFormID\":1,\"saleOrderID\":\"20230816605285972\",\"serialNum\":1,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-20 19:22:16', 3);
+INSERT INTO `sys_oper_log` VALUES (920, '生产任务单', 2, 'com.awise.produce.controller.AwProductiontasklistController.edit()', 'PUT', 1, 'admin', NULL, '/produce/productiontasklist', '127.0.0.1', '内网IP', '{\"createTime\":\"2023-08-18 00:00:00\",\"founder\":\"admin\",\"id\":1,\"params\":{},\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200,\"id\":1}', 0, NULL, '2023-09-20 19:38:09', 5);
+INSERT INTO `sys_oper_log` VALUES (921, '生产任务', 2, 'com.awise.produce.controller.AwProductiontasksController.edit()', 'PUT', 1, 'admin', NULL, '/produce/productiontasks', '127.0.0.1', '内网IP', '{\"id\":1,\"outsourced\":\"0\",\"params\":{},\"productionTasksFormID\":1,\"saleOrderID\":\"202308301864140539\",\"serialNum\":0,\"status\":\"1\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-20 19:38:09', 3);
+INSERT INTO `sys_oper_log` VALUES (922, '生产任务', 2, 'com.awise.produce.controller.AwProductiontasksController.edit()', 'PUT', 1, 'admin', NULL, '/produce/productiontasks', '127.0.0.1', '内网IP', '{\"id\":2,\"outsourced\":\"0\",\"params\":{},\"productionTasksFormID\":1,\"saleOrderID\":\"202308301864140539\",\"serialNum\":1,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-20 19:38:09', 7);
+INSERT INTO `sys_oper_log` VALUES (923, '生产任务单', 2, 'com.awise.produce.controller.AwProductiontasklistController.edit()', 'PUT', 1, 'admin', NULL, '/produce/productiontasklist', '127.0.0.1', '内网IP', '{\"createTime\":\"2023-08-30 00:00:00\",\"founder\":\"admin\",\"id\":2,\"params\":{},\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200,\"id\":2}', 0, NULL, '2023-09-20 19:38:14', 15);
+INSERT INTO `sys_oper_log` VALUES (924, '生产任务', 2, 'com.awise.produce.controller.AwProductiontasksController.edit()', 'PUT', 1, 'admin', NULL, '/produce/productiontasks', '127.0.0.1', '内网IP', '{\"id\":3,\"outsourced\":\"0\",\"params\":{},\"productionTasksFormID\":2,\"saleOrderID\":\"202308301864140539\",\"serialNum\":0,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-20 19:38:14', 4);
+INSERT INTO `sys_oper_log` VALUES (925, '生产任务', 2, 'com.awise.produce.controller.AwProductiontasksController.edit()', 'PUT', 1, 'admin', NULL, '/produce/productiontasks', '127.0.0.1', '内网IP', '{\"id\":4,\"outsourced\":\"0\",\"params\":{},\"productionTasksFormID\":2,\"saleOrderID\":\"202308301864140539\",\"serialNum\":1,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-20 19:38:14', 3);
+INSERT INTO `sys_oper_log` VALUES (926, '生产任务单', 2, 'com.awise.produce.controller.AwProductiontasklistController.edit()', 'PUT', 1, 'admin', NULL, '/produce/productiontasklist', '127.0.0.1', '内网IP', '{\"createTime\":\"2023-09-05 00:00:00\",\"founder\":\"admin\",\"id\":3,\"params\":{},\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200,\"id\":3}', 0, NULL, '2023-09-20 19:38:18', 5);
+INSERT INTO `sys_oper_log` VALUES (927, '生产任务', 2, 'com.awise.produce.controller.AwProductiontasksController.edit()', 'PUT', 1, 'admin', NULL, '/produce/productiontasks', '127.0.0.1', '内网IP', '{\"id\":5,\"outsourced\":\"0\",\"params\":{},\"productionTasksFormID\":3,\"saleOrderID\":\"202308301864140539\",\"serialNum\":0,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-20 19:38:19', 14);
+INSERT INTO `sys_oper_log` VALUES (928, '生产任务', 2, 'com.awise.produce.controller.AwProductiontasksController.edit()', 'PUT', 1, 'admin', NULL, '/produce/productiontasks', '127.0.0.1', '内网IP', '{\"id\":6,\"outsourced\":\"0\",\"params\":{},\"productionTasksFormID\":3,\"saleOrderID\":\"202308301864140539\",\"serialNum\":1,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-20 19:38:19', 3);
+INSERT INTO `sys_oper_log` VALUES (929, '生产任务', 2, 'com.awise.produce.controller.AwProductiontasksController.edit()', 'PUT', 1, 'admin', NULL, '/produce/productiontasks', '127.0.0.1', '内网IP', '{\"id\":7,\"outsourced\":\"0\",\"params\":{},\"productionTasksFormID\":3,\"saleOrderID\":\"202308301864140539\",\"serialNum\":2,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-20 19:38:19', 4);
+INSERT INTO `sys_oper_log` VALUES (930, '订单', 1, 'com.awise.order.controller.AwSaleorderController.add()', 'POST', 1, 'admin', NULL, '/order/saleorder', '127.0.0.1', '内网IP', '{\"createTime\":\"2023-09-21 20:13:13\",\"createUserName\":\"admin\",\"customerID\":\"测试客户编号001\",\"id\":\"20230921312275685\",\"isDel\":\"0\",\"iscustomersuppliedmaterials\":0,\"number\":10,\"orderDate\":\"2023-09-20\",\"params\":{},\"productID\":\"测试产品变化001\",\"requiredDeliveryTime\":\"2023-09-26\",\"state\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200,\"id\":\"20230921312275685\"}', 0, NULL, '2023-09-21 20:13:13', 18);
+INSERT INTO `sys_oper_log` VALUES (931, '订单', 2, 'com.awise.order.controller.AwSaleorderController.edit()', 'PUT', 1, 'admin', NULL, '/order/saleorder', '127.0.0.1', '内网IP', '{\"createTime\":\"2023-09-21 00:00:00\",\"createUserName\":\"admin\",\"customerID\":\"测试客户编号001\",\"id\":\"20230921312275685\",\"isDel\":\"0\",\"iscustomersuppliedmaterials\":0,\"number\":10,\"orderDate\":\"2023-09-20\",\"params\":{},\"productID\":\"测试产品变化001\",\"requiredDeliveryTime\":\"2023-09-26\",\"state\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-21 20:13:52', 3);
+INSERT INTO `sys_oper_log` VALUES (932, '订单', 2, 'com.awise.order.controller.AwSaleorderController.edit()', 'PUT', 1, 'admin', NULL, '/order/saleorder', '127.0.0.1', '内网IP', '{\"createTime\":\"2023-09-21 00:00:00\",\"createUserName\":\"admin\",\"customerID\":\"测试客户编号001\",\"id\":\"20230921312275685\",\"isDel\":\"0\",\"iscustomersuppliedmaterials\":0,\"number\":10,\"orderDate\":\"2023-09-20\",\"params\":{},\"productID\":\"测试产品变化001\",\"requiredDeliveryTime\":\"2023-09-26\",\"state\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-21 20:14:58', 15);
+INSERT INTO `sys_oper_log` VALUES (933, '订单', 2, 'com.awise.order.controller.AwSaleorderController.edit()', 'PUT', 1, 'admin', NULL, '/order/saleorder', '127.0.0.1', '内网IP', '{\"createTime\":\"2023-09-21 00:00:00\",\"createUserName\":\"admin\",\"customerID\":\"测试客户编号001\",\"id\":\"20230921312275685\",\"isDel\":\"0\",\"iscustomersuppliedmaterials\":0,\"number\":10,\"orderDate\":\"2023-09-20\",\"params\":{},\"productID\":\"测试产品变化001\",\"requiredDeliveryTime\":\"2023-09-26\",\"state\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-21 20:16:13', 4);
+INSERT INTO `sys_oper_log` VALUES (934, '订单附加信息', 1, 'com.awise.order.controller.AwAdditionalController.add()', 'POST', 1, 'admin', NULL, '/order/additional', '127.0.0.1', '内网IP', '{\"id\":3,\"key\":\"fas\",\"params\":{},\"saleorderID\":\"20230921312275685\",\"value\":\"dsfs\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-21 20:16:14', 11);
+INSERT INTO `sys_oper_log` VALUES (935, '订单附加信息', 1, 'com.awise.order.controller.AwAdditionalController.add()', 'POST', 1, 'admin', NULL, '/order/additional', '127.0.0.1', '内网IP', '{\"id\":4,\"key\":\"dsfsd\",\"params\":{},\"saleorderID\":\"20230921312275685\",\"value\":\"sdfsf\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-21 20:16:14', 6);
+INSERT INTO `sys_oper_log` VALUES (936, '订单', 1, 'com.awise.order.controller.AwSaleorderController.add()', 'POST', 1, 'admin', NULL, '/order/saleorder', '127.0.0.1', '内网IP', '{\"createTime\":\"2023-09-21 20:16:39\",\"createUserName\":\"admin\",\"customerID\":\"测试客户编号001\",\"id\":\"202309211017121338\",\"isDel\":\"0\",\"iscustomersuppliedmaterials\":0,\"number\":1231,\"orderDate\":\"2023-09-28\",\"params\":{},\"productID\":\"测试产品变化001\",\"requiredDeliveryTime\":\"2023-09-28\",\"state\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200,\"id\":\"202309211017121338\"}', 0, NULL, '2023-09-21 20:16:39', 6);
+INSERT INTO `sys_oper_log` VALUES (937, '订单附加信息', 1, 'com.awise.order.controller.AwAdditionalController.add()', 'POST', 1, 'admin', NULL, '/order/additional', '127.0.0.1', '内网IP', '{\"id\":5,\"key\":\"fdfd\",\"params\":{},\"saleorderID\":\"202309211017121338\",\"value\":\"dfdf\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-21 20:16:39', 4);
+INSERT INTO `sys_oper_log` VALUES (938, '订单附加信息', 1, 'com.awise.order.controller.AwAdditionalController.add()', 'POST', 1, 'admin', NULL, '/order/additional', '127.0.0.1', '内网IP', '{\"id\":6,\"key\":\"gfgf\",\"params\":{},\"saleorderID\":\"202309211017121338\",\"value\":\"fgfg\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-21 20:16:39', 4);
+INSERT INTO `sys_oper_log` VALUES (939, '订单附加信息', 1, 'com.awise.order.controller.AwAdditionalController.add()', 'POST', 1, 'admin', NULL, '/order/additional', '127.0.0.1', '内网IP', '{\"id\":7,\"key\":\"sfs\",\"params\":{},\"saleorderID\":\"202309211017121338\",\"value\":\"fds\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-21 20:16:39', 13);
+INSERT INTO `sys_oper_log` VALUES (940, '订单', 1, 'com.awise.order.controller.AwSaleorderController.add()', 'POST', 1, 'admin', NULL, '/order/saleorder', '127.0.0.1', '内网IP', '{\"createTime\":\"2023-09-21 20:21:41\",\"createUserName\":\"admin\",\"customerID\":\"测试客户编号001\",\"id\":\"202309212071604568\",\"isDel\":\"0\",\"iscustomersuppliedmaterials\":0,\"number\":12,\"orderDate\":\"2023-09-04\",\"params\":{},\"productID\":\"测试产品变化001\",\"requiredDeliveryTime\":\"2023-09-27\",\"state\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200,\"id\":\"202309212071604568\"}', 0, NULL, '2023-09-21 20:21:41', 5);
+INSERT INTO `sys_oper_log` VALUES (941, '订单附加信息', 1, 'com.awise.order.controller.AwAdditionalController.add()', 'POST', 1, 'admin', NULL, '/order/additional', '127.0.0.1', '内网IP', '{\"id\":8,\"key\":\"12\",\"params\":{},\"saleorderID\":\"202309212071604568\",\"value\":\"123\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-21 20:21:42', 3);
+INSERT INTO `sys_oper_log` VALUES (942, '订单附加信息', 1, 'com.awise.order.controller.AwAdditionalController.add()', 'POST', 1, 'admin', NULL, '/order/additional', '127.0.0.1', '内网IP', '{\"id\":9,\"key\":\"dsfa\",\"params\":{},\"saleorderID\":\"202309212071604568\",\"value\":\"sdafa\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-21 20:21:43', 3);
+INSERT INTO `sys_oper_log` VALUES (943, '订单', 1, 'com.awise.order.controller.AwSaleorderController.add()', 'POST', 1, 'admin', NULL, '/order/saleorder', '127.0.0.1', '内网IP', '{\"createTime\":\"2023-09-21 20:22:25\",\"createUserName\":\"admin\",\"customerID\":\"测试客户编号001\",\"id\":\"20230921531147933\",\"isDel\":\"0\",\"iscustomersuppliedmaterials\":0,\"number\":10,\"orderDate\":\"2023-09-06\",\"params\":{},\"productID\":\"测试产品变化001\",\"requiredDeliveryTime\":\"2023-09-20\",\"state\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200,\"id\":\"20230921531147933\"}', 0, NULL, '2023-09-21 20:22:25', 13);
+INSERT INTO `sys_oper_log` VALUES (944, '订单附加信息', 1, 'com.awise.order.controller.AwAdditionalController.add()', 'POST', 1, 'admin', NULL, '/order/additional', '127.0.0.1', '内网IP', '{\"id\":10,\"key\":\"12312\",\"params\":{},\"saleorderID\":\"20230921531147933\",\"value\":\"21312\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-21 20:22:26', 7);
+INSERT INTO `sys_oper_log` VALUES (945, '订单附加信息', 1, 'com.awise.order.controller.AwAdditionalController.add()', 'POST', 1, 'admin', NULL, '/order/additional', '127.0.0.1', '内网IP', '{\"id\":11,\"key\":\"32131\",\"params\":{},\"saleorderID\":\"20230921531147933\",\"value\":\"12asd\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-21 20:22:27', 15);
 
 -- ----------------------------
 -- Table structure for sys_post
@@ -5381,7 +5534,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', '超级管理员', '00', '000@00.com', '15800000000', '0', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2023-09-05 12:39:31', 'admin', '2023-06-20 09:42:08', '', '2023-09-05 12:39:30', '管理员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '超级管理员', '00', '000@00.com', '15800000000', '0', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2023-09-21 20:12:49', 'admin', '2023-06-20 09:42:08', '', '2023-09-21 20:12:49', '管理员');
 INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '2', '127.0.0.1', '2023-06-20 09:42:08', 'admin', '2023-06-20 09:42:08', '', NULL, '测试员');
 INSERT INTO `sys_user` VALUES (100, 100, 'test', 'test', '00', '', '', '0', '', '$2a$10$sBua0uP2ZH0ASchVbERRgONuyqR1fxLZj6xhbtKURJ2GtyXoINXVa', '0', '2', '127.0.0.1', '2023-06-25 09:34:58', 'admin', '2023-06-20 10:59:59', 'admin', '2023-06-25 09:34:58', NULL);
 INSERT INTO `sys_user` VALUES (101, 103, 'test', '测试用户', '00', '', '', '0', '', '$2a$10$vKRvIpvoTOxyzoRL9zUWRuJwMSQOLXyFRtI9WMazN0ZGRGb.8Aw9W', '0', '0', '127.0.0.1', '2023-08-11 16:56:10', 'admin', '2023-08-11 16:37:53', 'admin', '2023-08-11 16:56:09', '管理员');

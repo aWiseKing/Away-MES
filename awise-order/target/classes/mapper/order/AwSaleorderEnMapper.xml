@@ -123,6 +123,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectAwSaleorderEnList" parameterType="AwSaleorderEn" resultMap="AwSaleorderEnResult">
         <include refid="selectAwSaleorderEnVo"/>
+        <where>
+            <if test="createTime != null "> and createTime = #{createTime}</if>
+            <if test="state != null  and state != ''"> and aw_saleorder.state = #{state}</if>
+        </where>
     </select>
     
     <select id="selectAwSaleorderEnById" parameterType="String" resultMap="AwSaleorderEnResult">
