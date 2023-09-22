@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <sql id="selectAwCustomEnVo">
         SELECT
         aw_partner.id,
-        aw_partner.`name`,
+        aw_partner.name,
         aw_partner.nameAbbrevation,
         aw_partner.unifiedCreditCode,
         aw_partner.certificateURL,
@@ -28,9 +28,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM
         aw_partner
         left JOIN aw_city ON aw_partner.cityid = aw_city.id
-        WHERE
-        aw_partner.isdel = 0
-        AND aw_partner.type = 0
     </sql>
 
     <select id="selectAwCustomEnList" parameterType="AwCustomEn" resultMap="AwCustomEnResult">
@@ -43,6 +40,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="city != null "> and city = #{city}</if>
             <if test="address != null  and address != ''"> and address = #{address}</if>
             <if test="notes != null  and notes != ''"> and notes = #{notes}</if>
+            and aw_partner.isdel = 0
+            and aw_partner.type = 0
         </where>
     </select>
 </mapper>

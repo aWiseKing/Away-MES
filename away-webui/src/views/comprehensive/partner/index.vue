@@ -139,7 +139,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -243,6 +243,7 @@ export default {
   },
   created() {
     this.getList();
+
   },
   methods: {
     /** 查询合作方信息列表 */

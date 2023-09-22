@@ -2,6 +2,8 @@ package com.awise.order.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +29,10 @@ import com.away.common.core.page.TableDataInfo;
  * @author awise
  * @date 2023-08-14
  */
+
+
+
+@Slf4j
 @RestController
 @RequestMapping("/order/additional")
 public class AwAdditionalController extends BaseController
@@ -66,6 +72,7 @@ public class AwAdditionalController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
+
         return success(awAdditionalService.selectAwAdditionalById(id));
     }
 
@@ -77,6 +84,8 @@ public class AwAdditionalController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody AwAdditional awAdditional)
     {
+
+
         return toAjax(awAdditionalService.insertAwAdditional(awAdditional));
     }
 

@@ -2,6 +2,10 @@ package com.awise.comprehensive.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.awise.comprehensive.domain.AwCustomEn;
+import com.awise.comprehensive.domain.AwPartnerEn;
+import com.awise.comprehensive.service.IAwPartnerEnService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +38,9 @@ public class AwPartnerController extends BaseController
     @Autowired
     private IAwPartnerService awPartnerService;
 
+    @Autowired
+    private IAwPartnerEnService iAwPartnerEnService ;
+
     /**
      * 查询合作方信息列表
      */
@@ -44,6 +51,20 @@ public class AwPartnerController extends BaseController
         startPage();
         List<AwPartner> list = awPartnerService.selectAwPartnerList(awPartner);
         return getDataTable(list);
+    }
+
+
+    /**
+     * 查询合作方信息实体列表
+     */
+    @PreAuthorize("@ss.hasPermi('comprehensive:partner:enlist')")
+    @GetMapping("/enlist")
+    public TableDataInfo list(AwPartnerEn AwPartneren)
+    {
+        startPage();
+        List<AwPartnerEn> list= iAwPartnerEnService.selectAwPartnerEnList(AwPartneren);
+        return getDataTable(list);
+
     }
 
     /**

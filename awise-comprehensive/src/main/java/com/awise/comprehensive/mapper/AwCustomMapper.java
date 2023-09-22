@@ -2,6 +2,7 @@ package com.awise.comprehensive.mapper;
 
 import java.util.List;
 import com.awise.comprehensive.domain.AwCustom;
+import io.lettuce.core.dynamic.annotation.Param;
 
 /**
  * 客户信息Mapper接口
@@ -57,5 +58,6 @@ public interface AwCustomMapper
      * @param IDs 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteAwCustomByIDs(String[] IDs);
+  public int deleteAwCustomByIDs(String[] IDs);
+
 }

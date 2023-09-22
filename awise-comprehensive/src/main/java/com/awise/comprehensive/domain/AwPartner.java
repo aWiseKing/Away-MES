@@ -15,15 +15,15 @@ public class AwPartner extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 实体编号 */
+    /** 合作方编号 */
     private String ID;
 
-    /** 实体姓名 */
-    @Excel(name = "实体姓名")
+    /** 合作方姓名 */
+    @Excel(name = "合作方姓名")
     private String Name;
 
     /** 实体简称 */
-    @Excel(name = "实体简称")
+    @Excel(name = "合作方简称")
     private String NameAbbrevation;
 
     /** 社会统一信用代码 */

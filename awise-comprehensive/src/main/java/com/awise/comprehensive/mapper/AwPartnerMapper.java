@@ -2,6 +2,7 @@ package com.awise.comprehensive.mapper;
 
 import java.util.List;
 import com.awise.comprehensive.domain.AwPartner;
+import com.awise.comprehensive.domain.AwPartnerEn;
 
 /**
  * 合作方信息Mapper接口
@@ -58,4 +59,5 @@ public interface AwPartnerMapper
      * @return 结果
      */
     public int deleteAwPartnerByIDs(String[] IDs);
+
 }

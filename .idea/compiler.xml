@@ -22,20 +22,6 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="away" target="1.8" />
-      <module name="away-admin" target="1.8" />
-      <module name="away-common" target="1.8" />
-      <module name="away-framework" target="1.8" />
-      <module name="away-generator" target="1.8" />
-      <module name="away-quartz" target="1.8" />
-      <module name="away-system" target="1.8" />
-      <module name="awise-comprehensive" target="1.8" />
-      <module name="awise-file" target="1.8" />
-      <module name="awise-finance" target="1.8" />
-      <module name="awise-order" target="1.8" />
-      <module name="awise-produce" target="1.8" />
-      <module name="awise-qrcode" target="1.8" />
-      <module name="awise-storage" target="1.8" />
       <module name="ruoyi" target="1.8" />
     </bytecodeTargetLevel>
   </component>

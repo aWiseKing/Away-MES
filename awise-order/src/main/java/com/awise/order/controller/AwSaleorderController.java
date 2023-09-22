@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.awise.order.domain.AwSaleorderEn;
 import com.awise.order.service.IAwSaleorderEnService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,11 @@ import com.away.common.core.page.TableDataInfo;
  * @author awise
  * @date 2023-08-03
  */
+
+
+
+
+@Slf4j
 @RestController
 @RequestMapping("/order/saleorder")
 public class AwSaleorderController extends BaseController
@@ -105,6 +111,8 @@ public class AwSaleorderController extends BaseController
         awSaleorder.setIsDel("0");
         awSaleorder.setCreateTime(now_date);
         AjaxResult ajaxResult = toAjax(awSaleorderService.insertAwSaleorder(awSaleorder)).put("id",awSaleorder.getId());
+
+
         return ajaxResult;
     }
 
