@@ -1,0 +1,5 @@
+com\awise\finance\domain\AwInvoice.class
+com\awise\finance\mapper\AwInvoiceMapper.class
+com\awise\finance\service\IAwInvoiceService.class
+com\awise\finance\service\impl\AwInvoiceServiceImpl.class
+com\awise\finance\controller\AwInvoiceController.class

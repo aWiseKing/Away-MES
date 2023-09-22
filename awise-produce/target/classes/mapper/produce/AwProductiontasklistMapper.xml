@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.awise.produce.mapper.AwProductiontasklistMapper">
+    
+    <resultMap type="AwProductiontasklist" id="AwProductiontasklistResult">
+        <result property="id"    column="id"    />
+        <result property="founder"    column="founder"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="notes"    column="notes"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectAwProductiontasklistEnVo">
+        select
+        id,
+        founder,
+        createTime,
+        notes,
+        CASE aw_productiontasklist.status
+        WHEN 0 THEN
+        "未发布"
+        WHEN 1 THEN
+        "发布"
+        WHEN 2 THEN
+        "暂停"
+        WHEN 3 THEN
+        "完成"
+        WHEN 4 THEN
+        "取消"
+        ELSE
+        "未知类型"
+        END as status
+        from aw_productiontasklist
+    </sql>
+    <sql id="selectAwProductiontasklistVo">
+        select
+        id,
+        founder,
+        createTime,
+        notes,
+        status
+        from aw_productiontasklist
+    </sql>
+
+    <select id="selectAwProductiontasklistList" parameterType="AwProductiontasklist" resultMap="AwProductiontasklistResult">
+        <include refid="selectAwProductiontasklistEnVo"/>
+        <where>  
+            <if test="founder != null  and founder != ''"> and founder = #{founder}</if>
+            <if test="createTime != null "> and createTime = #{createTime}</if>
+            <if test="notes != null  and notes != ''"> and notes = #{notes}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectAwProductiontasklistById" parameterType="Long" resultMap="AwProductiontasklistResult">
+        <include refid="selectAwProductiontasklistVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAwProductiontasklist" parameterType="AwProductiontasklist" useGeneratedKeys="true" keyProperty="id">
+        insert into aw_productiontasklist
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="founder != null and founder != ''">founder,</if>
+            <if test="createTime != null">createTime,</if>
+            <if test="notes != null">notes,</if>
+            <if test="status != null and status != ''">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="founder != null and founder != ''">#{founder},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="notes != null">#{notes},</if>
+            <if test="status != null and status != ''">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAwProductiontasklist" parameterType="AwProductiontasklist">
+        update aw_productiontasklist
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="founder != null and founder != ''">founder = #{founder},</if>
+            <if test="createTime != null">createTime = #{createTime},</if>
+            <if test="notes != null">notes = #{notes},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAwProductiontasklistById" parameterType="Long">
+        delete from aw_productiontasklist where id = #{id}
+    </delete>
+
+    <delete id="deleteAwProductiontasklistByIds" parameterType="String">
+        delete from aw_productiontasklist where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
