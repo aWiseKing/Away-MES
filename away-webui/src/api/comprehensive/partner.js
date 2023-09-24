@@ -1,24 +1,24 @@
 import request from '@/utils/request'
 
-// 查询合作方信息列表
-export function listPartner(query) {
+// 查询客户信息列表
+export function listCustom(query) {
   return request({
-    url: '/comprehensive/partner/list',
+    url: '/comprehensive/partner/enlist',
     method: 'get',
     params: query
   })
 }
 
-// 查询合作方信息详细
-export function getPartner(ID) {
+// 查询客户信息详细
+export function getCustom(ID) {
   return request({
     url: '/comprehensive/partner/' + ID,
     method: 'get'
   })
 }
 
-// 新增合作方信息
-export function addPartner(data) {
+// 新增客户信息
+export function addCustom(data) {
   return request({
     url: '/comprehensive/partner',
     method: 'post',
@@ -26,8 +26,8 @@ export function addPartner(data) {
   })
 }
 
-// 修改合作方信息
-export function updatePartner(data) {
+// 修改客户信息
+export function updateCustom(data) {
   return request({
     url: '/comprehensive/partner',
     method: 'put',
@@ -35,8 +35,8 @@ export function updatePartner(data) {
   })
 }
 
-// 删除合作方信息
-export function delPartner(ID) {
+// 删除客户信息
+export function delCustom(ID) {
   return request({
     url: '/comprehensive/partner/' + ID,
     method: 'delete'

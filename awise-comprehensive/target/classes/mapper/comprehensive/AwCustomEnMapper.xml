@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="nameAbbrevation != null  and nameAbbrevation != ''"> and nameAbbrevation like concat('%', #{nameAbbrevation}, '%')</if>
             <if test="unifiedCreditCode != null  and unifiedCreditCode != ''"> and unifiedCreditCode like concat('%', #{unifiedCreditCode}, '%')</if>
             <if test="certificateURL != null  and certificateURL != ''"> and certificateURL = #{certificateURL}</if>
-            <if test="city != null "> and city = #{city}</if>
+            <if test="city != null "> and city like concat('%', #{city}, '%')</if>
             <if test="address != null  and address != ''"> and address = #{address}</if>
             <if test="notes != null  and notes != ''"> and notes = #{notes}</if>
             and aw_partner.isdel = 0
