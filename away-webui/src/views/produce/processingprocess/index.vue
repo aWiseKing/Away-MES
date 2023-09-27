@@ -149,7 +149,7 @@
           </el-row>
           <el-row :gutter="12">
             <el-col :span="24">
-              <el-form-item label="工序内容">
+              <el-form-item label="工序内容" prop="content">
                 <editor v-model="form.content" :min-height="192" />
               </el-form-item>
             </el-col>
@@ -324,17 +324,10 @@ export default {
   },
   methods: {
     async getProcessingtechnologyExist() {
-      let productionTasksID = this.$route.query.id
-      this.productionTasksID = productionTasksID
-      let response = await getProcessingtechnology({ "productionTasksID": productionTasksID })
-      if (response.data == "null") {
-        this.processingtechnology_exist = false
-      } else {
         this.processingtechnology_exist = true
-        this.processingTechnologyID = response.data.id;
+        this.processingTechnologyID = this.$route.query.id
         this.queryParams.processingTechnologyID = this.processingTechnologyID;
         this.getList();
-      }
     },
     /** 查询加工工序信息列表 */
     getList() {
@@ -473,8 +466,9 @@ export default {
     },
     /** 提交按钮 */
     async submitForm() {
-      await this.fileUpdate()
-      this.$refs["form"].validate(valid => {
+
+      this.$refs["form"].validate(async valid => {
+        await this.fileUpdate()
         if (valid) {
           if (this.form.id != null) {
             updateProcessingprocess(this.form).then(response => {

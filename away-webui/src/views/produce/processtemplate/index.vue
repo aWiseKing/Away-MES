@@ -356,9 +356,9 @@ export default {
     },
     /** 提交按钮 */
     async submitForm() {
-      await this.fileUpdate()
-      this.$refs["form"].validate(valid => {
+      this.$refs["form"].validate(async valid => {
         if (valid) {
+          await this.fileUpdate()
           if (this.form.id != null) {
             updateProcesstemplate(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");

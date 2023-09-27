@@ -19,6 +19,7 @@
         <module name="away-common" />
         <module name="awise-storage" />
         <module name="awise-produce" />
+        <module name="awise-quality" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

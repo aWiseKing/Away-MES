@@ -9,7 +9,7 @@ import com.away.common.core.domain.BaseEntity;
  * 加工工艺信息对象 aw_processingtechnology
  * 
  * @author awise
- * @date 2023-08-21
+ * @date 2023-09-26
  */
 public class AwProcessingtechnology extends BaseEntity
 {
@@ -17,10 +17,6 @@ public class AwProcessingtechnology extends BaseEntity
 
     /** 加工工艺编号 */
     private String id;
-
-    /** 生产任务编号 */
-    @Excel(name = "生产任务编号")
-    private Long productionTasksID;
 
     /** 创建人 */
     @Excel(name = "创建人")
@@ -42,15 +38,6 @@ public class AwProcessingtechnology extends BaseEntity
     public String getId() 
     {
         return id;
-    }
-    public void setProductionTasksID(Long productionTasksID) 
-    {
-        this.productionTasksID = productionTasksID;
-    }
-
-    public Long getProductionTasksID() 
-    {
-        return productionTasksID;
     }
     public void setFounder(String founder) 
     {
@@ -84,7 +71,6 @@ public class AwProcessingtechnology extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("productionTasksID", getProductionTasksID())
             .append("createTime", getCreateTime())
             .append("founder", getFounder())
             .append("cuttingSize", getCuttingSize())

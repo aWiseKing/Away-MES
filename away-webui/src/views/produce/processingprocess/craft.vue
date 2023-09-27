@@ -3,9 +3,6 @@
     <div class="mainbox">
       <div class="dialog">
         <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-          <el-form-item label="生产任务编号" prop="productionTasksID">
-            {{ this.productionTasksID }}
-          </el-form-item>
           <el-form-item label="加工工艺编号" prop="id">
             <el-input v-model="form.id" placeholder="请输入加工工艺编号" />
           </el-form-item>
@@ -33,7 +30,6 @@ import { listProcessingtechnology, getProcessingtechnology, delProcessingtechnol
 
 export default {
   name: "Craft",
-  props: ["productionTasksID"],
   data() {
     return {
       // 遮罩层
@@ -58,7 +54,6 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        productionTasksID: this.productionTasksID,
         createTime: null,
         founder: null,
         cuttingSize: null,
@@ -67,7 +62,6 @@ export default {
       // 表单参数
       form: {
         id: null,
-        productionTasksID: this.productionTasksID,
         createTime: null,
         founder: null,
         cuttingSize: null,
@@ -76,9 +70,6 @@ export default {
       // 表单校验
       rules: {
         id: { required: true, message: "任务工序单编号不能为空", trigger: "blur" },
-        productionTasksID: [
-          { required: true, message: "生产任务编号不能为空", trigger: "blur" }
-        ],
         createTime: [
           { required: true, message: "创建日期不能为空", trigger: "blur" }
         ],
@@ -110,7 +101,6 @@ export default {
     reset() {
       this.form = {
         id: null,
-        productionTasksID: this.productionTasksID,
         createTime: null,
         founder: null,
         cuttingSize: null,

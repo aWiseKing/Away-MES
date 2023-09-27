@@ -7,7 +7,7 @@ import com.awise.produce.domain.AwProcessingtechnology;
  * 加工工艺信息Service接口
  * 
  * @author awise
- * @date 2023-08-21
+ * @date 2023-09-26
  */
 public interface IAwProcessingtechnologyService 
 {
@@ -26,14 +26,6 @@ public interface IAwProcessingtechnologyService
      * @return 加工工艺信息集合
      */
     public List<AwProcessingtechnology> selectAwProcessingtechnologyList(AwProcessingtechnology awProcessingtechnology);
-
-    /**
-     * 查询生产任务对应加工工艺信息
-     *
-     * @param productionTasksID 生产任务id
-     * @return 加工工艺信息
-     */
-    public AwProcessingtechnology selectAwProcessingtechnologyByProductionTasksID(String productionTasksID);
 
     /**
      * 新增加工工艺信息

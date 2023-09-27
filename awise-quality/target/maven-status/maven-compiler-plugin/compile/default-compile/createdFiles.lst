@@ -1,0 +1,5 @@
+com\awise\quality\mapper\AwProcessinspectionMapper.class
+com\awise\quality\controller\AwProcessinspectionController.class
+com\awise\quality\service\IAwProcessinspectionService.class
+com\awise\quality\domain\AwProcessinspection.class
+com\awise\quality\service\impl\AwProcessinspectionServiceImpl.class
