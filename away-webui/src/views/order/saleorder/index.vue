@@ -505,20 +505,24 @@ export default {
       let saleorderID;
       this.$refs["form"].validate(async valid => {
         if (valid) {
+          let response = null
           if (this.form.id != null) {
             saleorderID = this.form.id;
-            let response = await updateSaleorder(this.form)
+            response = await updateSaleorder(this.form)
             this.$modal.msgSuccess("修改成功");
             this.open = false;
             this.getList();
           } else {
-            let response = await addSaleorder(this.form)
+            response = await addSaleorder(this.form)
             saleorderID = response.id;
             this.$modal.msgSuccess("新增成功");
             this.open = false;
             this.getList();
           }
-          if (response.code == "200") {
+          console.log(response);
+
+          if (response.code == 200) {
+            console.log("测试看看");
             // 插入或更新附加信息
             if (this.additionals.length > 0) {
               let tmp_additional_add_form = [];
@@ -565,17 +569,12 @@ export default {
     /** 删除按钮操作 */
     async handleDelete(row) {
       const ids = row.id || this.ids;
-      let that = this;
       await this.$modal.confirm('是否确认删除订单编号为"' + ids + '"的数据项？').then(async () => {
-        let num = 0;
-        await that.getListAdditional(ids);
-        for (num in this.additionals) {
-          await delAdditional(this.additionals[num].id)
-        }
-        return await delSaleorder(ids);
+        return delSaleorder(ids);
+      }).then(()=>{
+        this.getList();
+        this.$modal.msgSuccess("删除成功");
       })
-      await this.getList();
-      this.$modal.msgSuccess("删除成功");
     },
     /** 导出按钮操作 */
     handleExport() {

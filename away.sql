@@ -11,7 +11,7 @@
  Target Server Version : 50731
  File Encoding         : 65001
 
- Date: 27/09/2023 11:47:04
+ Date: 27/09/2023 17:30:14
 */
 
 SET NAMES utf8mb4;
@@ -28,24 +28,12 @@ CREATE TABLE `aw_additional`  (
   `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '附加内容',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_contacts_aw_saleorder_1`(`saleorderID`) USING BTREE,
-  CONSTRAINT `fk_contacts_aw_saleorder_1` FOREIGN KEY (`saleorderID`) REFERENCES `aw_saleorder` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单附加信息' ROW_FORMAT = Dynamic;
+  CONSTRAINT `fk_contacts_aw_saleorder_1` FOREIGN KEY (`saleorderID`) REFERENCES `aw_saleorder` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单附加信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of aw_additional
 -- ----------------------------
-INSERT INTO `aw_additional` VALUES (1, '202309261314942234', '1231', '21312');
-INSERT INTO `aw_additional` VALUES (2, '202309261314942234', '21312', '12312');
-INSERT INTO `aw_additional` VALUES (3, '20230927262603443', '1231', '撒旦法');
-INSERT INTO `aw_additional` VALUES (4, '20230927262603443', '撒旦法', '撒旦法');
-INSERT INTO `aw_additional` VALUES (5, '20230927582776936', '123', '撒旦法');
-INSERT INTO `aw_additional` VALUES (6, '20230927582776936', '试试', '到底');
-INSERT INTO `aw_additional` VALUES (7, '202309272120223017', '啥发大水', '士大夫发');
-INSERT INTO `aw_additional` VALUES (8, '202309272120223017', '得到的', '地方');
-INSERT INTO `aw_additional` VALUES (9, '20230927457815840', '12312', '打法');
-INSERT INTO `aw_additional` VALUES (10, '20230927457815840', '恢复', '阿萨德访问');
-INSERT INTO `aw_additional` VALUES (11, '20230927483569659', '撒旦法', '啊啊啊啊');
-INSERT INTO `aw_additional` VALUES (12, '20230927483569659', '得到的', '的说法');
 
 -- ----------------------------
 -- Table structure for aw_city
@@ -2954,7 +2942,6 @@ CREATE TABLE `aw_contract`  (
 -- ----------------------------
 -- Records of aw_contract
 -- ----------------------------
-INSERT INTO `aw_contract` VALUES ('1231', '123131', '93677513.jpg;1523879133.jpg;');
 
 -- ----------------------------
 -- Table structure for aw_customersuppliedmaterials
@@ -3079,7 +3066,6 @@ CREATE TABLE `aw_partner`  (
 -- ----------------------------
 -- Records of aw_partner
 -- ----------------------------
-INSERT INTO `aw_partner` VALUES ('测试客户001', '测试客户001', '客户001', '231231111111111111', NULL, 402, NULL, NULL, 0, '0');
 
 -- ----------------------------
 -- Table structure for aw_processingprocess
@@ -3096,17 +3082,16 @@ CREATE TABLE `aw_processingprocess`  (
   `preparationHours` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '准备工时',
   `taktTime` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '单件工时',
   `laborCost` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '工时成本',
-  `outsourcing` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '工序外协#0为不外协1为外协#',
-  `status` varchar(4) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '状态',
+  `outsourcing` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '工序外协',
+  `status` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '状态',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_加工工序信息表_加工工艺信息表_1`(`processingTechnologyID`) USING BTREE,
-  CONSTRAINT `fk_加工工序信息表_加工工艺信息表_1` FOREIGN KEY (`processingTechnologyID`) REFERENCES `aw_processingtechnology` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '加工工序信息表\r\n存储加工过程中每道工序的情况' ROW_FORMAT = Dynamic;
+  CONSTRAINT `fk_加工工序信息表_加工工艺信息表_1` FOREIGN KEY (`processingTechnologyID`) REFERENCES `aw_processingtechnology` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '加工工序信息表\r\n存储加工过程中每道工序的情况' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of aw_processingprocess
 -- ----------------------------
-INSERT INTO `aw_processingprocess` VALUES (7, '测试工艺001', 0, '测试模板002', '<p>测试一下吧</p>', NULL, '测试', '10', '100', '1020', '0', '1');
 
 -- ----------------------------
 -- Table structure for aw_processingtechnology
@@ -3118,13 +3103,13 @@ CREATE TABLE `aw_processingtechnology`  (
   `founder` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '创建人',
   `cuttingSize` float NULL DEFAULT NULL COMMENT '下料尺寸',
   `numberProducibleParts` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '可制件数',
+  `status` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '状态',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '加工工艺信息表\r\n存储加工工艺相关信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of aw_processingtechnology
 -- ----------------------------
-INSERT INTO `aw_processingtechnology` VALUES ('测试工艺001', '2023-09-26', '测试用户', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for aw_processinspection
@@ -3134,7 +3119,8 @@ CREATE TABLE `aw_processinspection`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '编号',
   `nameOfQualityInspection` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '质检名称',
   `qualityInspectionCategory` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '质检类别',
-  `processingprocessID` int(255) NOT NULL COMMENT '工序编号',
+  `ProductionTasksID` int(11) NOT NULL COMMENT '任务编号',
+  `processingprocessID` int(11) NOT NULL COMMENT '工序编号',
   `detectionQuantity` int(255) NOT NULL COMMENT '检测数量',
   `qualifiedQuantity` int(255) NOT NULL COMMENT '合格数量',
   `unqualifiedQuantity` int(255) NOT NULL COMMENT '不合格数量',
@@ -3146,7 +3132,9 @@ CREATE TABLE `aw_processinspection`  (
   `note` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_aw_processInspection_aw_processingprocess_1`(`processingprocessID`) USING BTREE,
-  CONSTRAINT `fk_aw_processInspection_aw_processingprocess_1` FOREIGN KEY (`processingprocessID`) REFERENCES `aw_processingprocess` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  INDEX `fk_aw_processInspection_aw_ProductionTasks_1`(`ProductionTasksID`) USING BTREE,
+  CONSTRAINT `fk_aw_processInspection_aw_ProductionTasks_1` FOREIGN KEY (`ProductionTasksID`) REFERENCES `aw_productiontasks` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `fk_aw_processInspection_aw_processingprocess_1` FOREIGN KEY (`processingprocessID`) REFERENCES `aw_processingprocess` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '过程检验' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -3167,14 +3155,13 @@ CREATE TABLE `aw_processtemplate`  (
   `taktTime` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '单件工时',
   `laborCost` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '工时成本',
   `outsourcing` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '工序外协#0为不外协1为外协#',
+  `status` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '状态',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '工序模板信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '工序模板信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of aw_processtemplate
 -- ----------------------------
-INSERT INTO `aw_processtemplate` VALUES (1, '焊接', '<p>奥德赛发发答案发</p>', '492272817.jpg;', '测试', '10', '1000', '100', '0');
-INSERT INTO `aw_processtemplate` VALUES (2, '测试模板002', '<p>测试一下吧</p>', NULL, '测试', '10', '100', '1020', '0');
 
 -- ----------------------------
 -- Table structure for aw_product
@@ -3190,7 +3177,6 @@ CREATE TABLE `aw_product`  (
 -- ----------------------------
 -- Records of aw_product
 -- ----------------------------
-INSERT INTO `aw_product` VALUES ('21312', '12312312', '1484342856.jpg;1455338295.jpg;');
 
 -- ----------------------------
 -- Table structure for aw_productiontasklist
@@ -3198,20 +3184,17 @@ INSERT INTO `aw_product` VALUES ('21312', '12312312', '1484342856.jpg;1455338295
 DROP TABLE IF EXISTS `aw_productiontasklist`;
 CREATE TABLE `aw_productiontasklist`  (
   `id` int(255) NOT NULL AUTO_INCREMENT COMMENT '生产任务单编号',
+  `referred` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '简称',
   `founder` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '制单人',
   `createTime` date NOT NULL COMMENT '创建日期',
   `notes` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注信息',
   `status` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '状态',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '生产任务单' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '生产任务单' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of aw_productiontasklist
 -- ----------------------------
-INSERT INTO `aw_productiontasklist` VALUES (1, 'admin', '2023-09-26', NULL, '0');
-INSERT INTO `aw_productiontasklist` VALUES (2, 'admin', '2023-09-27', NULL, '0');
-INSERT INTO `aw_productiontasklist` VALUES (3, 'admin', '2023-09-27', NULL, '0');
-INSERT INTO `aw_productiontasklist` VALUES (4, 'admin', '2023-09-27', NULL, '0');
 
 -- ----------------------------
 -- Table structure for aw_productiontasks
@@ -3224,21 +3207,20 @@ CREATE TABLE `aw_productiontasks`  (
   `processingTechnologyID` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '工艺编号',
   `saleOrderID` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '销售订单编号',
   `outsourced` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '外协',
-  `status` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '任务状态',
   `notes` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `status` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '任务状态',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_aw_Production tasks_aw_ProductionTaskList_1`(`productionTasksFormID`) USING BTREE,
   INDEX `fk_aw_Production tasks_aw_saleorder_1`(`saleOrderID`) USING BTREE,
   INDEX `fk_aw_ProductionTasks_aw_processingtechnology_1`(`processingTechnologyID`) USING BTREE,
-  CONSTRAINT `fk_aw_Production tasks_aw_ProductionTaskList_1` FOREIGN KEY (`productionTasksFormID`) REFERENCES `aw_productiontasklist` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `fk_aw_Production tasks_aw_saleorder_1` FOREIGN KEY (`saleOrderID`) REFERENCES `aw_saleorder` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `fk_aw_ProductionTasks_aw_processingtechnology_1` FOREIGN KEY (`processingTechnologyID`) REFERENCES `aw_processingtechnology` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  CONSTRAINT `fk_aw_Production tasks_aw_ProductionTaskList_1` FOREIGN KEY (`productionTasksFormID`) REFERENCES `aw_productiontasklist` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_aw_Production tasks_aw_saleorder_1` FOREIGN KEY (`saleOrderID`) REFERENCES `aw_saleorder` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `fk_aw_ProductionTasks_aw_processingtechnology_1` FOREIGN KEY (`processingTechnologyID`) REFERENCES `aw_processingtechnology` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of aw_productiontasks
 -- ----------------------------
-INSERT INTO `aw_productiontasks` VALUES (1, 4, 0, '测试工艺001', '202309272120223017', '0', '1', NULL);
 
 -- ----------------------------
 -- Table structure for aw_qrcode
@@ -3253,7 +3235,7 @@ CREATE TABLE `aw_qrcode`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_aw_qrcode_aw_processingprocess_1`(`processingprocessID`) USING BTREE,
   CONSTRAINT `fk_aw_qrcode_aw_processingprocess_1` FOREIGN KEY (`processingprocessID`) REFERENCES `aw_processingprocess` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of aw_qrcode
@@ -3293,12 +3275,6 @@ CREATE TABLE `aw_saleorder`  (
 -- ----------------------------
 -- Records of aw_saleorder
 -- ----------------------------
-INSERT INTO `aw_saleorder` VALUES ('202309261314942234', '2023-09-26', 'admin', '2023-09-13', 1231, '2023-09-28', '测试客户001', '21312', '1231', NULL, 0, NULL, '1', '31231', '0');
-INSERT INTO `aw_saleorder` VALUES ('202309272120223017', '2023-09-27', 'admin', '2023-09-12', 123, '2023-09-27', '测试客户001', '21312', NULL, NULL, 0, NULL, '1', NULL, '0');
-INSERT INTO `aw_saleorder` VALUES ('20230927262603443', '2023-09-27', 'admin', '2023-09-04', 100, '2023-09-28', '测试客户001', '21312', '1231', NULL, 0, NULL, '1', NULL, '0');
-INSERT INTO `aw_saleorder` VALUES ('20230927457815840', '2023-09-27', 'admin', '2023-09-11', 123, '2023-09-28', '测试客户001', '21312', NULL, NULL, 0, NULL, '1', '21312313三大法师法', '0');
-INSERT INTO `aw_saleorder` VALUES ('20230927483569659', '2023-09-27', 'admin', '2023-09-12', 123123, '2023-09-28', '测试客户001', '21312', '1231', NULL, 0, NULL, '1', NULL, '0');
-INSERT INTO `aw_saleorder` VALUES ('20230927582776936', '2023-09-27', 'admin', '2023-09-05', 10, '2023-09-28', '测试客户001', '21312', '1231', NULL, 0, NULL, '1', NULL, '0');
 
 -- ----------------------------
 -- Table structure for aw_specifications
@@ -3454,7 +3430,7 @@ CREATE TABLE `gen_table_column`  (
   `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`column_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 252 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 257 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of gen_table_column
@@ -3538,18 +3514,17 @@ INSERT INTO `gen_table_column` VALUES (168, '23', 'id', '附加信息id', 'int(1
 INSERT INTO `gen_table_column` VALUES (169, '23', 'saleorderID', '关联订单', 'varchar(255)', 'String', 'saleorderID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2023-08-14 09:48:03', '', '2023-08-14 09:48:45');
 INSERT INTO `gen_table_column` VALUES (170, '23', 'key', '附加属性', 'varchar(255)', 'String', 'key', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-08-14 09:48:03', '', '2023-08-14 09:48:45');
 INSERT INTO `gen_table_column` VALUES (171, '23', 'value', '附加内容', 'varchar(255)', 'String', 'value', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2023-08-14 09:48:03', '', '2023-08-14 09:48:45');
-INSERT INTO `gen_table_column` VALUES (183, '25', 'id', '生产任务单编号', 'int(255)', 'Long', 'id', '1', '1', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-08-15 16:09:19', '', '2023-08-15 16:10:02');
-INSERT INTO `gen_table_column` VALUES (184, '25', 'founder', '制单人', 'varchar(255)', 'String', 'founder', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2023-08-15 16:09:19', '', '2023-08-15 16:10:02');
-INSERT INTO `gen_table_column` VALUES (185, '25', 'createTime', '创建日期', 'date', 'Date', 'createTime', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'datetime', '', 3, 'admin', '2023-08-15 16:09:19', '', '2023-08-15 16:10:02');
-INSERT INTO `gen_table_column` VALUES (186, '25', 'notes', '备注信息', 'varchar(255)', 'String', 'notes', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2023-08-15 16:09:19', '', '2023-08-15 16:10:02');
-INSERT INTO `gen_table_column` VALUES (187, '25', 'status', '状态', 'varchar(2)', 'String', 'status', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'radio', '', 5, 'admin', '2023-08-15 16:09:19', '', '2023-08-15 16:10:02');
-INSERT INTO `gen_table_column` VALUES (188, '26', 'id', '任务编号', 'int(11)', 'Long', 'id', '1', '1', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-08-15 16:21:37', '', '2023-09-27 11:15:06');
-INSERT INTO `gen_table_column` VALUES (189, '26', 'productionTasksFormID', '生产任务单编号', 'int(255)', 'Long', 'productionTasksFormID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2023-08-15 16:21:37', '', '2023-09-27 11:15:06');
-INSERT INTO `gen_table_column` VALUES (190, '26', 'serialNum', '生产任务序号', 'int(255)', 'Long', 'serialNum', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-08-15 16:21:37', '', '2023-09-27 11:15:06');
-INSERT INTO `gen_table_column` VALUES (191, '26', 'saleOrderID', '销售订单编号', 'varchar(255)', 'String', 'saleOrderID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-08-15 16:21:37', '', '2023-09-27 11:15:06');
-INSERT INTO `gen_table_column` VALUES (192, '26', 'outsourced', '外协', 'varchar(2)', 'String', 'outsourced', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2023-08-15 16:21:37', '', '2023-09-27 11:15:06');
-INSERT INTO `gen_table_column` VALUES (193, '26', 'status', '任务状态', 'varchar(3)', 'String', 'status', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'radio', '', 7, 'admin', '2023-08-15 16:21:37', '', '2023-09-27 11:15:06');
-INSERT INTO `gen_table_column` VALUES (194, '26', 'notes', '备注', 'varchar(255)', 'String', 'notes', '0', '0', NULL, '1', '1', '1', '0', 'EQ', 'input', '', 8, 'admin', '2023-08-15 16:21:37', '', '2023-09-27 11:15:06');
+INSERT INTO `gen_table_column` VALUES (183, '25', 'id', '生产任务单编号', 'int(255)', 'Long', 'id', '1', '1', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-08-15 16:09:19', '', '2023-09-27 17:13:40');
+INSERT INTO `gen_table_column` VALUES (184, '25', 'founder', '制单人', 'varchar(255)', 'String', 'founder', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-08-15 16:09:19', '', '2023-09-27 17:13:40');
+INSERT INTO `gen_table_column` VALUES (185, '25', 'createTime', '创建日期', 'date', 'Date', 'createTime', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'datetime', '', 4, 'admin', '2023-08-15 16:09:19', '', '2023-09-27 17:13:40');
+INSERT INTO `gen_table_column` VALUES (186, '25', 'notes', '备注信息', 'varchar(255)', 'String', 'notes', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-08-15 16:09:19', '', '2023-09-27 17:13:40');
+INSERT INTO `gen_table_column` VALUES (187, '25', 'status', '状态', 'varchar(2)', 'String', 'status', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'radio', '', 6, 'admin', '2023-08-15 16:09:19', '', '2023-09-27 17:13:40');
+INSERT INTO `gen_table_column` VALUES (188, '26', 'id', '任务编号', 'int(11)', 'Long', 'id', '1', '1', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-08-15 16:21:37', '', '2023-09-27 16:09:20');
+INSERT INTO `gen_table_column` VALUES (189, '26', 'productionTasksFormID', '生产任务单编号', 'int(255)', 'Long', 'productionTasksFormID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2023-08-15 16:21:37', '', '2023-09-27 16:09:20');
+INSERT INTO `gen_table_column` VALUES (190, '26', 'serialNum', '生产任务序号', 'int(255)', 'Long', 'serialNum', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-08-15 16:21:37', '', '2023-09-27 16:09:20');
+INSERT INTO `gen_table_column` VALUES (191, '26', 'saleOrderID', '销售订单编号', 'varchar(255)', 'String', 'saleOrderID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-08-15 16:21:37', '', '2023-09-27 16:09:20');
+INSERT INTO `gen_table_column` VALUES (192, '26', 'outsourced', '外协', 'varchar(2)', 'String', 'outsourced', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2023-08-15 16:21:37', '', '2023-09-27 16:09:20');
+INSERT INTO `gen_table_column` VALUES (194, '26', 'notes', '备注', 'varchar(255)', 'String', 'notes', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 7, 'admin', '2023-08-15 16:21:37', '', '2023-09-27 16:09:20');
 INSERT INTO `gen_table_column` VALUES (195, '27', 'id', '联系人信息id', 'int(11)', 'Long', 'id', '1', '0', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-08-18 11:58:12', '', '2023-09-26 16:57:39');
 INSERT INTO `gen_table_column` VALUES (196, '27', 'name', '联系人姓名', 'varchar(255)', 'String', 'name', '0', '0', NULL, '1', '1', '1', '1', 'LIKE', 'input', '', 2, 'admin', '2023-08-18 11:58:12', '', '2023-09-26 16:57:39');
 INSERT INTO `gen_table_column` VALUES (197, '27', 'phone', '联系人电话', 'varchar(255)', 'String', 'phone', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-08-18 11:58:12', '', '2023-09-26 16:57:39');
@@ -3570,40 +3545,45 @@ INSERT INTO `gen_table_column` VALUES (211, '28', 'preparationHours', '准备工
 INSERT INTO `gen_table_column` VALUES (212, '28', 'taktTime', '单件工时', 'varchar(255)', 'String', 'taktTime', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 9, 'admin', '2023-08-18 11:58:12', '', '2023-09-26 16:57:42');
 INSERT INTO `gen_table_column` VALUES (213, '28', 'laborCost', '工时成本', 'varchar(255)', 'String', 'laborCost', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 10, 'admin', '2023-08-18 11:58:12', '', '2023-09-26 16:57:42');
 INSERT INTO `gen_table_column` VALUES (214, '28', 'outsourcing', '工序外协#0为不外协1为外协#', 'varchar(3)', 'String', 'outsourcing', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 11, 'admin', '2023-08-18 11:58:12', '', '2023-09-26 16:57:42');
-INSERT INTO `gen_table_column` VALUES (215, '29', 'id', '加工工艺编号', 'varchar(255)', 'String', 'id', '1', '0', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-08-18 11:58:12', '', '2023-09-26 17:56:35');
-INSERT INTO `gen_table_column` VALUES (217, '29', 'createTime', '创建日期', 'date', 'Date', 'createTime', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'datetime', '', 2, 'admin', '2023-08-18 11:58:12', '', '2023-09-26 17:56:35');
-INSERT INTO `gen_table_column` VALUES (218, '29', 'founder', '创建人', 'varchar(255)', 'String', 'founder', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-08-18 11:58:12', '', '2023-09-26 17:56:35');
-INSERT INTO `gen_table_column` VALUES (219, '29', 'cuttingSize', '下料尺寸', 'float', 'Long', 'cuttingSize', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2023-08-18 11:58:12', '', '2023-09-26 17:56:35');
-INSERT INTO `gen_table_column` VALUES (220, '29', 'numberProducibleParts', '可制件数', 'varchar(255)', 'String', 'numberProducibleParts', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-08-18 11:58:12', '', '2023-09-26 17:56:35');
-INSERT INTO `gen_table_column` VALUES (221, '30', 'id', '工序编号', 'int(11)', 'Long', 'id', '1', '0', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-08-18 11:58:12', '', '2023-09-07 17:41:52');
-INSERT INTO `gen_table_column` VALUES (222, '30', 'name', '工序名称', 'varchar(255)', 'String', 'name', '1', '0', '1', '1', '1', '1', '1', 'LIKE', 'input', '', 2, 'admin', '2023-08-18 11:58:12', '', '2023-09-07 17:41:52');
-INSERT INTO `gen_table_column` VALUES (223, '30', 'content', '工序内容', 'varchar(255)', 'String', 'content', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'editor', '', 3, 'admin', '2023-08-18 11:58:12', '', '2023-09-07 17:41:52');
-INSERT INTO `gen_table_column` VALUES (225, '30', 'usedTooling', '所用工装', 'varchar(255)', 'String', 'usedTooling', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-08-18 11:58:12', '', '2023-09-07 17:41:52');
-INSERT INTO `gen_table_column` VALUES (226, '30', 'preparationHours', '准备工时', 'varchar(255)', 'String', 'preparationHours', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2023-08-18 11:58:12', '', '2023-09-07 17:41:52');
-INSERT INTO `gen_table_column` VALUES (227, '30', 'taktTime', '单件工时', 'varchar(255)', 'String', 'taktTime', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 7, 'admin', '2023-08-18 11:58:12', '', '2023-09-07 17:41:52');
-INSERT INTO `gen_table_column` VALUES (228, '30', 'laborCost', '工时成本', 'varchar(255)', 'String', 'laborCost', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 8, 'admin', '2023-08-18 11:58:12', '', '2023-09-07 17:41:52');
-INSERT INTO `gen_table_column` VALUES (230, '30', 'diagramURL', '工序简图URL', 'varchar(255)', 'String', 'diagramURL', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 4, '', '2023-09-07 17:40:01', '', '2023-09-07 17:41:52');
-INSERT INTO `gen_table_column` VALUES (231, '30', 'outsourcing', '工序外协', 'varchar(3)', 'String', 'outsourcing', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 9, '', '2023-09-07 17:40:01', '', '2023-09-07 17:41:52');
+INSERT INTO `gen_table_column` VALUES (215, '29', 'id', '加工工艺编号', 'varchar(255)', 'String', 'id', '1', '0', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-08-18 11:58:12', '', '2023-09-27 15:21:57');
+INSERT INTO `gen_table_column` VALUES (217, '29', 'createTime', '创建日期', 'date', 'Date', 'createTime', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'datetime', '', 2, 'admin', '2023-08-18 11:58:12', '', '2023-09-27 15:21:57');
+INSERT INTO `gen_table_column` VALUES (218, '29', 'founder', '创建人', 'varchar(255)', 'String', 'founder', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-08-18 11:58:12', '', '2023-09-27 15:21:57');
+INSERT INTO `gen_table_column` VALUES (219, '29', 'cuttingSize', '下料尺寸', 'float', 'Long', 'cuttingSize', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2023-08-18 11:58:12', '', '2023-09-27 15:21:57');
+INSERT INTO `gen_table_column` VALUES (220, '29', 'numberProducibleParts', '可制件数', 'varchar(255)', 'String', 'numberProducibleParts', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-08-18 11:58:12', '', '2023-09-27 15:21:57');
+INSERT INTO `gen_table_column` VALUES (221, '30', 'id', '工序编号', 'int(11)', 'Long', 'id', '1', '0', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-08-18 11:58:12', '', '2023-09-27 15:32:21');
+INSERT INTO `gen_table_column` VALUES (222, '30', 'name', '工序名称', 'varchar(255)', 'String', 'name', '1', '0', '1', '1', '1', '1', '1', 'LIKE', 'input', '', 2, 'admin', '2023-08-18 11:58:12', '', '2023-09-27 15:32:21');
+INSERT INTO `gen_table_column` VALUES (223, '30', 'content', '工序内容', 'varchar(255)', 'String', 'content', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'editor', '', 3, 'admin', '2023-08-18 11:58:12', '', '2023-09-27 15:32:21');
+INSERT INTO `gen_table_column` VALUES (225, '30', 'usedTooling', '所用工装', 'varchar(255)', 'String', 'usedTooling', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-08-18 11:58:12', '', '2023-09-27 15:32:21');
+INSERT INTO `gen_table_column` VALUES (226, '30', 'preparationHours', '准备工时', 'varchar(255)', 'String', 'preparationHours', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2023-08-18 11:58:12', '', '2023-09-27 15:32:21');
+INSERT INTO `gen_table_column` VALUES (227, '30', 'taktTime', '单件工时', 'varchar(255)', 'String', 'taktTime', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 7, 'admin', '2023-08-18 11:58:12', '', '2023-09-27 15:32:21');
+INSERT INTO `gen_table_column` VALUES (228, '30', 'laborCost', '工时成本', 'varchar(255)', 'String', 'laborCost', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 8, 'admin', '2023-08-18 11:58:12', '', '2023-09-27 15:32:21');
+INSERT INTO `gen_table_column` VALUES (230, '30', 'diagramURL', '工序简图URL', 'varchar(255)', 'String', 'diagramURL', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 4, '', '2023-09-07 17:40:01', '', '2023-09-27 15:32:21');
+INSERT INTO `gen_table_column` VALUES (231, '30', 'outsourcing', '工序外协#0为不外协1为外协#', 'varchar(3)', 'String', 'outsourcing', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 9, '', '2023-09-07 17:40:01', '', '2023-09-27 15:32:21');
 INSERT INTO `gen_table_column` VALUES (232, '31', 'id', '二维码唯一标识符', 'int(11)', 'Long', 'id', '1', '0', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-09-18 02:27:58', '', '2023-09-18 02:29:03');
 INSERT INTO `gen_table_column` VALUES (233, '31', 'fileurl', '文件地址', 'varchar(255)', 'String', 'fileurl', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2023-09-18 02:27:58', '', '2023-09-18 02:29:03');
 INSERT INTO `gen_table_column` VALUES (234, '31', 'processingprocessID', '工序对应编号', 'int(255)', 'Long', 'processingprocessID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-09-18 02:27:58', '', '2023-09-18 02:29:03');
 INSERT INTO `gen_table_column` VALUES (235, '31', 'createTime', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'datetime', '', 4, 'admin', '2023-09-18 02:27:58', '', '2023-09-18 02:29:03');
 INSERT INTO `gen_table_column` VALUES (236, '31', 'effectiveDuration', '有效时长', 'varchar(255)', 'String', 'effectiveDuration', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-09-18 02:27:58', '', '2023-09-18 02:29:03');
-INSERT INTO `gen_table_column` VALUES (237, '32', 'id', '编号', 'int(11)', 'Long', 'id', '1', '1', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-09-26 16:20:38', '', '2023-09-26 16:44:09');
-INSERT INTO `gen_table_column` VALUES (238, '32', 'nameOfQualityInspection', '质检名称', 'varchar(255)', 'String', 'nameOfQualityInspection', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2023-09-26 16:20:38', '', '2023-09-26 16:44:09');
-INSERT INTO `gen_table_column` VALUES (239, '32', 'qualityInspectionCategory', '质检类别', 'varchar(255)', 'String', 'qualityInspectionCategory', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-09-26 16:20:38', '', '2023-09-26 16:44:09');
-INSERT INTO `gen_table_column` VALUES (240, '32', 'processingprocessID', '工序编号', 'int(255)', 'Long', 'processingprocessID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2023-09-26 16:20:38', '', '2023-09-26 16:44:09');
-INSERT INTO `gen_table_column` VALUES (241, '32', 'detectionQuantity', '检测数量', 'int(255)', 'Long', 'detectionQuantity', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-09-26 16:20:38', '', '2023-09-26 16:44:09');
-INSERT INTO `gen_table_column` VALUES (242, '32', 'qualifiedQuantity', '合格数量', 'int(255)', 'Long', 'qualifiedQuantity', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2023-09-26 16:20:38', '', '2023-09-26 16:44:09');
-INSERT INTO `gen_table_column` VALUES (243, '32', 'unqualifiedQuantity', '不合格数量', 'int(255)', 'Long', 'unqualifiedQuantity', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 7, 'admin', '2023-09-26 16:20:38', '', '2023-09-26 16:44:09');
-INSERT INTO `gen_table_column` VALUES (244, '32', 'numberOfRepairs', '返修数量', 'int(11)', 'Long', 'numberOfRepairs', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 8, 'admin', '2023-09-26 16:20:38', '', '2023-09-26 16:44:09');
-INSERT INTO `gen_table_column` VALUES (245, '32', 'scrappedQuantity', '报废数量', 'int(255)', 'Long', 'scrappedQuantity', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 9, 'admin', '2023-09-26 16:20:38', '', '2023-09-26 16:44:09');
-INSERT INTO `gen_table_column` VALUES (246, '32', 'testDate', '检测日期', 'datetime', 'Date', 'testDate', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'datetime', '', 10, 'admin', '2023-09-26 16:20:38', '', '2023-09-26 16:44:09');
-INSERT INTO `gen_table_column` VALUES (247, '32', 'testResult', '检测结果', 'varchar(16)', 'String', 'testResult', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 11, 'admin', '2023-09-26 16:20:38', '', '2023-09-26 16:44:09');
-INSERT INTO `gen_table_column` VALUES (248, '32', 'testingPersonnel', '检测人员', 'varchar(255)', 'String', 'testingPersonnel', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 12, 'admin', '2023-09-26 16:20:38', '', '2023-09-26 16:44:09');
-INSERT INTO `gen_table_column` VALUES (249, '32', 'note', '备注', 'varchar(255)', 'String', 'note', '0', '0', NULL, '1', '1', '0', '0', 'EQ', 'input', '', 13, 'admin', '2023-09-26 16:20:38', '', '2023-09-26 16:44:09');
+INSERT INTO `gen_table_column` VALUES (237, '32', 'id', '编号', 'int(11)', 'Long', 'id', '1', '1', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-09-26 16:20:38', '', '2023-09-27 17:14:08');
+INSERT INTO `gen_table_column` VALUES (238, '32', 'nameOfQualityInspection', '质检名称', 'varchar(255)', 'String', 'nameOfQualityInspection', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2023-09-26 16:20:38', '', '2023-09-27 17:14:08');
+INSERT INTO `gen_table_column` VALUES (239, '32', 'qualityInspectionCategory', '质检类别', 'varchar(255)', 'String', 'qualityInspectionCategory', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-09-26 16:20:38', '', '2023-09-27 17:14:08');
+INSERT INTO `gen_table_column` VALUES (240, '32', 'processingprocessID', '工序编号', 'int(255)', 'Long', 'processingprocessID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-09-26 16:20:38', '', '2023-09-27 17:14:09');
+INSERT INTO `gen_table_column` VALUES (241, '32', 'detectionQuantity', '检测数量', 'int(255)', 'Long', 'detectionQuantity', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2023-09-26 16:20:38', '', '2023-09-27 17:14:09');
+INSERT INTO `gen_table_column` VALUES (242, '32', 'qualifiedQuantity', '合格数量', 'int(255)', 'Long', 'qualifiedQuantity', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 7, 'admin', '2023-09-26 16:20:38', '', '2023-09-27 17:14:09');
+INSERT INTO `gen_table_column` VALUES (243, '32', 'unqualifiedQuantity', '不合格数量', 'int(255)', 'Long', 'unqualifiedQuantity', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 8, 'admin', '2023-09-26 16:20:38', '', '2023-09-27 17:14:09');
+INSERT INTO `gen_table_column` VALUES (244, '32', 'numberOfRepairs', '返修数量', 'int(11)', 'Long', 'numberOfRepairs', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 9, 'admin', '2023-09-26 16:20:38', '', '2023-09-27 17:14:09');
+INSERT INTO `gen_table_column` VALUES (245, '32', 'scrappedQuantity', '报废数量', 'int(255)', 'Long', 'scrappedQuantity', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 10, 'admin', '2023-09-26 16:20:38', '', '2023-09-27 17:14:09');
+INSERT INTO `gen_table_column` VALUES (246, '32', 'testDate', '检测日期', 'datetime', 'Date', 'testDate', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'datetime', '', 11, 'admin', '2023-09-26 16:20:38', '', '2023-09-27 17:14:09');
+INSERT INTO `gen_table_column` VALUES (247, '32', 'testResult', '检测结果', 'varchar(16)', 'String', 'testResult', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 12, 'admin', '2023-09-26 16:20:38', '', '2023-09-27 17:14:09');
+INSERT INTO `gen_table_column` VALUES (248, '32', 'testingPersonnel', '检测人员', 'varchar(255)', 'String', 'testingPersonnel', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 13, 'admin', '2023-09-26 16:20:38', '', '2023-09-27 17:14:09');
+INSERT INTO `gen_table_column` VALUES (249, '32', 'note', '备注', 'varchar(255)', 'String', 'note', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 14, 'admin', '2023-09-26 16:20:38', '', '2023-09-27 17:14:09');
 INSERT INTO `gen_table_column` VALUES (250, '28', 'status', '状态', 'varchar(4)', 'String', 'status', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'radio', '', 12, '', '2023-09-26 16:57:42', '', NULL);
-INSERT INTO `gen_table_column` VALUES (251, '26', 'processingTechnologyID', '工艺编号', 'varchar(255)', 'String', 'processingTechnologyID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 4, '', '2023-09-27 11:13:44', '', '2023-09-27 11:15:06');
+INSERT INTO `gen_table_column` VALUES (251, '26', 'processingTechnologyID', '工艺编号', 'varchar(255)', 'String', 'processingTechnologyID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 4, '', '2023-09-27 11:13:44', '', '2023-09-27 16:09:20');
+INSERT INTO `gen_table_column` VALUES (252, '30', 'status', '状态', 'varchar(3)', 'String', 'status', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'radio', '', 10, '', '2023-09-27 15:12:22', '', '2023-09-27 15:32:21');
+INSERT INTO `gen_table_column` VALUES (253, '29', 'status', '状态', 'varchar(3)', 'String', 'status', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'radio', '', 6, '', '2023-09-27 15:21:57', '', NULL);
+INSERT INTO `gen_table_column` VALUES (254, '26', 'status', '任务状态', 'varchar(3)', 'String', 'status', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'radio', '', 8, '', '2023-09-27 16:09:20', '', NULL);
+INSERT INTO `gen_table_column` VALUES (255, '25', 'referred', '简称', 'varchar(255)', 'String', 'referred', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, '', '2023-09-27 17:13:40', '', NULL);
+INSERT INTO `gen_table_column` VALUES (256, '32', 'ProductionTasksID', '任务编号', 'int(11)', 'Long', 'ProductionTasksID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 4, '', '2023-09-27 17:14:09', '', NULL);
 
 -- ----------------------------
 -- Table structure for qrtz_blob_triggers
@@ -4047,7 +4027,7 @@ CREATE TABLE `sys_logininfor`  (
   PRIMARY KEY (`info_id`) USING BTREE,
   INDEX `idx_sys_logininfor_s`(`status`) USING BTREE,
   INDEX `idx_sys_logininfor_lt`(`login_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 331 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 334 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -4283,6 +4263,9 @@ INSERT INTO `sys_logininfor` VALUES (327, 'admin', '127.0.0.1', '内网IP', 'Chr
 INSERT INTO `sys_logininfor` VALUES (328, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-26 17:57:15');
 INSERT INTO `sys_logininfor` VALUES (329, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-26 19:19:23');
 INSERT INTO `sys_logininfor` VALUES (330, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-27 09:53:58');
+INSERT INTO `sys_logininfor` VALUES (331, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '验证码已失效', '2023-09-27 14:25:57');
+INSERT INTO `sys_logininfor` VALUES (332, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '验证码错误', '2023-09-27 14:26:06');
+INSERT INTO `sys_logininfor` VALUES (333, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-09-27 14:26:11');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -4480,7 +4463,7 @@ CREATE TABLE `sys_oper_log`  (
   INDEX `idx_sys_oper_log_bt`(`business_type`) USING BTREE,
   INDEX `idx_sys_oper_log_s`(`status`) USING BTREE,
   INDEX `idx_sys_oper_log_ot`(`oper_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1047 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1111 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_oper_log
@@ -5432,6 +5415,70 @@ INSERT INTO `sys_oper_log` VALUES (1043, '加工工序信息', 3, 'com.awise.pro
 INSERT INTO `sys_oper_log` VALUES (1044, '加工工序信息', 3, 'com.awise.produce.controller.AwProcessingprocessController.remove()', 'DELETE', 1, 'admin', NULL, '/produce/processingprocess/1', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 11:41:34', 3);
 INSERT INTO `sys_oper_log` VALUES (1045, '加工工序信息', 3, 'com.awise.produce.controller.AwProcessingprocessController.remove()', 'DELETE', 1, 'admin', NULL, '/produce/processingprocess/3', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 11:41:47', 4);
 INSERT INTO `sys_oper_log` VALUES (1046, '加工工序信息', 1, 'com.awise.produce.controller.AwProcessingprocessController.add()', 'POST', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p>测试一下吧</p>\",\"laborCost\":\"1020\",\"name\":\"测试模板002\",\"number\":0,\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"10\",\"processingTechnologyID\":\"测试工艺001\",\"status\":\"1\",\"taktTime\":\"100\",\"usedTooling\":\"测试\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 11:45:33', 11);
+INSERT INTO `sys_oper_log` VALUES (1047, '代码生成', 2, 'com.away.generator.controller.GenController.synchDb()', 'GET', 1, 'admin', NULL, '/tool/gen/synchDb/aw_productiontasks', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 14:40:08', 113);
+INSERT INTO `sys_oper_log` VALUES (1048, '代码生成', 8, 'com.away.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"aw_productiontasks\"}', NULL, 0, NULL, '2023-09-27 14:40:18', 287);
+INSERT INTO `sys_oper_log` VALUES (1049, '客户信息', 1, 'com.awise.comprehensive.controller.AwCustomController.add()', 'POST', 1, 'admin', NULL, '/comprehensive/custom', '127.0.0.1', '内网IP', '{\"address\":\"测试\",\"cityid\":703,\"id\":\"测试\",\"isdel\":\"0\",\"name\":\"测试客户001\",\"nameAbbrevation\":\"客户001\",\"params\":{},\"type\":0,\"unifiedCreditCode\":\"123111111111111111\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 14:45:27', 193);
+INSERT INTO `sys_oper_log` VALUES (1050, '产品存储', 1, 'com.awise.order.controller.AwProductController.add()', 'POST', 1, 'admin', NULL, '/order/product', '127.0.0.1', '内网IP', '{\"drawingURL\":\"1574423314.jpg;\",\"id\":\"测试产品001\",\"name\":\"测试产品001\",\"params\":{}}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 14:46:26', 17);
+INSERT INTO `sys_oper_log` VALUES (1051, '合同存储', 1, 'com.awise.order.controller.AwContractController.add()', 'POST', 1, 'admin', NULL, '/order/contract', '127.0.0.1', '内网IP', '{\"contractURL\":\"49600785.jpg;\",\"id\":\"测试合同001\",\"money\":\"测试合同001\",\"params\":{}}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 14:46:54', 7);
+INSERT INTO `sys_oper_log` VALUES (1052, '订单', 1, 'com.awise.order.controller.AwSaleorderController.add()', 'POST', 1, 'admin', NULL, '/order/saleorder', '127.0.0.1', '内网IP', '{\"contractID\":\"测试合同001\",\"createTime\":\"2023-09-27 14:47:21\",\"createUserName\":\"admin\",\"customerID\":\"测试\",\"id\":\"20230927369887937\",\"isDel\":\"0\",\"iscustomersuppliedmaterials\":0,\"number\":100,\"orderDate\":\"2023-09-04\",\"params\":{},\"productID\":\"测试产品001\",\"requiredDeliveryTime\":\"2023-09-29\",\"state\":\"1\"}', '{\"msg\":\"操作成功\",\"code\":200,\"id\":\"20230927369887937\"}', 0, NULL, '2023-09-27 14:47:21', 17);
+INSERT INTO `sys_oper_log` VALUES (1053, '订单', 1, 'com.awise.order.controller.AwSaleorderController.add()', 'POST', 1, 'admin', NULL, '/order/saleorder', '127.0.0.1', '内网IP', '{\"contractID\":\"测试合同001\",\"createTime\":\"2023-09-27 14:49:26\",\"createUserName\":\"admin\",\"customerID\":\"测试\",\"id\":\"202309271826524035\",\"isDel\":\"0\",\"iscustomersuppliedmaterials\":0,\"number\":10,\"orderDate\":\"2023-09-29\",\"params\":{},\"productID\":\"测试产品001\",\"requiredDeliveryTime\":\"2023-09-30\",\"state\":\"1\"}', '{\"msg\":\"操作成功\",\"code\":200,\"id\":\"202309271826524035\"}', 0, NULL, '2023-09-27 14:49:26', 13);
+INSERT INTO `sys_oper_log` VALUES (1054, '订单', 1, 'com.awise.order.controller.AwSaleorderController.add()', 'POST', 1, 'admin', NULL, '/order/saleorder', '127.0.0.1', '内网IP', '{\"createTime\":\"2023-09-27 14:51:41\",\"createUserName\":\"admin\",\"customerID\":\"测试\",\"id\":\"202309272082236114\",\"isDel\":\"0\",\"iscustomersuppliedmaterials\":0,\"number\":1023,\"orderDate\":\"2023-09-12\",\"params\":{},\"productID\":\"测试产品001\",\"requiredDeliveryTime\":\"2023-09-30\",\"state\":\"1\"}', '{\"msg\":\"操作成功\",\"code\":200,\"id\":\"202309272082236114\"}', 0, NULL, '2023-09-27 14:51:41', 6);
+INSERT INTO `sys_oper_log` VALUES (1055, '订单附加信息', 1, 'com.awise.order.controller.AwAdditionalController.add()', 'POST', 1, 'admin', NULL, '/order/additional', '127.0.0.1', '内网IP', '{\"id\":1,\"key\":\"撒旦法\",\"params\":{},\"saleorderID\":\"202309272082236114\",\"value\":\"阿斯蒂芬\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 14:51:41', 18);
+INSERT INTO `sys_oper_log` VALUES (1056, '订单附加信息', 1, 'com.awise.order.controller.AwAdditionalController.add()', 'POST', 1, 'admin', NULL, '/order/additional', '127.0.0.1', '内网IP', '{\"id\":2,\"key\":\"阿斯顿发的\",\"params\":{},\"saleorderID\":\"202309272082236114\",\"value\":\"盛大\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 14:51:41', 5);
+INSERT INTO `sys_oper_log` VALUES (1057, '订单附加信息', 1, 'com.awise.order.controller.AwAdditionalController.add()', 'POST', 1, 'admin', NULL, '/order/additional', '127.0.0.1', '内网IP', '{\"id\":3,\"key\":\"到底是\",\"params\":{},\"saleorderID\":\"202309272082236114\",\"value\":\"沙发\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 14:51:42', 19);
+INSERT INTO `sys_oper_log` VALUES (1058, '订单', 3, 'com.awise.order.controller.AwSaleorderController.remove()', 'DELETE', 1, 'admin', NULL, '/order/saleorder/202309271826524035,20230927369887937,202309272082236114', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 15:00:09', 8);
+INSERT INTO `sys_oper_log` VALUES (1059, '订单', 1, 'com.awise.order.controller.AwSaleorderController.add()', 'POST', 1, 'admin', NULL, '/order/saleorder', '127.0.0.1', '内网IP', '{\"contractID\":\"测试合同001\",\"createTime\":\"2023-09-27 15:00:31\",\"createUserName\":\"admin\",\"customerID\":\"测试\",\"id\":\"202309271467597281\",\"isDel\":\"0\",\"iscustomersuppliedmaterials\":0,\"number\":213,\"orderDate\":\"2023-09-04\",\"params\":{},\"productID\":\"测试产品001\",\"requiredDeliveryTime\":\"2023-09-29\",\"state\":\"1\"}', '{\"msg\":\"操作成功\",\"code\":200,\"id\":\"202309271467597281\"}', 0, NULL, '2023-09-27 15:00:31', 14);
+INSERT INTO `sys_oper_log` VALUES (1060, '订单附加信息', 1, 'com.awise.order.controller.AwAdditionalController.add()', 'POST', 1, 'admin', NULL, '/order/additional', '127.0.0.1', '内网IP', '{\"id\":4,\"key\":\"撒旦法萨芬\",\"params\":{},\"saleorderID\":\"202309271467597281\",\"value\":\"是打发\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 15:00:32', 5);
+INSERT INTO `sys_oper_log` VALUES (1061, '订单附加信息', 1, 'com.awise.order.controller.AwAdditionalController.add()', 'POST', 1, 'admin', NULL, '/order/additional', '127.0.0.1', '内网IP', '{\"id\":5,\"key\":\"三大法师的\",\"params\":{},\"saleorderID\":\"202309271467597281\",\"value\":\"是打发\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 15:00:32', 5);
+INSERT INTO `sys_oper_log` VALUES (1062, '订单附加信息', 1, 'com.awise.order.controller.AwAdditionalController.add()', 'POST', 1, 'admin', NULL, '/order/additional', '127.0.0.1', '内网IP', '{\"id\":6,\"key\":\"大沙发的说\",\"params\":{},\"saleorderID\":\"202309271467597281\",\"value\":\"是打发\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 15:00:32', 4);
+INSERT INTO `sys_oper_log` VALUES (1063, '订单附加信息', 1, 'com.awise.order.controller.AwAdditionalController.add()', 'POST', 1, 'admin', NULL, '/order/additional', '127.0.0.1', '内网IP', '{\"id\":7,\"key\":\"的说法\",\"params\":{},\"saleorderID\":\"202309271467597281\",\"value\":\"的说法\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 15:00:32', 3);
+INSERT INTO `sys_oper_log` VALUES (1064, '工序模板', 1, 'com.awise.produce.controller.AwProcesstemplateController.add()', 'POST', 1, 'admin', NULL, '/produce/processtemplate', '127.0.0.1', '内网IP', '{\"content\":\"<p>测试一下焊接</p>\",\"laborCost\":\"123\",\"name\":\"焊接\",\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"1231\",\"taktTime\":\"199\",\"usedTooling\":\"1321\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'status\' doesn\'t have a default value\r\n### The error may exist in URL [jar:file:/F:/programme/java/jxsd/away-admin/target/away-admin.jar!/BOOT-INF/lib/awise-produce-3.8.5.jar!/mapper/produce/AwProcesstemplateMapper.xml]\r\n### The error may involve com.awise.produce.mapper.AwProcesstemplateMapper.insertAwProcesstemplate-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into aw_processtemplate          ( name,             content,                          usedTooling,             preparationHours,             taktTime,             laborCost,             outsourcing )           values ( ?,             ?,                          ?,             ?,             ?,             ?,             ? )\r\n### Cause: java.sql.SQLException: Field \'status\' doesn\'t have a default value\n; Field \'status\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'status\' doesn\'t have a default value', '2023-09-27 15:01:35', 77);
+INSERT INTO `sys_oper_log` VALUES (1065, '工序模板', 1, 'com.awise.produce.controller.AwProcesstemplateController.add()', 'POST', 1, 'admin', NULL, '/produce/processtemplate', '127.0.0.1', '内网IP', '{\"content\":\"<p>测试一下焊接</p>\",\"laborCost\":\"123\",\"name\":\"焊接\",\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"1231\",\"taktTime\":\"199\",\"usedTooling\":\"1321\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'status\' doesn\'t have a default value\r\n### The error may exist in URL [jar:file:/F:/programme/java/jxsd/away-admin/target/away-admin.jar!/BOOT-INF/lib/awise-produce-3.8.5.jar!/mapper/produce/AwProcesstemplateMapper.xml]\r\n### The error may involve com.awise.produce.mapper.AwProcesstemplateMapper.insertAwProcesstemplate-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into aw_processtemplate          ( name,             content,                          usedTooling,             preparationHours,             taktTime,             laborCost,             outsourcing )           values ( ?,             ?,                          ?,             ?,             ?,             ?,             ? )\r\n### Cause: java.sql.SQLException: Field \'status\' doesn\'t have a default value\n; Field \'status\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'status\' doesn\'t have a default value', '2023-09-27 15:01:40', 3);
+INSERT INTO `sys_oper_log` VALUES (1066, '代码生成', 2, 'com.away.generator.controller.GenController.synchDb()', 'GET', 1, 'admin', NULL, '/tool/gen/synchDb/aw_productiontasks', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 15:11:50', 97);
+INSERT INTO `sys_oper_log` VALUES (1067, '代码生成', 8, 'com.away.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"aw_productiontasks\"}', NULL, 0, NULL, '2023-09-27 15:12:04', 355);
+INSERT INTO `sys_oper_log` VALUES (1068, '代码生成', 2, 'com.away.generator.controller.GenController.synchDb()', 'GET', 1, 'admin', NULL, '/tool/gen/synchDb/aw_processtemplate', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 15:12:22', 79);
+INSERT INTO `sys_oper_log` VALUES (1069, '代码生成', 8, 'com.away.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"aw_processtemplate\"}', NULL, 0, NULL, '2023-09-27 15:12:25', 78);
+INSERT INTO `sys_oper_log` VALUES (1070, '工序模板', 1, 'com.awise.produce.controller.AwProcesstemplateController.add()', 'POST', 1, 'admin', NULL, '/produce/processtemplate', '127.0.0.1', '内网IP', '{\"content\":\"<p>测试一下</p>\",\"laborCost\":\"12313\",\"name\":\"测试\",\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"12312\",\"status\":\"1\",\"taktTime\":\"1231\",\"usedTooling\":\"21321\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 15:21:01', 166);
+INSERT INTO `sys_oper_log` VALUES (1071, '加工工艺信息', 1, 'com.awise.produce.controller.AwProcessingtechnologyController.add()', 'POST', 1, 'admin', NULL, '/produce/processingtechnology', '127.0.0.1', '内网IP', '{\"createTime\":\"2023-09-27 15:21:23\",\"founder\":\"测试一下呢\",\"id\":\"测试一下呢\",\"params\":{}}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'status\' doesn\'t have a default value\r\n### The error may exist in URL [jar:file:/F:/programme/java/jxsd/away-admin/target/away-admin.jar!/BOOT-INF/lib/awise-produce-3.8.5.jar!/mapper/produce/AwProcessingtechnologyMapper.xml]\r\n### The error may involve com.awise.produce.mapper.AwProcessingtechnologyMapper.insertAwProcessingtechnology-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into aw_processingtechnology          ( id,             createTime,             founder )           values ( ?,             ?,             ? )\r\n### Cause: java.sql.SQLException: Field \'status\' doesn\'t have a default value\n; Field \'status\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'status\' doesn\'t have a default value', '2023-09-27 15:21:24', 83);
+INSERT INTO `sys_oper_log` VALUES (1072, '代码生成', 2, 'com.away.generator.controller.GenController.synchDb()', 'GET', 1, 'admin', NULL, '/tool/gen/synchDb/aw_processingtechnology', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 15:21:57', 85);
+INSERT INTO `sys_oper_log` VALUES (1073, '代码生成', 8, 'com.away.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"aw_processingtechnology\"}', NULL, 0, NULL, '2023-09-27 15:21:58', 281);
+INSERT INTO `sys_oper_log` VALUES (1074, '代码生成', 8, 'com.away.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"aw_processingtechnology\"}', NULL, 0, NULL, '2023-09-27 15:22:29', 59);
+INSERT INTO `sys_oper_log` VALUES (1075, '加工工艺信息', 1, 'com.awise.produce.controller.AwProcessingtechnologyController.add()', 'POST', 1, 'admin', NULL, '/produce/processingtechnology', '127.0.0.1', '内网IP', '{\"createTime\":\"2023-09-27 15:31:32\",\"founder\":\"测试\",\"id\":\"测试工艺0011\",\"params\":{},\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 15:31:32', 179);
+INSERT INTO `sys_oper_log` VALUES (1076, '加工工序信息', 1, 'com.awise.produce.controller.AwProcessingprocessController.add()', 'POST', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p>测试一下</p>\",\"laborCost\":\"12313\",\"name\":\"测试\",\"number\":0,\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"12312\",\"processingTechnologyID\":\"测试工艺0011\",\"status\":\"1\",\"taktTime\":\"1231\",\"usedTooling\":\"21321\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'\r\n### The error may exist in URL [jar:file:/F:/programme/java/jxsd/away-admin/target/away-admin.jar!/BOOT-INF/lib/awise-produce-3.8.5.jar!/mapper/produce/AwProcessingprocessMapper.xml]\r\n### The error may involve com.awise.produce.mapper.AwProcessingprocessMapper.insertAwProcessingprocess-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into aw_processingprocess          ( processingTechnologyID,             number,             name,             content,                          usedTooling,             preparationHours,             taktTime,             laborCost,             outsourcing,             status )           values ( ?,             ?,             ?,             ?,                          ?,             ?,             ?,             ?,             ?,             ? )\r\n### Cause: java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'\n; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'', '2023-09-27 15:31:51', 85);
+INSERT INTO `sys_oper_log` VALUES (1077, '加工工序信息', 1, 'com.awise.produce.controller.AwProcessingprocessController.add()', 'POST', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p>测试一下</p>\",\"laborCost\":\"12313\",\"name\":\"测试\",\"number\":0,\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"12312\",\"processingTechnologyID\":\"测试工艺0011\",\"status\":\"1\",\"taktTime\":\"1231\",\"usedTooling\":\"21321\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'\r\n### The error may exist in URL [jar:file:/F:/programme/java/jxsd/away-admin/target/away-admin.jar!/BOOT-INF/lib/awise-produce-3.8.5.jar!/mapper/produce/AwProcessingprocessMapper.xml]\r\n### The error may involve com.awise.produce.mapper.AwProcessingprocessMapper.insertAwProcessingprocess-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into aw_processingprocess          ( processingTechnologyID,             number,             name,             content,                          usedTooling,             preparationHours,             taktTime,             laborCost,             outsourcing,             status )           values ( ?,             ?,             ?,             ?,                          ?,             ?,             ?,             ?,             ?,             ? )\r\n### Cause: java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'\n; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'', '2023-09-27 15:31:58', 7);
+INSERT INTO `sys_oper_log` VALUES (1078, '代码生成', 2, 'com.away.generator.controller.GenController.synchDb()', 'GET', 1, 'admin', NULL, '/tool/gen/synchDb/aw_processtemplate', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 15:32:21', 118);
+INSERT INTO `sys_oper_log` VALUES (1079, '代码生成', 8, 'com.away.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"aw_processtemplate\"}', NULL, 0, NULL, '2023-09-27 15:32:29', 321);
+INSERT INTO `sys_oper_log` VALUES (1080, '加工工序信息', 1, 'com.awise.produce.controller.AwProcessingprocessController.add()', 'POST', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p>测试一下</p>\",\"laborCost\":\"12313\",\"name\":\"测试\",\"number\":0,\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"12312\",\"processingTechnologyID\":\"测试工艺0011\",\"status\":\"1\",\"taktTime\":\"1231\",\"usedTooling\":\"21321\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'\r\n### The error may exist in URL [jar:file:/F:/programme/java/jxsd/away-admin/target/away-admin.jar!/BOOT-INF/lib/awise-produce-3.8.5.jar!/mapper/produce/AwProcessingprocessMapper.xml]\r\n### The error may involve com.awise.produce.mapper.AwProcessingprocessMapper.insertAwProcessingprocess-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into aw_processingprocess          ( processingTechnologyID,             number,             name,             content,                          usedTooling,             preparationHours,             taktTime,             laborCost,             outsourcing,             status )           values ( ?,             ?,             ?,             ?,                          ?,             ?,             ?,             ?,             ?,             ? )\r\n### Cause: java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'\n; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'', '2023-09-27 15:35:04', 236);
+INSERT INTO `sys_oper_log` VALUES (1081, '加工工序信息', 1, 'com.awise.produce.controller.AwProcessingprocessController.add()', 'POST', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p>测试一下</p>\",\"laborCost\":\"12313\",\"name\":\"测试\",\"number\":0,\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"12312\",\"processingTechnologyID\":\"测试工艺0011\",\"status\":\"1\",\"taktTime\":\"1231\",\"usedTooling\":\"21321\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'\r\n### The error may exist in URL [jar:file:/F:/programme/java/jxsd/away-admin/target/away-admin.jar!/BOOT-INF/lib/awise-produce-3.8.5.jar!/mapper/produce/AwProcessingprocessMapper.xml]\r\n### The error may involve com.awise.produce.mapper.AwProcessingprocessMapper.insertAwProcessingprocess-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into aw_processingprocess          ( processingTechnologyID,             number,             name,             content,                          usedTooling,             preparationHours,             taktTime,             laborCost,             outsourcing,             status )           values ( ?,             ?,             ?,             ?,                          ?,             ?,             ?,             ?,             ?,             ? )\r\n### Cause: java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'\n; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'', '2023-09-27 15:35:24', 3);
+INSERT INTO `sys_oper_log` VALUES (1082, '加工工序信息', 1, 'com.awise.produce.controller.AwProcessingprocessController.add()', 'POST', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p>测试一下</p>\",\"laborCost\":\"12313\",\"name\":\"测试\",\"number\":0,\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"12312\",\"processingTechnologyID\":\"测试工艺0011\",\"status\":\"1\",\"taktTime\":\"1231\",\"usedTooling\":\"21321\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'\r\n### The error may exist in URL [jar:file:/F:/programme/java/jxsd/away-admin/target/away-admin.jar!/BOOT-INF/lib/awise-produce-3.8.5.jar!/mapper/produce/AwProcessingprocessMapper.xml]\r\n### The error may involve com.awise.produce.mapper.AwProcessingprocessMapper.insertAwProcessingprocess-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into aw_processingprocess          ( processingTechnologyID,             number,             name,             content,                          usedTooling,             preparationHours,             taktTime,             laborCost,             outsourcing,             status )           values ( ?,             ?,             ?,             ?,                          ?,             ?,             ?,             ?,             ?,             ? )\r\n### Cause: java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'\n; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'', '2023-09-27 15:38:21', 13);
+INSERT INTO `sys_oper_log` VALUES (1083, '加工工序信息', 1, 'com.awise.produce.controller.AwProcessingprocessController.add()', 'POST', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p>测试一下</p>\",\"laborCost\":\"12313\",\"name\":\"测试\",\"number\":0,\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"12312\",\"processingTechnologyID\":\"测试工艺0011\",\"status\":\"1\",\"taktTime\":\"1231\",\"usedTooling\":\"21321\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'\r\n### The error may exist in URL [jar:file:/F:/programme/java/jxsd/away-admin/target/away-admin.jar!/BOOT-INF/lib/awise-produce-3.8.5.jar!/mapper/produce/AwProcessingprocessMapper.xml]\r\n### The error may involve com.awise.produce.mapper.AwProcessingprocessMapper.insertAwProcessingprocess-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into aw_processingprocess          ( processingTechnologyID,             number,             name,             content,                          usedTooling,             preparationHours,             taktTime,             laborCost,             outsourcing,             status )           values ( ?,             ?,             ?,             ?,                          ?,             ?,             ?,             ?,             ?,             ? )\r\n### Cause: java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'\n; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'', '2023-09-27 15:39:04', 5);
+INSERT INTO `sys_oper_log` VALUES (1084, '加工工序信息', 1, 'com.awise.produce.controller.AwProcessingprocessController.add()', 'POST', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p>测试一下</p>\",\"laborCost\":\"12313\",\"name\":\"测试\",\"number\":0,\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"12312\",\"processingTechnologyID\":\"测试工艺0011\",\"status\":\"1\",\"taktTime\":\"1231\",\"usedTooling\":\"21321\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'\r\n### The error may exist in URL [jar:file:/F:/programme/java/jxsd/away-admin/target/away-admin.jar!/BOOT-INF/lib/awise-produce-3.8.5.jar!/mapper/produce/AwProcessingprocessMapper.xml]\r\n### The error may involve com.awise.produce.mapper.AwProcessingprocessMapper.insertAwProcessingprocess-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into aw_processingprocess          ( processingTechnologyID,             number,             name,             content,                          usedTooling,             preparationHours,             taktTime,             laborCost,             outsourcing,             status )           values ( ?,             ?,             ?,             ?,                          ?,             ?,             ?,             ?,             ?,             ? )\r\n### Cause: java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'\n; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'', '2023-09-27 15:39:44', 3);
+INSERT INTO `sys_oper_log` VALUES (1085, '加工工序信息', 1, 'com.awise.produce.controller.AwProcessingprocessController.add()', 'POST', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p>测试一下</p>\",\"laborCost\":\"12313\",\"name\":\"测试\",\"number\":0,\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"12312\",\"processingTechnologyID\":\"测试工艺0011\",\"status\":\"1\",\"taktTime\":\"1231\",\"usedTooling\":\"21321\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'\r\n### The error may exist in URL [jar:file:/F:/programme/java/jxsd/away-admin/target/away-admin.jar!/BOOT-INF/lib/awise-produce-3.8.5.jar!/mapper/produce/AwProcessingprocessMapper.xml]\r\n### The error may involve com.awise.produce.mapper.AwProcessingprocessMapper.insertAwProcessingprocess-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into aw_processingprocess          ( processingTechnologyID,             number,             name,             content,                          usedTooling,             preparationHours,             taktTime,             laborCost,             outsourcing,             status )           values ( ?,             ?,             ?,             ?,                          ?,             ?,             ?,             ?,             ?,             ? )\r\n### Cause: java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'\n; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'', '2023-09-27 15:40:49', 6);
+INSERT INTO `sys_oper_log` VALUES (1086, '加工工序信息', 1, 'com.awise.produce.controller.AwProcessingprocessController.add()', 'POST', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p>测试一下</p>\",\"laborCost\":\"12313\",\"name\":\"测试\",\"number\":0,\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"12312\",\"processingTechnologyID\":\"测试工艺0011\",\"status\":\"0\",\"taktTime\":\"1231\",\"usedTooling\":\"21321\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'\r\n### The error may exist in URL [jar:file:/F:/programme/java/jxsd/away-admin/target/away-admin.jar!/BOOT-INF/lib/awise-produce-3.8.5.jar!/mapper/produce/AwProcessingprocessMapper.xml]\r\n### The error may involve com.awise.produce.mapper.AwProcessingprocessMapper.insertAwProcessingprocess-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into aw_processingprocess          ( processingTechnologyID,             number,             name,             content,                          usedTooling,             preparationHours,             taktTime,             laborCost,             outsourcing,             status )           values ( ?,             ?,             ?,             ?,                          ?,             ?,             ?,             ?,             ?,             ? )\r\n### Cause: java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'\n; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'', '2023-09-27 15:55:56', 277);
+INSERT INTO `sys_oper_log` VALUES (1087, '加工工序信息', 1, 'com.awise.produce.controller.AwProcessingprocessController.add()', 'POST', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p>测试一下</p>\",\"laborCost\":\"12313\",\"name\":\"测试\",\"number\":0,\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"12312\",\"processingTechnologyID\":\"测试工艺0011\",\"status\":\"0\",\"taktTime\":\"1231\",\"usedTooling\":\"21321\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'\r\n### The error may exist in URL [jar:file:/F:/programme/java/jxsd/away-admin/target/away-admin.jar!/BOOT-INF/lib/awise-produce-3.8.5.jar!/mapper/produce/AwProcessingprocessMapper.xml]\r\n### The error may involve com.awise.produce.mapper.AwProcessingprocessMapper.insertAwProcessingprocess-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into aw_processingprocess          ( processingTechnologyID,             number,             name,             content,                          usedTooling,             preparationHours,             taktTime,             laborCost,             outsourcing,             status )           values ( ?,             ?,             ?,             ?,                          ?,             ?,             ?,             ?,             ?,             ? )\r\n### Cause: java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'\n; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: Unknown column \'status\' in \'field list\'', '2023-09-27 15:58:33', 7);
+INSERT INTO `sys_oper_log` VALUES (1088, '加工工序信息', 1, 'com.awise.produce.controller.AwProcessingprocessController.add()', 'POST', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p>测试一下</p>\",\"laborCost\":\"12313\",\"name\":\"测试\",\"number\":0,\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"12312\",\"processingTechnologyID\":\"测试工艺0011\",\"taktTime\":\"1231\",\"usedTooling\":\"21321\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 15:59:17', 16);
+INSERT INTO `sys_oper_log` VALUES (1089, '生产任务单', 1, 'com.awise.produce.controller.AwProductiontasklistController.add()', 'POST', 1, 'admin', NULL, '/produce/productiontasklist', '127.0.0.1', '内网IP', '{\"createTime\":\"2023-09-27 16:01:26\",\"founder\":\"admin\",\"id\":1,\"params\":{},\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200,\"id\":1}', 0, NULL, '2023-09-27 16:01:27', 25);
+INSERT INTO `sys_oper_log` VALUES (1090, '生产任务', 1, 'com.awise.produce.controller.AwProductiontasksController.add()', 'POST', 1, 'admin', NULL, '/produce/productiontasks', '127.0.0.1', '内网IP', '{\"id\":1,\"outsourced\":\"0\",\"params\":{},\"processingTechnologyID\":\"测试工艺0011\",\"productionTasksFormID\":1,\"saleOrderID\":\"202309271467597281\",\"serialNum\":0}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 16:01:27', 25);
+INSERT INTO `sys_oper_log` VALUES (1091, '代码生成', 2, 'com.away.generator.controller.GenController.synchDb()', 'GET', 1, 'admin', NULL, '/tool/gen/synchDb/aw_productiontasks', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 16:02:51', 95);
+INSERT INTO `sys_oper_log` VALUES (1092, '代码生成', 2, 'com.away.generator.controller.GenController.synchDb()', 'GET', 1, 'admin', NULL, '/tool/gen/synchDb/aw_productiontasks', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 16:02:56', 47);
+INSERT INTO `sys_oper_log` VALUES (1093, '代码生成', 2, 'com.away.generator.controller.GenController.synchDb()', 'GET', 1, 'admin', NULL, '/tool/gen/synchDb/aw_productiontasks', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 16:03:42', 48);
+INSERT INTO `sys_oper_log` VALUES (1094, '代码生成', 2, 'com.away.generator.controller.GenController.synchDb()', 'GET', 1, 'admin', NULL, '/tool/gen/synchDb/aw_productiontasks', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 16:08:21', 102);
+INSERT INTO `sys_oper_log` VALUES (1095, '代码生成', 2, 'com.away.generator.controller.GenController.synchDb()', 'GET', 1, 'admin', NULL, '/tool/gen/synchDb/aw_productiontasks', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 16:09:20', 66);
+INSERT INTO `sys_oper_log` VALUES (1096, '代码生成', 8, 'com.away.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"aw_productiontasks\"}', NULL, 0, NULL, '2023-09-27 16:09:28', 266);
+INSERT INTO `sys_oper_log` VALUES (1097, '生产任务单', 1, 'com.awise.produce.controller.AwProductiontasklistController.add()', 'POST', 1, 'admin', NULL, '/produce/productiontasklist', '127.0.0.1', '内网IP', '{\"createTime\":\"2023-09-27 16:12:14\",\"founder\":\"admin\",\"id\":2,\"params\":{},\"status\":\"1\"}', '{\"msg\":\"操作成功\",\"code\":200,\"id\":2}', 0, NULL, '2023-09-27 16:12:14', 194);
+INSERT INTO `sys_oper_log` VALUES (1098, '生产任务', 1, 'com.awise.produce.controller.AwProductiontasksController.add()', 'POST', 1, 'admin', NULL, '/produce/productiontasks', '127.0.0.1', '内网IP', '{\"id\":1,\"outsourced\":\"0\",\"params\":{},\"processingTechnologyID\":\"测试工艺0011\",\"productionTasksFormID\":2,\"saleOrderID\":\"202309271467597281\",\"serialNum\":0,\"status\":\"1\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 16:12:14', 16);
+INSERT INTO `sys_oper_log` VALUES (1099, '生产任务', 3, 'com.awise.produce.controller.AwProductiontasksController.removeByProductionTasksFormIDs()', 'DELETE', 1, 'admin', NULL, '/produce/productiontasks/remove/1', '127.0.0.1', '内网IP', '{}', NULL, 1, 'Invalid bound statement (not found): com.awise.produce.mapper.AwProductiontasksMapper.deleteAwProductiontasksByProductionTasksFormIDs', '2023-09-27 16:12:17', 1);
+INSERT INTO `sys_oper_log` VALUES (1100, '生产任务', 3, 'com.awise.produce.controller.AwProductiontasksController.removeByProductionTasksFormIDs()', 'DELETE', 1, 'admin', NULL, '/produce/productiontasks/remove/1', '127.0.0.1', '内网IP', '{}', NULL, 1, 'Invalid bound statement (not found): com.awise.produce.mapper.AwProductiontasksMapper.deleteAwProductiontasksByProductionTasksFormIDs', '2023-09-27 16:12:24', 1);
+INSERT INTO `sys_oper_log` VALUES (1101, '生产任务单', 3, 'com.awise.produce.controller.AwProductiontasklistController.remove()', 'DELETE', 1, 'admin', NULL, '/produce/productiontasklist/1', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 16:15:57', 7);
+INSERT INTO `sys_oper_log` VALUES (1102, '加工工序信息', 1, 'com.awise.produce.controller.AwProcessingprocessController.add()', 'POST', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p>测试一下</p>\",\"laborCost\":\"12313\",\"name\":\"测试\",\"number\":0,\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"12312\",\"processingTechnologyID\":\"测试工艺0011\",\"status\":\"1\",\"taktTime\":\"1231\",\"usedTooling\":\"21321\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 16:20:41', 15);
+INSERT INTO `sys_oper_log` VALUES (1103, '加工工序信息', 1, 'com.awise.produce.controller.AwProcessingprocessController.add()', 'POST', 1, 'admin', NULL, '/produce/processingprocess', '127.0.0.1', '内网IP', '{\"content\":\"<p>测试一下</p>\",\"laborCost\":\"12313\",\"name\":\"测试\",\"number\":2,\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"12312\",\"processingTechnologyID\":\"测试工艺0011\",\"status\":\"1\",\"taktTime\":\"1231\",\"usedTooling\":\"21321\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 16:20:54', 16);
+INSERT INTO `sys_oper_log` VALUES (1104, '工序模板', 1, 'com.awise.produce.controller.AwProcesstemplateController.add()', 'POST', 1, 'admin', NULL, '/produce/processtemplate', '127.0.0.1', '内网IP', '{\"content\":\"<p>测试一下</p>\",\"laborCost\":\"123\",\"name\":\"测试工艺2\",\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"123\",\"status\":\"1\",\"taktTime\":\"123\",\"usedTooling\":\"213\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 16:28:32', 16);
+INSERT INTO `sys_oper_log` VALUES (1105, '工序模板', 1, 'com.awise.produce.controller.AwProcesstemplateController.add()', 'POST', 1, 'admin', NULL, '/produce/processtemplate', '127.0.0.1', '内网IP', '{\"content\":\"<p>123131</p>\",\"laborCost\":\"123\",\"name\":\"测试工艺3\",\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"123\",\"status\":\"1\",\"taktTime\":\"123\",\"usedTooling\":\"123\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 16:28:56', 3);
+INSERT INTO `sys_oper_log` VALUES (1106, '工序模板', 1, 'com.awise.produce.controller.AwProcesstemplateController.add()', 'POST', 1, 'admin', NULL, '/produce/processtemplate', '127.0.0.1', '内网IP', '{\"content\":\"<p>撒打发</p>\",\"laborCost\":\"123\",\"name\":\"测试工序4\",\"outsourcing\":\"0\",\"params\":{},\"preparationHours\":\"213\",\"status\":\"0\",\"taktTime\":\"123\",\"usedTooling\":\"12\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 16:35:58', 3);
+INSERT INTO `sys_oper_log` VALUES (1107, '代码生成', 2, 'com.away.generator.controller.GenController.synchDb()', 'GET', 1, 'admin', NULL, '/tool/gen/synchDb/aw_productiontasklist', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 17:13:40', 151);
+INSERT INTO `sys_oper_log` VALUES (1108, '代码生成', 8, 'com.away.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"aw_productiontasklist\"}', NULL, 0, NULL, '2023-09-27 17:13:50', 435);
+INSERT INTO `sys_oper_log` VALUES (1109, '代码生成', 2, 'com.away.generator.controller.GenController.synchDb()', 'GET', 1, 'admin', NULL, '/tool/gen/synchDb/aw_processinspection', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-09-27 17:14:09', 88);
+INSERT INTO `sys_oper_log` VALUES (1110, '代码生成', 8, 'com.away.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"aw_processinspection\"}', NULL, 0, NULL, '2023-09-27 17:14:19', 130);
 
 -- ----------------------------
 -- Table structure for sys_post
@@ -5656,7 +5703,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', '超级管理员', '00', '000@00.com', '15800000000', '0', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2023-09-27 09:53:58', 'admin', '2023-06-20 09:42:08', '', '2023-09-27 09:53:58', '管理员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '超级管理员', '00', '000@00.com', '15800000000', '0', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2023-09-27 14:26:12', 'admin', '2023-06-20 09:42:08', '', '2023-09-27 14:26:11', '管理员');
 INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '2', '127.0.0.1', '2023-06-20 09:42:08', 'admin', '2023-06-20 09:42:08', '', NULL, '测试员');
 INSERT INTO `sys_user` VALUES (100, 100, 'test', 'test', '00', '', '', '0', '', '$2a$10$sBua0uP2ZH0ASchVbERRgONuyqR1fxLZj6xhbtKURJ2GtyXoINXVa', '0', '2', '127.0.0.1', '2023-06-25 09:34:58', 'admin', '2023-06-20 10:59:59', 'admin', '2023-06-25 09:34:58', NULL);
 INSERT INTO `sys_user` VALUES (101, 103, 'test', '测试用户', '00', '', '', '0', '', '$2a$10$vKRvIpvoTOxyzoRL9zUWRuJwMSQOLXyFRtI9WMazN0ZGRGb.8Aw9W', '0', '0', '127.0.0.1', '2023-08-11 16:56:10', 'admin', '2023-08-11 16:37:53', 'admin', '2023-08-11 16:56:09', '管理员');

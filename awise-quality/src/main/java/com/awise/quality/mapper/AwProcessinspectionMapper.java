@@ -7,7 +7,7 @@ import com.awise.quality.domain.AwProcessinspection;
  * 过程检验Mapper接口
  * 
  * @author awise
- * @date 2023-09-26
+ * @date 2023-09-27
  */
 public interface AwProcessinspectionMapper 
 {

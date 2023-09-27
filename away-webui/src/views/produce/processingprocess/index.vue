@@ -78,7 +78,7 @@
           <el-col :span="12">
             <span class="el-form-item__label" style="font-weight: 700;padding-left: 12px;">模板选择</span>
             <div style="margin-bottom: 22px;">
-              <el-select v-model="processtemplate" placeholder="模板工序">
+              <el-select v-model="processtemplate_name" placeholder="模板工序">
                 <el-option v-for="item, index in processtemplate_list" :key="index" :label="item.name"
                   @click.native="setProcesstemplate(item)" :value="item.key"></el-option>
               </el-select>
@@ -284,7 +284,7 @@ export default {
         usedTooling: [
           { required: true, message: "所用工装不能为空", trigger: "blur" }
         ],
-        status:[
+        status: [
           { required: true, message: "请选择工序状态", trigger: "blur" }
         ],
         preparationHours: [
@@ -311,7 +311,7 @@ export default {
         { key: "1", value: "是" }
       ],
       // 当前模板工序
-      processtemplate: null,
+      processtemplate_name: null,
       // 模板工序列表
       processtemplate_list: [],
       // 二维码
@@ -344,7 +344,7 @@ export default {
     },
     /** 查询模板工序列表 */
     getListProcesstemplate() {
-      listProcesstemplate().then((response) => {
+      listProcesstemplate({status:"1"}).then((response) => {
         this.processtemplate_list = response.rows;
       })
     },
@@ -377,19 +377,23 @@ export default {
     },
     // 设置模板
     async setProcesstemplate(processtemplate) {
+      this.processtemplate_name = processtemplate.name
       Object.keys(processtemplate).forEach((key) => {
-        if (key != "id") {
+        if (key != "id" && key != "status") {
           this.form[key] = processtemplate[key]
         }
       });
-      let num = 0;
-      let urls = processtemplate.diagramURL.split(";");
-      urls.pop();
       this.fileList = []
-      for (num in urls) {
-        let tmp = await fileDownload(urls[num]);
-        this.fileList.push({ 'url': tmp.getUrl(), "raw": tmp.getFile() })
+      if (processtemplate.diagramURL != null) {
+        let num = 0;
+        let urls = processtemplate.diagramURL.split(";");
+        urls.pop();
+        for (num in urls) {
+          let tmp = await fileDownload(urls[num]);
+          this.fileList.push({ 'url': tmp.getUrl(), "raw": tmp.getFile() })
+        }
       }
+
     },
     // 取消按钮
     cancel() {
@@ -410,8 +414,8 @@ export default {
         preparationHours: null,
         taktTime: null,
         laborCost: null,
-        outsourcing: null,
-        status: null
+        outsourcing: "0",
+        status: "0"
       };
       this.fileList = []
       this.resetForm("form");
@@ -439,10 +443,12 @@ export default {
         this.view_form = response.data;
         this.view_form.files = [];
         let num = 0;
-        let urls = response.data.diagramURL.split(";");
-        urls.pop();
-        for (num in urls) {
-          await this.fileDown(urls[num]);
+        if (response.data.diagramURL != null) {
+          let urls = response.data.diagramURL.split(";");
+          urls.pop();
+          for (num in urls) {
+            await this.fileDown(urls[num]);
+          }
         }
         this.view_open = true;
       });

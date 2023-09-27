@@ -2,36 +2,19 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="创建日期" prop="createTime">
-        <el-date-picker clearable
-          v-model="queryParams.createTime"
-          type="date"
-          value-format="yyyy-MM-dd"
+        <el-date-picker clearable v-model="queryParams.createTime" type="date" value-format="yyyy-MM-dd"
           placeholder="请选择创建日期">
         </el-date-picker>
       </el-form-item>
       <el-form-item label="创建人" prop="founder">
-        <el-input
-          v-model="queryParams.founder"
-          placeholder="请输入创建人"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.founder" placeholder="请输入创建人" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
       <el-form-item label="下料尺寸" prop="cuttingSize">
-        <el-input
-          v-model="queryParams.cuttingSize"
-          placeholder="请输入下料尺寸"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.cuttingSize" placeholder="请输入下料尺寸" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
       <el-form-item label="可制件数" prop="numberProducibleParts">
-        <el-input
-          v-model="queryParams.numberProducibleParts"
-          placeholder="请输入可制件数"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.numberProducibleParts" placeholder="请输入可制件数" clearable
+          @keyup.enter.native="handleQuery" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -41,46 +24,20 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['produce:processingtechnology:add']"
-        >新增</el-button>
+        <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
+          v-hasPermi="['produce:processingtechnology:add']">新增</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['produce:processingtechnology:edit']"
-        >修改</el-button>
+        <el-button type="success" plain icon="el-icon-edit" size="mini" :disabled="single" @click="handleUpdate"
+          v-hasPermi="['produce:processingtechnology:edit']">修改</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['produce:processingtechnology:remove']"
-        >删除</el-button>
+        <el-button type="danger" plain icon="el-icon-delete" size="mini" :disabled="multiple" @click="handleDelete"
+          v-hasPermi="['produce:processingtechnology:remove']">删除</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['produce:processingtechnology:export']"
-        >导出</el-button>
+        <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport"
+          v-hasPermi="['produce:processingtechnology:export']">导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -96,55 +53,62 @@
       <el-table-column label="创建人" align="center" prop="founder" />
       <el-table-column label="下料尺寸" align="center" prop="cuttingSize" />
       <el-table-column label="可制件数" align="center" prop="numberProducibleParts" />
+      <el-table-column label="状态" align="center">
+        <template slot-scope="scope">
+          {{ getValue(state_options, scope.row.status) }}
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-view"
-            @click="jumpDetailPage(scope.row)"
-          >详细</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['produce:processingtechnology:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['produce:processingtechnology:remove']"
-          >删除</el-button>
+          <el-button size="mini" type="text" icon="el-icon-view" @click="jumpDetailPage(scope.row)">详细</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
+            v-hasPermi="['produce:processingtechnology:edit']">修改</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
+            v-hasPermi="['produce:processingtechnology:remove']">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+    <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
+      @pagination="getList" />
 
     <!-- 添加或修改加工工艺信息对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="工艺编号" prop="id">
-          <el-input v-model="form.id" placeholder="请输入工艺编号" />
-        </el-form-item>
-        <el-form-item label="创建人" prop="founder">
-          <el-input v-model="form.founder" placeholder="请输入创建人" />
-        </el-form-item>
-        <el-form-item label="下料尺寸" prop="cuttingSize">
-          <el-input v-model="form.cuttingSize" placeholder="请输入下料尺寸" />
-        </el-form-item>
-        <el-form-item label="可制件数" prop="numberProducibleParts">
-          <el-input v-model="form.numberProducibleParts" placeholder="请输入可制件数" />
-        </el-form-item>
+        <el-row :gutter="12">
+          <el-col :span="12">
+            <el-form-item label="状态" prop="status">
+              <el-select v-model="form.status" placeholder="请选择状态">
+                <el-option v-for="item, index in state_options" :key="index" :label="item.value"
+                  :value="item.key"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="12">
+          <el-col :span="12">
+            <el-form-item label="工艺编号" prop="id">
+              <el-input v-model="form.id" placeholder="请输入工艺编号" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="创建人" prop="founder">
+              <el-input v-model="form.founder" placeholder="请输入创建人" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="12">
+          <el-col :span="12">
+            <el-form-item label="下料尺寸" prop="cuttingSize">
+              <el-input v-model="form.cuttingSize" placeholder="请输入下料尺寸" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="可制件数" prop="numberProducibleParts">
+              <el-input v-model="form.numberProducibleParts" placeholder="请输入可制件数" />
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -181,6 +145,16 @@ export default {
       open: false,
       // 是否新增
       is_add: true,
+      // 工艺状态
+      state_options: [
+        { key: "0", value: "未发布" },
+        { key: "1", value: "发布" },
+        { key: "2", value: "生产中" },
+        { key: "3", value: "生产完成" },
+        { key: "4", value: "质检中" },
+        { key: "5", value: "生产合格" },
+        { key: "6", value: "生产不合格" }
+      ],
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -188,13 +162,14 @@ export default {
         createTime: null,
         founder: null,
         cuttingSize: null,
-        numberProducibleParts: null
+        numberProducibleParts: null,
+        status: null
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        id:[
+        id: [
           { required: true, message: "工艺编号不能为空", trigger: "blur" }
         ],
         createTime: [
@@ -203,6 +178,9 @@ export default {
         founder: [
           { required: true, message: "创建人不能为空", trigger: "blur" }
         ],
+        status: [
+          { required: true, message: "创建人不能为空", trigger: "blur" }
+        ]
       }
     };
   },
@@ -231,7 +209,8 @@ export default {
         createTime: null,
         founder: null,
         cuttingSize: null,
-        numberProducibleParts: null
+        numberProducibleParts: null,
+        status: "0"
       };
       this.resetForm("form");
     },
@@ -248,13 +227,13 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 跳转详情页面 */
-    async jumpDetailPage(row){
+    async jumpDetailPage(row) {
       let id = row.id;
-      this.$router.push({ name:"Processingprocess", query:{ id:id} })
+      this.$router.push({ name: "Processingprocess", query: { id: id } })
 
     },
     /** 新增按钮操作 */
@@ -298,18 +277,28 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除加工工艺信息编号为"' + ids + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除加工工艺信息编号为"' + ids + '"的数据项？').then(function () {
         return delProcessingtechnology(ids);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      }).catch(() => { });
     },
     /** 导出按钮操作 */
     handleExport() {
       this.download('produce/processingtechnology/export', {
         ...this.queryParams
       }, `processingtechnology_${new Date().getTime()}.xlsx`)
+    },
+    // 取出key对应的value
+    getValue(dict, key) {
+      let num = 0
+      for (num in dict) {
+        if (dict[num]["key"] == key) {
+          return dict[num]["value"]
+        }
+      }
+      return "未知状态"
     }
   }
 };

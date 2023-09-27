@@ -11,7 +11,7 @@ import com.away.common.core.domain.BaseEntity;
  * 过程检验对象 aw_processinspection
  * 
  * @author awise
- * @date 2023-09-26
+ * @date 2023-09-27
  */
 public class AwProcessinspection extends BaseEntity
 {
@@ -27,6 +27,10 @@ public class AwProcessinspection extends BaseEntity
     /** 质检类别 */
     @Excel(name = "质检类别")
     private String qualityInspectionCategory;
+
+    /** 任务编号 */
+    @Excel(name = "任务编号")
+    private Long ProductionTasksID;
 
     /** 工序编号 */
     @Excel(name = "工序编号")
@@ -66,6 +70,7 @@ public class AwProcessinspection extends BaseEntity
     private String testingPersonnel;
 
     /** 备注 */
+    @Excel(name = "备注")
     private String note;
 
     public void setId(Long id) 
@@ -94,6 +99,15 @@ public class AwProcessinspection extends BaseEntity
     public String getQualityInspectionCategory() 
     {
         return qualityInspectionCategory;
+    }
+    public void setProductionTasksID(Long ProductionTasksID) 
+    {
+        this.ProductionTasksID = ProductionTasksID;
+    }
+
+    public Long getProductionTasksID() 
+    {
+        return ProductionTasksID;
     }
     public void setProcessingprocessID(Long processingprocessID) 
     {
@@ -192,6 +206,7 @@ public class AwProcessinspection extends BaseEntity
             .append("id", getId())
             .append("nameOfQualityInspection", getNameOfQualityInspection())
             .append("qualityInspectionCategory", getQualityInspectionCategory())
+            .append("ProductionTasksID", getProductionTasksID())
             .append("processingprocessID", getProcessingprocessID())
             .append("detectionQuantity", getDetectionQuantity())
             .append("qualifiedQuantity", getQualifiedQuantity())

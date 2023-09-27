@@ -9,7 +9,7 @@ import com.away.common.core.domain.BaseEntity;
  * 加工工艺信息对象 aw_processingtechnology
  * 
  * @author awise
- * @date 2023-09-26
+ * @date 2023-09-27
  */
 public class AwProcessingtechnology extends BaseEntity
 {
@@ -29,6 +29,10 @@ public class AwProcessingtechnology extends BaseEntity
     /** 可制件数 */
     @Excel(name = "可制件数")
     private String numberProducibleParts;
+
+    /** 状态 */
+    @Excel(name = "状态")
+    private String status;
 
     public void setId(String id) 
     {
@@ -66,6 +70,15 @@ public class AwProcessingtechnology extends BaseEntity
     {
         return numberProducibleParts;
     }
+    public void setStatus(String status) 
+    {
+        this.status = status;
+    }
+
+    public String getStatus() 
+    {
+        return status;
+    }
 
     @Override
     public String toString() {
@@ -75,6 +88,7 @@ public class AwProcessingtechnology extends BaseEntity
             .append("founder", getFounder())
             .append("cuttingSize", getCuttingSize())
             .append("numberProducibleParts", getNumberProducibleParts())
+            .append("status", getStatus())
             .toString();
     }
 }

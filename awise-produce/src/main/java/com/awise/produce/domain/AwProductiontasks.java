@@ -38,13 +38,13 @@ public class AwProductiontasks extends BaseEntity
     @Excel(name = "外协")
     private String outsourced;
 
-    /** 任务状态 */
-    @Excel(name = "任务状态")
-    private String status;
-
     /** 备注 */
     @Excel(name = "备注")
     private String notes;
+
+    /** 任务状态 */
+    @Excel(name = "任务状态")
+    private String status;
 
     public void setId(Long id) 
     {
@@ -100,15 +100,6 @@ public class AwProductiontasks extends BaseEntity
     {
         return outsourced;
     }
-    public void setStatus(String status) 
-    {
-        this.status = status;
-    }
-
-    public String getStatus() 
-    {
-        return status;
-    }
     public void setNotes(String notes) 
     {
         this.notes = notes;
@@ -117,6 +108,15 @@ public class AwProductiontasks extends BaseEntity
     public String getNotes() 
     {
         return notes;
+    }
+    public void setStatus(String status) 
+    {
+        this.status = status;
+    }
+
+    public String getStatus() 
+    {
+        return status;
     }
 
     @Override
@@ -128,8 +128,8 @@ public class AwProductiontasks extends BaseEntity
             .append("processingTechnologyID", getProcessingTechnologyID())
             .append("saleOrderID", getSaleOrderID())
             .append("outsourced", getOutsourced())
-            .append("status", getStatus())
             .append("notes", getNotes())
+            .append("status", getStatus())
             .toString();
     }
 }

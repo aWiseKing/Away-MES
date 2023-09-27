@@ -25,7 +25,7 @@ import com.away.common.core.page.TableDataInfo;
  * 过程检验Controller
  * 
  * @author awise
- * @date 2023-09-26
+ * @date 2023-09-27
  */
 @RestController
 @RequestMapping("/quality/processinspection")

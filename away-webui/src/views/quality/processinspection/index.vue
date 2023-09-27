@@ -17,6 +17,14 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="任务编号" prop="ProductionTasksID">
+        <el-input
+          v-model="queryParams.ProductionTasksID"
+          placeholder="请输入任务编号"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item label="工序编号" prop="processingprocessID">
         <el-input
           v-model="queryParams.processingprocessID"
@@ -89,6 +97,14 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="备注" prop="note">
+        <el-input
+          v-model="queryParams.note"
+          placeholder="请输入备注"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -146,6 +162,7 @@
       <el-table-column label="编号" align="center" prop="id" />
       <el-table-column label="质检名称" align="center" prop="nameOfQualityInspection" />
       <el-table-column label="质检类别" align="center" prop="qualityInspectionCategory" />
+      <el-table-column label="任务编号" align="center" prop="ProductionTasksID" />
       <el-table-column label="工序编号" align="center" prop="processingprocessID" />
       <el-table-column label="检测数量" align="center" prop="detectionQuantity" />
       <el-table-column label="合格数量" align="center" prop="qualifiedQuantity" />
@@ -159,6 +176,7 @@
       </el-table-column>
       <el-table-column label="检测结果" align="center" prop="testResult" />
       <el-table-column label="检测人员" align="center" prop="testingPersonnel" />
+      <el-table-column label="备注" align="center" prop="note" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -195,6 +213,9 @@
         </el-form-item>
         <el-form-item label="质检类别" prop="qualityInspectionCategory">
           <el-input v-model="form.qualityInspectionCategory" placeholder="请输入质检类别" />
+        </el-form-item>
+        <el-form-item label="任务编号" prop="ProductionTasksID">
+          <el-input v-model="form.ProductionTasksID" placeholder="请输入任务编号" />
         </el-form-item>
         <el-form-item label="工序编号" prop="processingprocessID">
           <el-input v-model="form.processingprocessID" placeholder="请输入工序编号" />
@@ -271,6 +292,7 @@ export default {
         pageSize: 10,
         nameOfQualityInspection: null,
         qualityInspectionCategory: null,
+        ProductionTasksID: null,
         processingprocessID: null,
         detectionQuantity: null,
         qualifiedQuantity: null,
@@ -280,6 +302,7 @@ export default {
         testDate: null,
         testResult: null,
         testingPersonnel: null,
+        note: null
       },
       // 表单参数
       form: {},
@@ -290,6 +313,9 @@ export default {
         ],
         qualityInspectionCategory: [
           { required: true, message: "质检类别不能为空", trigger: "blur" }
+        ],
+        ProductionTasksID: [
+          { required: true, message: "任务编号不能为空", trigger: "blur" }
         ],
         processingprocessID: [
           { required: true, message: "工序编号不能为空", trigger: "blur" }
@@ -345,6 +371,7 @@ export default {
         id: null,
         nameOfQualityInspection: null,
         qualityInspectionCategory: null,
+        ProductionTasksID: null,
         processingprocessID: null,
         detectionQuantity: null,
         qualifiedQuantity: null,
