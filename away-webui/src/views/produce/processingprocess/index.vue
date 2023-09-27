@@ -40,9 +40,9 @@
       <el-table v-loading="loading" :data="processingprocessList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="工序编号" align="center" prop="id" />
-        <el-table-column label="加工工艺" align="center" prop="processingTechnologyID" />
         <el-table-column label="工序序号" align="center" prop="number" />
         <el-table-column label="工序名称" align="center" prop="name" />
+        <el-table-column label="加工工艺" align="center" prop="processingTechnologyID" />
         <el-table-column label="所用工装" align="center" prop="usedTooling" />
         <el-table-column label="准备工时" align="center" prop="preparationHours" />
         <el-table-column label="单件工时" align="center" prop="taktTime" />
@@ -55,13 +55,10 @@
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)">详细</el-button>
-            <el-popover
-              placement="top-start"
-              width="130"
-              trigger="click"
-              >
+            <el-popover placement="top-start" width="130" trigger="click">
               <el-Image style="width: 120px;height: 120px;" :src="qrcode" :preview-src-list="[qrcode]"></el-Image>
-              <el-button slot="reference" size="mini" type="text" icon="el-icon-share" @click="getProcessingProcessQrcode(scope.row)">二维码</el-button>
+              <el-button slot="reference" size="mini" type="text" icon="el-icon-share"
+                @click="getProcessingProcessQrcode(scope.row)">二维码</el-button>
             </el-popover>
 
             <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
@@ -79,10 +76,13 @@
       <el-dialog :title="title" :visible.sync="open" :close-on-click-modal="false" width="900px" append-to-body>
         <el-row :gutter="12">
           <el-col :span="12">
-            <el-select v-model="processtemplate" placeholder="模板工序">
-                  <el-option v-for="item, index in processtemplate_list" :key="index" :label="item.name" @click.native="setProcesstemplate(item)"
-                    :value="item.key"></el-option>
-                </el-select>
+            <span class="el-form-item__label" style="font-weight: 700;padding-left: 12px;">模板选择</span>
+            <div style="margin-bottom: 22px;">
+              <el-select v-model="processtemplate" placeholder="模板工序">
+                <el-option v-for="item, index in processtemplate_list" :key="index" :label="item.name"
+                  @click.native="setProcesstemplate(item)" :value="item.key"></el-option>
+              </el-select>
+            </div>
           </el-col>
         </el-row>
 
@@ -139,7 +139,7 @@
           </el-row>
           <el-row :gutter="12">
             <el-col :span="12">
-              <el-form-item label="状态">
+              <el-form-item label="状态" prop="status">
                 <el-select v-model="form.status" placeholder="请选择状态">
                   <el-option v-for="item, index in state_options" :key="index" :label="item.value"
                     :value="item.key"></el-option>
@@ -284,6 +284,9 @@ export default {
         usedTooling: [
           { required: true, message: "所用工装不能为空", trigger: "blur" }
         ],
+        status:[
+          { required: true, message: "请选择工序状态", trigger: "blur" }
+        ],
         preparationHours: [
           { required: true, message: "准备工时不能为空", trigger: "blur" }
         ],
@@ -308,11 +311,11 @@ export default {
         { key: "1", value: "是" }
       ],
       // 当前模板工序
-      processtemplate:null,
+      processtemplate: null,
       // 模板工序列表
-      processtemplate_list:[],
+      processtemplate_list: [],
       // 二维码
-      qrcode:null
+      qrcode: null
 
     };
   },
@@ -324,10 +327,10 @@ export default {
   },
   methods: {
     async getProcessingtechnologyExist() {
-        this.processingtechnology_exist = true
-        this.processingTechnologyID = this.$route.query.id
-        this.queryParams.processingTechnologyID = this.processingTechnologyID;
-        this.getList();
+      this.processingtechnology_exist = true
+      this.processingTechnologyID = this.$route.query.id
+      this.queryParams.processingTechnologyID = this.processingTechnologyID;
+      this.getList();
     },
     /** 查询加工工序信息列表 */
     getList() {
@@ -340,15 +343,15 @@ export default {
       });
     },
     /** 查询模板工序列表 */
-    getListProcesstemplate(){
-      listProcesstemplate().then((response)=>{
+    getListProcesstemplate() {
+      listProcesstemplate().then((response) => {
         this.processtemplate_list = response.rows;
       })
     },
     /** 获取工序对应二维码 */
-    getProcessingProcessQrcode(row){
+    getProcessingProcessQrcode(row) {
       console.log(row);
-      getProcessingProcessQrcode({"processingprocessID":row.id}).then(async response => {
+      getProcessingProcessQrcode({ "processingprocessID": row.id }).then(async response => {
         let tmp = await fileDownload(response.date);
         this.qrcode = tmp.getUrl()
       })
@@ -356,14 +359,16 @@ export default {
     /** 文件上传 */
     async fileUpdate() {
       let file_list = this.$refs.upload.uploadFiles;
-      console.log(file_list);
-      let num = 0
-      let formData = new FormData();
-      for (num in file_list) {
-        formData.append('files', file_list[num].raw);
+      if (file_list.length > 0) {
+        let num = 0
+        let formData = new FormData();
+        for (num in file_list) {
+          formData.append('files', file_list[num].raw);
+        }
+        let response = await fileUpdate(formData)
+        this.form.diagramURL = response
       }
-      let response = await fileUpdate(formData)
-      this.form.diagramURL = response
+
     },
     /** 文件下载 */
     async fileDown(file_name) {
@@ -371,13 +376,16 @@ export default {
       this.view_form.files.push(tmp.getUrl());
     },
     // 设置模板
-    async setProcesstemplate(processtemplate){
-      Object.keys(processtemplate).forEach((key)=>{
-        this.form[key] = processtemplate[key]
+    async setProcesstemplate(processtemplate) {
+      Object.keys(processtemplate).forEach((key) => {
+        if (key != "id") {
+          this.form[key] = processtemplate[key]
+        }
       });
       let num = 0;
       let urls = processtemplate.diagramURL.split(";");
       urls.pop();
+      this.fileList = []
       for (num in urls) {
         let tmp = await fileDownload(urls[num]);
         this.fileList.push({ 'url': tmp.getUrl(), "raw": tmp.getFile() })
@@ -396,7 +404,7 @@ export default {
         processingTechnologyID: this.processingTechnologyID,
         number: null,
         name: null,
-        content: null,
+        content: "",
         diagramURL: null,
         usedTooling: null,
         preparationHours: null,

@@ -9,7 +9,7 @@ import com.away.common.core.domain.BaseEntity;
  * 生产任务对象 aw_productiontasks
  * 
  * @author awise
- * @date 2023-08-15
+ * @date 2023-09-27
  */
 public class AwProductiontasks extends BaseEntity
 {
@@ -25,6 +25,10 @@ public class AwProductiontasks extends BaseEntity
     /** 生产任务序号 */
     @Excel(name = "生产任务序号")
     private Long serialNum;
+
+    /** 工艺编号 */
+    @Excel(name = "工艺编号")
+    private String processingTechnologyID;
 
     /** 销售订单编号 */
     @Excel(name = "销售订单编号")
@@ -69,6 +73,15 @@ public class AwProductiontasks extends BaseEntity
     {
         return serialNum;
     }
+    public void setProcessingTechnologyID(String processingTechnologyID) 
+    {
+        this.processingTechnologyID = processingTechnologyID;
+    }
+
+    public String getProcessingTechnologyID() 
+    {
+        return processingTechnologyID;
+    }
     public void setSaleOrderID(String saleOrderID) 
     {
         this.saleOrderID = saleOrderID;
@@ -112,6 +125,7 @@ public class AwProductiontasks extends BaseEntity
             .append("id", getId())
             .append("productionTasksFormID", getProductionTasksFormID())
             .append("serialNum", getSerialNum())
+            .append("processingTechnologyID", getProcessingTechnologyID())
             .append("saleOrderID", getSaleOrderID())
             .append("outsourced", getOutsourced())
             .append("status", getStatus())

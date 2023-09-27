@@ -57,9 +57,9 @@
       <el-table-column label="准备工时" align="center" prop="preparationHours" />
       <el-table-column label="单件工时" align="center" prop="taktTime" />
       <el-table-column label="工时成本" align="center" prop="laborCost" />
-      <el-table-column label="工序外协" align="center" prop="outsourcing" >
+      <el-table-column label="工序外协" align="center" prop="outsourcing">
         <template slot-scope="scope">
-          {{ getValue(isoutsourced,scope.row.outsourcing) }}
+          {{ getValue(isoutsourced, scope.row.outsourcing) }}
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -122,7 +122,7 @@
 
         <el-row :gutter="12">
           <el-col :span="24">
-            <el-form-item label="工序内容">
+            <el-form-item label="工序内容" prop="content">
               <editor v-model="form.content" :min-height="192" />
             </el-form-item>
           </el-col>
@@ -148,7 +148,7 @@
     <!--  查看工序模板对话框 -->
     <el-dialog :title="title" :visible.sync="view_open" width="900px" append-to-body>
       <el-descriptions :column="2" border>
-        <el-descriptions-item label="工序名称" >{{ view_form.name }}</el-descriptions-item>
+        <el-descriptions-item label="工序名称">{{ view_form.name }}</el-descriptions-item>
         <el-descriptions-item label="所用工装">{{ view_form.usedTooling }}</el-descriptions-item>
 
         <el-descriptions-item label="准备工时">{{ view_form.preparationHours }}</el-descriptions-item>
@@ -216,7 +216,7 @@ export default {
       // 表单参数
       form: {},
       // 预览表单
-      view_form:{},
+      view_form: {},
       // 表单校验
       rules: {
         name: [
@@ -266,14 +266,15 @@ export default {
     /** 文件上传 */
     async fileUpdate() {
       let file_list = this.$refs.upload.uploadFiles;
-      console.log(file_list);
-      let num = 0
-      let formData = new FormData();
-      for (num in file_list) {
-        formData.append('files', file_list[num].raw);
+      if (file_list.length > 0) {
+        let num = 0
+        let formData = new FormData();
+        for (num in file_list) {
+          formData.append('files', file_list[num].raw);
+        }
+        let response = await fileUpdate(formData)
+        this.form.diagramURL = response
       }
-      let response = await fileUpdate(formData)
-      this.form.diagramURL = response
     },
     /** 文件下载 */
     async fileDown(file_name) {
@@ -392,10 +393,10 @@ export default {
       }, `processtemplate_${new Date().getTime()}.xlsx`)
     },
     // 取出key对应的value
-    getValue(dict,key){
+    getValue(dict, key) {
       let num = 0
-      for(num in dict){
-        if(dict[num]["key"] == key){
+      for (num in dict) {
+        if (dict[num]["key"] == key) {
           return dict[num]["value"]
         }
       }
