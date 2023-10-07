@@ -52,7 +52,7 @@
           <el-input v-model="form.id" placeholder="请输入合同编号" />
         </el-form-item>
         <el-form-item label="合同金额" prop="money">
-          <el-input v-model="form.money" placeholder="请输入合同金额" />
+          <el-input type="number" v-model="form.money" placeholder="请输入合同金额" />
         </el-form-item>
         <el-form-item label="合同附件上传" prop="contractURL">
           <el-upload ref="upload" :file-list="fileList" action="String" :http-request="fileUpdate" :auto-upload="false"

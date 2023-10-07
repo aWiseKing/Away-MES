@@ -196,7 +196,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -212,28 +212,64 @@
           <el-input v-model="form.nameOfQualityInspection" placeholder="请输入质检名称" />
         </el-form-item>
         <el-form-item label="质检类别" prop="qualityInspectionCategory">
-          <el-input v-model="form.qualityInspectionCategory" placeholder="请输入质检类别" />
+          <el-select v-model="form.qualityInspectionCategory" placeholder="请选择质检类别" filterable>
+            <el-option
+              v-for="item in qualityInspectionCategory_dict"
+              :key="item.key"
+              :label="item.value"
+              :value = "item.key"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="任务编号" prop="ProductionTasksID">
-          <el-input v-model="form.ProductionTasksID" placeholder="请输入任务编号" />
+        <el-form-item label="任务单" prop="Productiontasklist">
+          <el-select v-model="productiontasklist" placeholder="请选择任务单" filterable @focus="getListProductiontasklist()">
+            <el-option
+              v-for="item in productiontasklist_list"
+              :key="item.id"
+              :label="item.referred"
+              :value = "item.id"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="工序编号" prop="processingprocessID">
-          <el-input v-model="form.processingprocessID" placeholder="请输入工序编号" />
+        <el-form-item label="任务" prop="ProductionTasksID">
+          <el-select v-model="form.ProductionTasksID" :disabled="productiontasklist==null?true:false" placeholder="请选择任务" filterable @focus="getListProductiontasks()">
+            <el-option
+              v-for="item in productiontasks_list"
+              @click.native="setProcessingTechnologyID(item.processingTechnologyID)"
+              :key="item.id"
+              :label="item.id"
+              :value = "item.id"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="工序" prop="processingprocessID">
+          <el-select v-model="form.processingprocessID" :disabled="processingTechnologyID==null?true:false" placeholder="请选择工序" filterable @focus="getListProcessingprocess()">
+            <el-option
+              v-for="item in processingprocess_list"
+              :key="item.id"
+              :label="item.name"
+              :value = "item.id"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="检测数量" prop="detectionQuantity">
-          <el-input v-model="form.detectionQuantity" placeholder="请输入检测数量" />
+          <el-input type="number" v-model="form.detectionQuantity" placeholder="请输入检测数量" />
         </el-form-item>
         <el-form-item label="合格数量" prop="qualifiedQuantity">
-          <el-input v-model="form.qualifiedQuantity" placeholder="请输入合格数量" />
+          <el-input type="number" v-model="form.qualifiedQuantity" placeholder="请输入合格数量" />
         </el-form-item>
         <el-form-item label="不合格数量" prop="unqualifiedQuantity">
-          <el-input v-model="form.unqualifiedQuantity" placeholder="请输入不合格数量" />
+          <el-input type="number" v-model="form.unqualifiedQuantity" placeholder="请输入不合格数量" />
         </el-form-item>
         <el-form-item label="返修数量" prop="numberOfRepairs">
-          <el-input v-model="form.numberOfRepairs" placeholder="请输入返修数量" />
+          <el-input type="number" v-model="form.numberOfRepairs" placeholder="请输入返修数量" />
         </el-form-item>
         <el-form-item label="报废数量" prop="scrappedQuantity">
-          <el-input v-model="form.scrappedQuantity" placeholder="请输入报废数量" />
+          <el-input type="number" v-model="form.scrappedQuantity" placeholder="请输入报废数量" />
         </el-form-item>
         <el-form-item label="检测日期" prop="testDate">
           <el-date-picker clearable
@@ -244,7 +280,15 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item label="检测结果" prop="testResult">
-          <el-input v-model="form.testResult" placeholder="请输入检测结果" />
+          <el-select v-model="form.testResult" placeholder="请选择检测结果" filterable>
+            <el-option
+              v-for="item in testResult_option"
+              :key="item.key"
+              :label="item.value"
+              :value = "item.key"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="检测人员" prop="testingPersonnel">
           <el-input v-model="form.testingPersonnel" placeholder="请输入检测人员" />
@@ -263,6 +307,10 @@
 
 <script>
 import { listProcessinspection, getProcessinspection, delProcessinspection, addProcessinspection, updateProcessinspection } from "@/api/quality/processinspection";
+import { listProductiontasklist } from "@/api/produce/productiontasklist";
+import { listProductiontasks } from "@/api/produce/productiontasks";
+import { listProcessingprocess } from "@/api/produce/processingprocess";
+import { getValue } from "@/utils/utils.js";
 
 export default {
   name: "Processinspection",
@@ -314,11 +362,14 @@ export default {
         qualityInspectionCategory: [
           { required: true, message: "质检类别不能为空", trigger: "blur" }
         ],
+        Productiontasklist: [
+          { required: true, message: "任务单不能为空", trigger: "blur" }
+        ],
         ProductionTasksID: [
-          { required: true, message: "任务编号不能为空", trigger: "blur" }
+          { required: true, message: "任务不能为空", trigger: "blur" }
         ],
         processingprocessID: [
-          { required: true, message: "工序编号不能为空", trigger: "blur" }
+          { required: true, message: "工序不能为空", trigger: "blur" }
         ],
         detectionQuantity: [
           { required: true, message: "检测数量不能为空", trigger: "blur" }
@@ -344,7 +395,29 @@ export default {
         testingPersonnel: [
           { required: true, message: "检测人员不能为空", trigger: "blur" }
         ],
-      }
+      },
+      // 任务单列表
+      productiontasklist_list:[],
+      // 当前创建检验选中任务单
+      productiontasklist:null,
+      // 任务列表
+      productiontasks_list:[],
+      // 工艺选中
+      processingTechnologyID:null,
+      // 工序列表
+      processingprocess_list:[],
+      // 质检类别
+      qualityInspectionCategory_dict: [
+        { key: "0", value: "首检" },
+        { key: "1", value: "二检" },
+        { key: "2", value: "尾检" }
+      ],
+      // 质检结构
+      testResult_option:[
+        { key: "0", value: "检验通过" },
+        { key: "1", value: "检验不通过" },
+        { key: "2", value: "检验完毕" }
+      ],
     };
   },
   created() {
@@ -359,6 +432,34 @@ export default {
         this.total = response.total;
         this.loading = false;
       });
+    },
+    /** 查询任务单列表 */
+    getListProductiontasklist(){
+      this.loading = true;
+      listProductiontasklist({status:"1"}).then(response => {
+        this.productiontasklist_list = response.rows;
+        this.loading = false;
+      })
+    },
+    /** 查询任务列表 */
+    getListProductiontasks(){
+      this.loading = true;
+      listProductiontasks({status:"1",productionTasksFormID:String(this.productiontasklist)}).then(response => {
+        this.productiontasks_list = response.rows;
+        this.loading = false;
+      })
+    },
+    /** 查询工序列表 */
+    getListProcessingprocess(){
+      this.loading = true;
+      listProcessingprocess({status:"1",processingTechnologyID:String(this.processingTechnologyID)}).then(response => {
+        this.processingprocess_list = response.rows;
+        this.loading = false;
+      })
+    },
+    /** 选中工艺 */
+    setProcessingTechnologyID(value){
+      this.processingTechnologyID = value;
     },
     // 取消按钮
     cancel() {
@@ -383,6 +484,16 @@ export default {
         testingPersonnel: null,
         note: null
       };
+      // 任务单子列表
+      this.productiontasks_list = [];
+      // 任务单列表
+      this.productiontasklist_list = [];
+      // 当前创建检验选中任务单
+      this.productiontasklist = null;
+      // 任务列表
+      this.productiontasks_list = [];
+      // 当前创建检验选中任务
+      this.productiontask = null;
       this.resetForm("form");
     },
     /** 搜索按钮操作 */
