@@ -97,7 +97,7 @@
       <el-table-column label="开票数量" align="center" prop="invoiceNumer" />
       <el-table-column label="税率" align="center" prop="taxRate" />
       <el-table-column label="税费" align="center" prop="taxation" />
-      <el-table-column label="销售单价(不含税)" align="center" prop="salesUnitPriceExcludingTax" />
+      <el-table-column type="number" label="销售单价(不含税)" align="center" prop="salesUnitPriceExcludingTax" />
       <el-table-column label="销售单价(含税)" align="center" prop="salesUnitPriceIncludingTax" />
       <el-table-column label="销售金额(不含税)" align="center" prop="consumptionAmountExcludingTax" />
       <el-table-column label="销售金额(含税)" align="center" prop="consumptionAmountIncludingTax" />
@@ -153,25 +153,25 @@
           <el-input v-model="form.invoiceType" placeholder="请输入开票类型" />
         </el-form-item>
         <el-form-item label="开票数量" prop="invoiceNumer">
-          <el-input v-model="form.invoiceNumer" placeholder="请输入开票数量" />
+          <el-input type="number" v-model="form.invoiceNumer" placeholder="请输入开票数量" />
         </el-form-item>
         <el-form-item label="税率" prop="taxRate">
           <el-input v-model="form.taxRate" placeholder="请输入税率" />
         </el-form-item>
         <el-form-item label="税费" prop="taxation">
-          <el-input v-model="form.taxation" placeholder="请输入税费" />
+          <el-input type="number" v-model="form.taxation" placeholder="请输入税费" />
         </el-form-item>
         <el-form-item label="销售单价(不含税)" prop="salesUnitPriceExcludingTax">
-          <el-input v-model="form.salesUnitPriceExcludingTax" placeholder="请输入销售单价(不含税)" />
+          <el-input type="number" v-model="form.salesUnitPriceExcludingTax" placeholder="请输入销售单价(不含税)" />
         </el-form-item>
         <el-form-item label="销售单价(含税)" prop="salesUnitPriceIncludingTax">
-          <el-input v-model="form.salesUnitPriceIncludingTax" placeholder="请输入销售单价(含税)" />
+          <el-input type="number" v-model="form.salesUnitPriceIncludingTax" placeholder="请输入销售单价(含税)" />
         </el-form-item>
         <el-form-item label="销售金额(不含税)" prop="consumptionAmountExcludingTax">
-          <el-input v-model="form.consumptionAmountExcludingTax" placeholder="请输入销售金额(不含税)" />
+          <el-input type="number" v-model="form.consumptionAmountExcludingTax" placeholder="请输入销售金额(不含税)" />
         </el-form-item>
         <el-form-item label="销售金额(含税)" prop="consumptionAmountIncludingTax">
-          <el-input v-model="form.consumptionAmountIncludingTax" placeholder="请输入销售金额(含税)" />
+          <el-input type="number" v-model="form.consumptionAmountIncludingTax" placeholder="请输入销售金额(含税)" />
         </el-form-item>
         <el-form-item label="对账日期" prop="reconciliationDate">
           <el-date-picker clearable

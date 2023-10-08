@@ -9,7 +9,7 @@ import com.away.common.core.domain.BaseEntity;
  * 工序模板对象 aw_processtemplate
  * 
  * @author awise
- * @date 2023-09-07
+ * @date 2023-09-27
  */
 public class AwProcesstemplate extends BaseEntity
 {
@@ -46,9 +46,13 @@ public class AwProcesstemplate extends BaseEntity
     @Excel(name = "工时成本")
     private String laborCost;
 
-    /** 工序外协 */
-    @Excel(name = "工序外协")
+    /** 工序外协#0为不外协1为外协# */
+    @Excel(name = "工序外协#0为不外协1为外协#")
     private String outsourcing;
+
+    /** 状态 */
+    @Excel(name = "状态")
+    private String status;
 
     public void setId(Long id) 
     {
@@ -131,6 +135,15 @@ public class AwProcesstemplate extends BaseEntity
     {
         return outsourcing;
     }
+    public void setStatus(String status) 
+    {
+        this.status = status;
+    }
+
+    public String getStatus() 
+    {
+        return status;
+    }
 
     @Override
     public String toString() {
@@ -144,6 +157,7 @@ public class AwProcesstemplate extends BaseEntity
             .append("taktTime", getTaktTime())
             .append("laborCost", getLaborCost())
             .append("outsourcing", getOutsourcing())
+            .append("status", getStatus())
             .toString();
     }
 }

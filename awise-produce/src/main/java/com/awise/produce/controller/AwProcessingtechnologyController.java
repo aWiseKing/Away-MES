@@ -4,7 +4,14 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import com.away.common.annotation.Log;
 import com.away.common.core.controller.BaseController;
 import com.away.common.core.domain.AjaxResult;
@@ -18,7 +25,7 @@ import com.away.common.core.page.TableDataInfo;
  * 加工工艺信息Controller
  * 
  * @author awise
- * @date 2023-08-21
+ * @date 2023-09-26
  */
 @RestController
 @RequestMapping("/produce/processingtechnology")
@@ -37,24 +44,6 @@ public class AwProcessingtechnologyController extends BaseController
         startPage();
         List<AwProcessingtechnology> list = awProcessingtechnologyService.selectAwProcessingtechnologyList(awProcessingtechnology);
         return getDataTable(list);
-    }
-
-    /**
-     * 获取生产任务对应加工工艺信息
-     * @return
-     */
-    @PreAuthorize("@ss.hasPermi('produce:processingtechnology:query')")
-    @GetMapping(value = "/productionTasks")
-    public AjaxResult getByProductionTasksIDInfo(@RequestParam("productionTasksID") String productionTasksID)
-    {
-        AwProcessingtechnology awProcessingtechnology = awProcessingtechnologyService.selectAwProcessingtechnologyByProductionTasksID(productionTasksID);
-        AjaxResult ajaxResult = success();
-        if(awProcessingtechnology == null){
-            ajaxResult.put("data","null");
-        }else {
-            ajaxResult.put("data",awProcessingtechnology);
-        }
-        return ajaxResult;
     }
 
     /**

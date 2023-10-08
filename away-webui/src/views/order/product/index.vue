@@ -2,12 +2,7 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="产品名称" prop="name">
-        <el-input
-          v-model="queryParams.name"
-          placeholder="请输入产品名称"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.name" placeholder="请输入产品名称" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -17,46 +12,20 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['order:product:add']"
-        >新增</el-button>
+        <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
+          v-hasPermi="['order:product:add']">新增</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['order:product:edit']"
-        >修改</el-button>
+        <el-button type="success" plain icon="el-icon-edit" size="mini" :disabled="single" @click="handleUpdate"
+          v-hasPermi="['order:product:edit']">修改</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['order:product:remove']"
-        >删除</el-button>
+        <el-button type="danger" plain icon="el-icon-delete" size="mini" :disabled="multiple" @click="handleDelete"
+          v-hasPermi="['order:product:remove']">删除</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['order:product:export']"
-        >导出</el-button>
+        <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport"
+          v-hasPermi="['order:product:export']">导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -67,37 +36,17 @@
       <el-table-column label="产品名称" align="center" prop="name" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-view"
-            @click="handleView(scope.row)"
-          >查看</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['order:product:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['order:product:remove']"
-          >删除</el-button>
+          <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)">查看</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
+            v-hasPermi="['order:product:edit']">修改</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
+            v-hasPermi="['order:product:remove']">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+    <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
+      @pagination="getList" />
 
     <!-- 添加或修改产品存储对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
@@ -109,12 +58,7 @@
           <el-input v-model="form.name" placeholder="请输入产品名称" />
         </el-form-item>
         <el-form-item label="产品图纸附件" prop="drawingURL">
-          <el-upload
-            ref="upload"
-            :file-list="fileList"
-            action="String"
-            :http-request="fileUpdate"
-            :auto-upload="false"
+          <el-upload ref="upload" :file-list="fileList" action="String" :http-request="fileUpdate" :auto-upload="false"
             list-type="picture">
             <el-button size="small" type="primary">点击上传</el-button>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -130,16 +74,16 @@
     <!-- 预览产品对话框 -->
     <el-dialog :title="view_form.id" :visible.sync="view_open" width="800px" append-to-body>
       <el-descriptions :column="2" border>
-          <el-descriptions-item label="产品图号">{{ view_form.id }}</el-descriptions-item>
-          <el-descriptions-item label="产品名称">{{ view_form.name }}</el-descriptions-item>
-          <el-descriptions-item label="产品图纸附件" :span="2">
-            <el-carousel :interval="4000" type="card" height="200px">
-              <el-carousel-item v-for="item in view_form.files" :key="item">
-                <el-image  :src="item" :preview-src-list="[item]">
-                </el-image>
-              </el-carousel-item>
-            </el-carousel>
-          </el-descriptions-item>
+        <el-descriptions-item label="产品图号">{{ view_form.id }}</el-descriptions-item>
+        <el-descriptions-item label="产品名称">{{ view_form.name }}</el-descriptions-item>
+        <el-descriptions-item label="产品图纸附件" :span="2">
+          <el-carousel :interval="4000" type="card" height="200px">
+            <el-carousel-item v-for="item in view_form.files" :key="item">
+              <el-image :src="item" :preview-src-list="[item]">
+              </el-image>
+            </el-carousel-item>
+          </el-carousel>
+        </el-descriptions-item>
       </el-descriptions>
     </el-dialog>
   </div>
@@ -147,7 +91,7 @@
 
 <script>
 import { listProduct, getProduct, delProduct, addProduct, updateProduct } from "@/api/order/product";
-import { fileDownload,fileUpdate } from "@/api/file/file"
+import { fileDownload, fileUpdate } from "@/api/file/file"
 
 export default {
   name: "Product",
@@ -189,9 +133,9 @@ export default {
       rules: {
       },
       // 文件列表
-      fileList:[],
-            // 订单详细查看
-      view_form:[]
+      fileList: [],
+      // 订单详细查看
+      view_form: []
 
     };
   },
@@ -209,18 +153,20 @@ export default {
       });
     },
     /** 文件上传 */
-    async fileUpdate(){
+    async fileUpdate() {
       let file_list = this.$refs.upload.uploadFiles;
-      let num = 0
-      let formData = new FormData();
-      for(num in file_list){
-        formData.append('files', file_list[num].raw);
+      if (file_list.length > 0) {
+        let num = 0
+        let formData = new FormData();
+        for (num in file_list) {
+          formData.append('files', file_list[num].raw);
+        }
+        let response = await fileUpdate(formData)
+        this.form.drawingURL = response
       }
-      let response = await fileUpdate(formData)
-      this.form.drawingURL=response
     },
     /** 文件下载 */
-    async fileDown(file_name){
+    async fileDown(file_name) {
       let tmp = await fileDownload(file_name)
       this.view_form.files.push(tmp.getUrl());
     },
@@ -251,11 +197,11 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 查看产品详细信息 */
-    handleView(row){
+    handleView(row) {
       const id = row.id || this.ids
       getProduct(id).then(async response => {
         this.view_form = response.data;
@@ -263,7 +209,7 @@ export default {
         let num = 0;
         let urls = response.data.drawingURL.split(";");
         urls.pop();
-        for(num in urls){
+        for (num in urls) {
           await this.fileDown(urls[num]);
         }
         this.view_open = true;
@@ -288,7 +234,7 @@ export default {
         urls.pop();
         for (num in urls) {
           let tmp = await fileDownload(urls[num]);
-          this.fileList.push({'url': tmp.getUrl(),"raw":tmp.getFile()})
+          this.fileList.push({ 'url': tmp.getUrl(), "raw": tmp.getFile() })
         }
         this.open = true;
         this.title = "修改产品存储";
@@ -318,12 +264,12 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除产品存储编号为"' + ids + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除产品存储编号为"' + ids + '"的数据项？').then(function () {
         return delProduct(ids);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      }).catch(() => { });
     },
     /** 导出按钮操作 */
     handleExport() {

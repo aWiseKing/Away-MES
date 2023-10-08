@@ -8,7 +8,11 @@ com\awise\comprehensive\service\IAwPartnerService.class
 com\awise\comprehensive\service\IAwCustomService.class
 com\awise\comprehensive\domain\AwPartner.class
 com\awise\comprehensive\controller\AwPartnerController.class
+com\awise\comprehensive\service\impl\AwPartnerEnServiceImpl.class
+com\awise\comprehensive\domain\AwPartnerEn.class
 com\awise\comprehensive\mapper\AwCustomEnMapper.class
+com\awise\comprehensive\service\IAwPartnerEnService.class
+com\awise\comprehensive\mapper\AwPartnerEnMapper.class
 com\awise\comprehensive\domain\AwCustom.class
 com\awise\comprehensive\service\impl\AwPartnerServiceImpl.class
 com\awise\comprehensive\domain\AwCustomEn.class

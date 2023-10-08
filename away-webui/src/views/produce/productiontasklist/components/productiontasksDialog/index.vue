@@ -28,6 +28,19 @@
           </el-select>
         </template>
       </el-table-column>
+      <el-table-column label="生产工艺" align="center">
+        <template slot-scope="scope">
+          <el-select v-model="scope.row.processingTechnologyID" placeholder="请选择生产工艺" filterable>
+            <el-option
+              v-for="item in processingtechnology_list"
+              :key="item.id"
+              :label="item.id"
+              :value = "item.id"
+            >
+            </el-option>
+          </el-select>
+        </template>
+      </el-table-column>
       <el-table-column label="外协" align="center">
         <template slot-scope="scope">
           <el-radio-group v-model="scope.row.outsourced">
@@ -68,6 +81,7 @@
 <script>
 import { listSaleorder } from "@/api/order/saleorder";
 import { listProductiontasks, delProductiontasks, addProductiontasks, updateProductiontasks } from "@/api/produce/productiontasks";
+import { listProcessingtechnology } from "@/api/produce/processingtechnology";
 
 export default {
   name:"ProductiontasksDialog",
@@ -93,6 +107,8 @@ export default {
       del_productiontasks_list:[],
       // 销售订单表单
       saleorder_list: [],
+      // 生产工艺列表
+      processingtechnology_list:[],
       // 生成任务单ID
       productiontasksFormID:null,
       // 初始化produceformid参数
@@ -103,6 +119,7 @@ export default {
     this.loading = true;
     this.reset();
     this.getListSaleorder();
+    this.getListProcessingtechnology()
     this.getListProductiontasks(this.proformid);
     this.loading = false;
   },
@@ -112,13 +129,21 @@ export default {
       this.loading = true;
       listSaleorder({state:"1"}).then(response => {
         this.saleorder_list = response.rows;
-        console.log(this.saleorder_list);
+        this.loading = false;
+      })
+    },
+    /** 查询生产工艺列表 */
+    getListProcessingtechnology(){
+      this.loading = true;
+      listProcessingtechnology({state:"1"}).then(response => {
+        this.processingtechnology_list = response.rows;
+        console.log(this.processingtechnology_list);
         this.loading = false;
       })
     },
     /** 跳转详情页面 */
     async jumpDetailPage(row){
-      let id = row.id;
+      let id = row.processingTechnologyID;
       this.$router.push({ name:"Processingprocess", query:{ id:id} })
 
     },

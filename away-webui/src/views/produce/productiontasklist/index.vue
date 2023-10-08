@@ -48,7 +48,7 @@
         </template>
       </el-table-column>
       <el-table-column label="备注信息" align="center" prop="notes" />
-      <el-table-column label="状态" align="center" prop="status"/>
+      <el-table-column label="状态" align="center" prop="status" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)">查看</el-button>
@@ -81,7 +81,13 @@
             </el-form-item>
           </el-col>
         </el-row>
-
+        <el-row :gutter="12">
+          <el-col :span="6">
+            <el-form-item label="简称" prop="referred">
+              <el-input v-model="form.referred" placeholder="请输入简称" />
+            </el-form-item>
+          </el-col>
+        </el-row>
         <productiontasksDialog v-if="open" :proformid="form.id" ref="productiontasksDialog" />
 
         <el-form-item label="备注信息" prop="notes">
@@ -103,7 +109,7 @@ import ProductiontasksDialog from "./components/productiontasksDialog/index";
 
 export default {
   name: "Productiontasklist",
-  components:{"productiontasksDialog":ProductiontasksDialog},
+  components: { "productiontasksDialog": ProductiontasksDialog },
   data() {
     return {
       // 遮罩层
@@ -142,14 +148,17 @@ export default {
         { key: "4", value: "取消" }
       ],
       // 是否外协
-      isoutsourced:[
-        {key:"0",value:"否"},
-        {key:"1",value:"是"}
+      isoutsourced: [
+        { key: "0", value: "否" },
+        { key: "1", value: "是" }
       ],
       // 表单参数
       form: {},
       // 表单校验
       rules: {
+        referred:[
+          { required: true, message: "任务单简称不能为空", trigger: "blur" }
+        ],
         founder: [
           { required: true, message: "制单人不能为空", trigger: "blur" }
         ],
@@ -163,7 +172,7 @@ export default {
       // 生产任务列表
       productiontasks_list: [],
       // 删除任务队列
-      del_productiontasks_list:[],
+      del_productiontasks_list: [],
       // 销售订单表单
       saleorder_list: []
     };
@@ -256,10 +265,9 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除生产任务单编号为"' + ids + '"的数据项？').then(async function () {
-        await removeByProductionTasksFormIDs(ids)
+      this.$modal.confirm('是否确认删除生产任务单编号为"' + ids + '"的数据项？').then(function () {
         return delProductiontasklist(ids);
-      }).then(response=>{
+      }).then(response => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
       }).catch(() => { });
@@ -275,8 +283,8 @@ export default {
 };
 </script>
 <style scoped>
-.productiontasks_list_box{
-  max-height:400px;
+.productiontasks_list_box {
+  max-height: 400px;
   overflow-y: auto;
   display: flex;
   justify-content: center;

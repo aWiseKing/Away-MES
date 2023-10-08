@@ -12,9 +12,8 @@ export function listProcessingtechnology(query) {
 // 查询加工工艺信息详细
 export function getProcessingtechnology(id) {
   return request({
-    url: '/produce/processingtechnology/productionTasks',
-    method: 'get',
-    params: id
+    url: '/produce/processingtechnology/' + id,
+    method: 'get'
   })
 }
 

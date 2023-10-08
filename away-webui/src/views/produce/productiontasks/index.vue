@@ -241,7 +241,7 @@ export default {
         serialNum: null,
         saleOrderID: null,
         outsourced: null,
-        status: null,
+        status: "0",
         notes: null
       };
       this.resetForm("form");

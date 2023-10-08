@@ -505,74 +505,76 @@ export default {
       let saleorderID;
       this.$refs["form"].validate(async valid => {
         if (valid) {
+          let response = null
           if (this.form.id != null) {
             saleorderID = this.form.id;
-            await updateSaleorder(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
+            response = await updateSaleorder(this.form)
+            this.$modal.msgSuccess("修改成功");
+            this.open = false;
+            this.getList();
           } else {
-            await addSaleorder(this.form).then(response => {
-              saleorderID = response.id;
-              this.$modal.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
+            response = await addSaleorder(this.form)
+            saleorderID = response.id;
+            this.$modal.msgSuccess("新增成功");
+            this.open = false;
+            this.getList();
           }
+          console.log(response);
+
+          if (response.code == 200) {
+            console.log("测试看看");
+            // 插入或更新附加信息
+            if (this.additionals.length > 0) {
+              let tmp_additional_add_form = [];
+              let tmp_additional_update_form = [];
+              let num = 0;
+              for (num in this.additionals) {
+                if (this.additionals[num].id != null) {
+                  tmp_additional_update_form.push(this.additionals[num]);
+                } else if (this.additionals.id == null) {
+                  let tmp = this.additionals[num]
+                  tmp["saleorderID"] = saleorderID;
+                  tmp_additional_add_form.push(tmp);
+                }
+              };
+
+              if (tmp_additional_add_form.length > 0) {
+
+                let num = 0;
+                for (num in tmp_additional_add_form) {
+                  let response = await addAdditional(tmp_additional_add_form[num]);
+                }
+              }
+              if (tmp_additional_update_form.length > 0) {
+                let num = 0;
+                for (num in tmp_additional_update_form) {
+                  let response = await updateAdditional(tmp_additional_update_form[num]);
+                }
+              }
+              if (this.del_additionals.length > 0) {
+                let num;
+                for (num in this.del_additionals) {
+                  let response = await delAdditional(this.del_additionals[num])
+                }
+              }
+
+            }
+          }
+
+
         }
       });
-      // 插入或更新附加信息
-      if (this.additionals.length > 0) {
-        let tmp_additional_add_form = [];
-        let tmp_additional_update_form = [];
-        let num = 0;
-        for (num in this.additionals) {
-          if (this.additionals[num].id != null) {
-            tmp_additional_update_form.push(this.additionals[num]);
-          } else if (this.additionals.id == null) {
-            let tmp = this.additionals[num]
-            tmp["saleorderID"] = saleorderID;
-            tmp_additional_add_form.push(tmp);
-          }
-        };
 
-        if (tmp_additional_add_form.length > 0) {
-
-          let num = 0;
-          for (num in tmp_additional_add_form) {
-            let response = await addAdditional(tmp_additional_add_form[num]);
-          }
-        }
-        if (tmp_additional_update_form.length > 0) {
-          let num = 0;
-          for (num in tmp_additional_update_form) {
-            let response = await updateAdditional(tmp_additional_update_form[num]);
-          }
-        }
-        if (this.del_additionals.length > 0) {
-          let num;
-          for (num in this.del_additionals) {
-            let response = await delAdditional(this.del_additionals[num])
-          }
-        }
-
-      }
     },
     /** 删除按钮操作 */
     async handleDelete(row) {
       const ids = row.id || this.ids;
-      let that = this;
       await this.$modal.confirm('是否确认删除订单编号为"' + ids + '"的数据项？').then(async () => {
-        let num = 0;
-        await that.getListAdditional(ids);
-        for (num in this.additionals) {
-          await delAdditional(this.additionals[num].id)
-        }
-        return await delSaleorder(ids);
+        return delSaleorder(ids);
+      }).then(()=>{
+        this.getList();
+        this.$modal.msgSuccess("删除成功");
       })
-      await this.getList();
-      this.$modal.msgSuccess("删除成功");
     },
     /** 导出按钮操作 */
     handleExport() {

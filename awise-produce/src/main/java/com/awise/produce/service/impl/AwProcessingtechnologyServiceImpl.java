@@ -12,7 +12,7 @@ import com.awise.produce.service.IAwProcessingtechnologyService;
  * 加工工艺信息Service业务层处理
  * 
  * @author awise
- * @date 2023-08-21
+ * @date 2023-09-26
  */
 @Service
 public class AwProcessingtechnologyServiceImpl implements IAwProcessingtechnologyService 
@@ -42,18 +42,6 @@ public class AwProcessingtechnologyServiceImpl implements IAwProcessingtechnolog
     public List<AwProcessingtechnology> selectAwProcessingtechnologyList(AwProcessingtechnology awProcessingtechnology)
     {
         return awProcessingtechnologyMapper.selectAwProcessingtechnologyList(awProcessingtechnology);
-    }
-
-    /**
-     * 查询生产任务对应加工工艺信息
-     *
-     * @param productionTasksID 加工工艺信息主键
-     * @return 加工工艺信息
-     */
-    @Override
-    public AwProcessingtechnology selectAwProcessingtechnologyByProductionTasksID(String productionTasksID)
-    {
-        return awProcessingtechnologyMapper.selectAwProcessingtechnologyByProductionTasksID(productionTasksID);
     }
 
     /**

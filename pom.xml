@@ -219,6 +219,12 @@
                 <version>${away.version}</version>
             </dependency>
 
+            <!-- 质量管理 -->
+            <dependency>
+                <groupId>com.away</groupId>
+                <artifactId>awise-quality</artifactId>
+                <version>${away.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -237,6 +243,7 @@
         <module>awise-file</module>
         <module>awise-produce</module>
         <module>awise-qrcode</module>
+        <module>awise-quality</module>
     </modules>
     <packaging>pom</packaging>
 

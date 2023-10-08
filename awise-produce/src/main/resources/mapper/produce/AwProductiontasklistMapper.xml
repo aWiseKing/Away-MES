@@ -6,47 +6,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="AwProductiontasklist" id="AwProductiontasklistResult">
         <result property="id"    column="id"    />
+        <result property="referred"    column="referred"    />
         <result property="founder"    column="founder"    />
         <result property="createTime"    column="createTime"    />
         <result property="notes"    column="notes"    />
         <result property="status"    column="status"    />
     </resultMap>
 
-    <sql id="selectAwProductiontasklistEnVo">
-        select
-        id,
-        founder,
-        createTime,
-        notes,
-        CASE aw_productiontasklist.status
-        WHEN 0 THEN
-        "未发布"
-        WHEN 1 THEN
-        "发布"
-        WHEN 2 THEN
-        "暂停"
-        WHEN 3 THEN
-        "完成"
-        WHEN 4 THEN
-        "取消"
-        ELSE
-        "未知类型"
-        END as status
-        from aw_productiontasklist
-    </sql>
     <sql id="selectAwProductiontasklistVo">
-        select
-        id,
-        founder,
-        createTime,
-        notes,
-        status
-        from aw_productiontasklist
+        select id, referred, founder, createTime, notes, status from aw_productiontasklist
     </sql>
 
     <select id="selectAwProductiontasklistList" parameterType="AwProductiontasklist" resultMap="AwProductiontasklistResult">
-        <include refid="selectAwProductiontasklistEnVo"/>
+        <include refid="selectAwProductiontasklistVo"/>
         <where>  
+            <if test="referred != null  and referred != ''"> and referred = #{referred}</if>
             <if test="founder != null  and founder != ''"> and founder = #{founder}</if>
             <if test="createTime != null "> and createTime = #{createTime}</if>
             <if test="notes != null  and notes != ''"> and notes = #{notes}</if>
@@ -62,12 +36,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertAwProductiontasklist" parameterType="AwProductiontasklist" useGeneratedKeys="true" keyProperty="id">
         insert into aw_productiontasklist
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="referred != null and referred != ''">referred,</if>
             <if test="founder != null and founder != ''">founder,</if>
             <if test="createTime != null">createTime,</if>
             <if test="notes != null">notes,</if>
             <if test="status != null and status != ''">status,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="referred != null and referred != ''">#{referred},</if>
             <if test="founder != null and founder != ''">#{founder},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="notes != null">#{notes},</if>
@@ -78,6 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateAwProductiontasklist" parameterType="AwProductiontasklist">
         update aw_productiontasklist
         <trim prefix="SET" suffixOverrides=",">
+            <if test="referred != null and referred != ''">referred = #{referred},</if>
             <if test="founder != null and founder != ''">founder = #{founder},</if>
             <if test="createTime != null">createTime = #{createTime},</if>
             <if test="notes != null">notes = #{notes},</if>

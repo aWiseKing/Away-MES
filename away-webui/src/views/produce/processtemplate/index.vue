@@ -57,9 +57,9 @@
       <el-table-column label="准备工时" align="center" prop="preparationHours" />
       <el-table-column label="单件工时" align="center" prop="taktTime" />
       <el-table-column label="工时成本" align="center" prop="laborCost" />
-      <el-table-column label="工序外协" align="center" prop="outsourcing" >
+      <el-table-column label="工序外协" align="center" prop="outsourcing">
         <template slot-scope="scope">
-          {{ getValue(isoutsourced,scope.row.outsourcing) }}
+          {{ getValue(isoutsourced, scope.row.outsourcing) }}
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -79,6 +79,16 @@
     <!-- 添加或修改工序模板对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="900px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-row :gutter="12">
+          <el-col :span="12">
+            <el-form-item label="状态" prop="status">
+              <el-select v-model="form.status" placeholder="请选择状态">
+                <el-option v-for="item, index in state_options" :key="index" :label="item.value"
+                  :value="item.key"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="工序名称" prop="name">
@@ -122,7 +132,7 @@
 
         <el-row :gutter="12">
           <el-col :span="24">
-            <el-form-item label="工序内容">
+            <el-form-item label="工序内容" prop="content">
               <editor v-model="form.content" :min-height="192" />
             </el-form-item>
           </el-col>
@@ -148,7 +158,8 @@
     <!--  查看工序模板对话框 -->
     <el-dialog :title="title" :visible.sync="view_open" width="900px" append-to-body>
       <el-descriptions :column="2" border>
-        <el-descriptions-item label="工序名称" >{{ view_form.name }}</el-descriptions-item>
+        <el-descriptions-item label="工序状态" :span="2">{{ getValue(view_form.status) }}</el-descriptions-item>
+        <el-descriptions-item label="工序名称">{{ view_form.name }}</el-descriptions-item>
         <el-descriptions-item label="所用工装">{{ view_form.usedTooling }}</el-descriptions-item>
 
         <el-descriptions-item label="准备工时">{{ view_form.preparationHours }}</el-descriptions-item>
@@ -211,12 +222,23 @@ export default {
         preparationHours: null,
         taktTime: null,
         laborCost: null,
-        outsourcing: null
+        outsourcing: null,
+        status: "0"
       },
+      // 工序状态
+      state_options: [
+        { key: "0", value: "未发布" },
+        { key: "1", value: "发布" },
+        { key: "2", value: "生产中" },
+        { key: "3", value: "生产完成" },
+        { key: "4", value: "质检中" },
+        { key: "5", value: "生产合格" },
+        { key: "6", value: "生产不合格" }
+      ],
       // 表单参数
       form: {},
       // 预览表单
-      view_form:{},
+      view_form: {},
       // 表单校验
       rules: {
         name: [
@@ -239,6 +261,9 @@ export default {
         ],
         outsourcing: [
           { required: true, message: "工序外协不能为空", trigger: "blur" }
+        ],
+        status: [
+          { required: true, message: "工序状态不能为空", trigger: "blur" }
         ]
       },
       // 文件列表
@@ -266,14 +291,15 @@ export default {
     /** 文件上传 */
     async fileUpdate() {
       let file_list = this.$refs.upload.uploadFiles;
-      console.log(file_list);
-      let num = 0
-      let formData = new FormData();
-      for (num in file_list) {
-        formData.append('files', file_list[num].raw);
+      if (file_list.length > 0) {
+        let num = 0
+        let formData = new FormData();
+        for (num in file_list) {
+          formData.append('files', file_list[num].raw);
+        }
+        let response = await fileUpdate(formData)
+        this.form.diagramURL = response
       }
-      let response = await fileUpdate(formData)
-      this.form.diagramURL = response
     },
     /** 文件下载 */
     async fileDown(file_name) {
@@ -296,7 +322,8 @@ export default {
         preparationHours: null,
         taktTime: null,
         laborCost: null,
-        outsourcing: null
+        outsourcing: "0",
+        status: "0"
       };
       this.resetForm("form");
     },
@@ -339,26 +366,32 @@ export default {
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
+
       this.reset();
       const id = row.id || this.ids
       getProcesstemplate(id).then(async response => {
+        console.log(response);
         this.form = response.data;
         let num = 0;
-        let urls = response.data.diagramURL.split(";");
-        urls.pop();
-        for (num in urls) {
-          let tmp = await fileDownload(urls[num]);
-          this.fileList.push({ 'url': tmp.getUrl(), "raw": tmp.getFile() })
+        if (response.data.diagramURL != null) {
+          let urls = response.data.diagramURL.split(";");
+          urls.pop();
+          for (num in urls) {
+            let tmp = await fileDownload(urls[num]);
+            this.fileList.push({ 'url': tmp.getUrl(), "raw": tmp.getFile() })
+          }
         }
+
+
         this.open = true;
         this.title = "修改工序模板";
       });
     },
     /** 提交按钮 */
     async submitForm() {
-      await this.fileUpdate()
-      this.$refs["form"].validate(valid => {
+      this.$refs["form"].validate(async valid => {
         if (valid) {
+          await this.fileUpdate()
           if (this.form.id != null) {
             updateProcesstemplate(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
@@ -392,10 +425,10 @@ export default {
       }, `processtemplate_${new Date().getTime()}.xlsx`)
     },
     // 取出key对应的value
-    getValue(dict,key){
+    getValue(dict, key) {
       let num = 0
-      for(num in dict){
-        if(dict[num]["key"] == key){
+      for (num in dict) {
+        if (dict[num]["key"] == key) {
           return dict[num]["value"]
         }
       }

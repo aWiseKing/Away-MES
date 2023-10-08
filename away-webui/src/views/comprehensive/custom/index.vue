@@ -185,6 +185,7 @@
           <el-cascader
             :options="city_options"
             :props="{ expandTrigger: 'hover' }"
+            :value="cityid_value"
             placeholder="请选择城市地区"
             @change="setCityID"
             clearable
@@ -319,6 +320,7 @@ export default {
     },
     setCityID(value){
       this.form.cityid = value[2]
+
     },
     /** 搜索按钮操作 */
     handleQuery() {

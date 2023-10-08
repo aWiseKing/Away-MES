@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.awise.quality.mapper.AwProcessinspectionMapper">
+    
+    <resultMap type="AwProcessinspection" id="AwProcessinspectionResult">
+        <result property="id"    column="id"    />
+        <result property="nameOfQualityInspection"    column="nameOfQualityInspection"    />
+        <result property="qualityInspectionCategory"    column="qualityInspectionCategory"    />
+        <result property="ProductionTasksID"    column="ProductionTasksID"    />
+        <result property="processingprocessID"    column="processingprocessID"    />
+        <result property="detectionQuantity"    column="detectionQuantity"    />
+        <result property="qualifiedQuantity"    column="qualifiedQuantity"    />
+        <result property="unqualifiedQuantity"    column="unqualifiedQuantity"    />
+        <result property="numberOfRepairs"    column="numberOfRepairs"    />
+        <result property="scrappedQuantity"    column="scrappedQuantity"    />
+        <result property="testDate"    column="testDate"    />
+        <result property="testResult"    column="testResult"    />
+        <result property="testingPersonnel"    column="testingPersonnel"    />
+        <result property="note"    column="note"    />
+    </resultMap>
+
+    <sql id="selectAwProcessinspectionVo">
+        select id, nameOfQualityInspection, qualityInspectionCategory, ProductionTasksID, processingprocessID, detectionQuantity, qualifiedQuantity, unqualifiedQuantity, numberOfRepairs, scrappedQuantity, testDate, testResult, testingPersonnel, note from aw_processinspection
+    </sql>
+
+    <select id="selectAwProcessinspectionList" parameterType="AwProcessinspection" resultMap="AwProcessinspectionResult">
+        <include refid="selectAwProcessinspectionVo"/>
+        <where>  
+            <if test="nameOfQualityInspection != null  and nameOfQualityInspection != ''"> and nameOfQualityInspection = #{nameOfQualityInspection}</if>
+            <if test="qualityInspectionCategory != null  and qualityInspectionCategory != ''"> and qualityInspectionCategory = #{qualityInspectionCategory}</if>
+            <if test="ProductionTasksID != null "> and ProductionTasksID = #{ProductionTasksID}</if>
+            <if test="processingprocessID != null "> and processingprocessID = #{processingprocessID}</if>
+            <if test="detectionQuantity != null "> and detectionQuantity = #{detectionQuantity}</if>
+            <if test="qualifiedQuantity != null "> and qualifiedQuantity = #{qualifiedQuantity}</if>
+            <if test="unqualifiedQuantity != null "> and unqualifiedQuantity = #{unqualifiedQuantity}</if>
+            <if test="numberOfRepairs != null "> and numberOfRepairs = #{numberOfRepairs}</if>
+            <if test="scrappedQuantity != null "> and scrappedQuantity = #{scrappedQuantity}</if>
+            <if test="testDate != null "> and testDate = #{testDate}</if>
+            <if test="testResult != null  and testResult != ''"> and testResult = #{testResult}</if>
+            <if test="testingPersonnel != null  and testingPersonnel != ''"> and testingPersonnel = #{testingPersonnel}</if>
+            <if test="note != null  and note != ''"> and note = #{note}</if>
+        </where>
+    </select>
+    
+    <select id="selectAwProcessinspectionById" parameterType="Long" resultMap="AwProcessinspectionResult">
+        <include refid="selectAwProcessinspectionVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAwProcessinspection" parameterType="AwProcessinspection" useGeneratedKeys="true" keyProperty="id">
+        insert into aw_processinspection
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="nameOfQualityInspection != null and nameOfQualityInspection != ''">nameOfQualityInspection,</if>
+            <if test="qualityInspectionCategory != null and qualityInspectionCategory != ''">qualityInspectionCategory,</if>
+            <if test="ProductionTasksID != null">ProductionTasksID,</if>
+            <if test="processingprocessID != null">processingprocessID,</if>
+            <if test="detectionQuantity != null">detectionQuantity,</if>
+            <if test="qualifiedQuantity != null">qualifiedQuantity,</if>
+            <if test="unqualifiedQuantity != null">unqualifiedQuantity,</if>
+            <if test="numberOfRepairs != null">numberOfRepairs,</if>
+            <if test="scrappedQuantity != null">scrappedQuantity,</if>
+            <if test="testDate != null">testDate,</if>
+            <if test="testResult != null and testResult != ''">testResult,</if>
+            <if test="testingPersonnel != null and testingPersonnel != ''">testingPersonnel,</if>
+            <if test="note != null">note,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="nameOfQualityInspection != null and nameOfQualityInspection != ''">#{nameOfQualityInspection},</if>
+            <if test="qualityInspectionCategory != null and qualityInspectionCategory != ''">#{qualityInspectionCategory},</if>
+            <if test="ProductionTasksID != null">#{ProductionTasksID},</if>
+            <if test="processingprocessID != null">#{processingprocessID},</if>
+            <if test="detectionQuantity != null">#{detectionQuantity},</if>
+            <if test="qualifiedQuantity != null">#{qualifiedQuantity},</if>
+            <if test="unqualifiedQuantity != null">#{unqualifiedQuantity},</if>
+            <if test="numberOfRepairs != null">#{numberOfRepairs},</if>
+            <if test="scrappedQuantity != null">#{scrappedQuantity},</if>
+            <if test="testDate != null">#{testDate},</if>
+            <if test="testResult != null and testResult != ''">#{testResult},</if>
+            <if test="testingPersonnel != null and testingPersonnel != ''">#{testingPersonnel},</if>
+            <if test="note != null">#{note},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAwProcessinspection" parameterType="AwProcessinspection">
+        update aw_processinspection
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="nameOfQualityInspection != null and nameOfQualityInspection != ''">nameOfQualityInspection = #{nameOfQualityInspection},</if>
+            <if test="qualityInspectionCategory != null and qualityInspectionCategory != ''">qualityInspectionCategory = #{qualityInspectionCategory},</if>
+            <if test="ProductionTasksID != null">ProductionTasksID = #{ProductionTasksID},</if>
+            <if test="processingprocessID != null">processingprocessID = #{processingprocessID},</if>
+            <if test="detectionQuantity != null">detectionQuantity = #{detectionQuantity},</if>
+            <if test="qualifiedQuantity != null">qualifiedQuantity = #{qualifiedQuantity},</if>
+            <if test="unqualifiedQuantity != null">unqualifiedQuantity = #{unqualifiedQuantity},</if>
+            <if test="numberOfRepairs != null">numberOfRepairs = #{numberOfRepairs},</if>
+            <if test="scrappedQuantity != null">scrappedQuantity = #{scrappedQuantity},</if>
+            <if test="testDate != null">testDate = #{testDate},</if>
+            <if test="testResult != null and testResult != ''">testResult = #{testResult},</if>
+            <if test="testingPersonnel != null and testingPersonnel != ''">testingPersonnel = #{testingPersonnel},</if>
+            <if test="note != null">note = #{note},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAwProcessinspectionById" parameterType="Long">
+        delete from aw_processinspection where id = #{id}
+    </delete>
+
+    <delete id="deleteAwProcessinspectionByIds" parameterType="String">
+        delete from aw_processinspection where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
