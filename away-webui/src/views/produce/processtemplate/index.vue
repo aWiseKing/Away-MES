@@ -223,17 +223,13 @@ export default {
         taktTime: null,
         laborCost: null,
         outsourcing: null,
-        status: "0"
+        status: null
       },
       // 工序状态
       state_options: [
         { key: "0", value: "未发布" },
         { key: "1", value: "发布" },
-        { key: "2", value: "生产中" },
-        { key: "3", value: "生产完成" },
-        { key: "4", value: "质检中" },
-        { key: "5", value: "生产合格" },
-        { key: "6", value: "生产不合格" }
+        { key: "2", value: "取消发布" }
       ],
       // 表单参数
       form: {},

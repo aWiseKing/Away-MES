@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="nameOfQualityInspection"    column="nameOfQualityInspection"    />
         <result property="qualityInspectionCategory"    column="qualityInspectionCategory"    />
-        <result property="ProductionTasksID"    column="ProductionTasksID"    />
+        <result property="productionTasksID"    column="productionTasksID"    />
         <result property="processingprocessID"    column="processingprocessID"    />
         <result property="detectionQuantity"    column="detectionQuantity"    />
         <result property="qualifiedQuantity"    column="qualifiedQuantity"    />
@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwProcessinspectionVo">
-        select id, nameOfQualityInspection, qualityInspectionCategory, ProductionTasksID, processingprocessID, detectionQuantity, qualifiedQuantity, unqualifiedQuantity, numberOfRepairs, scrappedQuantity, testDate, testResult, testingPersonnel, note from aw_processinspection
+        select id, nameOfQualityInspection, qualityInspectionCategory, productionTasksID, processingprocessID, detectionQuantity, qualifiedQuantity, unqualifiedQuantity, numberOfRepairs, scrappedQuantity, testDate, testResult, testingPersonnel, note from aw_processinspection
     </sql>
 
     <select id="selectAwProcessinspectionList" parameterType="AwProcessinspection" resultMap="AwProcessinspectionResult">
@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="nameOfQualityInspection != null  and nameOfQualityInspection != ''"> and nameOfQualityInspection = #{nameOfQualityInspection}</if>
             <if test="qualityInspectionCategory != null  and qualityInspectionCategory != ''"> and qualityInspectionCategory = #{qualityInspectionCategory}</if>
-            <if test="ProductionTasksID != null "> and ProductionTasksID = #{ProductionTasksID}</if>
+            <if test="productionTasksID != null "> and productionTasksID = #{productionTasksID}</if>
             <if test="processingprocessID != null "> and processingprocessID = #{processingprocessID}</if>
             <if test="detectionQuantity != null "> and detectionQuantity = #{detectionQuantity}</if>
             <if test="qualifiedQuantity != null "> and qualifiedQuantity = #{qualifiedQuantity}</if>
@@ -54,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="nameOfQualityInspection != null and nameOfQualityInspection != ''">nameOfQualityInspection,</if>
             <if test="qualityInspectionCategory != null and qualityInspectionCategory != ''">qualityInspectionCategory,</if>
-            <if test="ProductionTasksID != null">ProductionTasksID,</if>
+            <if test="productionTasksID != null">productionTasksID,</if>
             <if test="processingprocessID != null">processingprocessID,</if>
             <if test="detectionQuantity != null">detectionQuantity,</if>
             <if test="qualifiedQuantity != null">qualifiedQuantity,</if>
@@ -69,7 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="nameOfQualityInspection != null and nameOfQualityInspection != ''">#{nameOfQualityInspection},</if>
             <if test="qualityInspectionCategory != null and qualityInspectionCategory != ''">#{qualityInspectionCategory},</if>
-            <if test="ProductionTasksID != null">#{ProductionTasksID},</if>
+            <if test="productionTasksID != null">#{productionTasksID},</if>
             <if test="processingprocessID != null">#{processingprocessID},</if>
             <if test="detectionQuantity != null">#{detectionQuantity},</if>
             <if test="qualifiedQuantity != null">#{qualifiedQuantity},</if>
@@ -88,7 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="nameOfQualityInspection != null and nameOfQualityInspection != ''">nameOfQualityInspection = #{nameOfQualityInspection},</if>
             <if test="qualityInspectionCategory != null and qualityInspectionCategory != ''">qualityInspectionCategory = #{qualityInspectionCategory},</if>
-            <if test="ProductionTasksID != null">ProductionTasksID = #{ProductionTasksID},</if>
+            <if test="productionTasksID != null">productionTasksID = #{productionTasksID},</if>
             <if test="processingprocessID != null">processingprocessID = #{processingprocessID},</if>
             <if test="detectionQuantity != null">detectionQuantity = #{detectionQuantity},</if>
             <if test="qualifiedQuantity != null">qualifiedQuantity = #{qualifiedQuantity},</if>

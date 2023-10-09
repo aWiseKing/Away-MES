@@ -77,6 +77,7 @@ public class AwProcessinspectionController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody AwProcessinspection awProcessinspection)
     {
+        System.out.println(awProcessinspection);
         return toAjax(awProcessinspectionService.insertAwProcessinspection(awProcessinspection));
     }
 

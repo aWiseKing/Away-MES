@@ -30,7 +30,7 @@ public class AwProcessinspection extends BaseEntity
 
     /** 任务编号 */
     @Excel(name = "任务编号")
-    private Long ProductionTasksID;
+    private Long productionTasksID;
 
     /** 工序编号 */
     @Excel(name = "工序编号")
@@ -100,14 +100,14 @@ public class AwProcessinspection extends BaseEntity
     {
         return qualityInspectionCategory;
     }
-    public void setProductionTasksID(Long ProductionTasksID) 
+    public void setProductionTasksID(Long productionTasksID) 
     {
-        this.ProductionTasksID = ProductionTasksID;
+        this.productionTasksID = productionTasksID;
     }
 
     public Long getProductionTasksID() 
     {
-        return ProductionTasksID;
+        return productionTasksID;
     }
     public void setProcessingprocessID(Long processingprocessID) 
     {
@@ -206,7 +206,7 @@ public class AwProcessinspection extends BaseEntity
             .append("id", getId())
             .append("nameOfQualityInspection", getNameOfQualityInspection())
             .append("qualityInspectionCategory", getQualityInspectionCategory())
-            .append("ProductionTasksID", getProductionTasksID())
+            .append("productionTasksID", getProductionTasksID())
             .append("processingprocessID", getProcessingprocessID())
             .append("detectionQuantity", getDetectionQuantity())
             .append("qualifiedQuantity", getQualifiedQuantity())
