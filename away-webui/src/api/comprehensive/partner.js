@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-// 查询客户信息列表
+// 查询供货商信息列表
 export function listCustom(query) {
   return request({
     url: '/comprehensive/partner/enlist',
@@ -9,7 +9,7 @@ export function listCustom(query) {
   })
 }
 
-// 查询客户信息详细
+// 查询供货商信息详细
 export function getCustom(ID) {
   return request({
     url: '/comprehensive/partner/' + ID,
@@ -17,7 +17,7 @@ export function getCustom(ID) {
   })
 }
 
-// 新增客户信息
+// 新增供货商信息
 export function addCustom(data) {
   return request({
     url: '/comprehensive/partner',
@@ -26,7 +26,7 @@ export function addCustom(data) {
   })
 }
 
-// 修改客户信息
+// 修改供货商信息
 export function updateCustom(data) {
   return request({
     url: '/comprehensive/partner',
@@ -35,7 +35,7 @@ export function updateCustom(data) {
   })
 }
 
-// 删除客户信息
+// 删除供货商信息
 export function delCustom(ID) {
   return request({
     url: '/comprehensive/partner/' + ID,

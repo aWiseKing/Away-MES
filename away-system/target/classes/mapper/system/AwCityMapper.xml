@@ -15,35 +15,16 @@
         select id, economize, city, county from aw_city
     </sql>
     <sql id = "selectAwCityJsonVo">
-        SELECT
-        JSON_ARRAYAGG( economize )
-        FROM
-        (
-        SELECT
-        JSON_OBJECT(
-        'label',
-        economize,
-        'children',
-        JSON_ARRAYAGG( city )) AS economize
-        FROM
-        (
-        SELECT
-        economize,
-        JSON_OBJECT(
-        'label',
-        aw_city.city,
-        "children",
-        JSON_ARRAYAGG(
-        JSON_OBJECT( "label", aw_city.county, "value", aw_city.id ))) AS city
-        FROM
-        aw_city
-        GROUP BY
-        economize,
-        city
-        ) citys
-        GROUP BY
-        economize
-        ) economizes
+        SELECT JSON_ARRAYAGG(economize)
+        FROM (
+                 SELECT JSON_OBJECT('label', economize, 'children', JSON_ARRAYAGG(city)) AS economize
+                 FROM (
+                          SELECT economize, JSON_OBJECT('label', aw_city.city, 'children', JSON_ARRAYAGG(JSON_OBJECT('label', aw_city.county, 'value', aw_city.id))) AS city
+                          FROM aw_city
+                          GROUP BY economize, aw_city.city
+                      ) citys
+                 GROUP BY economize
+             ) economizes
     </sql>
 
     <select id="selectAwCityList" parameterType="AwCity" resultMap="AwCityResult">

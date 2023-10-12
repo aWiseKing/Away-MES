@@ -252,7 +252,7 @@ export default {
         city: null,
         address: null,
         notes: null,
-        type: null,
+        type: 1,
       },
       // 表单参数
       form: {},
@@ -274,7 +274,8 @@ export default {
         isdel: [
           { required: true, message: "是否删除不能为空", trigger: "blur" }
         ]
-      }
+      },
+      
     };
   },
   created() {
@@ -312,7 +313,7 @@ export default {
         cityid: null,
         address: null,
         notes: null,
-        type: 0,
+        type: 1,
         isdel: 0
       };
       this.resetForm("form");

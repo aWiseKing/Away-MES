@@ -46,6 +46,30 @@ public class AwPartnerEn extends BaseEntity
     @Excel(name = "备注信息")
     private String notes;
 
+    /** 实体类型 */
+    @Excel(name = "实体类型")
+    private Long type;
+
+    public Long getType() {
+        return type;
+    }
+
+    public String getIsdel() {
+        return isdel;
+    }
+
+    public void setType(Long type) {
+        this.type = type;
+    }
+
+    public void setIsdel(String isdel) {
+        this.isdel = isdel;
+    }
+
+    /** 是否删除 */
+    private String isdel;
+
+
     public String getId() {
         return id;
     }

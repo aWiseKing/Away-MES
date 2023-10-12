@@ -12,6 +12,7 @@ import com.away.common.core.domain.BaseEntity;
  * @author ruoyi
  * @date 2023-09-22
  */
+
 public class AwContacts extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -51,12 +52,12 @@ public class AwContacts extends BaseEntity
     @Excel(name = "删除否 0为存在 1为删除")
     private String isDel;
 
-    public void setId(Long id) 
+    public void setId(Long id)
     {
         this.id = id;
     }
 
-    public Long getId() 
+    public Long getId()
     {
         return id;
     }

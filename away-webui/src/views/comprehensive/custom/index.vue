@@ -253,7 +253,7 @@ export default {
         city: null,
         address: null,
         notes: null,
-        type: null,
+        type: 0,
       },
       // 表单参数
       form: {},

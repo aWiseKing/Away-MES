@@ -1,4 +1,6 @@
 package com.awise.comprehensive.controller;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import  com.awise.comprehensive.domain.AwContacts;
@@ -86,6 +88,9 @@ public class AwContactsController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody AwContacts awContacts)
     {
+//        Date now_date = new Date();
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+//        awContacts.setId(sdf.format(now_date)+awContacts.hashCode());
         return toAjax(awContactsService.insertAwContacts(awContacts));
     }
 

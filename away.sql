@@ -23,7 +23,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `aw_additional`;
 CREATE TABLE `aw_additional`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '附加信息id',
-  `saleorderID` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '关联订单',
+  `ID` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '关联订单',
   `key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '附加属性',
   `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '附加内容',
   PRIMARY KEY (`id`) USING BTREE,
