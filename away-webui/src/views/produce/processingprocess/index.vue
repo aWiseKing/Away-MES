@@ -138,16 +138,6 @@
             </el-col>
           </el-row>
           <el-row :gutter="12">
-            <el-col :span="12">
-              <el-form-item label="状态" prop="status">
-                <el-select v-model="form.status" placeholder="请选择状态">
-                  <el-option v-for="item, index in state_options" :key="index" :label="item.value"
-                    :value="item.key"></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row :gutter="12">
             <el-col :span="24">
               <el-form-item label="工序内容" prop="content">
                 <editor v-model="form.content" :min-height="192" />
@@ -344,7 +334,7 @@ export default {
     },
     /** 查询模板工序列表 */
     getListProcesstemplate() {
-      listProcesstemplate({status:"1"}).then((response) => {
+      listProcesstemplate({ status: "1" }).then((response) => {
         this.processtemplate_list = response.rows;
       })
     },
@@ -467,12 +457,14 @@ export default {
       const id = row.id || this.ids
       await getProcessingprocess(id).then(async response => {
         this.form = response.data;
-        let num = 0;
-        let urls = response.data.diagramURL.split(";");
-        urls.pop();
-        for (num in urls) {
-          let tmp = await fileDownload(urls[num]);
-          this.fileList.push({ 'url': tmp.getUrl(), "raw": tmp.getFile() })
+        if (response.data.diagramURL != null) {
+          let num = 0;
+          let urls = response.data.diagramURL.split(";");
+          urls.pop();
+          for (num in urls) {
+            let tmp = await fileDownload(urls[num]);
+            this.fileList.push({ 'url': tmp.getUrl(), "raw": tmp.getFile() })
+          }
         }
         this.open = true;
         this.title = "修改加工工序信息";
