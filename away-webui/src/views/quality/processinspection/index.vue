@@ -427,6 +427,8 @@ export default {
       this.productiontasks_list = [];
       // 当前创建检验选中任务
       this.productiontask = null;
+      // 当前创建检验选中工序
+      this.processingTechnologyID = null;
       this.resetForm("form");
     },
     /** 搜索按钮操作 */
