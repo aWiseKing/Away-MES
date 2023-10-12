@@ -11,7 +11,7 @@
  Target Server Version : 50731
  File Encoding         : 65001
 
- Date: 12/10/2023 21:00:01
+ Date: 12/10/2023 22:29:01
 */
 
 SET NAMES utf8mb4;
@@ -23,22 +23,17 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `aw_additional`;
 CREATE TABLE `aw_additional`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '附加信息id',
-  `ID` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '关联订单',
+  `saleorderID` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '关联订单',
   `key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '附加属性',
   `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '附加内容',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_contacts_aw_saleorder_1`(`saleorderID`) USING BTREE,
   CONSTRAINT `fk_contacts_aw_saleorder_1` FOREIGN KEY (`saleorderID`) REFERENCES `aw_saleorder` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单附加信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单附加信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of aw_additional
 -- ----------------------------
-INSERT INTO `aw_additional` VALUES (1, '202310071826534923', '啥发大水', '撒旦法');
-INSERT INTO `aw_additional` VALUES (2, '202310071826534923', '鼎折覆餗打', '的法师打发');
-INSERT INTO `aw_additional` VALUES (3, '202310071826534923', '顶顶顶顶', '大法师');
-INSERT INTO `aw_additional` VALUES (4, '202310102076910093', '鼎折覆餗', '的说法是');
-INSERT INTO `aw_additional` VALUES (5, '202310102076910093', '打', '打法');
 
 -- ----------------------------
 -- Table structure for aw_city
@@ -2947,7 +2942,6 @@ CREATE TABLE `aw_contract`  (
 -- ----------------------------
 -- Records of aw_contract
 -- ----------------------------
-INSERT INTO `aw_contract` VALUES ('测试合同001', '1231231', NULL);
 
 -- ----------------------------
 -- Table structure for aw_customersuppliedmaterials
@@ -2995,6 +2989,33 @@ CREATE TABLE `aw_invoice`  (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for aw_localmaterialoutbound
+-- ----------------------------
+DROP TABLE IF EXISTS `aw_localmaterialoutbound`;
+CREATE TABLE `aw_localmaterialoutbound`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `deliveryNoteID` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '出库单编号',
+  `materialID` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '材料基础信息编号',
+  `productionTasksID` int(11) NULL DEFAULT NULL COMMENT '任务编号',
+  `processingTechnologyID` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工艺编号',
+  `outboundQuantity` int(11) NOT NULL COMMENT '出库数量',
+  `notes` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `fk_aw_LocalMaterialOutbound_aw_OutboundOrder_1`(`deliveryNoteID`) USING BTREE,
+  INDEX `fk_aw_LocalMaterialOutbound_aw_material_1`(`materialID`) USING BTREE,
+  INDEX `fk_aw_LocalMaterialOutbound_aw_ProductionTasks_1`(`productionTasksID`) USING BTREE,
+  INDEX `fk_aw_LocalMaterialOutbound_aw_processingtechnology_1`(`processingTechnologyID`) USING BTREE,
+  CONSTRAINT `fk_aw_LocalMaterialOutbound_aw_OutboundOrder_1` FOREIGN KEY (`deliveryNoteID`) REFERENCES `aw_outboundorder` (`deliveryNoteID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_aw_LocalMaterialOutbound_aw_ProductionTasks_1` FOREIGN KEY (`productionTasksID`) REFERENCES `aw_productiontasks` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `fk_aw_LocalMaterialOutbound_aw_material_1` FOREIGN KEY (`materialID`) REFERENCES `aw_material` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `fk_aw_LocalMaterialOutbound_aw_processingtechnology_1` FOREIGN KEY (`processingTechnologyID`) REFERENCES `aw_processingtechnology` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '本地材料出库' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of aw_localmaterialoutbound
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for aw_localmaterials
 -- ----------------------------
 DROP TABLE IF EXISTS `aw_localmaterials`;
@@ -3010,6 +3031,34 @@ CREATE TABLE `aw_localmaterials`  (
 
 -- ----------------------------
 -- Records of aw_localmaterials
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for aw_localmaterialwarehousing
+-- ----------------------------
+DROP TABLE IF EXISTS `aw_localmaterialwarehousing`;
+CREATE TABLE `aw_localmaterialwarehousing`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `warehouseEntryID` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '入库单编号',
+  `materialSubscription` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '申购材料编号',
+  `receiptInvoiceID` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '发票信息编号',
+  `materialID` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '材料基础信息编号',
+  `receiptQuantity` int(11) NOT NULL COMMENT '入库数量',
+  `sampleURL` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '附样',
+  `notes` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `fk_aw_LocalMaterialWarehousing_aw_ReceiptInvoice_1`(`receiptInvoiceID`) USING BTREE,
+  INDEX `fk_aw_LocalMaterialWarehousing_aw_Warehousing_1`(`warehouseEntryID`) USING BTREE,
+  INDEX `fk_aw_LocalMaterialWarehousing_aw_MaterialSubscription_1`(`materialSubscription`) USING BTREE,
+  INDEX `fk_aw_LocalMaterialWarehousing_aw_material_1`(`materialID`) USING BTREE,
+  CONSTRAINT `fk_aw_LocalMaterialWarehousing_aw_MaterialSubscription_1` FOREIGN KEY (`materialSubscription`) REFERENCES `aw_materialsubscription` (`materialSubscription`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `fk_aw_LocalMaterialWarehousing_aw_ReceiptInvoice_1` FOREIGN KEY (`receiptInvoiceID`) REFERENCES `aw_receiptinvoice` (`receiptInvoiceID`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `fk_aw_LocalMaterialWarehousing_aw_Warehousing_1` FOREIGN KEY (`warehouseEntryID`) REFERENCES `aw_warehousing` (`warehouseEntryID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_aw_LocalMaterialWarehousing_aw_material_1` FOREIGN KEY (`materialID`) REFERENCES `aw_material` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '本地材料入库' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of aw_localmaterialwarehousing
 -- ----------------------------
 
 -- ----------------------------
@@ -3050,6 +3099,54 @@ CREATE TABLE `aw_materialclassification`  (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for aw_materialsubscription
+-- ----------------------------
+DROP TABLE IF EXISTS `aw_materialsubscription`;
+CREATE TABLE `aw_materialsubscription`  (
+  `materialSubscription` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '申购材料编号',
+  `subscribeID` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '申购单编号',
+  `productionTasksID` int(11) NOT NULL COMMENT '任务编号',
+  `materialID` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '材料基础信息编号',
+  `processingTechnologyID` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '工艺编号',
+  `subscriptionQuantity` int(11) NOT NULL COMMENT '申购数量',
+  `requiredDate` datetime(6) NOT NULL COMMENT '需用日期',
+  `sampleURL` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '附样',
+  `note` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`materialSubscription`) USING BTREE,
+  INDEX `fk_aw_MaterialSubscription_aw_PurchaseRequisition_1`(`subscribeID`) USING BTREE,
+  INDEX `fk_aw_MaterialSubscription_aw_ProductionTasks_1`(`productionTasksID`) USING BTREE,
+  INDEX `fk_aw_MaterialSubscription_aw_material_1`(`materialID`) USING BTREE,
+  INDEX `fk_aw_MaterialSubscription_aw_processingtechnology_1`(`processingTechnologyID`) USING BTREE,
+  CONSTRAINT `fk_aw_MaterialSubscription_aw_ProductionTasks_1` FOREIGN KEY (`productionTasksID`) REFERENCES `aw_productiontasks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_aw_MaterialSubscription_aw_PurchaseRequisition_1` FOREIGN KEY (`subscribeID`) REFERENCES `aw_purchaserequisition` (`subscribeID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_aw_MaterialSubscription_aw_material_1` FOREIGN KEY (`materialID`) REFERENCES `aw_material` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_aw_MaterialSubscription_aw_processingtechnology_1` FOREIGN KEY (`processingTechnologyID`) REFERENCES `aw_processingtechnology` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '申购材料' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of aw_materialsubscription
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for aw_outboundorder
+-- ----------------------------
+DROP TABLE IF EXISTS `aw_outboundorder`;
+CREATE TABLE `aw_outboundorder`  (
+  `deliveryNoteID` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '出库单编号',
+  `deliveryDate` datetime(6) NOT NULL COMMENT '出库日期',
+  `creator` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '制单人',
+  `warehouseKeeper` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '库管员',
+  `materialReceiver` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '领料人',
+  `notes` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `status` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '状态',
+  PRIMARY KEY (`deliveryNoteID`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '出库单' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of aw_outboundorder
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for aw_partner
 -- ----------------------------
 DROP TABLE IF EXISTS `aw_partner`;
@@ -3072,8 +3169,6 @@ CREATE TABLE `aw_partner`  (
 -- ----------------------------
 -- Records of aw_partner
 -- ----------------------------
-INSERT INTO `aw_partner` VALUES ('测试0002', '测试的客户0002', '客户002', '213333333333333333', NULL, 2306, NULL, NULL, 0, '0');
-INSERT INTO `aw_partner` VALUES ('测试客户编号0001', '测试客户0001', '客户0001', '123333333333333333', NULL, 704, NULL, NULL, 0, '0');
 
 -- ----------------------------
 -- Table structure for aw_processingprocess
@@ -3095,14 +3190,11 @@ CREATE TABLE `aw_processingprocess`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_加工工序信息表_加工工艺信息表_1`(`processingTechnologyID`) USING BTREE,
   CONSTRAINT `fk_加工工序信息表_加工工艺信息表_1` FOREIGN KEY (`processingTechnologyID`) REFERENCES `aw_processingtechnology` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '加工工序信息表\r\n存储加工过程中每道工序的情况' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '加工工序信息表\r\n存储加工过程中每道工序的情况' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of aw_processingprocess
 -- ----------------------------
-INSERT INTO `aw_processingprocess` VALUES (1, '1312321', 0, '123123是否', '<p>是打发但是发</p>', NULL, '12321的说法', '大是发大水发', '沙发', '鼎折覆餗发生的', '0', '1');
-INSERT INTO `aw_processingprocess` VALUES (2, '1312321', 2, '三大法师的', '<p>撒旦法撒旦法盛大</p>', NULL, '的撒旦法师法三', '撒旦法盛大', '定时送到法师打发', '撒旦法师是否是', '0', '1');
-INSERT INTO `aw_processingprocess` VALUES (3, '1312321', 3, '123123', '<p>123123123</p>', '1552275583.jpg;', '12312', '1231', '1231', '123', '0', '0');
 
 -- ----------------------------
 -- Table structure for aw_processingtechnology
@@ -3112,8 +3204,6 @@ CREATE TABLE `aw_processingtechnology`  (
   `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '加工工艺编号',
   `createTime` date NOT NULL COMMENT '创建日期',
   `founder` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '创建人',
-  `cuttingSize` float NULL DEFAULT NULL COMMENT '下料尺寸',
-  `numberProducibleParts` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '可制件数',
   `status` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '状态',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '加工工艺信息表\r\n存储加工工艺相关信息' ROW_FORMAT = Dynamic;
@@ -3121,8 +3211,6 @@ CREATE TABLE `aw_processingtechnology`  (
 -- ----------------------------
 -- Records of aw_processingtechnology
 -- ----------------------------
-INSERT INTO `aw_processingtechnology` VALUES ('1312321', '2023-10-07', '测试', NULL, NULL, '1');
-INSERT INTO `aw_processingtechnology` VALUES ('213213', '2023-10-10', '123123', 123123, '213123', '0');
 
 -- ----------------------------
 -- Table structure for aw_processinspection
@@ -3148,13 +3236,32 @@ CREATE TABLE `aw_processinspection`  (
   INDEX `fk_aw_processInspection_aw_ProductionTasks_1`(`productionTasksID`) USING BTREE,
   CONSTRAINT `fk_aw_processInspection_aw_ProductionTasks_1` FOREIGN KEY (`productionTasksID`) REFERENCES `aw_productiontasks` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `fk_aw_processInspection_aw_processingprocess_1` FOREIGN KEY (`processingprocessID`) REFERENCES `aw_processingprocess` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '过程检验' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '过程检验' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of aw_processinspection
 -- ----------------------------
-INSERT INTO `aw_processinspection` VALUES (1, '测试检验', '0', 1, 2, 213131, 213123, 123123, 123123, 1231321, '2023-10-02 00:00:00', '0', '撒旦法发', '阿萨德发大水发');
-INSERT INTO `aw_processinspection` VALUES (2, '21的沙发上分', '0', 1, 1, 100, 30, 70, 30, 40, '2023-10-10 00:00:00', '1', '大沙发的说法', NULL);
+
+-- ----------------------------
+-- Table structure for aw_processrequirementmateriallist
+-- ----------------------------
+DROP TABLE IF EXISTS `aw_processrequirementmateriallist`;
+CREATE TABLE `aw_processrequirementmateriallist`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `materialID` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '材料基础信息编号',
+  `processingTechnologyID` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '工艺编号',
+  `cuttingSize` float NOT NULL COMMENT '下料尺寸',
+  `numberProducibleParts` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '可制件数',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `fk_aw_ProcessRequirementMaterialList_aw_processingtechnology_1`(`processingTechnologyID`) USING BTREE,
+  INDEX `fk_aw_ProcessRequirementMaterialList_aw_material_1`(`materialID`) USING BTREE,
+  CONSTRAINT `fk_aw_ProcessRequirementMaterialList_aw_material_1` FOREIGN KEY (`materialID`) REFERENCES `aw_material` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_aw_ProcessRequirementMaterialList_aw_processingtechnology_1` FOREIGN KEY (`processingTechnologyID`) REFERENCES `aw_processingtechnology` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '工艺需求材料' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of aw_processrequirementmateriallist
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for aw_processtemplate
@@ -3172,14 +3279,11 @@ CREATE TABLE `aw_processtemplate`  (
   `outsourcing` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '工序外协#0为不外协1为外协#',
   `status` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '状态',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '工序模板信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '工序模板信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of aw_processtemplate
 -- ----------------------------
-INSERT INTO `aw_processtemplate` VALUES (1, '测试工艺0001', '<p>测试0002</p>', NULL, '12321312', '1231', '123123', '1231', '0', '1');
-INSERT INTO `aw_processtemplate` VALUES (2, '123123', '<p>123123123</p>', '114673921.jpg;', '12312', '1231', '1231', '123', '0', '1');
-INSERT INTO `aw_processtemplate` VALUES (3, '放散阀', '<p>阿斯顿法师法</p>', NULL, '第三方', '第三方', '第三方', '是打发', '0', '1');
 
 -- ----------------------------
 -- Table structure for aw_product
@@ -3195,9 +3299,6 @@ CREATE TABLE `aw_product`  (
 -- ----------------------------
 -- Records of aw_product
 -- ----------------------------
-INSERT INTO `aw_product` VALUES ('21发发呆时', '打发大水发', '639808565.jpg;');
-INSERT INTO `aw_product` VALUES ('测试产品001', '撒旦法师', NULL);
-INSERT INTO `aw_product` VALUES ('测试产品002', '测试产品002', NULL);
 
 -- ----------------------------
 -- Table structure for aw_productiontasklist
@@ -3211,13 +3312,11 @@ CREATE TABLE `aw_productiontasklist`  (
   `notes` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注信息',
   `status` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '状态',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '生产任务单' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '生产任务单' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of aw_productiontasklist
 -- ----------------------------
-INSERT INTO `aw_productiontasklist` VALUES (1, '大法师打分啥的', 'admin', '2023-10-07', NULL, '1');
-INSERT INTO `aw_productiontasklist` VALUES (2, '法兰克福精看来是的房间里深刻的', 'admin', '2023-10-10', NULL, '0');
 
 -- ----------------------------
 -- Table structure for aw_productiontasks
@@ -3239,17 +3338,29 @@ CREATE TABLE `aw_productiontasks`  (
   CONSTRAINT `fk_aw_Production tasks_aw_ProductionTaskList_1` FOREIGN KEY (`productionTasksFormID`) REFERENCES `aw_productiontasklist` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_aw_Production tasks_aw_saleorder_1` FOREIGN KEY (`saleOrderID`) REFERENCES `aw_saleorder` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `fk_aw_ProductionTasks_aw_processingtechnology_1` FOREIGN KEY (`processingTechnologyID`) REFERENCES `aw_processingtechnology` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '生产任务' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of aw_productiontasks
 -- ----------------------------
-INSERT INTO `aw_productiontasks` VALUES (1, 1, 0, '1312321', '202310071467597281', '0', NULL, '1');
-INSERT INTO `aw_productiontasks` VALUES (2, 1, 1, '1312321', '202310071467597281', '0', '沙发士大夫', '1');
-INSERT INTO `aw_productiontasks` VALUES (3, 1, 2, '1312321', '202310071467597281', '0', NULL, '1');
-INSERT INTO `aw_productiontasks` VALUES (4, 2, 0, '1312321', '202310071467597281', '0', NULL, '1');
-INSERT INTO `aw_productiontasks` VALUES (5, 2, 1, '213213', '202310071467597281', '0', NULL, '1');
-INSERT INTO `aw_productiontasks` VALUES (6, 2, 2, '1312321', '202310071467597281', '0', NULL, '1');
+
+-- ----------------------------
+-- Table structure for aw_purchaserequisition
+-- ----------------------------
+DROP TABLE IF EXISTS `aw_purchaserequisition`;
+CREATE TABLE `aw_purchaserequisition`  (
+  `subscribeID` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '申购单编号',
+  `requisitioner` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '申购人',
+  `subscriptionDate` datetime NOT NULL COMMENT '申购日期',
+  `approver` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '核准人',
+  `note` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `status` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '状态',
+  PRIMARY KEY (`subscribeID`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '申购单' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of aw_purchaserequisition
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for aw_qrcode
@@ -3264,13 +3375,28 @@ CREATE TABLE `aw_qrcode`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_aw_qrcode_aw_processingprocess_1`(`processingprocessID`) USING BTREE,
   CONSTRAINT `fk_aw_qrcode_aw_processingprocess_1` FOREIGN KEY (`processingprocessID`) REFERENCES `aw_processingprocess` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of aw_qrcode
 -- ----------------------------
-INSERT INTO `aw_qrcode` VALUES (1, '9a088403-35b7-4519-8384-7d510b41ff40.png', 1, '2023-10-07 19:27:13', '10');
-INSERT INTO `aw_qrcode` VALUES (2, '706e19db-9a29-493f-92ef-0a0564594150.png', 1, '2023-10-07 19:27:13', '10');
+
+-- ----------------------------
+-- Table structure for aw_receiptinvoice
+-- ----------------------------
+DROP TABLE IF EXISTS `aw_receiptinvoice`;
+CREATE TABLE `aw_receiptinvoice`  (
+  `receiptInvoiceID` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '入库发票编号',
+  `invoiceType` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '发票类型',
+  `invoiceTaxRate` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '发票税率',
+  `purchaseUnitPriceExcludingTax` int(11) NOT NULL COMMENT '不含税采购单价',
+  `purchaseUnitPriceIncludingTax` int(11) NULL DEFAULT NULL COMMENT '含税采购单价',
+  PRIMARY KEY (`receiptInvoiceID`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '入库发票信息' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of aw_receiptinvoice
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for aw_saleorder
@@ -3306,9 +3432,6 @@ CREATE TABLE `aw_saleorder`  (
 -- ----------------------------
 -- Records of aw_saleorder
 -- ----------------------------
-INSERT INTO `aw_saleorder` VALUES ('202310071467597281', '2023-10-07', 'admin', '2023-10-03', 123123, '2023-10-24', '测试客户编号0001', '测试产品001', '测试合同001', NULL, 0, NULL, '1', NULL, '0');
-INSERT INTO `aw_saleorder` VALUES ('202310071826534923', '2023-10-07', 'admin', '2023-10-02', 123213, '2023-10-25', '测试客户编号0001', '测试产品001', NULL, NULL, 0, NULL, '1', NULL, '0');
-INSERT INTO `aw_saleorder` VALUES ('202310102076910093', '2023-10-10', 'admin', '2023-10-10', 567575, '2023-10-31', '测试0002', '21发发呆时', NULL, NULL, 0, NULL, '1', NULL, '0');
 
 -- ----------------------------
 -- Table structure for aw_specifications
@@ -3382,6 +3505,26 @@ INSERT INTO `aw_units` VALUES (1, '个');
 INSERT INTO `aw_units` VALUES (2, '斤');
 
 -- ----------------------------
+-- Table structure for aw_warehousing
+-- ----------------------------
+DROP TABLE IF EXISTS `aw_warehousing`;
+CREATE TABLE `aw_warehousing`  (
+  `warehouseEntryID` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '入库单编号',
+  `warehousingDate` datetime(6) NOT NULL COMMENT '入库日期',
+  `creator` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '制单人',
+  `acceptedBy` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '验收人',
+  `warehouseKeeper` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '库管员',
+  `operator` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '经办人',
+  `notes` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `status` varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '状态',
+  PRIMARY KEY (`warehouseEntryID`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '入库单' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of aw_warehousing
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for gen_table
 -- ----------------------------
 DROP TABLE IF EXISTS `gen_table`;
@@ -3407,7 +3550,7 @@ CREATE TABLE `gen_table`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`table_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '代码生成业务表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '代码生成业务表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of gen_table
@@ -3435,7 +3578,14 @@ INSERT INTO `gen_table` VALUES (29, 'aw_processingtechnology', '加工工艺信�
 INSERT INTO `gen_table` VALUES (30, 'aw_processtemplate', '工序模板', NULL, NULL, 'AwProcesstemplate', 'crud', 'com.awise.produce', 'produce', 'processtemplate', '工序模板', 'awise', '0', '/', '{\"parentMenuId\":2029}', 'admin', '2023-08-18 11:58:12', '', '2023-09-07 17:41:52', NULL);
 INSERT INTO `gen_table` VALUES (31, 'aw_qrcode', '二维码', NULL, NULL, 'AwQrcode', 'crud', 'com.awise.qrcode', 'qrcode', 'qrcode', '二维码', 'awise', '0', '/', '{}', 'admin', '2023-09-18 02:27:58', '', '2023-09-18 02:29:03', NULL);
 INSERT INTO `gen_table` VALUES (32, 'aw_processinspection', '过程检验', NULL, NULL, 'AwProcessinspection', 'crud', 'com.awise.quality', 'quality', 'processinspection', '过程检验', 'awise', '0', '/', '{\"parentMenuId\":\"2034\"}', 'admin', '2023-09-26 16:20:38', '', '2023-09-26 16:44:09', NULL);
-INSERT INTO `gen_table` VALUES (33, 'test', 'VIEW', NULL, NULL, 'Test', 'crud', 'com.ruoyi.system', 'system', 'test', 'VIEW', 'ruoyi', '0', '/', NULL, 'admin', '2023-10-12 17:27:29', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (35, 'aw_localmaterialoutbound', '本地材料出库', NULL, NULL, 'AwLocalmaterialoutbound', 'crud', 'com.ruoyi.system', 'system', 'localmaterialoutbound', '本地材料出库', 'ruoyi', '0', '/', NULL, 'admin', '2023-10-12 21:40:07', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (36, 'aw_localmaterialwarehousing', '本地材料入库', NULL, NULL, 'AwLocalmaterialwarehousing', 'crud', 'com.ruoyi.system', 'system', 'localmaterialwarehousing', '本地材料入库', 'ruoyi', '0', '/', NULL, 'admin', '2023-10-12 21:40:07', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (37, 'aw_materialsubscription', '申购材料', NULL, NULL, 'AwMaterialsubscription', 'crud', 'com.ruoyi.system', 'system', 'materialsubscription', '申购材料', 'ruoyi', '0', '/', NULL, 'admin', '2023-10-12 21:40:07', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (38, 'aw_outboundorder', '出库单', NULL, NULL, 'AwOutboundorder', 'crud', 'com.ruoyi.system', 'system', 'outboundorder', '出库单', 'ruoyi', '0', '/', NULL, 'admin', '2023-10-12 21:40:07', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (39, 'aw_processrequirementmateriallist', '工艺需求材料', NULL, NULL, 'AwProcessrequirementmateriallist', 'crud', 'com.ruoyi.system', 'system', 'processrequirementmateriallist', '工艺需求材料', 'ruoyi', '0', '/', NULL, 'admin', '2023-10-12 21:40:07', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (40, 'aw_purchaserequisition', '申购单', NULL, NULL, 'AwPurchaserequisition', 'crud', 'com.ruoyi.system', 'system', 'purchaserequisition', '申购单', 'ruoyi', '0', '/', NULL, 'admin', '2023-10-12 21:40:07', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (41, 'aw_receiptinvoice', '入库发票信息', NULL, NULL, 'AwReceiptinvoice', 'crud', 'com.ruoyi.system', 'system', 'receiptinvoice', '入库发票信息', 'ruoyi', '0', '/', NULL, 'admin', '2023-10-12 21:40:07', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (43, 'aw_warehousing', '入库单', NULL, NULL, 'AwWarehousing', 'crud', 'com.ruoyi.system', 'system', 'warehousing', '入库单', 'ruoyi', '0', '/', NULL, 'admin', '2023-10-12 21:40:07', '', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for gen_table_column
@@ -3465,7 +3615,7 @@ CREATE TABLE `gen_table_column`  (
   `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`column_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 267 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 364 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of gen_table_column
@@ -3580,11 +3730,9 @@ INSERT INTO `gen_table_column` VALUES (211, '28', 'preparationHours', '准备工
 INSERT INTO `gen_table_column` VALUES (212, '28', 'taktTime', '单件工时', 'varchar(255)', 'String', 'taktTime', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 9, 'admin', '2023-08-18 11:58:12', '', '2023-09-26 16:57:42');
 INSERT INTO `gen_table_column` VALUES (213, '28', 'laborCost', '工时成本', 'varchar(255)', 'String', 'laborCost', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 10, 'admin', '2023-08-18 11:58:12', '', '2023-09-26 16:57:42');
 INSERT INTO `gen_table_column` VALUES (214, '28', 'outsourcing', '工序外协#0为不外协1为外协#', 'varchar(3)', 'String', 'outsourcing', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 11, 'admin', '2023-08-18 11:58:12', '', '2023-09-26 16:57:42');
-INSERT INTO `gen_table_column` VALUES (215, '29', 'id', '加工工艺编号', 'varchar(255)', 'String', 'id', '1', '0', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-08-18 11:58:12', '', '2023-09-27 15:21:57');
-INSERT INTO `gen_table_column` VALUES (217, '29', 'createTime', '创建日期', 'date', 'Date', 'createTime', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'datetime', '', 2, 'admin', '2023-08-18 11:58:12', '', '2023-09-27 15:21:57');
-INSERT INTO `gen_table_column` VALUES (218, '29', 'founder', '创建人', 'varchar(255)', 'String', 'founder', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-08-18 11:58:12', '', '2023-09-27 15:21:57');
-INSERT INTO `gen_table_column` VALUES (219, '29', 'cuttingSize', '下料尺寸', 'float', 'Long', 'cuttingSize', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2023-08-18 11:58:12', '', '2023-09-27 15:21:57');
-INSERT INTO `gen_table_column` VALUES (220, '29', 'numberProducibleParts', '可制件数', 'varchar(255)', 'String', 'numberProducibleParts', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-08-18 11:58:12', '', '2023-09-27 15:21:57');
+INSERT INTO `gen_table_column` VALUES (215, '29', 'id', '加工工艺编号', 'varchar(255)', 'String', 'id', '1', '0', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-08-18 11:58:12', '', '2023-10-12 21:41:08');
+INSERT INTO `gen_table_column` VALUES (217, '29', 'createTime', '创建日期', 'date', 'Date', 'createTime', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'datetime', '', 2, 'admin', '2023-08-18 11:58:12', '', '2023-10-12 21:41:08');
+INSERT INTO `gen_table_column` VALUES (218, '29', 'founder', '创建人', 'varchar(255)', 'String', 'founder', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-08-18 11:58:12', '', '2023-10-12 21:41:08');
 INSERT INTO `gen_table_column` VALUES (221, '30', 'id', '工序编号', 'int(11)', 'Long', 'id', '1', '0', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-08-18 11:58:12', '', '2023-09-27 15:32:21');
 INSERT INTO `gen_table_column` VALUES (222, '30', 'name', '工序名称', 'varchar(255)', 'String', 'name', '1', '0', '1', '1', '1', '1', '1', 'LIKE', 'input', '', 2, 'admin', '2023-08-18 11:58:12', '', '2023-09-27 15:32:21');
 INSERT INTO `gen_table_column` VALUES (223, '30', 'content', '工序内容', 'varchar(255)', 'String', 'content', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'editor', '', 3, 'admin', '2023-08-18 11:58:12', '', '2023-09-27 15:32:21');
@@ -3615,20 +3763,65 @@ INSERT INTO `gen_table_column` VALUES (249, '32', 'note', '备注', 'varchar(255
 INSERT INTO `gen_table_column` VALUES (250, '28', 'status', '状态', 'varchar(4)', 'String', 'status', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'radio', '', 12, '', '2023-09-26 16:57:42', '', NULL);
 INSERT INTO `gen_table_column` VALUES (251, '26', 'processingTechnologyID', '工艺编号', 'varchar(255)', 'String', 'processingTechnologyID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 4, '', '2023-09-27 11:13:44', '', '2023-09-27 16:09:20');
 INSERT INTO `gen_table_column` VALUES (252, '30', 'status', '状态', 'varchar(3)', 'String', 'status', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'radio', '', 10, '', '2023-09-27 15:12:22', '', '2023-09-27 15:32:21');
-INSERT INTO `gen_table_column` VALUES (253, '29', 'status', '状态', 'varchar(3)', 'String', 'status', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'radio', '', 6, '', '2023-09-27 15:21:57', '', NULL);
+INSERT INTO `gen_table_column` VALUES (253, '29', 'status', '状态', 'varchar(3)', 'String', 'status', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'radio', '', 4, '', '2023-09-27 15:21:57', '', '2023-10-12 21:41:08');
 INSERT INTO `gen_table_column` VALUES (254, '26', 'status', '任务状态', 'varchar(3)', 'String', 'status', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'radio', '', 8, '', '2023-09-27 16:09:20', '', NULL);
 INSERT INTO `gen_table_column` VALUES (255, '25', 'referred', '简称', 'varchar(255)', 'String', 'referred', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, '', '2023-09-27 17:13:40', '', NULL);
 INSERT INTO `gen_table_column` VALUES (256, '32', 'ProductionTasksID', '任务编号', 'int(11)', 'Long', 'ProductionTasksID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 4, '', '2023-09-27 17:14:09', '', NULL);
-INSERT INTO `gen_table_column` VALUES (257, '33', 'id', '城市地区id', 'int(11)', 'Long', 'id', '0', '0', '1', '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-10-12 17:27:29', '', NULL);
-INSERT INTO `gen_table_column` VALUES (258, '33', 'economize', '省', 'varchar(255)', 'String', 'economize', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2023-10-12 17:27:29', '', NULL);
-INSERT INTO `gen_table_column` VALUES (259, '33', 'city', '市', 'varchar(255)', 'String', 'city', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-10-12 17:27:29', '', NULL);
-INSERT INTO `gen_table_column` VALUES (260, '33', 'county', '区县', 'varchar(255)', 'String', 'county', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2023-10-12 17:27:29', '', NULL);
-INSERT INTO `gen_table_column` VALUES (261, '33', 'cityid', '城市地区id#省份、地市、区县#', 'int(11)', 'Long', 'cityid', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-10-12 17:27:29', '', NULL);
-INSERT INTO `gen_table_column` VALUES (262, '33', 'name', '实体姓名', 'varchar(255)', 'String', 'name', '0', '0', '1', '1', '1', '1', '1', 'LIKE', 'input', '', 6, 'admin', '2023-10-12 17:27:29', '', NULL);
-INSERT INTO `gen_table_column` VALUES (263, '33', 'unifiedCreditCode', '社会统一信用代码', 'varchar(255)', 'String', 'unifiedCreditCode', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 7, 'admin', '2023-10-12 17:27:29', '', NULL);
-INSERT INTO `gen_table_column` VALUES (264, '33', 'nameAbbrevation', '实体简称', 'varchar(255)', 'String', 'nameAbbrevation', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 8, 'admin', '2023-10-12 17:27:29', '', NULL);
-INSERT INTO `gen_table_column` VALUES (265, '33', 'certificateURL', '证照附件url地址#多个附件地址用分号;分隔#', 'varchar(255)', 'String', 'certificateURL', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 9, 'admin', '2023-10-12 17:27:29', '', NULL);
-INSERT INTO `gen_table_column` VALUES (266, '33', 'address', '详细地址', 'varchar(255)', 'String', 'address', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 10, 'admin', '2023-10-12 17:27:29', '', NULL);
+INSERT INTO `gen_table_column` VALUES (276, '35', 'id', 'id', 'int(11)', 'Long', 'id', '1', '1', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (277, '35', 'deliveryNoteID', '出库单编号', 'varchar(255)', 'String', 'deliveryNoteID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (278, '35', 'materialID', '材料基础信息编号', 'varchar(255)', 'String', 'materialID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (279, '35', 'productionTasksID', '任务编号', 'int(11)', 'Long', 'productionTasksID', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (280, '35', 'processingTechnologyID', '工艺编号', 'varchar(255)', 'String', 'processingTechnologyID', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (281, '35', 'outboundQuantity', '出库数量', 'int(11)', 'Long', 'outboundQuantity', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (282, '35', 'notes', '备注', 'varchar(255)', 'String', 'notes', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 7, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (283, '36', 'id', 'id', 'int(11)', 'Long', 'id', '1', '1', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (284, '36', 'warehouseEntryID', '入库单编号', 'varchar(255)', 'String', 'warehouseEntryID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (285, '36', 'materialSubscription', '申购材料编号', 'varchar(255)', 'String', 'materialSubscription', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (286, '36', 'receiptInvoiceID', '发票信息编号', 'varchar(255)', 'String', 'receiptInvoiceID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (287, '36', 'materialID', '材料基础信息编号', 'varchar(255)', 'String', 'materialID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (288, '36', 'receiptQuantity', '入库数量', 'int(11)', 'Long', 'receiptQuantity', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (289, '36', 'sampleURL', '附样', 'varchar(255)', 'String', 'sampleURL', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 7, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (290, '36', 'notes', '备注', 'varchar(255)', 'String', 'notes', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 8, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (291, '37', 'materialSubscription', '申购材料编号', 'varchar(255)', 'String', 'materialSubscription', '1', '0', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (292, '37', 'subscribeID', '申购单编号', 'varchar(255)', 'String', 'subscribeID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (293, '37', 'productionTasksID', '任务编号', 'int(11)', 'Long', 'productionTasksID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (294, '37', 'materialID', '材料基础信息编号', 'varchar(255)', 'String', 'materialID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (295, '37', 'processingTechnologyID', '工艺编号', 'varchar(255)', 'String', 'processingTechnologyID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (296, '37', 'subscriptionQuantity', '申购数量', 'int(11)', 'Long', 'subscriptionQuantity', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (297, '37', 'requiredDate', '需用日期', 'datetime(6)', 'Date', 'requiredDate', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'datetime', '', 7, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (298, '37', 'sampleURL', '附样', 'varchar(255)', 'String', 'sampleURL', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 8, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (299, '37', 'note', '备注', 'varchar(255)', 'String', 'note', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 9, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (300, '38', 'deliveryNoteID', '出库单编号', 'varchar(255)', 'String', 'deliveryNoteID', '1', '0', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (301, '38', 'deliveryDate', '出库日期', 'datetime(6)', 'Date', 'deliveryDate', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'datetime', '', 2, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (302, '38', 'creator', '制单人', 'varchar(20)', 'String', 'creator', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (303, '38', 'warehouseKeeper', '库管员', 'varchar(20)', 'String', 'warehouseKeeper', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (304, '38', 'materialReceiver', '领料人', 'varchar(20)', 'String', 'materialReceiver', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (305, '38', 'notes', '备注', 'varchar(255)', 'String', 'notes', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (306, '38', 'status', '状态', 'varchar(3)', 'String', 'status', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'radio', '', 7, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (307, '39', 'id', 'id', 'int(11)', 'Long', 'id', '1', '1', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (308, '39', 'materialID', '材料基础信息编号', 'varchar(255)', 'String', 'materialID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (309, '39', 'processingTechnologyID', '工艺编号', 'varchar(255)', 'String', 'processingTechnologyID', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (310, '39', 'cuttingSize', '下料尺寸', 'float', 'Long', 'cuttingSize', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (311, '39', 'numberProducibleParts', '可制件数', 'varchar(255)', 'String', 'numberProducibleParts', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (312, '40', 'subscribeID', '申购单编号', 'varchar(255)', 'String', 'subscribeID', '1', '0', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (313, '40', 'requisitioner', '申购人', 'varchar(255)', 'String', 'requisitioner', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (314, '40', 'subscriptionDate', '申购日期', 'datetime', 'Date', 'subscriptionDate', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'datetime', '', 3, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (315, '40', 'approver', '核准人', 'varchar(255)', 'String', 'approver', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (316, '40', 'note', '备注', 'varchar(255)', 'String', 'note', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (317, '40', 'status', '状态', 'varchar(3)', 'String', 'status', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'radio', '', 6, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (318, '41', 'receiptInvoiceID', '入库发票编号', 'varchar(255)', 'String', 'receiptInvoiceID', '1', '0', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (319, '41', 'invoiceType', '发票类型', 'varchar(3)', 'String', 'invoiceType', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'select', '', 2, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (320, '41', 'invoiceTaxRate', '发票税率', 'varchar(255)', 'String', 'invoiceTaxRate', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (321, '41', 'purchaseUnitPriceExcludingTax', '不含税采购单价', 'int(11)', 'Long', 'purchaseUnitPriceExcludingTax', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (322, '41', 'purchaseUnitPriceIncludingTax', '含税采购单价', 'int(11)', 'Long', 'purchaseUnitPriceIncludingTax', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (356, '43', 'warehouseEntryID', '入库单编号', 'varchar(255)', 'String', 'warehouseEntryID', '1', '0', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (357, '43', 'warehousingDate', '入库日期', 'datetime(6)', 'Date', 'warehousingDate', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'datetime', '', 2, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (358, '43', 'creator', '制单人', 'varchar(20)', 'String', 'creator', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (359, '43', 'acceptedBy', '验收人', 'varchar(20)', 'String', 'acceptedBy', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (360, '43', 'warehouseKeeper', '库管员', 'varchar(20)', 'String', 'warehouseKeeper', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (361, '43', 'operator', '经办人', 'varchar(20)', 'String', 'operator', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (362, '43', 'notes', '备注', 'varchar(255)', 'String', 'notes', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 7, 'admin', '2023-10-12 21:40:07', '', NULL);
+INSERT INTO `gen_table_column` VALUES (363, '43', 'status', '状态', 'varchar(3)', 'String', 'status', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'radio', '', 8, 'admin', '2023-10-12 21:40:07', '', NULL);
 
 -- ----------------------------
 -- Table structure for qrtz_blob_triggers
@@ -4072,7 +4265,7 @@ CREATE TABLE `sys_logininfor`  (
   PRIMARY KEY (`info_id`) USING BTREE,
   INDEX `idx_sys_logininfor_s`(`status`) USING BTREE,
   INDEX `idx_sys_logininfor_lt`(`login_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 354 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 359 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -4331,6 +4524,11 @@ INSERT INTO `sys_logininfor` VALUES (350, 'admin', '127.0.0.1', '内网IP', 'Chr
 INSERT INTO `sys_logininfor` VALUES (351, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '验证码已失效', '2023-10-10 22:23:50');
 INSERT INTO `sys_logininfor` VALUES (352, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-10-10 22:23:59');
 INSERT INTO `sys_logininfor` VALUES (353, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-10-12 17:26:59');
+INSERT INTO `sys_logininfor` VALUES (354, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-10-12 21:39:17');
+INSERT INTO `sys_logininfor` VALUES (355, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '验证码已失效', '2023-10-12 22:20:22');
+INSERT INTO `sys_logininfor` VALUES (356, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '验证码错误', '2023-10-12 22:20:26');
+INSERT INTO `sys_logininfor` VALUES (357, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '验证码错误', '2023-10-12 22:20:27');
+INSERT INTO `sys_logininfor` VALUES (358, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-10-12 22:20:30');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -4528,7 +4726,7 @@ CREATE TABLE `sys_oper_log`  (
   INDEX `idx_sys_oper_log_bt`(`business_type`) USING BTREE,
   INDEX `idx_sys_oper_log_s`(`status`) USING BTREE,
   INDEX `idx_sys_oper_log_ot`(`oper_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1156 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1161 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_oper_log
@@ -5589,6 +5787,11 @@ INSERT INTO `sys_oper_log` VALUES (1152, '生产任务', 1, 'com.awise.produce.c
 INSERT INTO `sys_oper_log` VALUES (1153, '生产任务', 1, 'com.awise.produce.controller.AwProductiontasksController.add()', 'POST', 1, 'admin', NULL, '/produce/productiontasks', '127.0.0.1', '内网IP', '{\"id\":6,\"outsourced\":\"0\",\"params\":{},\"processingTechnologyID\":\"1312321\",\"productionTasksFormID\":2,\"saleOrderID\":\"202310071467597281\",\"serialNum\":2,\"status\":\"1\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-10-10 21:52:53', 16);
 INSERT INTO `sys_oper_log` VALUES (1154, '过程检验', 1, 'com.awise.quality.controller.AwProcessinspectionController.add()', 'POST', 1, 'admin', NULL, '/quality/processinspection', '127.0.0.1', '内网IP', '{\"detectionQuantity\":100,\"id\":2,\"nameOfQualityInspection\":\"21的沙发上分\",\"numberOfRepairs\":30,\"params\":{},\"processingprocessID\":1,\"productionTasksID\":1,\"qualifiedQuantity\":30,\"qualityInspectionCategory\":\"0\",\"scrappedQuantity\":40,\"testDate\":\"2023-10-10\",\"testResult\":\"1\",\"testingPersonnel\":\"大沙发的说法\",\"unqualifiedQuantity\":70}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-10-10 21:55:44', 19);
 INSERT INTO `sys_oper_log` VALUES (1155, '代码生成', 6, 'com.away.generator.controller.GenController.importTableSave()', 'POST', 1, 'admin', NULL, '/tool/gen/importTable', '127.0.0.1', '内网IP', '{\"tables\":\"test\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-10-12 17:27:29', 96);
+INSERT INTO `sys_oper_log` VALUES (1156, '代码生成', 3, 'com.away.generator.controller.GenController.remove()', 'DELETE', 1, 'admin', NULL, '/tool/gen/33', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-10-12 21:39:51', 44);
+INSERT INTO `sys_oper_log` VALUES (1157, '代码生成', 6, 'com.away.generator.controller.GenController.importTableSave()', 'POST', 1, 'admin', NULL, '/tool/gen/importTable', '127.0.0.1', '内网IP', '{\"tables\":\"aw_localmaterialwarehousing,aw_localmaterialoutbound,aw_processrequirementmateriallist,aw_receiptinvoice,aw_outboundorder,aw_warehousing,aw_purchaserequisition,aw_materialsubscription,aw_basicinformationofmaterials,aw_salesorderdetails\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-10-12 21:40:07', 599);
+INSERT INTO `sys_oper_log` VALUES (1158, '代码生成', 3, 'com.away.generator.controller.GenController.remove()', 'DELETE', 1, 'admin', NULL, '/tool/gen/42', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-10-12 21:40:45', 8);
+INSERT INTO `sys_oper_log` VALUES (1159, '代码生成', 3, 'com.away.generator.controller.GenController.remove()', 'DELETE', 1, 'admin', NULL, '/tool/gen/34', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-10-12 21:40:51', 17);
+INSERT INTO `sys_oper_log` VALUES (1160, '代码生成', 2, 'com.away.generator.controller.GenController.synchDb()', 'GET', 1, 'admin', NULL, '/tool/gen/synchDb/aw_processingtechnology', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-10-12 21:41:08', 46);
 
 -- ----------------------------
 -- Table structure for sys_post
@@ -5802,7 +6005,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', '超级管理员', '00', '000@00.com', '15800000000', '0', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2023-10-12 17:27:00', 'admin', '2023-06-20 09:42:08', '', '2023-10-12 17:26:59', '管理员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '超级管理员', '00', '000@00.com', '15800000000', '0', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2023-10-12 22:20:31', 'admin', '2023-06-20 09:42:08', '', '2023-10-12 22:20:30', '管理员');
 INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '2', '127.0.0.1', '2023-06-20 09:42:08', 'admin', '2023-06-20 09:42:08', '', NULL, '测试员');
 INSERT INTO `sys_user` VALUES (100, 100, 'test', 'test', '00', '', '', '0', '', '$2a$10$sBua0uP2ZH0ASchVbERRgONuyqR1fxLZj6xhbtKURJ2GtyXoINXVa', '0', '2', '127.0.0.1', '2023-06-25 09:34:58', 'admin', '2023-06-20 10:59:59', 'admin', '2023-06-25 09:34:58', NULL);
 INSERT INTO `sys_user` VALUES (101, 103, 'test', '测试用户', '00', '', '', '0', '', '$2a$10$vKRvIpvoTOxyzoRL9zUWRuJwMSQOLXyFRtI9WMazN0ZGRGb.8Aw9W', '0', '0', '127.0.0.1', '2023-08-11 16:56:10', 'admin', '2023-08-11 16:37:53', 'admin', '2023-08-11 16:56:09', '管理员');
@@ -5847,9 +6050,27 @@ INSERT INTO `sys_user_role` VALUES (101, 100);
 INSERT INTO `sys_user_role` VALUES (102, 100);
 
 -- ----------------------------
--- View structure for test
+-- View structure for aw_basicinformationofmaterials
 -- ----------------------------
-DROP VIEW IF EXISTS `test`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `test` AS select `aw_city`.`economize` AS `economize`,`aw_city`.`city` AS `city`,`aw_city`.`county` AS `county`,`aw_partner`.`name` AS `name`,`aw_partner`.`nameAbbrevation` AS `nameAbbrevation`,`aw_partner`.`unifiedCreditCode` AS `unifiedCreditCode`,`aw_partner`.`certificateURL` AS `certificateURL`,`aw_partner`.`address` AS `address` from (`aw_city` join `aw_partner` on((`aw_city`.`id` = `aw_partner`.`cityid`)));
+DROP VIEW IF EXISTS `aw_basicinformationofmaterials`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `aw_basicinformationofmaterials` AS select `aw_material`.`id` AS `id`,`aw_material`.`name` AS `name`,`aw_material`.`typeID` AS `typeID`,`aw_material`.`specificationsID` AS `specificationsID`,`aw_material`.`materialDensity` AS `materialDensity`,`aw_material`.`notes` AS `notes`,`aw_materialclassification`.`name` AS `typeName`,`aw_specifications`.`type` AS `specificationsType`,`aw_specifications`.`specificationModel` AS `specificationModel` from ((`aw_material` join `aw_materialclassification` on((`aw_material`.`typeID` = `aw_materialclassification`.`id`))) join `aw_specifications` on((`aw_material`.`specificationsID` = `aw_specifications`.`id`)));
+
+-- ----------------------------
+-- View structure for aw_detailedproductiontask
+-- ----------------------------
+DROP VIEW IF EXISTS `aw_detailedproductiontask`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `aw_detailedproductiontask` AS select `aw_productiontasks`.`id` AS `id`,`aw_productiontasks`.`productionTasksFormID` AS `productionTasksFormID`,`aw_productiontasks`.`serialNum` AS `serialNum`,`aw_productiontasks`.`outsourced` AS `outsourced`,`aw_productiontasks`.`notes` AS `notes`,`aw_productiontasks`.`status` AS `status`,`aw_productiontasks`.`processingTechnologyID` AS `processingTechnologyID`,`aw_processingtechnology`.`founder` AS `founder`,`aw_productiontasks`.`saleOrderID` AS `saleOrderID`,`aw_salesorderdetails`.`createTime` AS `createTime`,`aw_salesorderdetails`.`createUserName` AS `createUserName`,`aw_salesorderdetails`.`orderDate` AS `orderDate`,`aw_salesorderdetails`.`number` AS `number`,`aw_salesorderdetails`.`requiredDeliveryTime` AS `requiredDeliveryTime`,`aw_salesorderdetails`.`iscustomersuppliedmaterials` AS `iscustomersuppliedmaterials`,`aw_salesorderdetails`.`customersuppliedmaterialsID` AS `customersuppliedmaterialsID`,`aw_salesorderdetails`.`state` AS `state`,`aw_salesorderdetails`.`nameAbbrevation` AS `nameAbbrevation`,`aw_salesorderdetails`.`productName` AS `productName` from ((`aw_productiontasks` join `aw_processingtechnology` on((`aw_productiontasks`.`processingTechnologyID` = `aw_processingtechnology`.`id`))) join `aw_salesorderdetails` on((`aw_productiontasks`.`saleOrderID` = `aw_salesorderdetails`.`id`)));
+
+-- ----------------------------
+-- View structure for aw_detailedrealtimeinventoryofmaterials
+-- ----------------------------
+DROP VIEW IF EXISTS `aw_detailedrealtimeinventoryofmaterials`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `aw_detailedrealtimeinventoryofmaterials` AS select `aw_localmaterials`.`id` AS `id`,`aw_localmaterials`.`materialID` AS `materialID`,`aw_localmaterials`.`number` AS `number`,`aw_localmaterials`.`weight` AS `weight`,`aw_basicinformationofmaterials`.`name` AS `name`,`aw_basicinformationofmaterials`.`typeName` AS `typeName`,`aw_basicinformationofmaterials`.`specificationsType` AS `specificationsType`,`aw_basicinformationofmaterials`.`specificationModel` AS `specificationModel`,`aw_basicinformationofmaterials`.`materialDensity` AS `materialDensity`,`aw_basicinformationofmaterials`.`notes` AS `notes` from (`aw_basicinformationofmaterials` join `aw_localmaterials` on((`aw_basicinformationofmaterials`.`id` = `aw_localmaterials`.`materialID`)));
+
+-- ----------------------------
+-- View structure for aw_salesorderdetails
+-- ----------------------------
+DROP VIEW IF EXISTS `aw_salesorderdetails`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `aw_salesorderdetails` AS select `aw_saleorder`.`id` AS `id`,`aw_saleorder`.`createTime` AS `createTime`,`aw_saleorder`.`createUserName` AS `createUserName`,`aw_saleorder`.`orderDate` AS `orderDate`,`aw_saleorder`.`number` AS `number`,`aw_saleorder`.`requiredDeliveryTime` AS `requiredDeliveryTime`,`aw_saleorder`.`iscustomersuppliedmaterials` AS `iscustomersuppliedmaterials`,`aw_saleorder`.`customersuppliedmaterialsID` AS `customersuppliedmaterialsID`,`aw_saleorder`.`state` AS `state`,`aw_saleorder`.`note` AS `note`,`aw_saleorder`.`isDel` AS `isDel`,`aw_saleorder`.`customerID` AS `customerID`,`aw_partner`.`name` AS `name`,`aw_partner`.`nameAbbrevation` AS `nameAbbrevation`,`aw_partner`.`unifiedCreditCode` AS `unifiedCreditCode`,`aw_saleorder`.`productID` AS `productID`,`aw_product`.`name` AS `productName`,`aw_product`.`drawingURL` AS `drawingURL`,`aw_saleorder`.`contractID` AS `contractID`,`aw_contract`.`money` AS `money`,`aw_contract`.`contractURL` AS `contractURL`,`aw_saleorder`.`invoiceID` AS `invoiceID`,`aw_invoice`.`invoiceType` AS `invoiceType`,`aw_invoice`.`invoiceCreateTime` AS `invoiceCreateTime`,`aw_invoice`.`invoiceNumer` AS `invoiceNumer`,`aw_invoice`.`taxRate` AS `taxRate`,`aw_invoice`.`taxation` AS `taxation`,`aw_invoice`.`salesUnitPriceExcludingTax` AS `salesUnitPriceExcludingTax`,`aw_invoice`.`salesUnitPriceIncludingTax` AS `salesUnitPriceIncludingTax`,`aw_invoice`.`consumptionAmountExcludingTax` AS `consumptionAmountExcludingTax`,`aw_invoice`.`consumptionAmountIncludingTax` AS `consumptionAmountIncludingTax`,`aw_invoice`.`reconciliationDate` AS `reconciliationDate`,`aw_invoice`.`customerReconciliationPersonnel` AS `customerReconciliationPersonnel` from ((((`aw_saleorder` join `aw_partner` on((`aw_saleorder`.`customerID` = `aw_partner`.`id`))) join `aw_product` on((`aw_saleorder`.`productID` = `aw_product`.`id`))) join `aw_contract` on((`aw_saleorder`.`contractID` = `aw_contract`.`id`))) join `aw_invoice` on((`aw_saleorder`.`invoiceID` = `aw_invoice`.`id`)));
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -161,6 +161,13 @@
 #end
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
+        <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-view"
+            @click="handleView(scope.row)"
+            v-hasPermi="['${moduleName}:${businessName}:edit']"
+          >查看</el-button>
           <el-button
             size="mini"
             type="text"
@@ -396,6 +403,10 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      // 是否显示查看窗口
+      view_open: false,
+      // 是否新增
+      isadd: false,
 #foreach ($column in $columns)
 #if($column.htmlType == "datetime" && $column.queryType == "BETWEEN")
 #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
@@ -504,15 +515,20 @@ export default {
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
+    handleView(row) {
+      this.view_open = true;
+    },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
+      this.isadd = true;
       this.open = true;
       this.title = "添加${functionName}";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
+      this.isadd = false;
       const ${pkColumn.javaField} = row.${pkColumn.javaField} || this.ids
       get${BusinessName}(${pkColumn.javaField}).then(response => {
         this.form = response.data;
@@ -540,7 +556,7 @@ export default {
 #if($table.sub)
           this.form.${subclassName}List = this.${subclassName}List;
 #end
-          if (this.form.${pkColumn.javaField} != null) {
+          if (!this.isadd) {
             update${BusinessName}(this.form).then(response => {
               this.#[[$modal]]#.msgSuccess("修改成功");
               this.open = false;
