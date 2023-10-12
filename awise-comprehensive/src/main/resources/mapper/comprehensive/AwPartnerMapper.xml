@@ -6,9 +6,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="AwPartner" id="AwPartnerResult">
         <result property="ID"    column="ID"    />
-        <result property="Name"    column="Name"    />
-        <result property="NameAbbrevation"    column="NameAbbrevation"    />
-        <result property="UnifiedCreditCode"    column="UnifiedCreditCode"    />
+        <result property="name"    column="Name"    />
+        <result property="nameAbbrevation"    column="NameAbbrevation"    />
+        <result property="unifiedCreditCode"    column="UnifiedCreditCode"    />
         <result property="certificateURL"    column="certificateURL"    />
         <result property="cityid"    column="cityid"    />
         <result property="address"    column="address"    />
@@ -23,7 +23,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectAwPartnerList" parameterType="AwPartner" resultMap="AwPartnerResult">
         <include refid="selectAwPartnerVo"/>
-        <where>  
+        <where>
+            isDel='0'
             <if test="Name != null  and Name != ''"> and Name like concat('%', #{Name}, '%')</if>
             <if test="NameAbbrevation != null  and NameAbbrevation != ''"> and NameAbbrevation like concat('%', #{NameAbbrevation}, '%')</if>
             <if test="UnifiedCreditCode != null  and UnifiedCreditCode != ''"> and UnifiedCreditCode like concat('%', #{UnifiedCreditCode}, '%')</if>
@@ -84,14 +85,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where ID = #{ID}
     </update>
 
-    <delete id="deleteAwPartnerByID" parameterType="String">
-        delete from aw_partner where ID = #{ID}
-    </delete>
+    <update id="deleteAwPartnerByID" parameterType="String">
+        update  aw_partner set  isdel='1' where ID = #{ID}
+    </update>
 
-    <delete id="deleteAwPartnerByIDs" parameterType="String">
-        delete from aw_partner where ID in 
+    <update id="deleteAwPartnerByIDs" parameterType="String">
+        update  aw_partner set  isdel='1' where ID in
         <foreach item="ID" collection="array" open="(" separator="," close=")">
             #{ID}
         </foreach>
-    </delete>
+    </update>
 </mapper>

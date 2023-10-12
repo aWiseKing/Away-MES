@@ -46,6 +46,29 @@ public class AwCustomEn extends BaseEntity
     @Excel(name = "备注信息")
     private String notes;
 
+    /** 实体类型 */
+    @Excel(name = "实体类型")
+    private Long type;
+
+    /** 是否删除 */
+    private String isdel;
+
+    public void setType(Long type) {
+        this.type = type;
+    }
+
+    public void setIsdel(String isdel) {
+        this.isdel = isdel;
+    }
+
+    public Long getType() {
+        return type;
+    }
+
+    public String getIsdel() {
+        return isdel;
+    }
+
     public String getId() {
         return id;
     }

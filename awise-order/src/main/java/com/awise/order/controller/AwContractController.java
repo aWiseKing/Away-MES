@@ -42,7 +42,9 @@ public class AwContractController extends BaseController
     public TableDataInfo list(AwContract awContract)
     {
         startPage();
+        System.out.println("放发");
         List<AwContract> list = awContractService.selectAwContractList(awContract);
+        System.out.println(list);
         return getDataTable(list);
     }
 

@@ -23,7 +23,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectAwCustomList" parameterType="AwCustom" resultMap="AwCustomResult">
         <include refid="selectAwCustomVo"/>
-        <where>  
+        <where>
+            isDel='0'
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="nameAbbrevation != null  and nameAbbrevation != ''"> and nameAbbrevation like concat('%', #{nameAbbrevation}, '%')</if>
             <if test="unifiedCreditCode != null  and unifiedCreditCode != ''"> and unifiedCreditCode like concat('%', #{unifiedCreditCode}, '%')</if>
@@ -84,14 +85,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
-    <delete id="deleteAwCustomByID" parameterType="String">
-        delete from aw_partner where id = #{id}
-    </delete>
+    <update id="deleteAwCustomByID" parameterType="String">
+        update  aw_partner set  isdel='1' where id = #{id}
+    </update>
 
-    <delete id="deleteAwCustomByIDs" parameterType="java.lang.String">
-        delete from aw_partner where id in
+    <update id="deleteAwCustomByIDs" parameterType="java.lang.String">
+        update  aw_partner set  isdel='1' where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
-    </delete>
+    </update>
 </mapper>

@@ -62,8 +62,6 @@ public class AwQrcodeController extends BaseController
         return new PropertySourcesPlaceholderConfigurer();
     }
 
-
-
     @PreAuthorize("@ss.hasPermi('awise:qrcode:get')")
     @GetMapping("/get")
     public AjaxResult getQrCode(@RequestParam("processingprocessID")String processingprocessID) throws IOException, WriterException, ParseException {

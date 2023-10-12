@@ -1,42 +1,42 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="实体姓名" prop="Name">
+      <el-form-item label="客户姓名" prop="name">
         <el-input
-          v-model="queryParams.Name"
-          placeholder="请输入实体姓名"
+          v-model="queryParams.name"
+          placeholder="请输入客户姓名"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="实体简称" prop="NameAbbrevation">
+      <el-form-item label="客户简称" prop="nameAbbrevation">
         <el-input
-          v-model="queryParams.NameAbbrevation"
-          placeholder="请输入实体简称"
+          v-model="queryParams.nameAbbrevation"
+          placeholder="请输入客户简称"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="社会统一信用代码" prop="UnifiedCreditCode">
+      <el-form-item label="社会统一信用代码" prop="unifiedCreditCode">
         <el-input
-          v-model="queryParams.UnifiedCreditCode"
+          v-model="queryParams.unifiedCreditCode"
           placeholder="请输入社会统一信用代码"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="证照附件url地址#多个附件地址用分号;分隔#" prop="certificateURL">
+      <el-form-item label="证照附件" prop="certificateURL">
         <el-input
           v-model="queryParams.certificateURL"
-          placeholder="请输入证照附件url地址#多个附件地址用分号;分隔#"
+          placeholder="请输入证照附件"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="城市地区id#省份、地市、区县#" prop="cityid">
+      <el-form-item label="城市" prop="cityid">
         <el-input
           v-model="queryParams.cityid"
-          placeholder="请输入城市地区id#省份、地市、区县#"
+          placeholder="请输入城市"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -109,19 +109,21 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="partnerList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="customList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="实体编号" align="center" prop="ID" />
-      <el-table-column label="实体姓名" align="center" prop="Name" />
-      <el-table-column label="实体简称" align="center" prop="NameAbbrevation" />
-      <el-table-column label="社会统一信用代码" align="center" prop="UnifiedCreditCode" />
-      <el-table-column label="证照附件url地址#多个附件地址用分号;分隔#" align="center" prop="certificateURL" />
-      <el-table-column label="城市地区id#省份、地市、区县#" align="center" prop="cityid" />
-      <el-table-column label="详细地址" align="center" prop="address" />
-      <el-table-column label="备注信息" align="center" prop="notes" />
-      <el-table-column label="实体类型" align="center" prop="type" />
+      <el-table-column label="客供货商编号" align="center" prop="id" />
+      <el-table-column label="客供货商姓名" align="center" prop="name" />
+      <el-table-column label="客供货商简称" align="center" prop="nameAbbrevation" />
+      <el-table-column label="社会统一信用代码" align="center" prop="unifiedCreditCode" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-view"
+            @click="handleShow(scope.row)"
+            v-hasPermi="['comprehensive:partner:view']"
+          >查看</el-button>
           <el-button
             size="mini"
             type="text"
@@ -148,23 +150,47 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改合作方信息对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <!-- 查看供货商详细信息对话框 -->
+    <el-dialog title="供货商信息" :visible.sync="isshow" width="900px" append-to-body>
+        <el-descriptions :title="form.name" border>
+            <el-descriptions-item label="供货商编号">{{ form.id }}</el-descriptions-item>
+            <el-descriptions-item label="供货商姓名">{{ form.name }}</el-descriptions-item>
+            <el-descriptions-item label="供货商简称">{{ form.nameAbbrevation }}</el-descriptions-item>
+            <el-descriptions-item label="社会统一信用代码">{{ form.unifiedCreditCode }}</el-descriptions-item>
+            <el-descriptions-item label="城市地区">{{ form.city }}</el-descriptions-item>
+            <el-descriptions-item label="详细地址">{{ form.address }}</el-descriptions-item>
+            <el-descriptions-item label="联系人信息">
+              <el-table></el-table>
+            </el-descriptions-item>
+            <el-descriptions-item label="证照"></el-descriptions-item>
+        </el-descriptions>
+    </el-dialog>
+
+    <!-- 添加或修改供货商信息对话框 -->
+    <el-dialog :title="title" :visible.sync="open" width="700px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="实体姓名" prop="Name">
-          <el-input v-model="form.Name" placeholder="请输入实体姓名" />
+        <el-form-item v-if="isadd" label="供货商编号" prop="id">
+          <el-input v-model="form.id" placeholder="请输入供货商编号" />
         </el-form-item>
-        <el-form-item label="实体简称" prop="NameAbbrevation">
-          <el-input v-model="form.NameAbbrevation" placeholder="请输入实体简称" />
+        <el-form-item label="供货商姓名" prop="name">
+          <el-input v-model="form.name" placeholder="请输入供货商姓名" />
         </el-form-item>
-        <el-form-item label="社会统一信用代码" prop="UnifiedCreditCode">
-          <el-input v-model="form.UnifiedCreditCode" placeholder="请输入社会统一信用代码" />
+        <el-form-item label="供货商简称" prop="nameAbbrevation">
+          <el-input v-model="form.nameAbbrevation" placeholder="请输入供货商简称" />
         </el-form-item>
-        <el-form-item label="证照附件url地址#多个附件地址用分号;分隔#" prop="certificateURL">
-          <el-input v-model="form.certificateURL" placeholder="请输入证照附件url地址#多个附件地址用分号;分隔#" />
+        <el-form-item label="社会统一信用代码" prop="unifiedCreditCode">
+          <el-input v-model="form.unifiedCreditCode" placeholder="请输入社会统一信用代码" minlength="18" maxlength="18"/>
         </el-form-item>
-        <el-form-item label="城市地区id#省份、地市、区县#" prop="cityid">
-          <el-input v-model="form.cityid" placeholder="请输入城市地区id#省份、地市、区县#" />
+        <el-form-item label="城市地区" prop="cityid">
+          <el-cascader
+            :options="city_options"
+            :props="{ expandTrigger: 'hover' }"
+            placeholder="请选择城市地区"
+            @change="setCityID"
+            clearable
+            filterable
+          >
+          </el-cascader>
         </el-form-item>
         <el-form-item label="详细地址" prop="address">
           <el-input v-model="form.address" placeholder="请输入详细地址" />
@@ -182,10 +208,11 @@
 </template>
 
 <script>
-import { listPartner, getPartner, delPartner, addPartner, updatePartner } from "@/api/comprehensive/partner";
+import { listCustom, getCustom, delCustom, addCustom, updateCustom } from "@/api/comprehensive/partner";
+import { jsonCity } from "@/api/city/city";
 
 export default {
-  name: "Partner",
+  name: "Custom",
   data() {
     return {
       // 遮罩层
@@ -200,37 +227,46 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 合作方信息表格数据
-      partnerList: [],
+      // 客户信息表格数据
+      customList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
       open: false,
+      // 是否显示表单细节
+      isshow: false,
+      // 是否新建
+      isadd: true,
+      // 城市地区选择器
+      city_options:[],
+      // 城市地区选择器值
+      cityid_value:[],
       // 查询参数
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        Name: null,
-        NameAbbrevation: null,
-        UnifiedCreditCode: null,
+        name: null,
+        nameAbbrevation: null,
+        unifiedCreditCode: null,
         certificateURL: null,
-        cityid: null,
+        city: null,
         address: null,
         notes: null,
-        type: null,
+        type: 1,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        Name: [
-          { required: true, message: "实体姓名不能为空", trigger: "blur" }
+        name: [
+          { required: true, message: "供货商姓名不能为空", trigger: "blur" }
         ],
-        NameAbbrevation: [
-          { required: true, message: "实体简称不能为空", trigger: "blur" }
+        nameAbbrevation: [
+          { required: true, message: "供货商简称不能为空", trigger: "blur" }
         ],
-        UnifiedCreditCode: [
-          { required: true, message: "社会统一信用代码不能为空", trigger: "blur" }
+        unifiedCreditCode: [
+          { required: true, message: "社会统一信用代码不能为空", trigger: "blur"},
+          { min: 18, message: "社会统一信用代码不能少于18位", trigger: "blur"}
         ],
         type: [
           { required: true, message: "实体类型不能为空", trigger: "change" }
@@ -238,22 +274,28 @@ export default {
         isdel: [
           { required: true, message: "是否删除不能为空", trigger: "blur" }
         ]
-      }
+      },
+      
     };
   },
   created() {
     this.getList();
-
   },
   methods: {
-    /** 查询合作方信息列表 */
+    /** 查询客户信息列表 */
     getList() {
       this.loading = true;
-      listPartner(this.queryParams).then(response => {
-        this.partnerList = response.rows;
+      listCustom(this.queryParams).then(response => {
+        this.customList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
+    },
+    /** 查询城市地区json*/
+    getJsonCity(){
+      jsonCity({}).then(respones => {
+        this.city_options = respones
+      })
     },
     // 取消按钮
     cancel() {
@@ -263,18 +305,21 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        ID: null,
-        Name: null,
-        NameAbbrevation: null,
-        UnifiedCreditCode: null,
+        id: null,
+        name: null,
+        nameAbbrevation: null,
+        unifiedCreditCode: null,
         certificateURL: null,
         cityid: null,
         address: null,
         notes: null,
-        type: null,
-        isdel: null
+        type: 1,
+        isdel: 0
       };
       this.resetForm("form");
+    },
+    setCityID(value){
+      this.form.cityid = value[2]
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -288,38 +333,47 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.ID)
+      this.ids = selection.map(item => item.id)
       this.single = selection.length!==1
       this.multiple = !selection.length
+    },
+    /** 查看详细按钮 */
+    handleShow(row){
+      this.isshow = true;
+      this.form = row;
     },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
+      this.getJsonCity();
+      this.isadd = true;
       this.open = true;
-      this.title = "添加合作方信息";
+      this.title = "添加供货商信息";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const ID = row.ID || this.ids
-      getPartner(ID).then(response => {
+      this.getJsonCity();
+      this.isadd = false;
+      const id = row.id || this.ids
+      getCustom(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改合作方信息";
+        this.title = "修改供货商信息";
       });
     },
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.ID != null) {
-            updatePartner(this.form).then(response => {
+          if (!this.isadd) {
+            updateCustom(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addPartner(this.form).then(response => {
+            addCustom(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -330,9 +384,9 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const IDs = row.ID || this.ids;
-      this.$modal.confirm('是否确认删除合作方信息编号为"' + IDs + '"的数据项？').then(function() {
-        return delPartner(IDs);
+      const ids = row.id || this.ids;
+      this.$modal.confirm('是否确认删除供货商信息编号为"' + ids + '"的数据项？').then(function() {
+        return delCustom(ids);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
@@ -340,9 +394,9 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('comprehensive/partner/export', {
+      this.download('comprehensive/custom/export', {
         ...this.queryParams
-      }, `partner_${new Date().getTime()}.xlsx`)
+      }, `custom_${new Date().getTime()}.xlsx`)
     }
   }
 };

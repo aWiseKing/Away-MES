@@ -35,15 +35,15 @@
     <select id="selectAwPartnerEnList" resultType="com.awise.comprehensive.domain.AwPartnerEn">
         <include refid="selectAwPartnerEnVo"/>
         <where>
+            isdel = 0
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="nameAbbrevation != null  and nameAbbrevation != ''"> and nameAbbrevation like concat('%', #{nameAbbrevation}, '%')</if>
             <if test="unifiedCreditCode != null  and unifiedCreditCode != ''"> and unifiedCreditCode like concat('%', #{unifiedCreditCode}, '%')</if>
             <if test="certificateURL != null  and certificateURL != ''"> and certificateURL = #{certificateURL}</if>
-            <if test="city != null "> and city = #{city}</if>
+            <if test="city != null "> and  city = #{city}</if>
             <if test="address != null  and address != ''"> and address = #{address}</if>
             <if test="notes != null  and notes != ''"> and notes = #{notes}</if>
-            and aw_partner.isdel = 0
-            and aw_partner.type = 0
+            <if test="type != null  and type != '' "> and  type = #{type}</if>
         </where>
     </select>
 
