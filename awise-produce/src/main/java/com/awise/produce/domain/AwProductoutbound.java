@@ -1,0 +1,121 @@
+package com.awise.produce.domain;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import com.away.common.annotation.Excel;
+import com.away.common.core.domain.BaseEntity;
+
+/**
+ * 产品出库对象 aw_productoutbound
+ * 
+ * @author awise
+ * @date 2023-10-14
+ */
+public class AwProductoutbound extends BaseEntity
+{
+    private static final long serialVersionUID = 1L;
+
+    /** id */
+    private Long id;
+
+    /** 出库单编号 */
+    @Excel(name = "出库单编号")
+    private String deliveryNoteID;
+
+    /** 产品图号 */
+    @Excel(name = "产品图号")
+    private String productID;
+
+    /** 出货检验编号 */
+    @Excel(name = "出货检验编号")
+    private Long shippingInspectionID;
+
+    /** 出库数量 */
+    @Excel(name = "出库数量")
+    private Long receiptQuantity;
+
+    /** 客户编号 */
+    @Excel(name = "客户编号")
+    private String contractID;
+
+    /** 备注 */
+    @Excel(name = "备注")
+    private String notes;
+
+    public void setId(Long id) 
+    {
+        this.id = id;
+    }
+
+    public Long getId() 
+    {
+        return id;
+    }
+    public void setDeliveryNoteID(String deliveryNoteID) 
+    {
+        this.deliveryNoteID = deliveryNoteID;
+    }
+
+    public String getDeliveryNoteID() 
+    {
+        return deliveryNoteID;
+    }
+    public void setProductID(String productID) 
+    {
+        this.productID = productID;
+    }
+
+    public String getProductID() 
+    {
+        return productID;
+    }
+    public void setShippingInspectionID(Long shippingInspectionID) 
+    {
+        this.shippingInspectionID = shippingInspectionID;
+    }
+
+    public Long getShippingInspectionID() 
+    {
+        return shippingInspectionID;
+    }
+    public void setReceiptQuantity(Long receiptQuantity) 
+    {
+        this.receiptQuantity = receiptQuantity;
+    }
+
+    public Long getReceiptQuantity() 
+    {
+        return receiptQuantity;
+    }
+    public void setContractID(String contractID) 
+    {
+        this.contractID = contractID;
+    }
+
+    public String getContractID() 
+    {
+        return contractID;
+    }
+    public void setNotes(String notes) 
+    {
+        this.notes = notes;
+    }
+
+    public String getNotes() 
+    {
+        return notes;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+            .append("id", getId())
+            .append("deliveryNoteID", getDeliveryNoteID())
+            .append("productID", getProductID())
+            .append("shippingInspectionID", getShippingInspectionID())
+            .append("receiptQuantity", getReceiptQuantity())
+            .append("contractID", getContractID())
+            .append("notes", getNotes())
+            .toString();
+    }
+}

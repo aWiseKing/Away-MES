@@ -1,18 +1,18 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="客户姓名" prop="name">
+      <el-form-item label="供货商姓名" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入客户姓名"
+          placeholder="请输入供货商姓名"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="客户简称" prop="nameAbbrevation">
+      <el-form-item label="供货商简称" prop="nameAbbrevation">
         <el-input
           v-model="queryParams.nameAbbrevation"
-          placeholder="请输入客户简称"
+          placeholder="请输入供货商简称"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -111,9 +111,9 @@
 
     <el-table v-loading="loading" :data="customList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="客供货商编号" align="center" prop="id" />
-      <el-table-column label="客供货商姓名" align="center" prop="name" />
-      <el-table-column label="客供货商简称" align="center" prop="nameAbbrevation" />
+      <el-table-column label="供货商编号" align="center" prop="id" />
+      <el-table-column label="供货商姓名" align="center" prop="name" />
+      <el-table-column label="供货商简称" align="center" prop="nameAbbrevation" />
       <el-table-column label="社会统一信用代码" align="center" prop="unifiedCreditCode" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -227,7 +227,7 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 客户信息表格数据
+      // 供货商信息表格数据
       customList: [],
       // 弹出层标题
       title: "",
@@ -275,14 +275,14 @@ export default {
           { required: true, message: "是否删除不能为空", trigger: "blur" }
         ]
       },
-      
+
     };
   },
   created() {
     this.getList();
   },
   methods: {
-    /** 查询客户信息列表 */
+    /** 查询供货商信息列表 */
     getList() {
       this.loading = true;
       listCustom(this.queryParams).then(response => {
