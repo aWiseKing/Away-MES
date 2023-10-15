@@ -1,15 +1,15 @@
-package com.awise.storage.mapper;
+package com.awise.produce.service;
 
 import java.util.List;
-import com.awise.storage.domain.AwProcessrequirementmateriallist;
+import com.awise.produce.domain.AwProcessrequirementmateriallist;
 
 /**
- * 工艺需求材料Mapper接口
+ * 工艺需求材料Service接口
  * 
- * @author ruoyi
- * @date 2023-10-14
+ * @author awise
+ * @date 2023-10-15
  */
-public interface AwProcessrequirementmateriallistMapper 
+public interface IAwProcessrequirementmateriallistService 
 {
     /**
      * 查询工艺需求材料
@@ -44,18 +44,18 @@ public interface AwProcessrequirementmateriallistMapper
     public int updateAwProcessrequirementmateriallist(AwProcessrequirementmateriallist awProcessrequirementmateriallist);
 
     /**
-     * 删除工艺需求材料
+     * 批量删除工艺需求材料
+     * 
+     * @param ids 需要删除的工艺需求材料主键集合
+     * @return 结果
+     */
+    public int deleteAwProcessrequirementmateriallistByIds(Long[] ids);
+
+    /**
+     * 删除工艺需求材料信息
      * 
      * @param id 工艺需求材料主键
      * @return 结果
      */
     public int deleteAwProcessrequirementmateriallistById(Long id);
-
-    /**
-     * 批量删除工艺需求材料
-     * 
-     * @param ids 需要删除的数据主键集合
-     * @return 结果
-     */
-    public int deleteAwProcessrequirementmateriallistByIds(Long[] ids);
 }

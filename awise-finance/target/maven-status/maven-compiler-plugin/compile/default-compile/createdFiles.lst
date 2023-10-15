@@ -1,5 +1,10 @@
-com\awise\finance\domain\AwInvoice.class
 com\awise\finance\mapper\AwInvoiceMapper.class
-com\awise\finance\service\IAwInvoiceService.class
 com\awise\finance\service\impl\AwInvoiceServiceImpl.class
+com\awise\finance\service\impl\AwReceiptinvoiceServiceImpl.class
+com\awise\finance\service\IAwReceiptinvoiceService.class
+com\awise\finance\domain\AwInvoice.class
+com\awise\finance\service\IAwInvoiceService.class
+com\awise\finance\controller\AwReceiptinvoiceController.class
+com\awise\finance\domain\AwReceiptinvoice.class
 com\awise\finance\controller\AwInvoiceController.class
+com\awise\finance\mapper\AwReceiptinvoiceMapper.class

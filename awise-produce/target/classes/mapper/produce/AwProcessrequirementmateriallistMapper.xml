@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.awise.storage.mapper.AwProcessrequirementmateriallistMapper">
+<mapper namespace="com.awise.produce.mapper.AwProcessrequirementmateriallistMapper">
     
     <resultMap type="AwProcessrequirementmateriallist" id="AwProcessrequirementmateriallistResult">
         <result property="id"    column="id"    />
@@ -20,9 +20,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectAwProcessrequirementmateriallistVo"/>
         <where>  
             <if test="materialID != null  and materialID != ''"> and materialID = #{materialID}</if>
-            <if test="processingTechnologyID != null  and processingTechnologyID != ''"> and processingTechnologyID = #{processingTechnologyID}</if>
-            <if test="cuttingSize != null "> and cuttingSize = #{cuttingSize}</if>
-            <if test="numberProducibleParts != null  and numberProducibleParts != ''"> and numberProducibleParts = #{numberProducibleParts}</if>
         </where>
     </select>
     

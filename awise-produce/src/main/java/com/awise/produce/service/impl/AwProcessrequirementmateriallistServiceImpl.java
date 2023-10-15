@@ -1,17 +1,17 @@
-package com.awise.storage.service.impl;
+package com.awise.produce.service.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.awise.storage.mapper.AwProcessrequirementmateriallistMapper;
-import com.awise.storage.domain.AwProcessrequirementmateriallist;
-import com.awise.storage.service.IAwProcessrequirementmateriallistService;
+import com.awise.produce.mapper.AwProcessrequirementmateriallistMapper;
+import com.awise.produce.domain.AwProcessrequirementmateriallist;
+import com.awise.produce.service.IAwProcessrequirementmateriallistService;
 
 /**
  * 工艺需求材料Service业务层处理
  * 
- * @author ruoyi
- * @date 2023-10-14
+ * @author awise
+ * @date 2023-10-15
  */
 @Service
 public class AwProcessrequirementmateriallistServiceImpl implements IAwProcessrequirementmateriallistService 

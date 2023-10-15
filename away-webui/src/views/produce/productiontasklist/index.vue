@@ -65,7 +65,7 @@
 
     <!-- 添加或修改生产任务单对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="1200px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px" :disabled="open_view?true:false">
         <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="制单人" prop="founder">
@@ -94,7 +94,7 @@
           <el-input v-model="form.notes" placeholder="请输入备注信息" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <div slot="footer" class="dialog-footer" v-if="!open_view">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
@@ -130,6 +130,8 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      // 是否显示查看弹出层
+      open_view: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -204,6 +206,7 @@ export default {
         notes: null,
         status: "0"
       };
+      this.open_view=false;
       this.resetForm("form");
     },
     /** 搜索按钮操作 */
@@ -236,6 +239,16 @@ export default {
       this.form = response.data;
       this.open = true;
       this.title = "修改生产任务单";
+    },
+    /** 修改按钮操作 */
+    async handleView(row) {
+      this.reset();
+      const id = row.id || this.ids
+      let response = await getProductiontasklist(id)
+      this.form = response.data;
+      this.open = true;
+      this.open_view = true;
+      this.title = "查看生产任务单";
     },
     /** 提交按钮 */
     async submitForm() {

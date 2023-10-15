@@ -1,4 +1,4 @@
-package com.awise.storage.controller;
+package com.awise.produce.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
@@ -16,19 +16,19 @@ import com.away.common.annotation.Log;
 import com.away.common.core.controller.BaseController;
 import com.away.common.core.domain.AjaxResult;
 import com.away.common.enums.BusinessType;
-import com.awise.storage.domain.AwProcessrequirementmateriallist;
-import com.awise.storage.service.IAwProcessrequirementmateriallistService;
+import com.awise.produce.domain.AwProcessrequirementmateriallist;
+import com.awise.produce.service.IAwProcessrequirementmateriallistService;
 import com.away.common.utils.poi.ExcelUtil;
 import com.away.common.core.page.TableDataInfo;
 
 /**
  * 工艺需求材料Controller
  * 
- * @author ruoyi
- * @date 2023-10-14
+ * @author awise
+ * @date 2023-10-15
  */
 @RestController
-@RequestMapping("/storage/processrequirementmateriallist")
+@RequestMapping("/produce/processrequirementmateriallist")
 public class AwProcessrequirementmateriallistController extends BaseController
 {
     @Autowired
@@ -37,7 +37,7 @@ public class AwProcessrequirementmateriallistController extends BaseController
     /**
      * 查询工艺需求材料列表
      */
-    @PreAuthorize("@ss.hasPermi('storage:processrequirementmateriallist:list')")
+    @PreAuthorize("@ss.hasPermi('produce:processrequirementmateriallist:list')")
     @GetMapping("/list")
     public TableDataInfo list(AwProcessrequirementmateriallist awProcessrequirementmateriallist)
     {
@@ -49,7 +49,7 @@ public class AwProcessrequirementmateriallistController extends BaseController
     /**
      * 导出工艺需求材料列表
      */
-    @PreAuthorize("@ss.hasPermi('storage:processrequirementmateriallist:export')")
+    @PreAuthorize("@ss.hasPermi('produce:processrequirementmateriallist:export')")
     @Log(title = "工艺需求材料", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, AwProcessrequirementmateriallist awProcessrequirementmateriallist)
@@ -62,7 +62,7 @@ public class AwProcessrequirementmateriallistController extends BaseController
     /**
      * 获取工艺需求材料详细信息
      */
-    @PreAuthorize("@ss.hasPermi('storage:processrequirementmateriallist:query')")
+    @PreAuthorize("@ss.hasPermi('produce:processrequirementmateriallist:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class AwProcessrequirementmateriallistController extends BaseController
     /**
      * 新增工艺需求材料
      */
-    @PreAuthorize("@ss.hasPermi('storage:processrequirementmateriallist:add')")
+    @PreAuthorize("@ss.hasPermi('produce:processrequirementmateriallist:add')")
     @Log(title = "工艺需求材料", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody AwProcessrequirementmateriallist awProcessrequirementmateriallist)
@@ -83,7 +83,7 @@ public class AwProcessrequirementmateriallistController extends BaseController
     /**
      * 修改工艺需求材料
      */
-    @PreAuthorize("@ss.hasPermi('storage:processrequirementmateriallist:edit')")
+    @PreAuthorize("@ss.hasPermi('produce:processrequirementmateriallist:edit')")
     @Log(title = "工艺需求材料", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody AwProcessrequirementmateriallist awProcessrequirementmateriallist)
@@ -94,7 +94,7 @@ public class AwProcessrequirementmateriallistController extends BaseController
     /**
      * 删除工艺需求材料
      */
-    @PreAuthorize("@ss.hasPermi('storage:processrequirementmateriallist:remove')")
+    @PreAuthorize("@ss.hasPermi('produce:processrequirementmateriallist:remove')")
     @Log(title = "工艺需求材料", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

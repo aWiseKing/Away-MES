@@ -137,7 +137,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -149,6 +149,9 @@
     <!-- 添加或修改产品出库单对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="出库单编号" prop="deliveryNoteID">
+          <el-input v-model="form.deliveryNoteID" placeholder="请输入出库单编号" />
+        </el-form-item>
         <el-form-item label="出库日期" prop="warehousingDate">
           <el-date-picker clearable
             v-model="form.warehousingDate"
@@ -228,6 +231,9 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        deliveryNoteID: [
+          { required: true, message: "出库单编号不能为空", trigger: "blur" }
+        ],
         warehousingDate: [
           { required: true, message: "出库日期不能为空", trigger: "blur" }
         ],
@@ -240,7 +246,8 @@ export default {
         status: [
           { required: true, message: "状态不能为空", trigger: "change" }
         ]
-      }
+      },
+
     };
   },
   created() {
@@ -291,6 +298,8 @@ export default {
     },
     handleView(row) {
       this.view_open = true;
+      let id = row.deliveryNoteID;
+      this.$router.push({path:"/produce/detailproductoutbound",query:{id:id}})
     },
     /** 新增按钮操作 */
     handleAdd() {
