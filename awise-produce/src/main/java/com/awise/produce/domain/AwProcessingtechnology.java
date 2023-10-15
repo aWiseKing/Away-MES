@@ -22,14 +22,6 @@ public class AwProcessingtechnology extends BaseEntity
     @Excel(name = "创建人")
     private String founder;
 
-    /** 下料尺寸 */
-    @Excel(name = "下料尺寸")
-    private Long cuttingSize;
-
-    /** 可制件数 */
-    @Excel(name = "可制件数")
-    private String numberProducibleParts;
-
     /** 状态 */
     @Excel(name = "状态")
     private String status;
@@ -52,24 +44,6 @@ public class AwProcessingtechnology extends BaseEntity
     {
         return founder;
     }
-    public void setCuttingSize(Long cuttingSize) 
-    {
-        this.cuttingSize = cuttingSize;
-    }
-
-    public Long getCuttingSize() 
-    {
-        return cuttingSize;
-    }
-    public void setNumberProducibleParts(String numberProducibleParts) 
-    {
-        this.numberProducibleParts = numberProducibleParts;
-    }
-
-    public String getNumberProducibleParts() 
-    {
-        return numberProducibleParts;
-    }
     public void setStatus(String status) 
     {
         this.status = status;
@@ -86,8 +60,6 @@ public class AwProcessingtechnology extends BaseEntity
             .append("id", getId())
             .append("createTime", getCreateTime())
             .append("founder", getFounder())
-            .append("cuttingSize", getCuttingSize())
-            .append("numberProducibleParts", getNumberProducibleParts())
             .append("status", getStatus())
             .toString();
     }

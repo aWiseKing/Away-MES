@@ -8,13 +8,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="createTime"    column="createTime"    />
         <result property="founder"    column="founder"    />
-        <result property="cuttingSize"    column="cuttingSize"    />
-        <result property="numberProducibleParts"    column="numberProducibleParts"    />
         <result property="status"    column="status"    />
     </resultMap>
 
     <sql id="selectAwProcessingtechnologyVo">
-        select id, createTime, founder, cuttingSize, numberProducibleParts, status from aw_processingtechnology
+        select id, createTime, founder, status from aw_processingtechnology
     </sql>
 
     <select id="selectAwProcessingtechnologyList" parameterType="AwProcessingtechnology" resultMap="AwProcessingtechnologyResult">
@@ -22,8 +20,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="createTime != null "> and createTime = #{createTime}</if>
             <if test="founder != null  and founder != ''"> and founder = #{founder}</if>
-            <if test="cuttingSize != null "> and cuttingSize = #{cuttingSize}</if>
-            <if test="numberProducibleParts != null  and numberProducibleParts != ''"> and numberProducibleParts = #{numberProducibleParts}</if>
             <if test="status != null  and status != ''"> and status = #{status}</if>
         </where>
     </select>
@@ -39,16 +35,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="id != null">id,</if>
             <if test="createTime != null">createTime,</if>
             <if test="founder != null and founder != ''">founder,</if>
-            <if test="cuttingSize != null">cuttingSize,</if>
-            <if test="numberProducibleParts != null">numberProducibleParts,</if>
             <if test="status != null and status != ''">status,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="founder != null and founder != ''">#{founder},</if>
-            <if test="cuttingSize != null">#{cuttingSize},</if>
-            <if test="numberProducibleParts != null">#{numberProducibleParts},</if>
             <if test="status != null and status != ''">#{status},</if>
          </trim>
     </insert>
@@ -58,8 +50,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="createTime != null">createTime = #{createTime},</if>
             <if test="founder != null and founder != ''">founder = #{founder},</if>
-            <if test="cuttingSize != null">cuttingSize = #{cuttingSize},</if>
-            <if test="numberProducibleParts != null">numberProducibleParts = #{numberProducibleParts},</if>
             <if test="status != null and status != ''">status = #{status},</if>
         </trim>
         where id = #{id}

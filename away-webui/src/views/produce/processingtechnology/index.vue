@@ -9,13 +9,6 @@
       <el-form-item label="创建人" prop="founder">
         <el-input v-model="queryParams.founder" placeholder="请输入创建人" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="下料尺寸" prop="cuttingSize">
-        <el-input v-model="queryParams.cuttingSize" placeholder="请输入下料尺寸" clearable @keyup.enter.native="handleQuery" />
-      </el-form-item>
-      <el-form-item label="可制件数" prop="numberProducibleParts">
-        <el-input v-model="queryParams.numberProducibleParts" placeholder="请输入可制件数" clearable
-          @keyup.enter.native="handleQuery" />
-      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -51,8 +44,6 @@
         </template>
       </el-table-column>
       <el-table-column label="创建人" align="center" prop="founder" />
-      <el-table-column label="下料尺寸" align="center" prop="cuttingSize" />
-      <el-table-column label="可制件数" align="center" prop="numberProducibleParts" />
       <el-table-column label="状态" align="center">
         <template slot-scope="scope">
           {{ getValue(state_options, scope.row.status) }}
@@ -94,18 +85,6 @@
           <el-col :span="12">
             <el-form-item label="创建人" prop="founder">
               <el-input v-model="form.founder" placeholder="请输入创建人" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="12">
-          <el-col :span="12">
-            <el-form-item label="下料尺寸" prop="cuttingSize">
-              <el-input v-model="form.cuttingSize" placeholder="请输入下料尺寸" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="可制件数" prop="numberProducibleParts">
-              <el-input v-model="form.numberProducibleParts" placeholder="请输入可制件数" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -161,8 +140,6 @@ export default {
         pageSize: 10,
         createTime: null,
         founder: null,
-        cuttingSize: null,
-        numberProducibleParts: null,
         status: null
       },
       // 表单参数
@@ -208,8 +185,6 @@ export default {
         id: null,
         createTime: null,
         founder: null,
-        cuttingSize: null,
-        numberProducibleParts: null,
         status: "0"
       };
       this.resetForm("form");
@@ -233,7 +208,7 @@ export default {
     /** 跳转详情页面 */
     async jumpDetailPage(row) {
       let id = row.id;
-      this.$router.push({ name: "Processingprocess", query: { id: id } })
+      this.$router.push({ path: "/produce/processdetails", query: { id: id } })
 
     },
     /** 新增按钮操作 */

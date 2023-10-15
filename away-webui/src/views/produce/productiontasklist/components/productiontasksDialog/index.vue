@@ -50,7 +50,7 @@
       </el-table-column>
       <el-table-column label="状态" align="center">
         <template slot-scope="scope">
-          <el-select v-model="scope.row.status">
+          <el-select v-model="scope.row.status" :disabled = "scope.row.processingTechnologyID!=null?false:true">
             <el-option
               v-for="item,index in state_options"
               :key="index"
@@ -67,7 +67,7 @@
       </el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button v-if="scope.row.id != null && scope.row.status == '1'" type="text" size="mini" icon="el-icon-view" @click="jumpDetailPage(scope.row)">详细</el-button>
+          <el-button v-if="scope.row.id != null && scope.row.status == '1' && scope.row.processingTechnologyID!= null" :disabled="false" type="text" size="mini" icon="el-icon-view" @click="jumpDetailPage(scope.row)">详细</el-button>
           <el-button type="text" size="mini" icon="el-icon-plus" @click="handleAddProductiontasks()">{{ scope.row.state }}新增</el-button>
           <el-button type="text" size="mini" icon="el-icon-minus" @click="handleRemoveProductiontasks(scope.$index,scope.row)">删除</el-button>
         </template>
@@ -144,7 +144,7 @@ export default {
     /** 跳转详情页面 */
     async jumpDetailPage(row){
       let id = row.processingTechnologyID;
-      this.$router.push({ name:"Processingprocess", query:{ id:id} })
+      this.$router.push({ path:"/produce/processdetails", query:{ id:id} })
 
     },
     /** 提交需修改或添加的任务 */

@@ -93,7 +93,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -124,7 +124,7 @@
 import { listMaterialclassification, getMaterialclassification, delMaterialclassification, addMaterialclassification, updateMaterialclassification } from "@/api/storage/materialclassification";
 
 export default {
-  name: "Materialclassification",
+  name: "materialclassification",
   data() {
     return {
       // 遮罩层
