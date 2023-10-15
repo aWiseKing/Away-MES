@@ -4439,7 +4439,7 @@ job_group</ColNames>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="897" parent="356" name="dict_code">
-      <AutoIncrement>30</AutoIncrement>
+      <AutoIncrement>51</AutoIncrement>
       <Comment>字典编码</Comment>
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
@@ -4529,7 +4529,7 @@ job_group</ColNames>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="913" parent="357" name="dict_id">
-      <AutoIncrement>11</AutoIncrement>
+      <AutoIncrement>15</AutoIncrement>
       <Comment>字典主键</Comment>
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
@@ -4747,7 +4747,7 @@ job_group</ColNames>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="951" parent="360" name="info_id">
-      <AutoIncrement>359</AutoIncrement>
+      <AutoIncrement>381</AutoIncrement>
       <Comment>访问ID</Comment>
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
@@ -4819,7 +4819,7 @@ job_group</ColNames>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="964" parent="361" name="menu_id">
-      <AutoIncrement>2179</AutoIncrement>
+      <AutoIncrement>2273</AutoIncrement>
       <Comment>菜单ID</Comment>
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
@@ -5006,7 +5006,7 @@ job_group</ColNames>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="997" parent="363" name="oper_id">
-      <AutoIncrement>1161</AutoIncrement>
+      <AutoIncrement>1338</AutoIncrement>
       <Comment>日志主键</Comment>
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
@@ -5336,7 +5336,7 @@ menu_id</ColNames>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="1055" parent="368" name="user_id">
-      <AutoIncrement>103</AutoIncrement>
+      <AutoIncrement>104</AutoIncrement>
       <Comment>用户ID</Comment>
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>

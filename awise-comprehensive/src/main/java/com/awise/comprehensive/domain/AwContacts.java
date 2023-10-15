@@ -1,18 +1,16 @@
 package com.awise.comprehensive.domain;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.away.common.annotation.Excel;
 import com.away.common.core.domain.BaseEntity;
 
 /**
- * 联系人信息
-存储合作方的联系人的联系信息
-存储  联系人姓名，电话，部门，职位对象 aw_contacts
+ * 联系人信息对象 aw_contacts
  * 
  * @author ruoyi
- * @date 2023-09-22
+ * @date 2023-10-15
  */
-
 public class AwContacts extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -49,7 +47,6 @@ public class AwContacts extends BaseEntity
     private String notes;
 
     /** 删除否 0为存在 1为删除 */
-    @Excel(name = "删除否 0为存在 1为删除")
     private String isDel;
 
     public void setId(Long id)
