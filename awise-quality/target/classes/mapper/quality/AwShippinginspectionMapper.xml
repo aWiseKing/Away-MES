@@ -25,13 +25,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectAwShippinginspectionList" parameterType="AwShippinginspection" resultMap="AwShippinginspectionResult">
         <include refid="selectAwShippinginspectionVo"/>
         <where>  
+            <if test="productID != null  and productID != ''"> and productID = #{productID}</if>
+            <if test="contractID != null  and contractID != ''"> and contractID = #{contractID}</if>
+            <if test="shipmentQuantity != null "> and shipmentQuantity = #{shipmentQuantity}</if>
+            <if test="detectionQuantity != null "> and detectionQuantity = #{detectionQuantity}</if>
+            <if test="qualifiedQuantity != null "> and qualifiedQuantity = #{qualifiedQuantity}</if>
+            <if test="unqualifiedQuantity != null "> and unqualifiedQuantity = #{unqualifiedQuantity}</if>
             <if test="testDate != null "> and testDate = #{testDate}</if>
             <if test="testResult != null  and testResult != ''"> and testResult = #{testResult}</if>
             <if test="testingPersonnel != null  and testingPersonnel != ''"> and testingPersonnel = #{testingPersonnel}</if>
+            <if test="notes != null  and notes != ''"> and notes = #{notes}</if>
         </where>
     </select>
     
-    <select id="selectAwShippinginspectionById" parameterType="Long" resultMap="AwShippinginspectionResult">
+    <select id="selectAwShippinginspectionById" parameterType="String" resultMap="AwShippinginspectionResult">
         <include refid="selectAwShippinginspectionVo"/>
         where id = #{id}
     </select>
@@ -83,7 +90,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
-    <delete id="deleteAwShippinginspectionById" parameterType="Long">
+    <delete id="deleteAwShippinginspectionById" parameterType="String">
         delete from aw_shippinginspection where id = #{id}
     </delete>
 

@@ -20,6 +20,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectAwProductstorageList" parameterType="AwProductstorage" resultMap="AwProductstorageResult">
         <include refid="selectAwProductstorageVo"/>
         <where>  
+            <if test="warehouseEntryID != null  and warehouseEntryID != ''"> and warehouseEntryID = #{warehouseEntryID}</if>
+            <if test="productID != null  and productID != ''"> and productID = #{productID}</if>
+            <if test="FinishedProductInspectionID != null  and FinishedProductInspectionID != ''"> and FinishedProductInspectionID = #{FinishedProductInspectionID}</if>
+            <if test="receiptQuantity != null "> and receiptQuantity = #{receiptQuantity}</if>
+            <if test="notes != null  and notes != ''"> and notes = #{notes}</if>
         </where>
     </select>
     

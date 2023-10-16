@@ -11,23 +11,25 @@ import com.away.common.core.domain.BaseEntity;
  * 成品检验对象 aw_finishedproductinspection
  * 
  * @author awise
- * @date 2023-10-14
+ * @date 2023-10-16
  */
 public class AwFinishedproductinspection extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** 编号 */
-    private Long id;
+    private String id;
 
     /** 质检名称 */
     @Excel(name = "质检名称")
     private String nameOfQualityInspection;
 
     /** 任务编号 */
+    @Excel(name = "任务编号")
     private Long productionTasksID;
 
     /** 产品图号 */
+    @Excel(name = "产品图号")
     private String productID;
 
     /** 检测数量 */
@@ -59,12 +61,12 @@ public class AwFinishedproductinspection extends BaseEntity
     @Excel(name = "备注")
     private String notes;
 
-    public void setId(Long id) 
+    public void setId(String id) 
     {
         this.id = id;
     }
 
-    public Long getId() 
+    public String getId() 
     {
         return id;
     }

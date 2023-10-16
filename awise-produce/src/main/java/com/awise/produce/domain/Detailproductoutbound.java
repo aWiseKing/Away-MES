@@ -11,7 +11,7 @@ import com.away.common.core.domain.BaseEntity;
  * 产品出库详单对象 detailproductoutbound
  * 
  * @author awise
- * @date 2023-10-15
+ * @date 2023-10-16
  */
 public class Detailproductoutbound extends BaseEntity
 {
@@ -34,27 +34,35 @@ public class Detailproductoutbound extends BaseEntity
 
     /** 出货检验编号 */
     @Excel(name = "出货检验编号")
-    private Long shippingInspectionID;
+    private String shippingInspectionID;
 
     /** 出货数量 */
+    @Excel(name = "出货数量")
     private Long shipmentQuantity;
 
     /** 检测数量 */
+    @Excel(name = "检测数量")
     private Long detectionQuantity;
 
     /** 合格数量 */
+    @Excel(name = "合格数量")
     private Long qualifiedQuantity;
 
     /** 不合格数量 */
+    @Excel(name = "不合格数量")
     private Long unqualifiedQuantity;
 
     /** 检测结果 */
+    @Excel(name = "检测结果")
     private String testResult;
 
     /** 检测日期 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "检测日期", width = 30, dateFormat = "yyyy-MM-dd")
     private Date testDate;
 
     /** 检测人员 */
+    @Excel(name = "检测人员")
     private String testingPersonnel;
 
     /** 出库数量 */
@@ -62,10 +70,11 @@ public class Detailproductoutbound extends BaseEntity
     private Long receiptQuantity;
 
     /** 客户编号 */
+    @Excel(name = "客户编号")
     private String contractID;
 
-    /** 客户姓名 */
-    @Excel(name = "客户姓名")
+    /** 实体姓名 */
+    @Excel(name = "实体姓名")
     private String customname;
 
     public void setId(Long id) 
@@ -104,12 +113,12 @@ public class Detailproductoutbound extends BaseEntity
     {
         return productname;
     }
-    public void setShippingInspectionID(Long shippingInspectionID) 
+    public void setShippingInspectionID(String shippingInspectionID) 
     {
         this.shippingInspectionID = shippingInspectionID;
     }
 
-    public Long getShippingInspectionID() 
+    public String getShippingInspectionID() 
     {
         return shippingInspectionID;
     }

@@ -7,7 +7,7 @@ import com.awise.quality.domain.AwFinishedproductinspection;
  * 成品检验Mapper接口
  * 
  * @author awise
- * @date 2023-10-14
+ * @date 2023-10-16
  */
 public interface AwFinishedproductinspectionMapper 
 {
@@ -17,7 +17,7 @@ public interface AwFinishedproductinspectionMapper
      * @param id 成品检验主键
      * @return 成品检验
      */
-    public AwFinishedproductinspection selectAwFinishedproductinspectionById(Long id);
+    public AwFinishedproductinspection selectAwFinishedproductinspectionById(String id);
 
     /**
      * 查询成品检验列表
@@ -49,7 +49,7 @@ public interface AwFinishedproductinspectionMapper
      * @param id 成品检验主键
      * @return 结果
      */
-    public int deleteAwFinishedproductinspectionById(Long id);
+    public int deleteAwFinishedproductinspectionById(String id);
 
     /**
      * 批量删除成品检验
@@ -57,5 +57,5 @@ public interface AwFinishedproductinspectionMapper
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteAwFinishedproductinspectionByIds(Long[] ids);
+    public int deleteAwFinishedproductinspectionByIds(String[] ids);
 }

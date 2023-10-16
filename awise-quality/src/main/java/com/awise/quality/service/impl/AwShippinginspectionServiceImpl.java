@@ -11,7 +11,7 @@ import com.awise.quality.service.IAwShippinginspectionService;
  * 成品出货检验Service业务层处理
  * 
  * @author awise
- * @date 2023-10-14
+ * @date 2023-10-16
  */
 @Service
 public class AwShippinginspectionServiceImpl implements IAwShippinginspectionService 
@@ -26,7 +26,7 @@ public class AwShippinginspectionServiceImpl implements IAwShippinginspectionSer
      * @return 成品出货检验
      */
     @Override
-    public AwShippinginspection selectAwShippinginspectionById(Long id)
+    public AwShippinginspection selectAwShippinginspectionById(String id)
     {
         return awShippinginspectionMapper.selectAwShippinginspectionById(id);
     }
@@ -74,7 +74,7 @@ public class AwShippinginspectionServiceImpl implements IAwShippinginspectionSer
      * @return 结果
      */
     @Override
-    public int deleteAwShippinginspectionByIds(Long[] ids)
+    public int deleteAwShippinginspectionByIds(String[] ids)
     {
         return awShippinginspectionMapper.deleteAwShippinginspectionByIds(ids);
     }
@@ -86,7 +86,7 @@ public class AwShippinginspectionServiceImpl implements IAwShippinginspectionSer
      * @return 结果
      */
     @Override
-    public int deleteAwShippinginspectionById(Long id)
+    public int deleteAwShippinginspectionById(String id)
     {
         return awShippinginspectionMapper.deleteAwShippinginspectionById(id);
     }

@@ -7,7 +7,7 @@ import com.awise.produce.domain.AwProductstorage;
  * 产品入库Service接口
  * 
  * @author awise
- * @date 2023-10-14
+ * @date 2023-10-16
  */
 public interface IAwProductstorageService 
 {

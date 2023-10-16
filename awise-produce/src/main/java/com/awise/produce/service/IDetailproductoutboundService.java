@@ -7,7 +7,7 @@ import com.awise.produce.domain.Detailproductoutbound;
  * 产品出库详单Service接口
  * 
  * @author awise
- * @date 2023-10-15
+ * @date 2023-10-16
  */
 public interface IDetailproductoutboundService 
 {

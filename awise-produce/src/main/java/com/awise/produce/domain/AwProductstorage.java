@@ -9,7 +9,7 @@ import com.away.common.core.domain.BaseEntity;
  * 产品入库对象 aw_productstorage
  * 
  * @author awise
- * @date 2023-10-14
+ * @date 2023-10-16
  */
 public class AwProductstorage extends BaseEntity
 {
@@ -28,7 +28,7 @@ public class AwProductstorage extends BaseEntity
 
     /** 成品检验编号 */
     @Excel(name = "成品检验编号")
-    private Long FinishedProductInspectionID;
+    private String FinishedProductInspectionID;
 
     /** 入库数量 */
     @Excel(name = "入库数量")
@@ -65,12 +65,12 @@ public class AwProductstorage extends BaseEntity
     {
         return productID;
     }
-    public void setFinishedProductInspectionID(Long FinishedProductInspectionID) 
+    public void setFinishedProductInspectionID(String FinishedProductInspectionID) 
     {
         this.FinishedProductInspectionID = FinishedProductInspectionID;
     }
 
-    public Long getFinishedProductInspectionID() 
+    public String getFinishedProductInspectionID() 
     {
         return FinishedProductInspectionID;
     }

@@ -9,7 +9,7 @@ import com.away.common.core.domain.BaseEntity;
  * 产品出库对象 aw_productoutbound
  * 
  * @author awise
- * @date 2023-10-14
+ * @date 2023-10-16
  */
 public class AwProductoutbound extends BaseEntity
 {
@@ -28,7 +28,7 @@ public class AwProductoutbound extends BaseEntity
 
     /** 出货检验编号 */
     @Excel(name = "出货检验编号")
-    private Long shippingInspectionID;
+    private String shippingInspectionID;
 
     /** 出库数量 */
     @Excel(name = "出库数量")
@@ -69,12 +69,12 @@ public class AwProductoutbound extends BaseEntity
     {
         return productID;
     }
-    public void setShippingInspectionID(Long shippingInspectionID) 
+    public void setShippingInspectionID(String shippingInspectionID) 
     {
         this.shippingInspectionID = shippingInspectionID;
     }
 
-    public Long getShippingInspectionID() 
+    public String getShippingInspectionID() 
     {
         return shippingInspectionID;
     }

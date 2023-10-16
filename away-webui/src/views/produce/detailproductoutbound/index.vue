@@ -189,14 +189,8 @@
 
     <!-- 添加或修改产品出库详单对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="900px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" :disabled="view_open" label-width="80px">
         <el-row :gutter="12"
-          ><el-col :span="12">
-            <el-form-item label="id" prop="id">
-              <el-input
-                v-model="form.id"
-                placeholder="请输入id"
-              /> </el-form-item></el-col
           ><el-col :span="12">
             <el-form-item label="出库单编号" prop="deliveryNoteID">
               <el-input
@@ -216,10 +210,20 @@
         <el-row :gutter="12"
           ><el-col :span="12">
             <el-form-item label="产品图号" prop="productID">
-              <el-input
+              <el-select
                 v-model="form.productID"
-                placeholder="请输入产品图号"
-              /> </el-form-item></el-col
+                placeholder="请选择产品图号"
+                @focus="getListproduct()"
+              >
+                <el-option
+                  v-for="(item, index) in productlist"
+                  :key="index"
+                  :label="item.id"
+                  :value="item.id"
+                  @click.native="setDeliveryNoteOfProduct(item.id)"
+                >
+                </el-option>
+              </el-select> </el-form-item></el-col
           ><el-col :span="12">
             <el-form-item label="产品名称" prop="productname">
               <el-input
@@ -231,10 +235,20 @@
         <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="客户编号" prop="contractID">
-              <el-input
+              <el-select
                 v-model="form.contractID"
-                placeholder="请输入客户编号"
-              /> </el-form-item
+                placeholder="请选择客户编号"
+                @focus="getListcustom()"
+              >
+                <el-option
+                  v-for="(item, index) in customlist"
+                  :key="index"
+                  :label="item.name"
+                  :value="item.id"
+                  @click.native="setDeliveryNoteOfCustom(item.id)"
+                >
+                </el-option>
+              </el-select> </el-form-item
           ></el-col>
           <el-col :span="12">
             <el-form-item label="客户姓名" prop="customname">
@@ -247,10 +261,20 @@
         <el-row :gutter="12"
           ><el-col :span="12">
             <el-form-item label="出货检验编号" prop="shippingInspectionID">
-              <el-input
+              <el-select
                 v-model="form.shippingInspectionID"
-                placeholder="请输入出货检验编号"
-              /> </el-form-item
+                placeholder="请选择出货检验编号"
+                @focus="getListshippinginspection()"
+              >
+                <el-option
+                  v-for="(item, index) in shippinginspectionlist"
+                  :key="index"
+                  :label="item.id"
+                  :value="item.id"
+                  @click.native="setDeliveryNoteOfShippinginspection(item.id)"
+                >
+                </el-option>
+              </el-select> </el-form-item
           ></el-col>
           <el-col :span="12">
             <el-form-item label="出货数量" prop="shipmentQuantity">
@@ -284,11 +308,18 @@
               /> </el-form-item></el-col
           ><el-col :span="12">
             <el-form-item label="检测结果" prop="testResult">
-              <el-input
+              <el-select
                 v-model="deliveryNote.testResult"
-                placeholder="请输入检测结果"
+                placeholder="请选择检测结果"
                 disabled
-              /> </el-form-item></el-col></el-row
+              >
+                <el-option
+                  v-for="dict in dict.type.aw_quality_shippinginspection_status"
+                  :key="dict.value"
+                  :label="dict.label"
+                  :value="dict.value"
+                ></el-option>
+              </el-select> </el-form-item></el-col></el-row
         ><el-row :gutter="12"
           ><el-col :span="12">
             <el-form-item label="检测日期" prop="testDate">
@@ -310,7 +341,7 @@
               /> </el-form-item></el-col
         ></el-row>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <div slot="footer" v-if="!view_open" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
@@ -324,16 +355,22 @@ import {
   getDetailproductoutbound,
 } from "@/api/produce/detailproductoutbound";
 import { listProduct, getProduct } from "@/api/order/product";
-import { listShippinginspection,getShippinginspection } from "@/api/quality/shippinginspection.js";
+import {
+  listShippinginspection,
+  getShippinginspection,
+} from "@/api/quality/shippinginspection.js";
+import { listCustom, getCustom } from "@/api/comprehensive/custom.js";
 import {
   getProductoutbound,
   addProductoutbound,
   updateProductoutbound,
-  delProductoutbound
+  delProductoutbound,
 } from "@/api/produce/productoutbound.js";
+import '@/assets/styles/away-element-ui-disabled.scss' // away css
 
 export default {
   name: "Detailproductoutbound",
+  dicts: ["aw_quality_shippinginspection_status"],
   data() {
     return {
       // 遮罩层
@@ -372,7 +409,6 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        id: [{ required: true, message: "id不能为空", trigger: "blur" }],
         deliveryNoteID: [
           { required: true, message: "出库单编号不能为空", trigger: "blur" },
         ],
@@ -381,9 +417,6 @@ export default {
         ],
         shippingInspectionID: [
           { required: true, message: "出货检验编号不能为空", trigger: "blur" },
-        ],
-        shipmentQuantity: [
-          { required: true, message: "出货数量不能为空", trigger: "blur" },
         ],
         receiptQuantity: [
           { required: true, message: "出库数量不能为空", trigger: "blur" },
@@ -396,6 +429,12 @@ export default {
       deliveryNoteID: null,
       // 当前选中出库单详情
       deliveryNote: {},
+      // 产品列表
+      productlist: [],
+      // 客户信息列表
+      customlist: [],
+      // 出货检验单列表
+      shippinginspectionlist: [],
     };
   },
   created() {
@@ -416,6 +455,62 @@ export default {
         this.loading = false;
       });
     },
+    /** 查询产品列表 */
+    getListproduct() {
+      this.loading = true;
+      listProduct().then((response) => {
+        this.productlist = response.rows;
+        this.loading = false;
+      });
+    },
+    /** 查询客户信息 */
+    getListcustom() {
+      this.loading = true;
+      listCustom().then((response) => {
+        this.customlist = response.rows;
+        this.loading = false;
+      });
+    },
+    /** 查询出货检验单 */
+    getListshippinginspection() {
+      this.loading = true;
+      listShippinginspection().then((response) => {
+        this.shippinginspectionlist = response.rows;
+        this.loading = false;
+      });
+    },
+    /** 自动回显产品信息 */
+    setDeliveryNoteOfProduct(id) {
+      getProduct(id).then((response) => {
+        this.deliveryNote["productname"] = response.data.name;
+      });
+    },
+    /** 自动回显客户信息 */
+    setDeliveryNoteOfCustom(id) {
+      getCustom(id).then((response) => {
+        this.deliveryNote["customname"] = response.data.name;
+      });
+    },
+    /** 自动回显出货检验单信息 */
+    setDeliveryNoteOfShippinginspection(id) {
+      getShippinginspection(id).then((response) => {
+
+        console.log(JSON.stringify(response));
+        let data = response.data;
+        let value = {
+          shipmentQuantity: data.shipmentQuantity,
+          detectionQuantity: data.detectionQuantity,
+          qualifiedQuantity: data.qualifiedQuantity,
+          unqualifiedQuantity: data.unqualifiedQuantity,
+          testResult: data.testResult,
+          testDate: data.testDate,
+          testingPersonnel: data.testingPersonnel,
+        };
+        let deliveryNote = this.deliveryNote;
+        this.deliveryNote = { ...deliveryNote,...value };
+        console.log(this.deliveryNote);
+      });
+    },
     // 取消按钮
     cancel() {
       this.open = false;
@@ -432,6 +527,7 @@ export default {
         contractID: null,
         notes: null,
       };
+      this.deliveryNote = {}
       this.resetForm("form");
     },
     /** 搜索按钮操作 */
@@ -451,11 +547,23 @@ export default {
       this.multiple = !selection.length;
     },
     handleView(row) {
-      this.view_open = true;
+      this.reset();
+      this.isadd = false;
+      const id = row.id || this.ids;
+      getProductoutbound(id).then((response) => {
+        this.form = response.data;
+        getDetailproductoutbound(id).then((response) => {
+          this.deliveryNote = response.data;
+        });
+        this.view_open = true;
+        this.open = true;
+        this.title = "查看产品出库详单";
+      });
     },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
+      this.view_open = false;
       this.isadd = true;
       this.open = true;
       this.title = "添加产品出库详单";
@@ -467,9 +575,10 @@ export default {
       const id = row.id || this.ids;
       getProductoutbound(id).then((response) => {
         this.form = response.data;
-        this.getDetailproductoutbound(id).then((response)=>{
-          this.deliveryNote = response
-        })
+        getDetailproductoutbound(id).then((response) => {
+          this.deliveryNote = response.data;
+        });
+        this.view_open = false;
         this.open = true;
         this.title = "修改产品出库详单";
       });

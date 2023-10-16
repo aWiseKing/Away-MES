@@ -25,7 +25,7 @@ import com.away.common.core.page.TableDataInfo;
  * 成品检验Controller
  * 
  * @author awise
- * @date 2023-10-14
+ * @date 2023-10-16
  */
 @RestController
 @RequestMapping("/quality/finishedproductinspection")
@@ -64,7 +64,7 @@ public class AwFinishedproductinspectionController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('quality:finishedproductinspection:query')")
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
+    public AjaxResult getInfo(@PathVariable("id") String id)
     {
         return success(awFinishedproductinspectionService.selectAwFinishedproductinspectionById(id));
     }
@@ -97,7 +97,7 @@ public class AwFinishedproductinspectionController extends BaseController
     @PreAuthorize("@ss.hasPermi('quality:finishedproductinspection:remove')")
     @Log(title = "成品检验", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
+    public AjaxResult remove(@PathVariable String[] ids)
     {
         return toAjax(awFinishedproductinspectionService.deleteAwFinishedproductinspectionByIds(ids));
     }

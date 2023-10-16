@@ -7,7 +7,7 @@ import com.awise.quality.domain.AwShippinginspection;
  * 成品出货检验Service接口
  * 
  * @author awise
- * @date 2023-10-14
+ * @date 2023-10-16
  */
 public interface IAwShippinginspectionService 
 {
@@ -17,7 +17,7 @@ public interface IAwShippinginspectionService
      * @param id 成品出货检验主键
      * @return 成品出货检验
      */
-    public AwShippinginspection selectAwShippinginspectionById(Long id);
+    public AwShippinginspection selectAwShippinginspectionById(String id);
 
     /**
      * 查询成品出货检验列表
@@ -49,7 +49,7 @@ public interface IAwShippinginspectionService
      * @param ids 需要删除的成品出货检验主键集合
      * @return 结果
      */
-    public int deleteAwShippinginspectionByIds(Long[] ids);
+    public int deleteAwShippinginspectionByIds(String[] ids);
 
     /**
      * 删除成品出货检验信息
@@ -57,5 +57,5 @@ public interface IAwShippinginspectionService
      * @param id 成品出货检验主键
      * @return 结果
      */
-    public int deleteAwShippinginspectionById(Long id);
+    public int deleteAwShippinginspectionById(String id);
 }

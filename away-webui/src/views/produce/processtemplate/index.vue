@@ -340,10 +340,13 @@ export default {
         this.view_form = response.data;
         this.view_form.files = [];
         let num = 0;
-        let urls = response.data.diagramURL.split(";");
-        urls.pop();
-        for (num in urls) {
-          await this.fileDown(urls[num]);
+        if(response.data.diagramURL == null){}
+        else{
+          let urls = response.data.diagramURL.split(";");
+          urls.pop();
+          for (num in urls) {
+            await this.fileDown(urls[num]);
+          }
         }
         this.view_open = true;
       });

@@ -7,7 +7,7 @@ import com.awise.produce.domain.AwProductoutbound;
  * 产品出库Mapper接口
  * 
  * @author awise
- * @date 2023-10-14
+ * @date 2023-10-16
  */
 public interface AwProductoutboundMapper 
 {

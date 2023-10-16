@@ -11,7 +11,7 @@ import com.awise.quality.service.IAwFinishedproductinspectionService;
  * 成品检验Service业务层处理
  * 
  * @author awise
- * @date 2023-10-14
+ * @date 2023-10-16
  */
 @Service
 public class AwFinishedproductinspectionServiceImpl implements IAwFinishedproductinspectionService 
@@ -26,7 +26,7 @@ public class AwFinishedproductinspectionServiceImpl implements IAwFinishedproduc
      * @return 成品检验
      */
     @Override
-    public AwFinishedproductinspection selectAwFinishedproductinspectionById(Long id)
+    public AwFinishedproductinspection selectAwFinishedproductinspectionById(String id)
     {
         return awFinishedproductinspectionMapper.selectAwFinishedproductinspectionById(id);
     }
@@ -74,7 +74,7 @@ public class AwFinishedproductinspectionServiceImpl implements IAwFinishedproduc
      * @return 结果
      */
     @Override
-    public int deleteAwFinishedproductinspectionByIds(Long[] ids)
+    public int deleteAwFinishedproductinspectionByIds(String[] ids)
     {
         return awFinishedproductinspectionMapper.deleteAwFinishedproductinspectionByIds(ids);
     }
@@ -86,7 +86,7 @@ public class AwFinishedproductinspectionServiceImpl implements IAwFinishedproduc
      * @return 结果
      */
     @Override
-    public int deleteAwFinishedproductinspectionById(Long id)
+    public int deleteAwFinishedproductinspectionById(String id)
     {
         return awFinishedproductinspectionMapper.deleteAwFinishedproductinspectionById(id);
     }

@@ -21,6 +21,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectAwProductoutboundList" parameterType="AwProductoutbound" resultMap="AwProductoutboundResult">
         <include refid="selectAwProductoutboundVo"/>
         <where>  
+            <if test="deliveryNoteID != null  and deliveryNoteID != ''"> and deliveryNoteID = #{deliveryNoteID}</if>
+            <if test="productID != null  and productID != ''"> and productID = #{productID}</if>
+            <if test="shippingInspectionID != null  and shippingInspectionID != ''"> and shippingInspectionID = #{shippingInspectionID}</if>
+            <if test="receiptQuantity != null "> and receiptQuantity = #{receiptQuantity}</if>
+            <if test="contractID != null  and contractID != ''"> and contractID = #{contractID}</if>
+            <if test="notes != null  and notes != ''"> and notes = #{notes}</if>
         </where>
     </select>
     
@@ -35,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="id != null">id,</if>
             <if test="deliveryNoteID != null and deliveryNoteID != ''">deliveryNoteID,</if>
             <if test="productID != null and productID != ''">productID,</if>
-            <if test="shippingInspectionID != null">shippingInspectionID,</if>
+            <if test="shippingInspectionID != null and shippingInspectionID != ''">shippingInspectionID,</if>
             <if test="receiptQuantity != null">receiptQuantity,</if>
             <if test="contractID != null and contractID != ''">contractID,</if>
             <if test="notes != null">notes,</if>
@@ -44,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="id != null">#{id},</if>
             <if test="deliveryNoteID != null and deliveryNoteID != ''">#{deliveryNoteID},</if>
             <if test="productID != null and productID != ''">#{productID},</if>
-            <if test="shippingInspectionID != null">#{shippingInspectionID},</if>
+            <if test="shippingInspectionID != null and shippingInspectionID != ''">#{shippingInspectionID},</if>
             <if test="receiptQuantity != null">#{receiptQuantity},</if>
             <if test="contractID != null and contractID != ''">#{contractID},</if>
             <if test="notes != null">#{notes},</if>
@@ -56,7 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="deliveryNoteID != null and deliveryNoteID != ''">deliveryNoteID = #{deliveryNoteID},</if>
             <if test="productID != null and productID != ''">productID = #{productID},</if>
-            <if test="shippingInspectionID != null">shippingInspectionID = #{shippingInspectionID},</if>
+            <if test="shippingInspectionID != null and shippingInspectionID != ''">shippingInspectionID = #{shippingInspectionID},</if>
             <if test="receiptQuantity != null">receiptQuantity = #{receiptQuantity},</if>
             <if test="contractID != null and contractID != ''">contractID = #{contractID},</if>
             <if test="notes != null">notes = #{notes},</if>

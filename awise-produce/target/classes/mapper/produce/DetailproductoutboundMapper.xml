@@ -32,7 +32,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="deliveryNoteID != null  and deliveryNoteID != ''"> and deliveryNoteID = #{deliveryNoteID}</if>
             <if test="productID != null  and productID != ''"> and productID = #{productID}</if>
             <if test="productname != null  and productname != ''"> and productname like concat('%', #{productname}, '%')</if>
-            <if test="shippingInspectionID != null "> and shippingInspectionID = #{shippingInspectionID}</if>
+            <if test="shippingInspectionID != null  and shippingInspectionID != ''"> and shippingInspectionID = #{shippingInspectionID}</if>
+            <if test="shipmentQuantity != null "> and shipmentQuantity = #{shipmentQuantity}</if>
+            <if test="detectionQuantity != null "> and detectionQuantity = #{detectionQuantity}</if>
+            <if test="qualifiedQuantity != null "> and qualifiedQuantity = #{qualifiedQuantity}</if>
+            <if test="unqualifiedQuantity != null "> and unqualifiedQuantity = #{unqualifiedQuantity}</if>
+            <if test="testResult != null  and testResult != ''"> and testResult = #{testResult}</if>
+            <if test="testDate != null "> and testDate = #{testDate}</if>
+            <if test="testingPersonnel != null  and testingPersonnel != ''"> and testingPersonnel = #{testingPersonnel}</if>
+            <if test="receiptQuantity != null "> and receiptQuantity = #{receiptQuantity}</if>
+            <if test="contractID != null  and contractID != ''"> and contractID = #{contractID}</if>
             <if test="customname != null  and customname != ''"> and customname like concat('%', #{customname}, '%')</if>
         </where>
     </select>
@@ -49,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="deliveryNoteID != null and deliveryNoteID != ''">deliveryNoteID,</if>
             <if test="productID != null and productID != ''">productID,</if>
             <if test="productname != null">productname,</if>
-            <if test="shippingInspectionID != null">shippingInspectionID,</if>
+            <if test="shippingInspectionID != null and shippingInspectionID != ''">shippingInspectionID,</if>
             <if test="shipmentQuantity != null">shipmentQuantity,</if>
             <if test="detectionQuantity != null">detectionQuantity,</if>
             <if test="qualifiedQuantity != null">qualifiedQuantity,</if>
@@ -66,7 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="deliveryNoteID != null and deliveryNoteID != ''">#{deliveryNoteID},</if>
             <if test="productID != null and productID != ''">#{productID},</if>
             <if test="productname != null">#{productname},</if>
-            <if test="shippingInspectionID != null">#{shippingInspectionID},</if>
+            <if test="shippingInspectionID != null and shippingInspectionID != ''">#{shippingInspectionID},</if>
             <if test="shipmentQuantity != null">#{shipmentQuantity},</if>
             <if test="detectionQuantity != null">#{detectionQuantity},</if>
             <if test="qualifiedQuantity != null">#{qualifiedQuantity},</if>
@@ -86,7 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="deliveryNoteID != null and deliveryNoteID != ''">deliveryNoteID = #{deliveryNoteID},</if>
             <if test="productID != null and productID != ''">productID = #{productID},</if>
             <if test="productname != null">productname = #{productname},</if>
-            <if test="shippingInspectionID != null">shippingInspectionID = #{shippingInspectionID},</if>
+            <if test="shippingInspectionID != null and shippingInspectionID != ''">shippingInspectionID = #{shippingInspectionID},</if>
             <if test="shipmentQuantity != null">shipmentQuantity = #{shipmentQuantity},</if>
             <if test="detectionQuantity != null">detectionQuantity = #{detectionQuantity},</if>
             <if test="qualifiedQuantity != null">qualifiedQuantity = #{qualifiedQuantity},</if>

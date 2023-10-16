@@ -26,13 +26,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectAwFinishedproductinspectionVo"/>
         <where>  
             <if test="nameOfQualityInspection != null  and nameOfQualityInspection != ''"> and nameOfQualityInspection = #{nameOfQualityInspection}</if>
-            <if test="testDate != null "> and testDate = #{testDate}</if>
             <if test="testResult != null  and testResult != ''"> and testResult = #{testResult}</if>
             <if test="testingPersonnel != null  and testingPersonnel != ''"> and testingPersonnel = #{testingPersonnel}</if>
         </where>
     </select>
     
-    <select id="selectAwFinishedproductinspectionById" parameterType="Long" resultMap="AwFinishedproductinspectionResult">
+    <select id="selectAwFinishedproductinspectionById" parameterType="String" resultMap="AwFinishedproductinspectionResult">
         <include refid="selectAwFinishedproductinspectionVo"/>
         where id = #{id}
     </select>
@@ -84,7 +83,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
-    <delete id="deleteAwFinishedproductinspectionById" parameterType="Long">
+    <delete id="deleteAwFinishedproductinspectionById" parameterType="String">
         delete from aw_finishedproductinspection where id = #{id}
     </delete>
 

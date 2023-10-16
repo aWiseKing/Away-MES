@@ -25,7 +25,7 @@ import com.away.common.core.page.TableDataInfo;
  * 产品出库详单Controller
  * 
  * @author awise
- * @date 2023-10-15
+ * @date 2023-10-16
  */
 @RestController
 @RequestMapping("/produce/detailproductoutbound")

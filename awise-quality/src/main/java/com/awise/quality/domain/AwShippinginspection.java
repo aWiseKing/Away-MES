@@ -11,19 +11,21 @@ import com.away.common.core.domain.BaseEntity;
  * 成品出货检验对象 aw_shippinginspection
  * 
  * @author awise
- * @date 2023-10-14
+ * @date 2023-10-16
  */
 public class AwShippinginspection extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** 编号 */
-    private Long id;
+    private String id;
 
     /** 产品图号 */
+    @Excel(name = "产品图号")
     private String productID;
 
     /** 客户编号 */
+    @Excel(name = "客户编号")
     private String contractID;
 
     /** 出货数量 */
@@ -56,14 +58,15 @@ public class AwShippinginspection extends BaseEntity
     private String testingPersonnel;
 
     /** 备注 */
+    @Excel(name = "备注")
     private String notes;
 
-    public void setId(Long id) 
+    public void setId(String id) 
     {
         this.id = id;
     }
 
-    public Long getId() 
+    public String getId() 
     {
         return id;
     }
