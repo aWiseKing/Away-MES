@@ -323,6 +323,14 @@ import {
   listDetailproductoutbound,
   getDetailproductoutbound,
 } from "@/api/produce/detailproductoutbound";
+import { listProduct, getProduct } from "@/api/produce/product";
+import { listShippinginspection,getShippinginspection } from "@/api/quality/shippinginspection.js";
+import {
+  getProductoutbound,
+  addProductoutbound,
+  updateProductoutbound,
+  delProductoutbound
+} from "@/api/produce/productoutbound.js";
 
 export default {
   name: "Detailproductoutbound",
@@ -457,8 +465,11 @@ export default {
       this.reset();
       this.isadd = false;
       const id = row.id || this.ids;
-      getDetailproductoutbound(id).then((response) => {
+      getProductoutbound(id).then((response) => {
         this.form = response.data;
+        this.getDetailproductoutbound(id).then((response)=>{
+          this.deliveryNote = response
+        })
         this.open = true;
         this.title = "修改产品出库详单";
       });
@@ -468,13 +479,13 @@ export default {
       this.$refs["form"].validate((valid) => {
         if (valid) {
           if (!this.isadd) {
-            updateDetailproductoutbound(this.form).then((response) => {
+            updateProductoutbound(this.form).then((response) => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addDetailproductoutbound(this.form).then((response) => {
+            addProductoutbound(this.form).then((response) => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -489,7 +500,7 @@ export default {
       this.$modal
         .confirm('是否确认删除产品出库详单编号为"' + ids + '"的数据项？')
         .then(function () {
-          return delDetailproductoutbound(ids);
+          return delProductoutbound(ids);
         })
         .then(() => {
           this.getList();
