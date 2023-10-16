@@ -4,52 +4,34 @@
     <el-row :gutter="1">
             <el-col :span="21">
               <div style="overflow-x: auto;scrollbar-width: none; white-space: nowrap;">
-      <el-form-item label="联系人姓名" prop="name">
+      <el-form-item label="出库单编号" prop="deliveryNoteID">
         <el-input
-          v-model="queryParams.name"
-          placeholder="请输入联系人姓名"
+          v-model="queryParams.deliveryNoteID"
+          placeholder="请输入出库单编号"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="联系人电话" prop="phone">
+      <el-form-item label="材料基础信息编号" prop="materialID">
         <el-input
-          v-model="queryParams.phone"
-          placeholder="请输入联系人电话"
+          v-model="queryParams.materialID"
+          placeholder="请输入材料基础信息编号"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="联系人部门" prop="department">
+      <el-form-item label="任务编号" prop="productionTasksID">
         <el-input
-          v-model="queryParams.department"
-          placeholder="请输入联系人部门"
+          v-model="queryParams.productionTasksID"
+          placeholder="请输入任务编号"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="联系人职位" prop="position">
+      <el-form-item label="工艺编号" prop="processingTechnologyID">
         <el-input
-          v-model="queryParams.position"
-          placeholder="请输入联系人职位"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="联系人所属的定位" prop="location">
-        <el-select v-model="queryParams.location" placeholder="请选择联系人所属的定位" clearable>
-          <el-option
-            v-for="dict in dict.type.aw_contract_location"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="联系人所属公司id" prop="companyID">
-        <el-input
-          v-model="queryParams.companyID"
-          placeholder="请输入联系人所属公司id"
+          v-model="queryParams.processingTechnologyID"
+          placeholder="请输入工艺编号"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -73,7 +55,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['comprehensive:contacts:add']"
+          v-hasPermi="['storage:localmaterialoutbound:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -84,7 +66,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['comprehensive:contacts:edit']"
+          v-hasPermi="['storage:localmaterialoutbound:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -95,7 +77,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['comprehensive:contacts:remove']"
+          v-hasPermi="['storage:localmaterialoutbound:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -105,26 +87,21 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['comprehensive:contacts:export']"
+          v-hasPermi="['storage:localmaterialoutbound:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="contactsList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="localmaterialoutboundList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="联系人信息id" align="center" prop="id" />
-      <el-table-column label="联系人姓名" align="center" prop="name" />
-      <el-table-column label="联系人电话" align="center" prop="phone" />
-      <el-table-column label="联系人部门" align="center" prop="department" />
-      <el-table-column label="联系人职位" align="center" prop="position" />
-      <el-table-column label="联系人所属的定位" align="center" prop="location">
-        <template slot-scope="scope">
-          <dict-tag :options="dict.type.aw_contract_location" :value="scope.row.location"/>
-        </template>
-      </el-table-column>
-      <el-table-column label="联系人所属公司id" align="center" prop="companyID" />
-      <el-table-column label="备注信息" align="center" prop="notes" />
+      <el-table-column label="id" align="center" prop="id" />
+      <el-table-column label="出库单编号" align="center" prop="deliveryNoteID" />
+      <el-table-column label="材料基础信息编号" align="center" prop="materialID" />
+      <el-table-column label="任务编号" align="center" prop="productionTasksID" />
+      <el-table-column label="工艺编号" align="center" prop="processingTechnologyID" />
+      <el-table-column label="出库数量" align="center" prop="outboundQuantity" />
+      <el-table-column label="备注" align="center" prop="notes" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
         <el-button
@@ -132,21 +109,21 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['comprehensive:contacts:edit']"
+            v-hasPermi="['storage:localmaterialoutbound:edit']"
           >查看</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['comprehensive:contacts:edit']"
+            v-hasPermi="['storage:localmaterialoutbound:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['comprehensive:contacts:remove']"
+            v-hasPermi="['storage:localmaterialoutbound:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -160,36 +137,26 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改联系人信息对话框 -->
+    <!-- 添加或修改本地材料出库对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="联系人姓名" prop="name">
-          <el-input v-model="form.name" placeholder="请输入联系人姓名" />
+        <el-form-item label="出库单编号" prop="deliveryNoteID">
+          <el-input v-model="form.deliveryNoteID" placeholder="请输入出库单编号" />
         </el-form-item>
-        <el-form-item label="联系人电话" prop="phone">
-          <el-input v-model="form.phone" placeholder="请输入联系人电话" />
+        <el-form-item label="材料基础信息编号" prop="materialID">
+          <el-input v-model="form.materialID" placeholder="请输入材料基础信息编号" />
         </el-form-item>
-        <el-form-item label="联系人部门" prop="department">
-          <el-input v-model="form.department" placeholder="请输入联系人部门" />
+        <el-form-item label="任务编号" prop="productionTasksID">
+          <el-input v-model="form.productionTasksID" placeholder="请输入任务编号" />
         </el-form-item>
-        <el-form-item label="联系人职位" prop="position">
-          <el-input v-model="form.position" placeholder="请输入联系人职位" />
+        <el-form-item label="工艺编号" prop="processingTechnologyID">
+          <el-input v-model="form.processingTechnologyID" placeholder="请输入工艺编号" />
         </el-form-item>
-        <el-form-item label="联系人所属的定位" prop="location">
-          <el-select v-model="form.location" placeholder="请选择联系人所属的定位">
-            <el-option
-              v-for="dict in dict.type.aw_contract_location"
-              :key="dict.value"
-              :label="dict.label"
-              :value="parseInt(dict.value)"
-            ></el-option>
-          </el-select>
+        <el-form-item label="出库数量" prop="outboundQuantity">
+          <el-input v-model="form.outboundQuantity" placeholder="请输入出库数量" />
         </el-form-item>
-        <el-form-item label="联系人所属公司id" prop="companyID">
-          <el-input v-model="form.companyID" placeholder="请输入联系人所属公司id" />
-        </el-form-item>
-        <el-form-item label="备注信息" prop="notes">
-          <el-input v-model="form.notes" placeholder="请输入备注信息" />
+        <el-form-item label="备注" prop="notes">
+          <el-input v-model="form.notes" placeholder="请输入备注" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -201,11 +168,10 @@
 </template>
 
 <script>
-import { listContacts, getContacts, delContacts, addContacts, updateContacts } from "@/api/comprehensive/contacts";
+import { listLocalmaterialoutbound, getLocalmaterialoutbound, delLocalmaterialoutbound, addLocalmaterialoutbound, updateLocalmaterialoutbound } from "@/api/storage/localmaterialoutbound";
 
 export default {
-  name: "Contacts",
-  dicts: ['aw_contract_location'],
+  name: "Localmaterialoutbound",
   data() {
     return {
       // 遮罩层
@@ -220,8 +186,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 联系人信息表格数据
-      contactsList: [],
+      // 本地材料出库表格数据
+      localmaterialoutboundList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -234,17 +200,24 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        name: null,
-        phone: null,
-        department: null,
-        position: null,
-        location: null,
-        companyID: null,
+        deliveryNoteID: null,
+        materialID: null,
+        productionTasksID: null,
+        processingTechnologyID: null,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
+        deliveryNoteID: [
+          { required: true, message: "出库单编号不能为空", trigger: "blur" }
+        ],
+        materialID: [
+          { required: true, message: "材料基础信息编号不能为空", trigger: "blur" }
+        ],
+        outboundQuantity: [
+          { required: true, message: "出库数量不能为空", trigger: "blur" }
+        ],
       }
     };
   },
@@ -252,11 +225,11 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询联系人信息列表 */
+    /** 查询本地材料出库列表 */
     getList() {
       this.loading = true;
-      listContacts(this.queryParams).then(response => {
-        this.contactsList = response.rows;
+      listLocalmaterialoutbound(this.queryParams).then(response => {
+        this.localmaterialoutboundList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -270,14 +243,12 @@ export default {
     reset() {
       this.form = {
         id: null,
-        name: null,
-        phone: null,
-        department: null,
-        position: null,
-        location: null,
-        companyID: null,
-        notes: null,
-        isDel: null
+        deliveryNoteID: null,
+        materialID: null,
+        productionTasksID: null,
+        processingTechnologyID: null,
+        outboundQuantity: null,
+        notes: null
       };
       this.resetForm("form");
     },
@@ -305,17 +276,17 @@ export default {
       this.reset();
       this.isadd = true;
       this.open = true;
-      this.title = "添加联系人信息";
+      this.title = "添加本地材料出库";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       this.isadd = false;
       const id = row.id || this.ids
-      getContacts(id).then(response => {
+      getLocalmaterialoutbound(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改联系人信息";
+        this.title = "修改本地材料出库";
       });
     },
     /** 提交按钮 */
@@ -323,13 +294,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (!this.isadd) {
-            updateContacts(this.form).then(response => {
+            updateLocalmaterialoutbound(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addContacts(this.form).then(response => {
+            addLocalmaterialoutbound(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -341,8 +312,8 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除联系人信息编号为"' + ids + '"的数据项？').then(function() {
-        return delContacts(ids);
+      this.$modal.confirm('是否确认删除本地材料出库编号为"' + ids + '"的数据项？').then(function() {
+        return delLocalmaterialoutbound(ids);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
@@ -350,9 +321,9 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('comprehensive/contacts/export', {
+      this.download('storage/localmaterialoutbound/export', {
         ...this.queryParams
-      }, `contacts_${new Date().getTime()}.xlsx`)
+      }, `localmaterialoutbound_${new Date().getTime()}.xlsx`)
     }
   }
 };

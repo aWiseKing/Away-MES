@@ -4,52 +4,26 @@
     <el-row :gutter="1">
             <el-col :span="21">
               <div style="overflow-x: auto;scrollbar-width: none; white-space: nowrap;">
-      <el-form-item label="联系人姓名" prop="name">
+      <el-form-item label="发票税率" prop="invoiceTaxRate">
         <el-input
-          v-model="queryParams.name"
-          placeholder="请输入联系人姓名"
+          v-model="queryParams.invoiceTaxRate"
+          placeholder="请输入发票税率"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="联系人电话" prop="phone">
+      <el-form-item label="不含税采购单价" prop="purchaseUnitPriceExcludingTax">
         <el-input
-          v-model="queryParams.phone"
-          placeholder="请输入联系人电话"
+          v-model="queryParams.purchaseUnitPriceExcludingTax"
+          placeholder="请输入不含税采购单价"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="联系人部门" prop="department">
+      <el-form-item label="含税采购单价" prop="purchaseUnitPriceIncludingTax">
         <el-input
-          v-model="queryParams.department"
-          placeholder="请输入联系人部门"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="联系人职位" prop="position">
-        <el-input
-          v-model="queryParams.position"
-          placeholder="请输入联系人职位"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="联系人所属的定位" prop="location">
-        <el-select v-model="queryParams.location" placeholder="请选择联系人所属的定位" clearable>
-          <el-option
-            v-for="dict in dict.type.aw_contract_location"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="联系人所属公司id" prop="companyID">
-        <el-input
-          v-model="queryParams.companyID"
-          placeholder="请输入联系人所属公司id"
+          v-model="queryParams.purchaseUnitPriceIncludingTax"
+          placeholder="请输入含税采购单价"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -73,7 +47,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['comprehensive:contacts:add']"
+          v-hasPermi="['finance:receiptinvoice:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -84,7 +58,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['comprehensive:contacts:edit']"
+          v-hasPermi="['finance:receiptinvoice:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -95,7 +69,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['comprehensive:contacts:remove']"
+          v-hasPermi="['finance:receiptinvoice:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -105,26 +79,19 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['comprehensive:contacts:export']"
+          v-hasPermi="['finance:receiptinvoice:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="contactsList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="receiptinvoiceList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="联系人信息id" align="center" prop="id" />
-      <el-table-column label="联系人姓名" align="center" prop="name" />
-      <el-table-column label="联系人电话" align="center" prop="phone" />
-      <el-table-column label="联系人部门" align="center" prop="department" />
-      <el-table-column label="联系人职位" align="center" prop="position" />
-      <el-table-column label="联系人所属的定位" align="center" prop="location">
-        <template slot-scope="scope">
-          <dict-tag :options="dict.type.aw_contract_location" :value="scope.row.location"/>
-        </template>
-      </el-table-column>
-      <el-table-column label="联系人所属公司id" align="center" prop="companyID" />
-      <el-table-column label="备注信息" align="center" prop="notes" />
+      <el-table-column label="入库发票编号" align="center" prop="receiptInvoiceID" />
+      <el-table-column label="发票类型" align="center" prop="invoiceType" />
+      <el-table-column label="发票税率" align="center" prop="invoiceTaxRate" />
+      <el-table-column label="不含税采购单价" align="center" prop="purchaseUnitPriceExcludingTax" />
+      <el-table-column label="含税采购单价" align="center" prop="purchaseUnitPriceIncludingTax" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
         <el-button
@@ -132,21 +99,21 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['comprehensive:contacts:edit']"
+            v-hasPermi="['finance:receiptinvoice:edit']"
           >查看</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['comprehensive:contacts:edit']"
+            v-hasPermi="['finance:receiptinvoice:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['comprehensive:contacts:remove']"
+            v-hasPermi="['finance:receiptinvoice:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -160,36 +127,17 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改联系人信息对话框 -->
+    <!-- 添加或修改入库发票信息对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="联系人姓名" prop="name">
-          <el-input v-model="form.name" placeholder="请输入联系人姓名" />
+        <el-form-item label="发票税率" prop="invoiceTaxRate">
+          <el-input v-model="form.invoiceTaxRate" placeholder="请输入发票税率" />
         </el-form-item>
-        <el-form-item label="联系人电话" prop="phone">
-          <el-input v-model="form.phone" placeholder="请输入联系人电话" />
+        <el-form-item label="不含税采购单价" prop="purchaseUnitPriceExcludingTax">
+          <el-input v-model="form.purchaseUnitPriceExcludingTax" placeholder="请输入不含税采购单价" />
         </el-form-item>
-        <el-form-item label="联系人部门" prop="department">
-          <el-input v-model="form.department" placeholder="请输入联系人部门" />
-        </el-form-item>
-        <el-form-item label="联系人职位" prop="position">
-          <el-input v-model="form.position" placeholder="请输入联系人职位" />
-        </el-form-item>
-        <el-form-item label="联系人所属的定位" prop="location">
-          <el-select v-model="form.location" placeholder="请选择联系人所属的定位">
-            <el-option
-              v-for="dict in dict.type.aw_contract_location"
-              :key="dict.value"
-              :label="dict.label"
-              :value="parseInt(dict.value)"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="联系人所属公司id" prop="companyID">
-          <el-input v-model="form.companyID" placeholder="请输入联系人所属公司id" />
-        </el-form-item>
-        <el-form-item label="备注信息" prop="notes">
-          <el-input v-model="form.notes" placeholder="请输入备注信息" />
+        <el-form-item label="含税采购单价" prop="purchaseUnitPriceIncludingTax">
+          <el-input v-model="form.purchaseUnitPriceIncludingTax" placeholder="请输入含税采购单价" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -201,11 +149,10 @@
 </template>
 
 <script>
-import { listContacts, getContacts, delContacts, addContacts, updateContacts } from "@/api/comprehensive/contacts";
+import { listReceiptinvoice, getReceiptinvoice, delReceiptinvoice, addReceiptinvoice, updateReceiptinvoice } from "@/api/finance/receiptinvoice";
 
 export default {
-  name: "Contacts",
-  dicts: ['aw_contract_location'],
+  name: "Receiptinvoice",
   data() {
     return {
       // 遮罩层
@@ -220,8 +167,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 联系人信息表格数据
-      contactsList: [],
+      // 入库发票信息表格数据
+      receiptinvoiceList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -234,17 +181,21 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        name: null,
-        phone: null,
-        department: null,
-        position: null,
-        location: null,
-        companyID: null,
+        invoiceType: null,
+        invoiceTaxRate: null,
+        purchaseUnitPriceExcludingTax: null,
+        purchaseUnitPriceIncludingTax: null
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
+        receiptInvoiceID: [
+          { required: true, message: "入库发票编号不能为空", trigger: "blur" }
+        ],
+        purchaseUnitPriceExcludingTax: [
+          { required: true, message: "不含税采购单价不能为空", trigger: "blur" }
+        ],
       }
     };
   },
@@ -252,11 +203,11 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询联系人信息列表 */
+    /** 查询入库发票信息列表 */
     getList() {
       this.loading = true;
-      listContacts(this.queryParams).then(response => {
-        this.contactsList = response.rows;
+      listReceiptinvoice(this.queryParams).then(response => {
+        this.receiptinvoiceList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -269,15 +220,11 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        id: null,
-        name: null,
-        phone: null,
-        department: null,
-        position: null,
-        location: null,
-        companyID: null,
-        notes: null,
-        isDel: null
+        receiptInvoiceID: null,
+        invoiceType: null,
+        invoiceTaxRate: null,
+        purchaseUnitPriceExcludingTax: null,
+        purchaseUnitPriceIncludingTax: null
       };
       this.resetForm("form");
     },
@@ -293,7 +240,7 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
+      this.ids = selection.map(item => item.receiptInvoiceID)
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
@@ -305,17 +252,17 @@ export default {
       this.reset();
       this.isadd = true;
       this.open = true;
-      this.title = "添加联系人信息";
+      this.title = "添加入库发票信息";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       this.isadd = false;
-      const id = row.id || this.ids
-      getContacts(id).then(response => {
+      const receiptInvoiceID = row.receiptInvoiceID || this.ids
+      getReceiptinvoice(receiptInvoiceID).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改联系人信息";
+        this.title = "修改入库发票信息";
       });
     },
     /** 提交按钮 */
@@ -323,13 +270,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (!this.isadd) {
-            updateContacts(this.form).then(response => {
+            updateReceiptinvoice(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addContacts(this.form).then(response => {
+            addReceiptinvoice(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -340,9 +287,9 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除联系人信息编号为"' + ids + '"的数据项？').then(function() {
-        return delContacts(ids);
+      const receiptInvoiceIDs = row.receiptInvoiceID || this.ids;
+      this.$modal.confirm('是否确认删除入库发票信息编号为"' + receiptInvoiceIDs + '"的数据项？').then(function() {
+        return delReceiptinvoice(receiptInvoiceIDs);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
@@ -350,9 +297,9 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('comprehensive/contacts/export', {
+      this.download('finance/receiptinvoice/export', {
         ...this.queryParams
-      }, `contacts_${new Date().getTime()}.xlsx`)
+      }, `receiptinvoice_${new Date().getTime()}.xlsx`)
     }
   }
 };

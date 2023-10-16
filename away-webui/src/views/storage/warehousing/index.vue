@@ -4,52 +4,42 @@
     <el-row :gutter="1">
             <el-col :span="21">
               <div style="overflow-x: auto;scrollbar-width: none; white-space: nowrap;">
-      <el-form-item label="联系人姓名" prop="name">
+      <el-form-item label="入库日期" prop="warehousingDate">
+        <el-date-picker clearable
+          v-model="queryParams.warehousingDate"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="请选择入库日期">
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="制单人" prop="creator">
         <el-input
-          v-model="queryParams.name"
-          placeholder="请输入联系人姓名"
+          v-model="queryParams.creator"
+          placeholder="请输入制单人"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="联系人电话" prop="phone">
+      <el-form-item label="验收人" prop="acceptedBy">
         <el-input
-          v-model="queryParams.phone"
-          placeholder="请输入联系人电话"
+          v-model="queryParams.acceptedBy"
+          placeholder="请输入验收人"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="联系人部门" prop="department">
+      <el-form-item label="库管员" prop="warehouseKeeper">
         <el-input
-          v-model="queryParams.department"
-          placeholder="请输入联系人部门"
+          v-model="queryParams.warehouseKeeper"
+          placeholder="请输入库管员"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="联系人职位" prop="position">
+      <el-form-item label="经办人" prop="operator">
         <el-input
-          v-model="queryParams.position"
-          placeholder="请输入联系人职位"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="联系人所属的定位" prop="location">
-        <el-select v-model="queryParams.location" placeholder="请选择联系人所属的定位" clearable>
-          <el-option
-            v-for="dict in dict.type.aw_contract_location"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="联系人所属公司id" prop="companyID">
-        <el-input
-          v-model="queryParams.companyID"
-          placeholder="请输入联系人所属公司id"
+          v-model="queryParams.operator"
+          placeholder="请输入经办人"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -73,7 +63,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['comprehensive:contacts:add']"
+          v-hasPermi="['storage:warehousing:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -84,7 +74,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['comprehensive:contacts:edit']"
+          v-hasPermi="['storage:warehousing:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -95,7 +85,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['comprehensive:contacts:remove']"
+          v-hasPermi="['storage:warehousing:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -105,26 +95,30 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['comprehensive:contacts:export']"
+          v-hasPermi="['storage:warehousing:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="contactsList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="warehousingList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="联系人信息id" align="center" prop="id" />
-      <el-table-column label="联系人姓名" align="center" prop="name" />
-      <el-table-column label="联系人电话" align="center" prop="phone" />
-      <el-table-column label="联系人部门" align="center" prop="department" />
-      <el-table-column label="联系人职位" align="center" prop="position" />
-      <el-table-column label="联系人所属的定位" align="center" prop="location">
+      <el-table-column label="入库单编号" align="center" prop="warehouseEntryID" />
+      <el-table-column label="入库日期" align="center" prop="warehousingDate" width="180">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.aw_contract_location" :value="scope.row.location"/>
+          <span>{{ parseTime(scope.row.warehousingDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="联系人所属公司id" align="center" prop="companyID" />
-      <el-table-column label="备注信息" align="center" prop="notes" />
+      <el-table-column label="制单人" align="center" prop="creator" />
+      <el-table-column label="验收人" align="center" prop="acceptedBy" />
+      <el-table-column label="库管员" align="center" prop="warehouseKeeper" />
+      <el-table-column label="经办人" align="center" prop="operator" />
+      <el-table-column label="备注" align="center" prop="notes" />
+      <el-table-column label="状态" align="center" prop="status">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.sys_storage_status" :value="scope.row.status"/>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
         <el-button
@@ -132,21 +126,21 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['comprehensive:contacts:edit']"
+            v-hasPermi="['storage:warehousing:edit']"
           >查看</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['comprehensive:contacts:edit']"
+            v-hasPermi="['storage:warehousing:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['comprehensive:contacts:remove']"
+            v-hasPermi="['storage:warehousing:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -160,36 +154,41 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改联系人信息对话框 -->
+    <!-- 添加或修改入库单对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="联系人姓名" prop="name">
-          <el-input v-model="form.name" placeholder="请输入联系人姓名" />
+        <el-form-item label="入库日期" prop="warehousingDate">
+          <el-date-picker clearable
+            v-model="form.warehousingDate"
+            type="date"
+            value-format="yyyy-MM-dd"
+            placeholder="请选择入库日期">
+          </el-date-picker>
         </el-form-item>
-        <el-form-item label="联系人电话" prop="phone">
-          <el-input v-model="form.phone" placeholder="请输入联系人电话" />
+        <el-form-item label="制单人" prop="creator">
+          <el-input v-model="form.creator" placeholder="请输入制单人" />
         </el-form-item>
-        <el-form-item label="联系人部门" prop="department">
-          <el-input v-model="form.department" placeholder="请输入联系人部门" />
+        <el-form-item label="验收人" prop="acceptedBy">
+          <el-input v-model="form.acceptedBy" placeholder="请输入验收人" />
         </el-form-item>
-        <el-form-item label="联系人职位" prop="position">
-          <el-input v-model="form.position" placeholder="请输入联系人职位" />
+        <el-form-item label="库管员" prop="warehouseKeeper">
+          <el-input v-model="form.warehouseKeeper" placeholder="请输入库管员" />
         </el-form-item>
-        <el-form-item label="联系人所属的定位" prop="location">
-          <el-select v-model="form.location" placeholder="请选择联系人所属的定位">
+        <el-form-item label="经办人" prop="operator">
+          <el-input v-model="form.operator" placeholder="请输入经办人" />
+        </el-form-item>
+        <el-form-item label="备注" prop="notes">
+          <el-input v-model="form.notes" placeholder="请输入备注" />
+        </el-form-item>
+        <el-form-item label="状态" prop="status">
+          <el-select v-model="form.status" placeholder="请选择状态">
             <el-option
-              v-for="dict in dict.type.aw_contract_location"
+              v-for="dict in dict.type.sys_storage_status"
               :key="dict.value"
               :label="dict.label"
-              :value="parseInt(dict.value)"
+              :value="dict.value"
             ></el-option>
           </el-select>
-        </el-form-item>
-        <el-form-item label="联系人所属公司id" prop="companyID">
-          <el-input v-model="form.companyID" placeholder="请输入联系人所属公司id" />
-        </el-form-item>
-        <el-form-item label="备注信息" prop="notes">
-          <el-input v-model="form.notes" placeholder="请输入备注信息" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -201,11 +200,11 @@
 </template>
 
 <script>
-import { listContacts, getContacts, delContacts, addContacts, updateContacts } from "@/api/comprehensive/contacts";
+import { listWarehousing, getWarehousing, delWarehousing, addWarehousing, updateWarehousing } from "@/api/storage/warehousing";
 
 export default {
-  name: "Contacts",
-  dicts: ['aw_contract_location'],
+  name: "Warehousing",
+  dicts: ['sys_storage_status'],
   data() {
     return {
       // 遮罩层
@@ -220,8 +219,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 联系人信息表格数据
-      contactsList: [],
+      // 入库单表格数据
+      warehousingList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -234,17 +233,37 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        name: null,
-        phone: null,
-        department: null,
-        position: null,
-        location: null,
-        companyID: null,
+        warehousingDate: null,
+        creator: null,
+        acceptedBy: null,
+        warehouseKeeper: null,
+        operator: null,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
+        warehouseEntryID: [
+          { required: true, message: "入库单编号不能为空", trigger: "blur" }
+        ],
+        warehousingDate: [
+          { required: true, message: "入库日期不能为空", trigger: "blur" }
+        ],
+        creator: [
+          { required: true, message: "制单人不能为空", trigger: "blur" }
+        ],
+        acceptedBy: [
+          { required: true, message: "验收人不能为空", trigger: "blur" }
+        ],
+        warehouseKeeper: [
+          { required: true, message: "库管员不能为空", trigger: "blur" }
+        ],
+        operator: [
+          { required: true, message: "经办人不能为空", trigger: "blur" }
+        ],
+        status: [
+          { required: true, message: "状态不能为空", trigger: "change" }
+        ]
       }
     };
   },
@@ -252,11 +271,11 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询联系人信息列表 */
+    /** 查询入库单列表 */
     getList() {
       this.loading = true;
-      listContacts(this.queryParams).then(response => {
-        this.contactsList = response.rows;
+      listWarehousing(this.queryParams).then(response => {
+        this.warehousingList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -269,15 +288,14 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        id: null,
-        name: null,
-        phone: null,
-        department: null,
-        position: null,
-        location: null,
-        companyID: null,
+        warehouseEntryID: null,
+        warehousingDate: null,
+        creator: null,
+        acceptedBy: null,
+        warehouseKeeper: null,
+        operator: null,
         notes: null,
-        isDel: null
+        status: null
       };
       this.resetForm("form");
     },
@@ -293,7 +311,7 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
+      this.ids = selection.map(item => item.warehouseEntryID)
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
@@ -305,17 +323,17 @@ export default {
       this.reset();
       this.isadd = true;
       this.open = true;
-      this.title = "添加联系人信息";
+      this.title = "添加入库单";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       this.isadd = false;
-      const id = row.id || this.ids
-      getContacts(id).then(response => {
+      const warehouseEntryID = row.warehouseEntryID || this.ids
+      getWarehousing(warehouseEntryID).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改联系人信息";
+        this.title = "修改入库单";
       });
     },
     /** 提交按钮 */
@@ -323,13 +341,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (!this.isadd) {
-            updateContacts(this.form).then(response => {
+            updateWarehousing(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addContacts(this.form).then(response => {
+            addWarehousing(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -340,9 +358,9 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除联系人信息编号为"' + ids + '"的数据项？').then(function() {
-        return delContacts(ids);
+      const warehouseEntryIDs = row.warehouseEntryID || this.ids;
+      this.$modal.confirm('是否确认删除入库单编号为"' + warehouseEntryIDs + '"的数据项？').then(function() {
+        return delWarehousing(warehouseEntryIDs);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
@@ -350,9 +368,9 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('comprehensive/contacts/export', {
+      this.download('system/warehousing/export', {
         ...this.queryParams
-      }, `contacts_${new Date().getTime()}.xlsx`)
+      }, `warehousing_${new Date().getTime()}.xlsx`)
     }
   }
 };

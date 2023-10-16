@@ -1,39 +1,29 @@
 package com.awise.comprehensive.service.impl;
 
 import java.util.List;
-
-import com.awise.comprehensive.domain.AwContacts;
-import com.awise.comprehensive.mapper.AwContactsMapper;
-import com.awise.comprehensive.service.IAwContactsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.awise.comprehensive.mapper.AwContactsMapper;
+import com.awise.comprehensive.domain.AwContacts;
+import com.awise.comprehensive.service.IAwContactsService;
 
 /**
- * 联系人信息
-存储合作方的联系人的联系信息
-存储  联系人姓名，电话，部门，职位Service业务层处理
+ * 联系人信息Service业务层处理
  * 
  * @author ruoyi
- * @date 2023-09-22
+ * @date 2023-10-15
  */
 @Service
-public class AwContactsServiceImpl implements IAwContactsService
+public class AwContactsServiceImpl implements IAwContactsService 
 {
     @Autowired
     private AwContactsMapper awContactsMapper;
 
     /**
      * 查询联系人信息
-存储合作方的联系人的联系信息
-存储  联系人姓名，电话，部门，职位
      * 
-     * @param id 联系人信息
-存储合作方的联系人的联系信息
-存储  联系人姓名，电话，部门，职位主键
+     * @param id 联系人信息主键
      * @return 联系人信息
-存储合作方的联系人的联系信息
-存储  联系人姓名，电话，部门，职位
      */
     @Override
     public AwContacts selectAwContactsById(Long id)
@@ -42,16 +32,10 @@ public class AwContactsServiceImpl implements IAwContactsService
     }
 
     /**
-     * 查询联系人信息
-存储合作方的联系人的联系信息
-存储  联系人姓名，电话，部门，职位列表
+     * 查询联系人信息列表
      * 
      * @param awContacts 联系人信息
-存储合作方的联系人的联系信息
-存储  联系人姓名，电话，部门，职位
      * @return 联系人信息
-存储合作方的联系人的联系信息
-存储  联系人姓名，电话，部门，职位
      */
     @Override
     public List<AwContacts> selectAwContactsList(AwContacts awContacts)
@@ -61,12 +45,8 @@ public class AwContactsServiceImpl implements IAwContactsService
 
     /**
      * 新增联系人信息
-存储合作方的联系人的联系信息
-存储  联系人姓名，电话，部门，职位
      * 
      * @param awContacts 联系人信息
-存储合作方的联系人的联系信息
-存储  联系人姓名，电话，部门，职位
      * @return 结果
      */
     @Override
@@ -77,12 +57,8 @@ public class AwContactsServiceImpl implements IAwContactsService
 
     /**
      * 修改联系人信息
-存储合作方的联系人的联系信息
-存储  联系人姓名，电话，部门，职位
      * 
      * @param awContacts 联系人信息
-存储合作方的联系人的联系信息
-存储  联系人姓名，电话，部门，职位
      * @return 结果
      */
     @Override
@@ -93,12 +69,8 @@ public class AwContactsServiceImpl implements IAwContactsService
 
     /**
      * 批量删除联系人信息
-存储合作方的联系人的联系信息
-存储  联系人姓名，电话，部门，职位
      * 
-     * @param ids 需要删除的联系人信息
-存储合作方的联系人的联系信息
-存储  联系人姓名，电话，部门，职位主键
+     * @param ids 需要删除的联系人信息主键
      * @return 结果
      */
     @Override
@@ -108,13 +80,9 @@ public class AwContactsServiceImpl implements IAwContactsService
     }
 
     /**
-     * 删除联系人信息
-存储合作方的联系人的联系信息
-存储  联系人姓名，电话，部门，职位信息
+     * 删除联系人信息信息
      * 
-     * @param id 联系人信息
-存储合作方的联系人的联系信息
-存储  联系人姓名，电话，部门，职位主键
+     * @param id 联系人信息主键
      * @return 结果
      */
     @Override
