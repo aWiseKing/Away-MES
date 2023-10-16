@@ -5,9 +5,9 @@ spring:
         driverClassName: com.mysql.cj.jdbc.Driver
         druid:
             # 主库数据源
+            # 81.68.156.23
+            # XNXdeP7A6zN3B7Ac
             master:
-                # 81.68.156.23
-                # XNXdeP7A6zN3B7Ac
                 url: jdbc:mysql://81.68.156.23:3306/away?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
                 username: away
                 password: XNXdeP7A6zN3B7Ac

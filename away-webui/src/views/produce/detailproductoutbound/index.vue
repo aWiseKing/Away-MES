@@ -323,7 +323,7 @@ import {
   listDetailproductoutbound,
   getDetailproductoutbound,
 } from "@/api/produce/detailproductoutbound";
-import { listProduct, getProduct } from "@/api/produce/product";
+import { listProduct, getProduct } from "@/api/order/product";
 import { listShippinginspection,getShippinginspection } from "@/api/quality/shippinginspection.js";
 import {
   getProductoutbound,

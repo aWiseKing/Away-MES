@@ -22,17 +22,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectAwContactsList" parameterType="AwContacts" resultMap="AwContactsResult">
         <include refid="selectAwContactsVo"/>
-        <where>
-            isDel = '0'
+        <where>  
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
             <if test="department != null  and department != ''"> and department = #{department}</if>
             <if test="position != null  and position != ''"> and position = #{position}</if>
             <if test="location != null "> and location = #{location}</if>
             <if test="companyID != null  and companyID != ''"> and companyID = #{companyID}</if>
-            <if test="notes != null  and notes != ''"> and notes = #{notes}</if>
-            <if test="isDel != null  and isDel != ''"> and isDel = #{isDel} </if>
-
         </where>
     </select>
     
@@ -40,8 +36,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectAwContactsVo"/>
         where id = #{id}
     </select>
-
-    <insert id="insertAwContacts" parameterType="AwContacts"   useGeneratedKeys="true" keyProperty="id" >
+        
+    <insert id="insertAwContacts" parameterType="AwContacts"  useGeneratedKeys="true" keyProperty="id">
         <selectKey keyProperty="id" resultType="long" order="BEFORE">
             SELECT if(max(id) is null,1,MAX(id) + 1 ) as id from aw_contacts
         </selectKey>
@@ -86,13 +82,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <update id="deleteAwContactsById" parameterType="Long">
-        update  aw_contacts set  isdel='1' where id = #{id}
+
+        delete from aw_contacts where id = #{id}
     </update>
 
-    <update id="deleteAwContactsByIds" parameterType="String">
-        update  aw_contacts set  isdel='1' where id in
+    <delete id="deleteAwContactsByIds" parameterType="String">
+        delete from aw_contacts where id in 
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
-    </update>
+    </delete>
 </mapper>
