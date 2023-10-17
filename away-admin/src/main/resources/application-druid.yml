@@ -8,9 +8,9 @@ spring:
             # 81.68.156.23
             # XNXdeP7A6zN3B7Ac
             master:
-                url: jdbc:mysql://81.68.156.23:3306/away?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-                username: away
-                password: XNXdeP7A6zN3B7Ac
+                url: jdbc:mysql://localhost:3306/away?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+                username: root
+                password: yidaimingjvn2017
             # 从库数据源
             slave:
                 # 从数据源开关/默认关闭

@@ -89,9 +89,15 @@
           <span>{{ parseTime(scope.row.testDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="检测结果" align="center" prop="testResult" />
+      <el-table-column label="检测结果" align="center" prop="testResult" >
+        <template slot-scope="scope">
+          <dict-tag
+            :options="dict.type.aw_quality_shippinginspection_status"
+            :value="scope.row.testResult"
+          />
+        </template>
+      </el-table-column>
       <el-table-column label="检测人员" align="center" prop="testingPersonnel" />
-      <el-table-column label="备注" align="center" prop="note" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)">查看</el-button>
@@ -247,6 +253,7 @@ import { getValue } from "@/utils/utils.js";
 
 export default {
   name: "Processinspection",
+  dicts: ["aw_quality_shippinginspection_status"],
   data() {
     return {
       // 遮罩层
@@ -385,7 +392,7 @@ export default {
     getListProcessingprocess() {
       console.log(this.from);
       this.loading = true;
-      listProcessingprocess({ status: "1", processingTechnologyID: String(this.processingTechnologyID) }).then(response => {
+      listProcessingprocess({ processingTechnologyID: String(this.processingTechnologyID) }).then(response => {
         this.processingprocess_list = response.rows;
         this.loading = false;
       })

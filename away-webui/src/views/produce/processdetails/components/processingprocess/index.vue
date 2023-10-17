@@ -320,9 +320,7 @@ export default {
     getList() {
       this.loading = true;
       this.queryParams.processingTechnologyID = this.processingTechnologyID;
-      console.log("测试。");
       listProcessingprocess(this.queryParams).then(response => {
-        console.log(this.queryParams);
         this.processingprocessList = response.rows;
         this.total = response.total;
         this.loading = false;
