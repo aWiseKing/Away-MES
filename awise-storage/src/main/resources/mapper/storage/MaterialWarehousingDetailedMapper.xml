@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.awise.storage.mapper.MaterialWarehousingDetailedMapper">
+    
+    <resultMap type="MaterialWarehousingDetailed" id="MaterialWarehousingDetailedResult">
+        <result property="warehouseEntryID"    column="warehouseEntryID"    />
+        <result property="warehousingDate"    column="warehousingDate"    />
+        <result property="creator"    column="creator"    />
+        <result property="warehouseKeeper"    column="warehouseKeeper"    />
+        <result property="operator"    column="operator"    />
+        <result property="notes"    column="notes"    />
+        <result property="receiptQuantity"    column="receiptQuantity"    />
+        <result property="sampleURL"    column="sampleURL"    />
+        <result property="name"    column="name"    />
+        <result property="typeName"    column="typeName"    />
+        <result property="specificationsType"    column="specificationsType"    />
+        <result property="specificationModel"    column="specificationModel"    />
+        <result property="materialDensity"    column="materialDensity"    />
+    </resultMap>
+
+    <sql id="selectMaterialWarehousingDetailedVo">
+        select warehouseEntryID, warehousingDate, creator, warehouseKeeper, operator, notes, receiptQuantity, sampleURL, name, typeName, specificationsType, specificationModel, materialDensity from materialWarehousingDetailed
+    </sql>
+
+    <select id="selectMaterialWarehousingDetailedList" parameterType="MaterialWarehousingDetailed" resultMap="MaterialWarehousingDetailedResult">
+        <include refid="selectMaterialWarehousingDetailedVo"/>
+        <where>  
+            <if test="warehousingDate != null "> and warehousingDate = #{warehousingDate}</if>
+            <if test="creator != null  and creator != ''"> and creator like concat('%', #{creator}, '%')</if>
+            <if test="warehouseKeeper != null  and warehouseKeeper != ''"> and warehouseKeeper like concat('%', #{warehouseKeeper}, '%')</if>
+            <if test="operator != null  and operator != ''"> and operator like concat('%', #{operator}, '%')</if>
+            <if test="receiptQuantity != null "> and receiptQuantity = #{receiptQuantity}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="typeName != null  and typeName != ''"> and typeName like concat('%', #{typeName}, '%')</if>
+            <if test="specificationsType != null  and specificationsType != ''"> and specificationsType = #{specificationsType}</if>
+            <if test="specificationModel != null  and specificationModel != ''"> and specificationModel = #{specificationModel}</if>
+        </where>
+    </select>
+    
+    <select id="selectMaterialWarehousingDetailedByWarehouseEntryID" parameterType="String" resultMap="MaterialWarehousingDetailedResult">
+        <include refid="selectMaterialWarehousingDetailedVo"/>
+        where warehouseEntryID = #{warehouseEntryID}
+    </select>
+        
+    <insert id="insertMaterialWarehousingDetailed" parameterType="MaterialWarehousingDetailed">
+        insert into materialWarehousingDetailed
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="warehouseEntryID != null and warehouseEntryID != ''">warehouseEntryID,</if>
+            <if test="warehousingDate != null">warehousingDate,</if>
+            <if test="creator != null and creator != ''">creator,</if>
+            <if test="warehouseKeeper != null and warehouseKeeper != ''">warehouseKeeper,</if>
+            <if test="operator != null and operator != ''">operator,</if>
+            <if test="notes != null">notes,</if>
+            <if test="receiptQuantity != null">receiptQuantity,</if>
+            <if test="sampleURL != null">sampleURL,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="typeName != null">typeName,</if>
+            <if test="specificationsType != null">specificationsType,</if>
+            <if test="specificationModel != null">specificationModel,</if>
+            <if test="materialDensity != null and materialDensity != ''">materialDensity,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="warehouseEntryID != null and warehouseEntryID != ''">#{warehouseEntryID},</if>
+            <if test="warehousingDate != null">#{warehousingDate},</if>
+            <if test="creator != null and creator != ''">#{creator},</if>
+            <if test="warehouseKeeper != null and warehouseKeeper != ''">#{warehouseKeeper},</if>
+            <if test="operator != null and operator != ''">#{operator},</if>
+            <if test="notes != null">#{notes},</if>
+            <if test="receiptQuantity != null">#{receiptQuantity},</if>
+            <if test="sampleURL != null">#{sampleURL},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="typeName != null">#{typeName},</if>
+            <if test="specificationsType != null">#{specificationsType},</if>
+            <if test="specificationModel != null">#{specificationModel},</if>
+            <if test="materialDensity != null and materialDensity != ''">#{materialDensity},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMaterialWarehousingDetailed" parameterType="MaterialWarehousingDetailed">
+        update materialWarehousingDetailed
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="warehousingDate != null">warehousingDate = #{warehousingDate},</if>
+            <if test="creator != null and creator != ''">creator = #{creator},</if>
+            <if test="warehouseKeeper != null and warehouseKeeper != ''">warehouseKeeper = #{warehouseKeeper},</if>
+            <if test="operator != null and operator != ''">operator = #{operator},</if>
+            <if test="notes != null">notes = #{notes},</if>
+            <if test="receiptQuantity != null">receiptQuantity = #{receiptQuantity},</if>
+            <if test="sampleURL != null">sampleURL = #{sampleURL},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="typeName != null">typeName = #{typeName},</if>
+            <if test="specificationsType != null">specificationsType = #{specificationsType},</if>
+            <if test="specificationModel != null">specificationModel = #{specificationModel},</if>
+            <if test="materialDensity != null and materialDensity != ''">materialDensity = #{materialDensity},</if>
+        </trim>
+        where warehouseEntryID = #{warehouseEntryID}
+    </update>
+
+    <delete id="deleteMaterialWarehousingDetailedByWarehouseEntryID" parameterType="String">
+        delete from materialWarehousingDetailed where warehouseEntryID = #{warehouseEntryID}
+    </delete>
+
+    <delete id="deleteMaterialWarehousingDetailedByWarehouseEntryIDs" parameterType="String">
+        delete from materialWarehousingDetailed where warehouseEntryID in 
+        <foreach item="warehouseEntryID" collection="array" open="(" separator="," close=")">
+            #{warehouseEntryID}
+        </foreach>
+    </delete>
+</mapper>

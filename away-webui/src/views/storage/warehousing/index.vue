@@ -157,6 +157,11 @@
     <!-- 添加或修改入库单对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        
+        <el-form-item label="入库单编号" prop="warehouseEntryID">
+          <el-input v-model="form.warehouseEntryID" placeholder="入库单编号" />
+        </el-form-item>
+
         <el-form-item label="入库日期" prop="warehousingDate">
           <el-date-picker clearable
             v-model="form.warehousingDate"
@@ -264,7 +269,9 @@ export default {
         status: [
           { required: true, message: "状态不能为空", trigger: "change" }
         ]
-      }
+      },
+   
+
     };
   },
   created() {
@@ -316,7 +323,12 @@ export default {
       this.multiple = !selection.length
     },
     handleView(row) {
-      this.view_open = true;
+       let  warehouseEntryID=row.warehouseEntryID;
+      this.$router.push({
+        path: "/storage/materialWarehousingDetailed",
+        query: { warehouseEntryID: warehouseEntryID },
+      });
+      // this.view_open = true;
     },
     /** 新增按钮操作 */
     handleAdd() {
