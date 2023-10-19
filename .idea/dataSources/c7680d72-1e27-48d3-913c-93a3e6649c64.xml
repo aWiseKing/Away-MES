@@ -1149,7 +1149,7 @@ away|schema||away||grant option|G</Grants>
     </view>
     <view id="303" parent="224" name="materialWarehousingDetailed">
       <Definer>away@%</Definer>
-      <SourceTextLength>1135</SourceTextLength>
+      <SourceTextLength>1632</SourceTextLength>
     </view>
     <column id="304" parent="227" name="id">
       <AutoIncrement>5</AutoIncrement>
@@ -3531,7 +3531,7 @@ away|schema||away||grant option|G</Grants>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="740" parent="265" name="table_id">
-      <AutoIncrement>67</AutoIncrement>
+      <AutoIncrement>68</AutoIncrement>
       <Comment>编号</Comment>
       <DasType>bigint(20)|0s</DasType>
       <NotNull>1</NotNull>
@@ -3651,7 +3651,7 @@ away|schema||away||grant option|G</Grants>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="762" parent="266" name="column_id">
-      <AutoIncrement>564</AutoIncrement>
+      <AutoIncrement>578</AutoIncrement>
       <Comment>编号</Comment>
       <DasType>bigint(20)|0s</DasType>
       <NotNull>1</NotNull>
@@ -4868,7 +4868,7 @@ job_group</ColNames>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="975" parent="284" name="info_id">
-      <AutoIncrement>580</AutoIncrement>
+      <AutoIncrement>583</AutoIncrement>
       <Comment>访问ID</Comment>
       <DasType>bigint(20)|0s</DasType>
       <NotNull>1</NotNull>
@@ -4940,7 +4940,7 @@ job_group</ColNames>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="988" parent="285" name="menu_id">
-      <AutoIncrement>2243</AutoIncrement>
+      <AutoIncrement>2249</AutoIncrement>
       <Comment>菜单ID</Comment>
       <DasType>bigint(20)|0s</DasType>
       <NotNull>1</NotNull>
@@ -5127,7 +5127,7 @@ job_group</ColNames>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="1021" parent="287" name="oper_id">
-      <AutoIncrement>1776</AutoIncrement>
+      <AutoIncrement>1796</AutoIncrement>
       <Comment>日志主键</Comment>
       <DasType>bigint(20)|0s</DasType>
       <NotNull>1</NotNull>
@@ -6303,72 +6303,76 @@ role_id</ColNames>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="1229" parent="303" name="warehousingDate">
-      <Comment>入库日期</Comment>
-      <DasType>datetime(6)|0s</DasType>
+    <column id="1229" parent="303" name="localmaterialwarehousingID">
+      <Comment>id</Comment>
+      <DasType>int(11)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="1230" parent="303" name="creator">
-      <Comment>制单人</Comment>
-      <DasType>varchar(20)|0s</DasType>
+    <column id="1230" parent="303" name="subscriptionQuantity">
+      <Comment>申购数量</Comment>
+      <DasType>int(11)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="1231" parent="303" name="warehouseKeeper">
-      <Comment>库管员</Comment>
-      <DasType>varchar(20)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>4</Position>
-    </column>
-    <column id="1232" parent="303" name="operator">
-      <Comment>经办人</Comment>
-      <DasType>varchar(20)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>5</Position>
-    </column>
-    <column id="1233" parent="303" name="notes">
-      <Comment>备注</Comment>
-      <DasType>varchar(255)|0s</DasType>
-      <Position>6</Position>
-    </column>
-    <column id="1234" parent="303" name="receiptQuantity">
-      <Comment>入库数量</Comment>
-      <DasType>int(11)|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>7</Position>
-    </column>
-    <column id="1235" parent="303" name="sampleURL">
-      <Comment>附样</Comment>
-      <DasType>varchar(255)|0s</DasType>
-      <Position>8</Position>
-    </column>
-    <column id="1236" parent="303" name="name">
+    <column id="1231" parent="303" name="name">
       <Comment>材料名称</Comment>
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
-      <Position>9</Position>
+      <Position>4</Position>
     </column>
-    <column id="1237" parent="303" name="typeName">
+    <column id="1232" parent="303" name="typeName">
       <Comment>类别名称</Comment>
       <DasType>varchar(255)|0s</DasType>
-      <Position>10</Position>
+      <Position>5</Position>
     </column>
-    <column id="1238" parent="303" name="specificationsType">
+    <column id="1233" parent="303" name="specificationsType">
       <Comment>规格类型</Comment>
       <DasType>varchar(255)|0s</DasType>
-      <Position>11</Position>
+      <Position>6</Position>
     </column>
-    <column id="1239" parent="303" name="specificationModel">
+    <column id="1234" parent="303" name="specificationModel">
       <Comment>规格型号</Comment>
       <DasType>varchar(255)|0s</DasType>
-      <Position>12</Position>
+      <Position>7</Position>
     </column>
-    <column id="1240" parent="303" name="materialDensity">
+    <column id="1235" parent="303" name="materialDensity">
       <Comment>材料密度#校验大于0，用于工艺下料后自动计算重量。规格类型确定了重量计算公式。材料计数单位都以kg计，材料密度单位为kg/mm^3，材料尺寸单位为mm#</Comment>
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <column id="1236" parent="303" name="invoiceTaxRate">
+      <Comment>发票税率</Comment>
+      <DasType>varchar(255)|0s</DasType>
+      <Position>9</Position>
+    </column>
+    <column id="1237" parent="303" name="invoiceType">
+      <Comment>发票类型</Comment>
+      <DasType>varchar(3)|0s</DasType>
+      <Position>10</Position>
+    </column>
+    <column id="1238" parent="303" name="purchaseUnitPriceExcludingTax">
+      <Comment>不含税采购单价</Comment>
+      <DasType>int(11)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>11</Position>
+    </column>
+    <column id="1239" parent="303" name="purchaseUnitPriceIncludingTax">
+      <Comment>含税采购单价</Comment>
+      <DasType>int(11)|0s</DasType>
+      <Position>12</Position>
+    </column>
+    <column id="1240" parent="303" name="subscribeID">
+      <Comment>申购单编号</Comment>
+      <DasType>varchar(255)|0s</DasType>
+      <NotNull>1</NotNull>
       <Position>13</Position>
+    </column>
+    <column id="1241" parent="303" name="sampleURL">
+      <Comment>附样</Comment>
+      <DasType>varchar(255)|0s</DasType>
+      <Position>14</Position>
     </column>
   </database-model>
 </dataSource>

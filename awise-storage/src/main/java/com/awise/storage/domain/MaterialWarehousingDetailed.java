@@ -1,7 +1,5 @@
 package com.awise.storage.domain;
 
-import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.away.common.annotation.Excel;
@@ -21,32 +19,13 @@ public class MaterialWarehousingDetailed extends BaseEntity
     @Excel(name = "入库单编号")
     private String warehouseEntryID;
 
-    /** 入库日期 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "入库日期", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date warehousingDate;
+    /** id */
+    @Excel(name = "id")
+    private Long localmaterialwarehousingID;
 
-    /** 制单人 */
-    @Excel(name = "制单人")
-    private String creator;
-
-    /** 库管员 */
-    @Excel(name = "库管员")
-    private String warehouseKeeper;
-
-    /** 经办人 */
-    @Excel(name = "经办人")
-    private String operator;
-
-    /** 备注 */
-    private String notes;
-
-    /** 入库数量 */
-    @Excel(name = "入库数量")
-    private Long receiptQuantity;
-
-    /** 附样 */
-    private String sampleURL;
+    /** 申购数量 */
+    @Excel(name = "申购数量")
+    private Long subscriptionQuantity;
 
     /** 材料名称 */
     @Excel(name = "材料名称")
@@ -67,6 +46,29 @@ public class MaterialWarehousingDetailed extends BaseEntity
     /** 材料密度#校验大于0，用于工艺下料后自动计算重量。规格类型确定了重量计算公式。材料计数单位都以kg计，材料密度单位为kg/mm^3，材料尺寸单位为mm# */
     private String materialDensity;
 
+    /** 发票税率 */
+    @Excel(name = "发票税率")
+    private String invoiceTaxRate;
+
+    /** 发票类型 */
+    @Excel(name = "发票类型")
+    private String invoiceType;
+
+    /** 不含税采购单价 */
+    @Excel(name = "不含税采购单价")
+    private Long purchaseUnitPriceExcludingTax;
+
+    /** 含税采购单价 */
+    @Excel(name = "含税采购单价")
+    private Long purchaseUnitPriceIncludingTax;
+
+    /** 申购单编号 */
+    @Excel(name = "申购单编号")
+    private String subscribeID;
+
+    /** 附样 */
+    private String sampleURL;
+
     public void setWarehouseEntryID(String warehouseEntryID) 
     {
         this.warehouseEntryID = warehouseEntryID;
@@ -76,68 +78,23 @@ public class MaterialWarehousingDetailed extends BaseEntity
     {
         return warehouseEntryID;
     }
-    public void setWarehousingDate(Date warehousingDate) 
+    public void setLocalmaterialwarehousingID(Long localmaterialwarehousingID) 
     {
-        this.warehousingDate = warehousingDate;
+        this.localmaterialwarehousingID = localmaterialwarehousingID;
     }
 
-    public Date getWarehousingDate() 
+    public Long getLocalmaterialwarehousingID() 
     {
-        return warehousingDate;
+        return localmaterialwarehousingID;
     }
-    public void setCreator(String creator) 
+    public void setSubscriptionQuantity(Long subscriptionQuantity) 
     {
-        this.creator = creator;
-    }
-
-    public String getCreator() 
-    {
-        return creator;
-    }
-    public void setWarehouseKeeper(String warehouseKeeper) 
-    {
-        this.warehouseKeeper = warehouseKeeper;
+        this.subscriptionQuantity = subscriptionQuantity;
     }
 
-    public String getWarehouseKeeper() 
+    public Long getSubscriptionQuantity() 
     {
-        return warehouseKeeper;
-    }
-    public void setOperator(String operator) 
-    {
-        this.operator = operator;
-    }
-
-    public String getOperator() 
-    {
-        return operator;
-    }
-    public void setNotes(String notes) 
-    {
-        this.notes = notes;
-    }
-
-    public String getNotes() 
-    {
-        return notes;
-    }
-    public void setReceiptQuantity(Long receiptQuantity) 
-    {
-        this.receiptQuantity = receiptQuantity;
-    }
-
-    public Long getReceiptQuantity() 
-    {
-        return receiptQuantity;
-    }
-    public void setSampleURL(String sampleURL) 
-    {
-        this.sampleURL = sampleURL;
-    }
-
-    public String getSampleURL() 
-    {
-        return sampleURL;
+        return subscriptionQuantity;
     }
     public void setName(String name) 
     {
@@ -184,23 +141,78 @@ public class MaterialWarehousingDetailed extends BaseEntity
     {
         return materialDensity;
     }
+    public void setInvoiceTaxRate(String invoiceTaxRate) 
+    {
+        this.invoiceTaxRate = invoiceTaxRate;
+    }
+
+    public String getInvoiceTaxRate() 
+    {
+        return invoiceTaxRate;
+    }
+    public void setInvoiceType(String invoiceType) 
+    {
+        this.invoiceType = invoiceType;
+    }
+
+    public String getInvoiceType() 
+    {
+        return invoiceType;
+    }
+    public void setPurchaseUnitPriceExcludingTax(Long purchaseUnitPriceExcludingTax) 
+    {
+        this.purchaseUnitPriceExcludingTax = purchaseUnitPriceExcludingTax;
+    }
+
+    public Long getPurchaseUnitPriceExcludingTax() 
+    {
+        return purchaseUnitPriceExcludingTax;
+    }
+    public void setPurchaseUnitPriceIncludingTax(Long purchaseUnitPriceIncludingTax) 
+    {
+        this.purchaseUnitPriceIncludingTax = purchaseUnitPriceIncludingTax;
+    }
+
+    public Long getPurchaseUnitPriceIncludingTax() 
+    {
+        return purchaseUnitPriceIncludingTax;
+    }
+    public void setSubscribeID(String subscribeID) 
+    {
+        this.subscribeID = subscribeID;
+    }
+
+    public String getSubscribeID() 
+    {
+        return subscribeID;
+    }
+    public void setSampleURL(String sampleURL) 
+    {
+        this.sampleURL = sampleURL;
+    }
+
+    public String getSampleURL() 
+    {
+        return sampleURL;
+    }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("warehouseEntryID", getWarehouseEntryID())
-            .append("warehousingDate", getWarehousingDate())
-            .append("creator", getCreator())
-            .append("warehouseKeeper", getWarehouseKeeper())
-            .append("operator", getOperator())
-            .append("notes", getNotes())
-            .append("receiptQuantity", getReceiptQuantity())
-            .append("sampleURL", getSampleURL())
+            .append("localmaterialwarehousingID", getLocalmaterialwarehousingID())
+            .append("subscriptionQuantity", getSubscriptionQuantity())
             .append("name", getName())
             .append("typeName", getTypeName())
             .append("specificationsType", getSpecificationsType())
             .append("specificationModel", getSpecificationModel())
             .append("materialDensity", getMaterialDensity())
+            .append("invoiceTaxRate", getInvoiceTaxRate())
+            .append("invoiceType", getInvoiceType())
+            .append("purchaseUnitPriceExcludingTax", getPurchaseUnitPriceExcludingTax())
+            .append("purchaseUnitPriceIncludingTax", getPurchaseUnitPriceIncludingTax())
+            .append("subscribeID", getSubscribeID())
+            .append("sampleURL", getSampleURL())
             .toString();
     }
 }
