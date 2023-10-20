@@ -196,9 +196,6 @@
     <!-- 添加或修改本地材料入库对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-          
-
-
         <!-- <el-form-item label="入库单编号" prop="warehouseEntryID">
           <el-input v-model="form.warehouseEntryID" placeholder="请输入入库单编号" />
         </el-form-item> -->
@@ -211,7 +208,7 @@
               >
                 <el-option
                   v-for="item in warehousings"
-                  :key="item.id"
+                  :key="item.warehouseEntryID"
                   :label="item.warehouseEntryID"
                   :value="item.warehouseEntryID"
                 >
@@ -233,7 +230,7 @@
               >
                 <el-option
                   v-for="item in materialsubscriptions"
-                  :key="item.id"
+                  :key="item.materialSubscription"
                   :label="item.materialSubscription"
                   :value="item.materialSubscription"
                 >
@@ -255,7 +252,7 @@
               >
                 <el-option
                   v-for="item in receiptinvoices"
-                  :key="item.id"
+                  :key="item.receiptInvoiceID"
                   :label="item.receiptInvoiceID"
                   :value="item.receiptInvoiceID"
                 >
@@ -271,7 +268,7 @@
           />
         </el-form-item> -->
 
-         <el-row :gutter="12">
+        <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="材料基础信息编号" prop="materialID">
               <el-select
@@ -281,8 +278,8 @@
                 <el-option
                   v-for="item in Materials"
                   :key="item.id"
-                  :label="item.id"
-                  :value="item.name"
+                  :label="item.name"
+                  :value="item.id"
                 >
                 </el-option>
               </el-select>
@@ -471,17 +468,21 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
-      this.isadd = true;
-      this.open = true;
-      this.title = "添加本地材料入库";
       this.getlistWarehousing(); //入库单编号
       this.getlistReceiptinvoice(); //发票
       this.getlistMaterialsubscription(); //查询申购材料
       this.getlistMaterial(); //查询材料基础信息
+      this.isadd = true;
+      this.open = true;
+      this.title = "添加本地材料入库";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
+      this.getlistWarehousing(); //入库单编号
+      this.getlistReceiptinvoice(); //发票
+      this.getlistMaterialsubscription(); //查询申购材料
+      this.getlistMaterial(); //查询材料基础信息
       this.isadd = false;
       const id = row.id || this.ids;
       getLocalmaterialwarehousing(id).then((response) => {

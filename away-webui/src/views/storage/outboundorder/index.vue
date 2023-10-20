@@ -1,68 +1,91 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-    <el-row :gutter="1">
-            <el-col :span="21">
-              <div style="overflow-x: auto;scrollbar-width: none; white-space: nowrap;">
-      <el-form-item label="出库日期" prop="deliveryDate">
-        <el-date-picker clearable
-          v-model="queryParams.deliveryDate"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择出库日期">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="制单人" prop="creator">
-        <el-input
-          v-model="queryParams.creator"
-          placeholder="请输入制单人"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="库管员" prop="warehouseKeeper">
-        <el-input
-          v-model="queryParams.warehouseKeeper"
-          placeholder="请输入库管员"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="领料人" prop="materialReceiver">
-        <el-input
-          v-model="queryParams.materialReceiver"
-          placeholder="请输入领料人"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="备注" prop="notes">
-        <el-input
-          v-model="queryParams.notes"
-          placeholder="请输入备注"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable>
-          <el-option
-            v-for="dict in dict.type.sys_outbound_status"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
-          />
-        </el-select>
-      </el-form-item>
- </div>
+    <el-form
+      :model="queryParams"
+      ref="queryForm"
+      size="small"
+      :inline="true"
+      v-show="showSearch"
+      label-width="68px"
+    >
+      <el-row :gutter="1">
+        <el-col :span="21">
+          <div
+            style="overflow-x: auto; scrollbar-width: none; white-space: nowrap"
+          >
+            <el-form-item label="出库日期" prop="deliveryDate">
+              <el-date-picker
+                clearable
+                v-model="queryParams.deliveryDate"
+                type="date"
+                value-format="yyyy-MM-dd"
+                placeholder="请选择出库日期"
+              >
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item label="制单人" prop="creator">
+              <el-input
+                v-model="queryParams.creator"
+                placeholder="请输入制单人"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
+            <el-form-item label="库管员" prop="warehouseKeeper">
+              <el-input
+                v-model="queryParams.warehouseKeeper"
+                placeholder="请输入库管员"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
+            <el-form-item label="领料人" prop="materialReceiver">
+              <el-input
+                v-model="queryParams.materialReceiver"
+                placeholder="请输入领料人"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
+            <el-form-item label="备注" prop="notes">
+              <el-input
+                v-model="queryParams.notes"
+                placeholder="请输入备注"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
+            <el-form-item label="状态" prop="status">
+              <el-select
+                v-model="queryParams.status"
+                placeholder="请选择状态"
+                clearable
+              >
+                <el-option
+                  v-for="dict in dict.type.sys_outbound_status"
+                  :key="dict.value"
+                  :label="dict.label"
+                  :value="dict.value"
+                />
+              </el-select>
+            </el-form-item>
+          </div>
         </el-col>
         <el-col :span="3">
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-      </el-form-item>
-      </el-col>
-    </el-row>
+          <el-form-item>
+            <el-button
+              type="primary"
+              icon="el-icon-search"
+              size="mini"
+              @click="handleQuery"
+              >搜索</el-button
+            >
+            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
+              >重置</el-button
+            >
+          </el-form-item>
+        </el-col>
+      </el-row>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -74,7 +97,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['storage:outboundorder:add']"
-        >新增</el-button>
+          >新增</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -85,7 +109,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['storage:outboundorder:edit']"
-        >修改</el-button>
+          >修改</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -96,7 +121,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['storage:outboundorder:remove']"
-        >删除</el-button>
+          >删除</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -106,17 +132,34 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['storage:outboundorder:export']"
-        >导出</el-button>
+          >导出</el-button
+        >
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar
+        :showSearch.sync="showSearch"
+        @queryTable="getList"
+      ></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="outboundorderList" @selection-change="handleSelectionChange">
+    <el-table
+      v-loading="loading"
+      :data="outboundorderList"
+      @selection-change="handleSelectionChange"
+    >
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="出库单编号" align="center" prop="deliveryNoteID" />
-      <el-table-column label="出库日期" align="center" prop="deliveryDate" width="180">
+      <el-table-column
+        label="出库单编号"
+        align="center"
+        prop="deliveryNoteID"
+      />
+      <el-table-column
+        label="出库日期"
+        align="center"
+        prop="deliveryDate"
+        width="180"
+      >
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.deliveryDate, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.deliveryDate, "{y}-{m}-{d}") }}</span>
         </template>
       </el-table-column>
       <el-table-column label="制单人" align="center" prop="creator" />
@@ -125,38 +168,48 @@
       <el-table-column label="备注" align="center" prop="notes" />
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_outbound_status" :value="scope.row.status"/>
+          <dict-tag
+            :options="dict.type.sys_outbound_status"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column
+        label="操作"
+        align="center"
+        class-name="small-padding fixed-width"
+      >
         <template slot-scope="scope">
-        <el-button
+          <el-button
             size="mini"
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
             v-hasPermi="['storage:outboundorder:edit']"
-          >查看</el-button>
+            >查看</el-button
+          >
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['storage:outboundorder:edit']"
-          >修改</el-button>
+            >修改</el-button
+          >
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['storage:outboundorder:remove']"
-          >删除</el-button>
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
-      v-show="total>0"
+      v-show="total > 0"
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
@@ -166,12 +219,21 @@
     <!-- 添加或修改出库单对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="出库单编号" prop="deliveryNoteID">
+          <el-input
+            v-model="form.deliveryNoteID"
+            placeholder="请输入出库单编号"
+          />
+        </el-form-item>
+
         <el-form-item label="出库日期" prop="deliveryDate">
-          <el-date-picker clearable
+          <el-date-picker
+            clearable
             v-model="form.deliveryDate"
             type="date"
             value-format="yyyy-MM-dd"
-            placeholder="请选择出库日期">
+            placeholder="请选择出库日期"
+          >
           </el-date-picker>
         </el-form-item>
         <el-form-item label="制单人" prop="creator">
@@ -181,7 +243,10 @@
           <el-input v-model="form.warehouseKeeper" placeholder="请输入库管员" />
         </el-form-item>
         <el-form-item label="领料人" prop="materialReceiver">
-          <el-input v-model="form.materialReceiver" placeholder="请输入领料人" />
+          <el-input
+            v-model="form.materialReceiver"
+            placeholder="请输入领料人"
+          />
         </el-form-item>
         <el-form-item label="备注" prop="notes">
           <el-input v-model="form.notes" placeholder="请输入备注" />
@@ -206,11 +271,17 @@
 </template>
 
 <script>
-import { listOutboundorder, getOutboundorder, delOutboundorder, addOutboundorder, updateOutboundorder } from "@/api/storage/outboundorder";
+import {
+  listOutboundorder,
+  getOutboundorder,
+  delOutboundorder,
+  addOutboundorder,
+  updateOutboundorder,
+} from "@/api/storage/outboundorder";
 
 export default {
   name: "Outboundorder",
-  dicts: ['sys_outbound_status'],
+  dicts: ["sys_outbound_status"],
   data() {
     return {
       // 遮罩层
@@ -244,31 +315,31 @@ export default {
         warehouseKeeper: null,
         materialReceiver: null,
         notes: null,
-        status: null
+        status: null,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
         deliveryNoteID: [
-          { required: true, message: "出库单编号不能为空", trigger: "blur" }
+          { required: true, message: "出库单编号不能为空", trigger: "blur" },
         ],
         deliveryDate: [
-          { required: true, message: "出库日期不能为空", trigger: "blur" }
+          { required: true, message: "出库日期不能为空", trigger: "blur" },
         ],
         creator: [
-          { required: true, message: "制单人不能为空", trigger: "blur" }
+          { required: true, message: "制单人不能为空", trigger: "blur" },
         ],
         warehouseKeeper: [
-          { required: true, message: "库管员不能为空", trigger: "blur" }
+          { required: true, message: "库管员不能为空", trigger: "blur" },
         ],
         materialReceiver: [
-          { required: true, message: "领料人不能为空", trigger: "blur" }
+          { required: true, message: "领料人不能为空", trigger: "blur" },
         ],
         status: [
-          { required: true, message: "状态不能为空", trigger: "change" }
-        ]
-      }
+          { required: true, message: "状态不能为空", trigger: "change" },
+        ],
+      },
     };
   },
   created() {
@@ -278,7 +349,7 @@ export default {
     /** 查询出库单列表 */
     getList() {
       this.loading = true;
-      listOutboundorder(this.queryParams).then(response => {
+      listOutboundorder(this.queryParams).then((response) => {
         this.outboundorderList = response.rows;
         this.total = response.total;
         this.loading = false;
@@ -298,7 +369,7 @@ export default {
         warehouseKeeper: null,
         materialReceiver: null,
         notes: null,
-        status: null
+        status: null,
       };
       this.resetForm("form");
     },
@@ -314,9 +385,9 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.deliveryNoteID)
-      this.single = selection.length!==1
-      this.multiple = !selection.length
+      this.ids = selection.map((item) => item.deliveryNoteID);
+      this.single = selection.length !== 1;
+      this.multiple = !selection.length;
     },
     handleView(row) {
       this.view_open = true;
@@ -332,8 +403,8 @@ export default {
     handleUpdate(row) {
       this.reset();
       this.isadd = false;
-      const deliveryNoteID = row.deliveryNoteID || this.ids
-      getOutboundorder(deliveryNoteID).then(response => {
+      const deliveryNoteID = row.deliveryNoteID || this.ids;
+      getOutboundorder(deliveryNoteID).then((response) => {
         this.form = response.data;
         this.open = true;
         this.title = "修改出库单";
@@ -341,16 +412,16 @@ export default {
     },
     /** 提交按钮 */
     submitForm() {
-      this.$refs["form"].validate(valid => {
+      this.$refs["form"].validate((valid) => {
         if (valid) {
           if (!this.isadd) {
-            updateOutboundorder(this.form).then(response => {
+            updateOutboundorder(this.form).then((response) => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addOutboundorder(this.form).then(response => {
+            addOutboundorder(this.form).then((response) => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -362,19 +433,27 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const deliveryNoteIDs = row.deliveryNoteID || this.ids;
-      this.$modal.confirm('是否确认删除出库单编号为"' + deliveryNoteIDs + '"的数据项？').then(function() {
-        return delOutboundorder(deliveryNoteIDs);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      this.$modal
+        .confirm('是否确认删除出库单编号为"' + deliveryNoteIDs + '"的数据项？')
+        .then(function () {
+          return delOutboundorder(deliveryNoteIDs);
+        })
+        .then(() => {
+          this.getList();
+          this.$modal.msgSuccess("删除成功");
+        })
+        .catch(() => {});
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('storage/outboundorder/export', {
-        ...this.queryParams
-      }, `outboundorder_${new Date().getTime()}.xlsx`)
-    }
-  }
+      this.download(
+        "storage/outboundorder/export",
+        {
+          ...this.queryParams,
+        },
+        `outboundorder_${new Date().getTime()}.xlsx`
+      );
+    },
+  },
 };
 </script>

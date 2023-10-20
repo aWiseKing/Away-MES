@@ -81,11 +81,10 @@
           plain
           icon="el-icon-plus"
           size="mini"
-          v-if="purchaserequisition.status=='0'"
+          v-if="purchaserequisition.status == '0'"
           @click="handleAdd"
           v-hasPermi="['order:detailmaterialsubscription:add']"
           >新增</el-button
-
         >
       </el-col>
       <el-col :span="1.5">
@@ -94,7 +93,7 @@
           plain
           icon="el-icon-edit"
           size="mini"
-          v-if="purchaserequisition.status=='0'"
+          v-if="purchaserequisition.status == '0'"
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['order:detailmaterialsubscription:edit']"
@@ -107,7 +106,7 @@
           plain
           icon="el-icon-delete"
           size="mini"
-          v-if="purchaserequisition.status=='0'"
+          v-if="purchaserequisition.status == '0'"
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['order:detailmaterialsubscription:remove']"
@@ -193,7 +192,7 @@
             size="mini"
             type="text"
             icon="el-icon-edit"
-            v-if="purchaserequisition.status=='0'"
+            v-if="purchaserequisition.status == '0'"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['order:detailmaterialsubscription:edit']"
             >修改</el-button
@@ -202,7 +201,7 @@
             size="mini"
             type="text"
             icon="el-icon-delete"
-            v-if="purchaserequisition.status=='0'"
+            v-if="purchaserequisition.status == '0'"
             @click="handleDelete(scope.row)"
             v-hasPermi="['order:detailmaterialsubscription:remove']"
             >删除</el-button
@@ -221,164 +220,182 @@
 
     <!-- 添加或修改申购材料详细对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="900px" append-to-body>
-      <div style="width: 100%;height: 600px;overflow-y: scroll;overflow-x: hidden;">
-        <el-form ref="form" :model="form" :disabled="view_open" :rules="rules" label-width="80px">
-        <el-row :gutter="12"
-          ><el-col :span="12"
-            ><el-form-item label="申购单编号" prop="subscribeID">
-              <el-input
-                v-model="form.subscribeID"
-                disabled
-                placeholder="请输入申购单编号"
-              /> </el-form-item></el-col
-        ></el-row>
+      <div
+        style="
+          width: 100%;
+          height: 600px;
+          overflow-y: scroll;
+          overflow-x: hidden;
+        "
+      >
+        <el-form
+          ref="form"
+          :model="form"
+          :disabled="view_open"
+          :rules="rules"
+          label-width="80px"
+        >
+          <el-row :gutter="12"
+            ><el-col :span="12"
+              ><el-form-item label="申购单编号" prop="subscribeID">
+                <el-input
+                  v-model="form.subscribeID"
+                  disabled
+                  placeholder="请输入申购单编号"
+                /> </el-form-item></el-col
+          ></el-row>
 
-        <el-row :gutter="12"
-          ><el-col :span="12">
-            <el-form-item label="申购材料编号" prop="materialSubscription">
-              <el-input
-                v-model="form.materialSubscription"
-                placeholder="请输入申购材料编号"
-              /> </el-form-item></el-col
-        ></el-row>
-        <el-row :gutter="12"
-          ><el-col :span="12">
-            <el-form-item label="任务单" prop="productionTasksFormID">
-              <el-select
-                v-model="productionTasksFormID"
-                placeholder="请选择任务单"
-                @focus="getListproductiontasklist()"
-              >
-                <el-option
-                  v-for="(item, index) in productiontasklistlist"
-                  :key="index"
-                  :label="item.referred"
-                  :value="item.id"
-                  @click.native="setProductiontasklist(item.id)"
+          <el-row :gutter="12"
+            ><el-col :span="12">
+              <el-form-item label="申购材料编号" prop="materialSubscription">
+                <el-input
+                  v-model="form.materialSubscription"
+                  placeholder="请输入申购材料编号"
+                /> </el-form-item></el-col
+          ></el-row>
+          <el-row :gutter="12"
+            ><el-col :span="12">
+              <el-form-item label="任务单" prop="productionTasksFormID">
+                <el-select
+                  v-model="productionTasksFormID"
+                  placeholder="请选择任务单"
+                  @focus="getListproductiontasklist()"
                 >
-                </el-option>
-              </el-select> </el-form-item></el-col
-        ></el-row>
-        <el-row :gutter="12"
-          ><el-col :span="12">
-            <el-form-item label="任务编号" prop="productionTasksID">
-              <el-select
-                v-model="form.productionTasksID"
-                :disabled="productiontasklist.id == null"
-                placeholder="请选择任务编号"
-                @focus="
-                  getListproductiontasks(
-                    productiontasklistlist.productionTasksFormID
-                  )
-                "
-              >
-                <el-option
-                  v-for="(item, index) in productiontaskslist"
-                  :key="index"
-                  :label="item.name"
-                  :value="item.id"
-                  @click.native="setProductiontasks(item.id)"
+                  <el-option
+                    v-for="(item, index) in productiontasklistlist"
+                    :key="index"
+                    :label="item.referred"
+                    :value="item.id"
+                    @click.native="setProductiontasklist(item.id)"
+                  >
+                  </el-option>
+                </el-select> </el-form-item></el-col
+          ></el-row>
+          <el-row :gutter="12"
+            ><el-col :span="12">
+              <el-form-item label="任务编号" prop="productionTasksID">
+                <el-select
+                  v-model="form.productionTasksID"
+                  :disabled="productiontasklist.id == null"
+                  placeholder="请选择任务编号"
+                  @focus="
+                    getListproductiontasks(
+                      productiontasklistlist.productionTasksFormID
+                    )
+                  "
                 >
-                </el-option>
-              </el-select> </el-form-item></el-col
-          ><el-col :span="12">
-            <el-form-item label="工艺编号" prop="processingTechnologyID">
-              <el-input
-                v-model="form.processingTechnologyID"
-                disabled
-                placeholder="请输入工艺编号"
-              /> </el-form-item></el-col
-        ></el-row>
-        <el-row :gutter="12"
-          ><el-col :span="12">
-            <el-form-item label="材料编号" prop="materialID">
-              <el-select
-                v-model="form.materialID"
-                placeholder="请选择材料编号"
-                :disabled="form.processingTechnologyID==null"
-                @focus="getListmateriallistoftechnology(form.processingTechnologyID)"
-              >
-                <el-option
-                  v-for="(item, index) in materiallistoftechnologylist"
-                  :key="index"
-                  :label="item.materialID"
-                  :value="item.materialID"
-                  @click.native="setMaterialListOfTechnology(item.id)"
+                  <el-optioncol
+                    v-for="(item, index) in productiontaskslist"
+                    :key="index"
+                    :label="item.name"
+                    :value="item.id"
+                    @click.native="setProductiontasks(item.id)"
+                  >
+                  </el-optioncol>
+                </el-select> </el-form-item></el-col
+            ><el-col :span="12">
+              <el-form-item label="工艺编号" prop="processingTechnologyID">
+                <el-input
+                  v-model="form.processingTechnologyID"
+                  disabled
+                  placeholder="请输入工艺编号"
+                /> </el-form-item></el-col
+          ></el-row>
+          <el-row :gutter="12"
+            ><el-col :span="12">
+              <el-form-item label="材料编号" prop="materialID">
+                <el-select
+                  v-model="form.materialID"
+                  placeholder="请选择材料编号"
+                  :disabled="form.processingTechnologyID == null"
+                  @focus="
+                    getListmateriallistoftechnology(form.processingTechnologyID)
+                  "
                 >
-                </el-option>
-              </el-select> </el-form-item></el-col
-        ></el-row>
-        <el-row :gutter="12"
-          ><el-col :span="12">
-            <el-form-item label="材料名称" prop="name">
-              <el-input
-                v-model="materiallistoftechnology.name"
-                placeholder="请输入材料名称"
-                disabled
-              /> </el-form-item></el-col
-          ><el-col :span="12">
-            <el-form-item label="类别名称" prop="typeName">
-              <el-input
-                v-model="materiallistoftechnology.typeName"
-                placeholder="请输入类别名称"
-                disabled
-              /> </el-form-item></el-col></el-row
-        ><el-row :gutter="12"
-          ><el-col :span="12">
-            <el-form-item label="规格类型" prop="specificationsType">
-              <el-input
-                v-model="materiallistoftechnology.specificationsType"
-                placeholder="请输入规格类型"
-                disabled
-              /> </el-form-item></el-col
-          ><el-col :span="12">
-            <el-form-item label="规格型号" prop="specificationModel">
-              <el-input
-                v-model="materiallistoftechnology.specificationModel"
-                placeholder="请输入规格型号"
-                disabled
-              /> </el-form-item></el-col></el-row
-        ><el-row :gutter="12"
-          ><el-col :span="12">
-            <el-form-item label="材料密度" prop="materialDensity">
-              <el-input
-                v-model="materiallistoftechnology.materialDensity"
-                placeholder="请输入材料密度"
-                disabled
-              /> </el-form-item></el-col
-        ></el-row>
-        <el-row :gutter="12"
-          ><el-col :span="12"
-            ><el-form-item label="申购数量" prop="subscriptionQuantity">
-              <el-input
-                v-model="form.subscriptionQuantity"
-                placeholder="请输入申购数量"
-              /> </el-form-item></el-col
-          ><el-col :span="12">
-            <el-form-item label="需用日期" prop="requiredDate">
-              <el-date-picker
-                clearable
-                v-model="form.requiredDate"
-                type="date"
-                value-format="yyyy-MM-dd"
-                placeholder="请选择需用日期"
-              >
-              </el-date-picker> </el-form-item></el-col
-        ></el-row>
-        <el-row :gutter="12"
-          ><el-col :span="24"
-            ><el-form-item label="附样" prop="sampleURL">
-              <image-upload v-model="form.sampleURL" /> </el-form-item></el-col
-        ></el-row>
-        <el-row :gutter="12"
-          ><el-col :span="24">
-            <el-form-item label="备注" prop="note">
-              <el-input
-                v-model="form.note"
-                placeholder="请输入备注"
-              /> </el-form-item></el-col
-        ></el-row>
-      </el-form>
+                  <el-option
+                    v-for="(item, index) in materiallistoftechnologylist"
+                    :key="index"
+                    :label="item.materialID"
+                    :value="item.materialID"
+                    @click.native="setMaterialListOfTechnology(item.id)"
+                  >
+                  </el-option>
+                </el-select> </el-form-item></el-col
+          ></el-row>
+          <el-row :gutter="12"
+            ><el-col :span="12">
+              <el-form-item label="材料名称" prop="name">
+                <el-input
+                  v-model="materiallistoftechnology.name"
+                  placeholder="请输入材料名称"
+                  disabled
+                /> </el-form-item></el-col
+            ><el-col :span="12">
+              <el-form-item label="类别名称" prop="typeName">
+                <el-input
+                  v-model="materiallistoftechnology.typeName"
+                  placeholder="请输入类别名称"
+                  disabled
+                /> </el-form-item></el-col></el-row
+          ><el-row :gutter="12"
+            ><el-col :span="12">
+              <el-form-item label="规格类型" prop="specificationsType">
+                <el-input
+                  v-model="materiallistoftechnology.specificationsType"
+                  placeholder="请输入规格类型"
+                  disabled
+                /> </el-form-item></el-col
+            ><el-col :span="12">
+              <el-form-item label="规格型号" prop="specificationModel">
+                <el-input
+                  v-model="materiallistoftechnology.specificationModel"
+                  placeholder="请输入规格型号"
+                  disabled
+                /> </el-form-item></el-col></el-row
+          ><el-row :gutter="12"
+            ><el-col :span="12">
+              <el-form-item label="材料密度" prop="materialDensity">
+                <el-input
+                  v-model="materiallistoftechnology.materialDensity"
+                  placeholder="请输入材料密度"
+                  disabled
+                 
+                /> </el-form-item></el-col
+          ></el-row>
+          <el-row :gutter="12"
+            ><el-col :span="12"
+              ><el-form-item label="申购数量" prop="subscriptionQuantity">
+                <el-input
+                  v-model="form.subscriptionQuantity"
+                  placeholder="请输入申购数量"
+                /> </el-form-item></el-col
+            ><el-col :span="12">
+              <el-form-item label="需用日期" prop="requiredDate">
+                <el-date-picker
+                  clearable
+                  v-model="form.requiredDate"
+                  type="date"
+                  value-format="yyyy-MM-dd"
+                  placeholder="请选择需用日期"
+                >
+                </el-date-picker> </el-form-item></el-col
+          ></el-row>
+          <el-row :gutter="12"
+            ><el-col :span="24"
+              ><el-form-item label="附样" prop="sampleURL">
+                <image-upload
+                  v-model="form.sampleURL"
+                /> </el-form-item></el-col
+          ></el-row>
+          <el-row :gutter="12"
+            ><el-col :span="24">
+              <el-form-item label="备注" prop="note">
+                <el-input
+                  v-model="form.note"
+                  placeholder="请输入备注"
+                /> </el-form-item></el-col
+          ></el-row>
+        </el-form>
       </div>
       <div v-if="!view_open" slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -402,7 +419,10 @@ import {
   listProductiontasks,
   getProductiontasks,
 } from "@/api/produce/productiontasks.js";
-import { listMaterialListOfTechnology, getMaterialListOfTechnology } from "@/api/produce/MaterialListOfTechnology.js";
+import {
+  listMaterialListOfTechnology,
+  getMaterialListOfTechnology,
+} from "@/api/produce/MaterialListOfTechnology.js";
 
 import {
   getMaterialsubscription,
@@ -484,7 +504,7 @@ export default {
       purchaserequisition: {},
       // 任务单信息
       productiontasklistlist: [],
-      productionTasksFormID:null,
+      productionTasksFormID: null,
       // 当前选中任务单
       productiontasklist: {},
       // 任务信息
@@ -492,7 +512,7 @@ export default {
       // 当前选中任务
       productiontasks: {},
       // 工艺所需材料详细信息
-      materiallistoftechnologylist:[],
+      materiallistoftechnologylist: [],
       // 工艺所需材料详细信息
       materiallistoftechnology: {},
     };
@@ -558,7 +578,9 @@ export default {
     /** 工艺所需材料详细信息 */
     getListmateriallistoftechnology(processingTechnologyID) {
       this.loading = true;
-      listMaterialListOfTechnology({processingTechnologyID:processingTechnologyID}).then((response) => {
+      listMaterialListOfTechnology({
+        processingTechnologyID: processingTechnologyID,
+      }).then((response) => {
         this.materiallistoftechnologylist = response.rows;
         this.loading = false;
       });
@@ -628,16 +650,14 @@ export default {
         this.form = response.data;
         this.view_open = true;
         listMaterialListOfTechnology({
-          processingTechnologyID:this.form.processingTechnologyID,
-          materialID:this.form.materialID
-        }).then((response)=>{
+          processingTechnologyID: this.form.processingTechnologyID,
+          materialID: this.form.materialID,
+        }).then((response) => {
           this.materiallistoftechnology = response.rows[0];
-        })
-        getProductiontasks(this.form.productionTasksID).then((response)=>
-          {
-            this.productionTasksFormID = response.data.id;
-          }
-        )
+        });
+        getProductiontasks(this.form.productionTasksID).then((response) => {
+          this.productionTasksFormID = response.data.id;
+        });
         this.open = true;
         this.title = "查看申购材料详细";
       });
@@ -658,16 +678,14 @@ export default {
       getMaterialsubscription(materialSubscription).then((response) => {
         this.form = response.data;
         listMaterialListOfTechnology({
-          processingTechnologyID:this.form.processingTechnologyID,
-          materialID:this.form.materialID
-        }).then((response)=>{
+          processingTechnologyID: this.form.processingTechnologyID,
+          materialID: this.form.materialID,
+        }).then((response) => {
           this.materiallistoftechnology = response.rows[0];
-        })
-        getProductiontasks(this.form.productionTasksID).then((response)=>
-          {
-            this.productionTasksFormID = response.data.id;
-          }
-        )
+        });
+        getProductiontasks(this.form.productionTasksID).then((response) => {
+          this.productionTasksFormID = response.data.id;
+        });
         this.view_open = false;
         this.open = true;
         this.title = "修改申购材料详细";
