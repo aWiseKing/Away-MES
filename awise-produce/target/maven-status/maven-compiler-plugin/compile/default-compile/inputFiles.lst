@@ -18,9 +18,11 @@ F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\mapper\AwPr
 F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\mapper\AwProductstorageMapper.java
 F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\mapper\AwProductiontasksMapper.java
 F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\service\IAwProcesstemplateService.java
+F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\controller\AwDetailproductwarehousingController.java
 F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\controller\AwMateriallistoftechnologyController.java
 F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\controller\DetailproductoutboundController.java
 F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\domain\AwProductiontasklist.java
+F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\mapper\AwDetailproductwarehousingMapper.java
 F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\service\impl\DetailproductoutboundServiceImpl.java
 F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\mapper\AwProductdeliveryformMapper.java
 F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\domain\AwProcesstemplate.java
@@ -50,7 +52,10 @@ F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\controller\
 F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\service\IDetailproductoutboundService.java
 F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\service\impl\AwMateriallistoftechnologyServiceImpl.java
 F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\service\impl\AwProductdeliveryformServiceImpl.java
+F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\service\IAwDetailproductwarehousingService.java
 F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\mapper\AwProductreceiptMapper.java
+F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\service\impl\AwDetailproductwarehousingServiceImpl.java
+F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\domain\AwDetailproductwarehousing.java
 F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\controller\AwProductstorageController.java
 F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\service\impl\AwProductoutboundServiceImpl.java
 F:\programme\java\jxsd\awise-produce\src\main\java\com\awise\produce\controller\AwProcessrequirementmateriallistController.java

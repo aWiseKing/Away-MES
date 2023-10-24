@@ -116,7 +116,7 @@
       <el-table-column label="备注" align="center" prop="notes" />
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_storage_status" :value="scope.row.status"/>
+          <dict-tag :options="dict.type.aw_storage_warehousing_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -145,7 +145,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -155,12 +155,22 @@
     />
 
     <!-- 添加或修改入库单对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        
-        <el-form-item label="入库单编号" prop="warehouseEntryID">
+    <el-dialog :title="title" :visible.sync="open" width="900px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+
+        <el-row :gutter='12'><el-col :span='12'><el-form-item label="入库单编号" prop="warehouseEntryID">
           <el-input v-model="form.warehouseEntryID" placeholder="入库单编号" />
-        </el-form-item>
+        </el-form-item></el-col><el-col :span='12'>
+        <el-form-item label="状态" prop="status">
+          <el-select v-model="form.status" placeholder="请选择状态">
+            <el-option
+              v-for="dict in dict.type.aw_storage_warehousing_status"
+              :key="dict.value"
+              :label="dict.label"
+              :value="dict.value"
+            ></el-option>
+          </el-select>
+        </el-form-item></el-col></el-row><el-row :gutter='12'><el-col :span='12'>
 
         <el-form-item label="入库日期" prop="warehousingDate">
           <el-date-picker clearable
@@ -169,32 +179,23 @@
             value-format="yyyy-MM-dd"
             placeholder="请选择入库日期">
           </el-date-picker>
-        </el-form-item>
+        </el-form-item></el-col><el-col :span='12'>
         <el-form-item label="制单人" prop="creator">
           <el-input v-model="form.creator" placeholder="请输入制单人" />
-        </el-form-item>
+        </el-form-item></el-col></el-row><el-row :gutter='12'><el-col :span='12'>
         <el-form-item label="验收人" prop="acceptedBy">
           <el-input v-model="form.acceptedBy" placeholder="请输入验收人" />
-        </el-form-item>
+        </el-form-item></el-col><el-col :span='12'>
         <el-form-item label="库管员" prop="warehouseKeeper">
           <el-input v-model="form.warehouseKeeper" placeholder="请输入库管员" />
-        </el-form-item>
+        </el-form-item></el-col></el-row><el-row :gutter='12'><el-col :span='12'>
         <el-form-item label="经办人" prop="operator">
           <el-input v-model="form.operator" placeholder="请输入经办人" />
-        </el-form-item>
-        <el-form-item label="备注" prop="notes">
+        </el-form-item></el-col></el-row>
+        <el-row :gutter='12'><el-col :span='24'> <el-form-item label="备注" prop="notes">
           <el-input v-model="form.notes" placeholder="请输入备注" />
-        </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-select v-model="form.status" placeholder="请选择状态">
-            <el-option
-              v-for="dict in dict.type.sys_storage_status"
-              :key="dict.value"
-              :label="dict.label"
-              :value="dict.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
+        </el-form-item></el-col></el-row>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -209,7 +210,7 @@ import { listWarehousing, getWarehousing, delWarehousing, addWarehousing, update
 
 export default {
   name: "Warehousing",
-  dicts: ['sys_storage_status'],
+  dicts: ['aw_storage_warehousing_status'],
   data() {
     return {
       // 遮罩层
@@ -270,7 +271,7 @@ export default {
           { required: true, message: "状态不能为空", trigger: "change" }
         ]
       },
-   
+
 
     };
   },

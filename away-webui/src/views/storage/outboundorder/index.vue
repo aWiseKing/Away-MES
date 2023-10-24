@@ -62,7 +62,7 @@
                 clearable
               >
                 <el-option
-                  v-for="dict in dict.type.sys_outbound_status"
+                  v-for="dict in dict.type.aw_storage_outboundorder_status"
                   :key="dict.value"
                   :label="dict.label"
                   :value="dict.value"
@@ -169,7 +169,7 @@
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag
-            :options="dict.type.sys_outbound_status"
+            :options="dict.type.aw_storage_outboundorder_status"
             :value="scope.row.status"
           />
         </template>
@@ -254,7 +254,7 @@
         <el-form-item label="状态" prop="status">
           <el-select v-model="form.status" placeholder="请选择状态">
             <el-option
-              v-for="dict in dict.type.sys_outbound_status"
+              v-for="dict in dict.type.aw_storage_outboundorder_status"
               :key="dict.value"
               :label="dict.label"
               :value="dict.value"
@@ -281,7 +281,7 @@ import {
 
 export default {
   name: "Outboundorder",
-  dicts: ["sys_outbound_status"],
+  dicts: ["aw_storage_outboundorder_status"],
   data() {
     return {
       // 遮罩层

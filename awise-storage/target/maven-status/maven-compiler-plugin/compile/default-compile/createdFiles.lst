@@ -9,7 +9,11 @@ com\awise\storage\service\impl\AwOutboundorderServiceImpl.class
 com\awise\storage\controller\AwLocalmaterialwarehousingController.class
 com\awise\storage\service\IAwToolinformationEnService.class
 com\awise\storage\domain\AwLocalmaterialsEn.class
+com\awise\storage\controller\AwMatlwarehousingdetController.class
 com\awise\storage\service\IAwOutboundorderService.class
+com\awise\storage\service\impl\AwMatlwarehousingdetServiceImpl.class
+com\awise\storage\mapper\MaterialWarehousingDetailedMapper.class
+com\awise\storage\service\impl\MaterialWarehousingDetailedServiceImpl.class
 com\awise\storage\service\IAwCustomersuppliedmaterialsEnService.class
 com\awise\storage\domain\AwMaterialEn.class
 com\awise\storage\service\impl\AwLocalmaterialoutboundServiceImpl.class
@@ -31,6 +35,7 @@ com\awise\storage\mapper\AwWarehousingMapper.class
 com\awise\storage\service\IAwToolinformationService.class
 com\awise\storage\service\impl\AwMaterialclassificationServiceImpl.class
 com\awise\storage\service\impl\AwLocalmaterialwarehousingServiceImpl.class
+com\awise\storage\controller\MaterialWarehousingDetailedController.class
 com\awise\storage\domain\AwToolinformationEn.class
 com\awise\storage\mapper\AwCustomersuppliedmaterialsMapper.class
 com\awise\storage\service\impl\AwCustomersuppliedmaterialsEnServiceImpl.class
@@ -42,7 +47,9 @@ com\awise\storage\service\impl\AwUnitsServiceImpl.class
 com\awise\storage\controller\AwMaterialclassificationController.class
 com\awise\storage\mapper\AwMaterialEnMapper.class
 com\awise\storage\mapper\AwLocalmaterialoutboundMapper.class
+com\awise\storage\domain\AwMatlwarehousingdet.class
 com\awise\storage\service\IAwMaterialEnService.class
+com\awise\storage\mapper\AwMatlwarehousingdetMapper.class
 com\awise\storage\mapper\AwLocalmaterialwarehousingMapper.class
 com\awise\storage\service\IAwLocalmaterialsService.class
 com\awise\storage\controller\AwBasicinformationofmaterialsController.class
@@ -59,6 +66,7 @@ com\awise\storage\domain\AwLocalmaterialwarehousing.class
 com\awise\storage\controller\AwLocalmaterialsController.class
 com\awise\storage\controller\AwToolclassificationController.class
 com\awise\storage\domain\AwUnits.class
+com\awise\storage\domain\MaterialWarehousingDetailed.class
 com\awise\storage\controller\AwUnitsController.class
 com\awise\storage\domain\AwSpecifications.class
 com\awise\storage\domain\AwToolclassification.class
@@ -71,10 +79,12 @@ com\awise\storage\service\IAwCustomersuppliedmaterialsService.class
 com\awise\storage\mapper\AwToolclassificationMapper.class
 com\awise\storage\mapper\AwUnitsMapper.class
 com\awise\storage\service\IAwMaterialService.class
+com\awise\storage\service\IAwMatlwarehousingdetService.class
 com\awise\storage\service\impl\AwToolinformationEnServiceImpl.class
 com\awise\storage\service\IAwWarehousingService.class
 com\awise\storage\service\impl\AwLocalmaterialsServiceImpl.class
 com\awise\storage\service\IAwLocalmaterialsEnService.class
+com\awise\storage\service\IMaterialWarehousingDetailedService.class
 com\awise\storage\service\IAwSpecificationsService.class
 com\awise\storage\mapper\AwToolinformationEnMapper.class
 com\awise\storage\controller\AwCustomersuppliedmaterialsController.class

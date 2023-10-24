@@ -18,6 +18,7 @@ com\awise\produce\service\IAwMateriallistoftechnologyService.class
 com\awise\produce\service\IAwProductdeliveryformService.class
 com\awise\produce\domain\AwProcessingprocess.class
 com\awise\produce\service\IAwProductiontasksService.class
+com\awise\produce\service\impl\AwDetailproductwarehousingServiceImpl.class
 com\awise\produce\service\impl\AwMateriallistoftechnologyServiceImpl.class
 com\awise\produce\controller\AwProcessrequirementmateriallistController.class
 com\awise\produce\service\impl\AwProcesstemplateServiceImpl.class
@@ -26,9 +27,11 @@ com\awise\produce\mapper\AwProcesstemplateMapper.class
 com\awise\produce\service\IAwProductiontasklistService.class
 com\awise\produce\domain\AwMateriallistoftechnology.class
 com\awise\produce\service\IAwProductoutboundService.class
+com\awise\produce\controller\AwDetailproductwarehousingController.class
 com\awise\produce\domain\AwProcessingtechnology.class
 com\awise\produce\service\IDetailproductoutboundService.class
 com\awise\produce\service\impl\AwProductreceiptServiceImpl.class
+com\awise\produce\service\IAwDetailproductwarehousingService.class
 com\awise\produce\service\IAwProductreceiptService.class
 com\awise\produce\service\impl\AwProductoutboundServiceImpl.class
 com\awise\produce\controller\AwProductiontasklistController.class
@@ -39,6 +42,7 @@ com\awise\produce\domain\Detailproductoutbound.class
 com\awise\produce\service\impl\AwProductstorageServiceImpl.class
 com\awise\produce\service\IAwProcessingprocessService.class
 com\awise\produce\service\impl\AwProcessingprocessServiceImpl.class
+com\awise\produce\mapper\AwDetailproductwarehousingMapper.class
 com\awise\produce\domain\AwProcessrequirementmateriallist.class
 com\awise\produce\controller\AwMateriallistoftechnologyController.class
 com\awise\produce\domain\AwProductstorage.class
@@ -51,6 +55,7 @@ com\awise\produce\controller\AwProductiontasksController.class
 com\awise\produce\domain\AwProductiontasklist.class
 com\awise\produce\controller\AwProductstorageController.class
 com\awise\produce\mapper\AwProductiontasksMapper.class
+com\awise\produce\domain\AwDetailproductwarehousing.class
 com\awise\produce\service\IAwProductstorageService.class
 com\awise\produce\domain\AwProductiontasks.class
 com\awise\produce\mapper\AwProcessingprocessMapper.class

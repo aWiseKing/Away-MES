@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectDetailproductoutboundVo">
-        select id, deliveryNoteID, productID, productname, shippingInspectionID, shipmentQuantity, detectionQuantity, qualifiedQuantity, unqualifiedQuantity, testResult, testDate, testingPersonnel, receiptQuantity, contractID, customname from detailproductoutbound
+        select id, deliveryNoteID, productID, productname, shippingInspectionID, shipmentQuantity, detectionQuantity, qualifiedQuantity, unqualifiedQuantity, testResult, testDate, testingPersonnel, receiptQuantity, contractID, customname from aw_detailproductoutbound
     </sql>
 
     <select id="selectDetailproductoutboundList" parameterType="Detailproductoutbound" resultMap="DetailproductoutboundResult">

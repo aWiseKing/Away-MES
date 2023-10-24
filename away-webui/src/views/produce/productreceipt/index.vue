@@ -314,6 +314,9 @@ export default {
     },
     handleView(row) {
       this.view_open = true;
+      let id = row.warehouseEntryID;
+      this.$router.push({path:"/produce/detailproductwarehousing",query:{id:id}})
+
     },
     /** 新增按钮操作 */
     handleAdd() {
