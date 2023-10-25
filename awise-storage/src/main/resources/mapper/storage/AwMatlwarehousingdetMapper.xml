@@ -30,7 +30,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectAwMatlwarehousingdetList" parameterType="AwMatlwarehousingdet" resultMap="AwMatlwarehousingdetResult">
         <include refid="selectAwMatlwarehousingdetVo"/>
-        <where>  
+        <where>
+            <if test="warehouseEntryID != null  and warehouseEntryID != ''"> and warehouseEntryID = #{warehouseEntryID}</if>
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="typeName != null  and typeName != ''"> and typeName like concat('%', #{typeName}, '%')</if>
             <if test="specificationsType != null  and specificationsType != ''"> and specificationsType = #{specificationsType}</if>

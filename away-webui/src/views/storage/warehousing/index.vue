@@ -326,8 +326,8 @@ export default {
     handleView(row) {
        let  warehouseEntryID=row.warehouseEntryID;
       this.$router.push({
-        path: "materialWarehousingDetailed",
-        query: { warehouseEntryID: warehouseEntryID },
+        path: "matlwarehousingdet",
+        query: { id: warehouseEntryID },
       });
       // this.view_open = true;
     },
