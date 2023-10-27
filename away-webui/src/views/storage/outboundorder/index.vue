@@ -391,6 +391,7 @@ export default {
     },
     handleView(row) {
       this.view_open = true;
+      this.$router.push({path:"/storage/inandoutofstorage/matloutbounddet",query:{id:row.deliveryNoteID}})
     },
     /** 新增按钮操作 */
     handleAdd() {

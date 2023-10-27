@@ -77,6 +77,7 @@
           v-hasPermi="['storage:warehousing:edit']"
         >修改</el-button>
       </el-col>
+
       <el-col :span="1.5">
         <el-button
           type="danger"
@@ -133,12 +134,70 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
+            v-if="scope.row.status == '0'"
             v-hasPermi="['storage:warehousing:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
+            icon="el-icon-edit"
+            @click="handleRelease(scope.row)"
+            v-if="scope.row.status == '0'"
+            v-hasPermi="['storage:warehousing:edit']"
+          >发布</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            v-if="scope.row.status == '1'"
+            @click="handleUnpublish(scope.row)"
+            v-hasPermi="['storage:warehousing:edit']"
+          >撤销发布</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            v-if="scope.row.status == '1'"
+            @click="handleWarehousing(scope.row)"
+            v-hasPermi="['storage:warehousing:edit']"
+          >入库</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            v-if="scope.row.status == '2'"
+            @click="handleFinish(scope.row)"
+            v-hasPermi="['storage:warehousing:edit']"
+          >完成入库</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            v-if="scope.row.status == '2'"
+            @click="handlePause(scope.row)"
+            v-hasPermi="['storage:warehousing:edit']"
+          >暂停</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            v-if="scope.row.status == '4'"
+            @click="handleCancelPause(scope.row)"
+            v-hasPermi="['storage:warehousing:edit']"
+          >取消暂停</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            v-if="scope.row.status == '4'"
+            @click="handleDiscard(scope.row)"
+            v-hasPermi="['storage:warehousing:edit']"
+          >废弃</el-button>
+          <el-button
+            size="mini"
+            type="text"
             icon="el-icon-delete"
+            v-if="scope.row.status == '0'"
             @click="handleDelete(scope.row)"
             v-hasPermi="['storage:warehousing:remove']"
           >删除</el-button>
@@ -162,7 +221,7 @@
           <el-input v-model="form.warehouseEntryID" placeholder="入库单编号" />
         </el-form-item></el-col><el-col :span='12'>
         <el-form-item label="状态" prop="status">
-          <el-select v-model="form.status" placeholder="请选择状态">
+          <el-select v-model="form.status" disabled placeholder="请选择状态">
             <el-option
               v-for="dict in dict.type.aw_storage_warehousing_status"
               :key="dict.value"
@@ -303,7 +362,7 @@ export default {
         warehouseKeeper: null,
         operator: null,
         notes: null,
-        status: null
+        status: "0"
       };
       this.resetForm("form");
     },
@@ -349,6 +408,52 @@ export default {
         this.title = "修改入库单";
       });
     },
+
+    /** 状态调整 */
+    setStatus(row,status){
+      this.reset();
+      this.loading = true;
+      const warehouseEntryID = row.warehouseEntryID || this.ids
+      getWarehousing(warehouseEntryID).then(response => {
+        this.form = response.data;
+        this.form.status=status;
+        updateWarehousing(this.form).then(response => {
+          this.$modal.msgSuccess("状态变更成功");
+          this.open = false;
+          this.getList();
+          this.loading = false;
+        });
+      });
+    },
+    /** 发布按钮操作 */
+    handleRelease(row) {
+      this.setStatus(row,"1");
+    },
+    /** 撤销发布按钮操作 */
+    handleUnpublish(row){
+      this.setStatus(row,"0");
+    },
+    /** 入库按钮操作 */
+    handleWarehousing(row) {
+      this.setStatus(row,"2");
+    },
+    /** 入库完成按钮操作 */
+    handleFinish(row) {
+      this.setStatus(row,"3");
+    },
+    /** 暂停按钮操作 */
+    handlePause(row) {
+      this.setStatus(row,"4");
+    },
+    /** 取消暂停按钮操作 */
+    handleCancelPause(row) {
+      this.setStatus(row,"2");
+    },
+    /** 废弃按钮操作 */
+    handleDiscard(row) {
+      this.setStatus(row,"5");
+    },
+
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {

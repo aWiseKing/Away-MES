@@ -19,11 +19,13 @@ F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\mapper\AwWa
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\domain\AwWarehousing.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\mapper\AwCustomersuppliedmaterialsEnMapper.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\domain\AwMatlwarehousingdet.java
+F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\mapper\AwMatloutbounddetMapper.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\controller\AwCustomersuppliedmaterialsController.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\mapper\AwToolinformationMapper.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\service\impl\AwCustomersuppliedmaterialsServiceImpl.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\service\impl\AwLocalmaterialsEnServiceImpl.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\controller\AwLocalmaterialoutboundController.java
+F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\service\IAwMatloutbounddetService.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\domain\AwSpecifications.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\service\impl\AwSpecificationsServiceImpl.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\service\IAwOutboundorderService.java
@@ -36,6 +38,7 @@ F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\service\imp
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\domain\AwMaterialclassification.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\service\IAwMaterialEnService.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\mapper\AwMaterialEnMapper.java
+F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\domain\AwMatloutbounddet.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\domain\AwToolinformationEn.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\service\IAwBasicinformationofmaterialsService.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\mapper\AwUnitsMapper.java
@@ -50,6 +53,7 @@ F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\service\IAw
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\service\IAwMaterialService.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\controller\AwMaterialclassificationController.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\domain\AwOutboundorder.java
+F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\controller\AwMatloutbounddetController.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\service\impl\AwLocalmaterialwarehousingServiceImpl.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\domain\MaterialWarehousingDetailed.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\service\impl\MaterialWarehousingDetailedServiceImpl.java
@@ -74,6 +78,7 @@ F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\service\imp
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\controller\AwMatlwarehousingdetController.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\service\impl\AwMaterialclassificationServiceImpl.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\mapper\AwMaterialclassificationMapper.java
+F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\service\impl\AwMatloutbounddetServiceImpl.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\service\impl\AwToolinformationEnServiceImpl.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\domain\AwLocalmaterialwarehousing.java
 F:\programme\java\jxsd\awise-storage\src\main\java\com\awise\storage\service\impl\AwUnitsServiceImpl.java
