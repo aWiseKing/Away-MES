@@ -1,20 +1,16 @@
 package com.awise.storage.controller;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import com.awise.storage.domain.AwLocalmaterialsEn;
 import com.awise.storage.service.IAwLocalmaterialsEnService;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.away.common.annotation.Log;
 import com.away.common.core.controller.BaseController;
 import com.away.common.core.domain.AjaxResult;
@@ -75,6 +71,16 @@ public class AwLocalmaterialsController extends BaseController
         List<AwLocalmaterials> list = awLocalmaterialsService.selectAwLocalmaterialsList(awLocalmaterials);
         ExcelUtil<AwLocalmaterials> util = new ExcelUtil<AwLocalmaterials>(AwLocalmaterials.class);
         util.exportExcel(response, list, "本地材料实时库存数据");
+    }
+
+    /***
+     *  本地实时库存新增
+     */
+    @PreAuthorize("@ss.hasPermi('storage:localmaterials:addnumber')")
+    @PostMapping("/ByNumbner/add")
+    public AjaxResult addByNumber(@RequestBody() List<Map<String,Integer>> lmlist){
+
+        return awLocalmaterialsService.addByNumber(lmlist)?success():error();
     }
 
     /**

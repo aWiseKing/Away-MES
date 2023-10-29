@@ -1,7 +1,10 @@
 package com.awise.storage.service;
 
 import java.util.List;
+import java.util.Map;
+
 import com.awise.storage.domain.AwLocalmaterials;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 本地材料实时库存Service接口
@@ -27,6 +30,9 @@ public interface IAwLocalmaterialsService
      */
     public List<AwLocalmaterials> selectAwLocalmaterialsList(AwLocalmaterials awLocalmaterials);
 
+    @Transactional
+    boolean addByNumber(List<Map<String,Integer>> lmlist);
+
     /**
      * 新增本地材料实时库存
      * 
@@ -34,6 +40,7 @@ public interface IAwLocalmaterialsService
      * @return 结果
      */
     public int insertAwLocalmaterials(AwLocalmaterials awLocalmaterials);
+
 
     /**
      * 修改本地材料实时库存

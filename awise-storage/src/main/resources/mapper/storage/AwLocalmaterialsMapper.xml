@@ -17,7 +17,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectAwLocalmaterialsList" parameterType="AwLocalmaterials" resultMap="AwLocalmaterialsResult">
         <include refid="selectAwLocalmaterialsVo"/>
-        <where>  
+        <where>
+            <if test="materialID != null and materialID != ''">and materialID = #{materialID}</if>
         </where>
     </select>
     

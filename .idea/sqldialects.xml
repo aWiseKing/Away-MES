@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="SqlDialectMappings">
-    <file url="file://$USER_HOME$/Documents/WeChat Files/wxid_2y5p7hkgwi3u22/FileStorage/File/2023-10/away(3).sql" dialect="MySQL" />
-    <file url="file://D:/dowload3/away (16)/materialWarehousingDetailedMenu.sql" dialect="MySQL" />
-    <file url="file://D:/download/away (4)/purchaserequisitionMenu.sql" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/../JavaProject/sq.sql" dialect="MySQL" />
-  </component>
-</project>
