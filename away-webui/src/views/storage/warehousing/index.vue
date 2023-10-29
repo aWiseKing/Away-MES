@@ -266,6 +266,8 @@
 
 <script>
 import { listWarehousing, getWarehousing, delWarehousing, addWarehousing, updateWarehousing } from "@/api/storage/warehousing";
+import { listMatlwarehousingdet } from "@/api/storage/matlwarehousingdet.js"
+import { addByNumber } from "@/api/storage/localmaterials.js"
 
 export default {
   name: "Warehousing",
@@ -330,8 +332,10 @@ export default {
           { required: true, message: "状态不能为空", trigger: "change" }
         ]
       },
-
-
+      // 材料入库详细列表
+      matlwarehousingdetlist:[],
+      // 材料入库详细
+      matlwarehousingdet:{},
     };
   },
   created() {
@@ -345,6 +349,22 @@ export default {
         this.warehousingList = response.rows;
         this.total = response.total;
         this.loading = false;
+      });
+    },
+    /** 查询材料入库详细列表 */
+    getListMatlwarehousingdet(warehouseEntryID){
+      this.loading=true;
+      listMatlwarehousingdet({warehouseEntryID:warehouseEntryID}).then((response)=>{
+        this.matlwarehousingdetlist=response.rows;
+        this.loading=false;
+      });
+    },
+    /** 选中材料入库详细 */
+    setMatlwarehousingdet(id){
+      this.loading=true;
+      getMatlwarehousingdet(id).then((response)=>{
+        this.matlwarehousingdet=response.data;
+        this.loading=false;
       });
     },
     // 取消按钮
@@ -435,11 +455,40 @@ export default {
     },
     /** 入库按钮操作 */
     handleWarehousing(row) {
-      this.setStatus(row,"2");
+      this.loading=true;
+      let warehouseEntryID = row.warehouseEntryID
+      listMatlwarehousingdet({warehouseEntryID:warehouseEntryID}).then((response)=>{
+        this.matlwarehousingdetlist=response.rows;
+        console.log(this.matlwarehousingdetlist);
+        if(this.matlwarehousingdetlist.length > 0){
+          this.setStatus(row,"2");
+        }else{
+          this.$modal.msgWarning("入库单中不存在材料！")
+        }
+        this.loading=false;
+      })
     },
     /** 入库完成按钮操作 */
     handleFinish(row) {
-      this.setStatus(row,"3");
+      let warehouseEntryID = row.warehouseEntryID
+      this.loading=true;
+      listMatlwarehousingdet({warehouseEntryID:warehouseEntryID}).then((response)=>{
+        this.matlwarehousingdetlist=response.rows;
+        if(this.matlwarehousingdetlist.length > 0){
+          let lmlist = []
+          for(let num in this.matlwarehousingdetlist){
+            let materialID = this.matlwarehousingdetlist[num].materialID;
+            let value = this.matlwarehousingdetlist[num].receiptQuantity;
+            lmlist.push({"key":materialID,"value":value})
+          }
+          addByNumber(JSON.stringify(lmlist)).then(response=>{
+              if (response.code == '200'){
+                this.setStatus(row,"3");
+              }
+            })
+        }
+        this.loading=false;
+      });
     },
     /** 暂停按钮操作 */
     handlePause(row) {

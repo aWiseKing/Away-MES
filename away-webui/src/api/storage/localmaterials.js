@@ -17,6 +17,18 @@ export function getLocalmaterials(id) {
   })
 }
 
+// 入库完成
+export function addByNumber(lmlist){
+  return request({
+    url: '/storage/localmaterials/ByNumbner/add',
+    data:lmlist,
+    method: 'post',
+    Headers:{
+      "content-type":"application/json"
+    }
+  })
+}
+
 // 新增本地材料实时库存
 export function addLocalmaterials(data) {
   return request({

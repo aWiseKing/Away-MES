@@ -1,4 +1,3 @@
-com\away\common\utils\Utils.class
 com\away\common\core\text\CharsetKit.class
 com\away\common\core\domain\model\RegisterBody.class
 com\away\common\core\domain\entity\SysUser.class

@@ -53,10 +53,10 @@ public class AwLocalmaterialsServiceImpl implements IAwLocalmaterialsService
      */
     @Override
     @Transactional
-    public boolean addByNumber(List<Map<String,Integer>> lmlist){
-        for(Map<String, Integer> line : lmlist) {
-            String materialID = line.keySet().iterator().next();
-            Integer num = line.get(materialID);
+    public boolean addByNumber(List<Map<String,String>> lmlist){
+        for(Map<String, String> line : lmlist) {
+            String materialID = line.get("key");
+            Integer num = Integer.valueOf(line.get("value"));
             AwLocalmaterials awLocalmaterials = new AwLocalmaterials();
             awLocalmaterials.setMaterialID(materialID);
             List<AwLocalmaterials> list = selectAwLocalmaterialsList(awLocalmaterials);

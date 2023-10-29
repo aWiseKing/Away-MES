@@ -78,7 +78,7 @@ public class AwLocalmaterialsController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('storage:localmaterials:addnumber')")
     @PostMapping("/ByNumbner/add")
-    public AjaxResult addByNumber(@RequestBody() List<Map<String,Integer>> lmlist){
+    public AjaxResult addByNumber(@RequestBody() List<Map<String,String>> lmlist){
 
         return awLocalmaterialsService.addByNumber(lmlist)?success():error();
     }

@@ -31,7 +31,7 @@ public interface IAwLocalmaterialsService
     public List<AwLocalmaterials> selectAwLocalmaterialsList(AwLocalmaterials awLocalmaterials);
 
     @Transactional
-    boolean addByNumber(List<Map<String,Integer>> lmlist);
+    boolean addByNumber(List<Map<String,String>> lmlist);
 
     /**
      * 新增本地材料实时库存

@@ -63,9 +63,11 @@
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)"
             v-hasPermi="['order:saleorder:edit']">查看</el-button>
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
+          <el-button v-if="scope.row.state == '未发布'"  size="mini" type="text" icon="el-icon-edit" @click="handleRelease(scope.row)"
+            v-hasPermi="['order:saleorder:edit']">发布</el-button>
+          <el-button v-if="scope.row.state == '未发布'"  size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
             v-hasPermi="['order:saleorder:edit']">修改</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
+          <el-button v-if="scope.row.state == '未发布'" size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
             v-hasPermi="['order:saleorder:remove']">删除</el-button>
         </template>
       </el-table-column>
@@ -174,7 +176,7 @@
         <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="订单状态" prop="state">
-              <el-select v-model="form.state" value-key="value" placeholder="请选择订单状态">
+              <el-select disabled v-model="form.state" value-key="value" placeholder="请选择订单状态">
                 <el-option v-for="item in state_options" :key="item.key" :label="item.value" :value="item.key">
                 </el-option>
               </el-select>
@@ -410,7 +412,7 @@ export default {
         contractID: null,
         invoiceID: null,
         iscustomersuppliedmaterials: 0,
-        state: null
+        state: "0"
       };
       this.resetForm("form");
     },
@@ -423,6 +425,26 @@ export default {
     resetQuery() {
       this.resetForm("queryForm");
       this.handleQuery();
+    },
+    /** 状态调整 */
+    setStatus(row,status){
+      this.reset();
+      this.loading = true;
+      const id = row.id
+      getSaleorder(id).then(response => {
+        this.form = response.data;
+        this.form.state=status;
+        updateSaleorder(this.form).then(response => {
+          this.$modal.msgSuccess("状态变更成功");
+          this.open = false;
+          this.getList();
+          this.loading = false;
+        });
+      });
+    },
+    /** 发布按钮操作 */
+    handleRelease(row) {
+      this.setStatus(row,"1");
     },
     // 添加附加信息
     handleAddAdditional() {
