@@ -73,7 +73,7 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
+      <el-col :span="1.5" v-if="upper_status=='0'">
         <el-button
           type="primary"
           plain
@@ -84,7 +84,7 @@
           >新增</el-button
         >
       </el-col>
-      <el-col :span="1.5">
+      <el-col :span="1.5" v-if="upper_status=='0'">
         <el-button
           type="success"
           plain
@@ -96,7 +96,7 @@
           >修改</el-button
         >
       </el-col>
-      <el-col :span="1.5">
+      <el-col :span="1.5" v-if="upper_status=='0'">
         <el-button
           type="danger"
           plain
@@ -172,6 +172,7 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
+            v-if="upper_status=='0'"
             v-hasPermi="['storage:matlwarehousingdet:edit']"
             >修改</el-button
           >
@@ -180,6 +181,7 @@
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
+            v-if="upper_status=='0'"
             v-hasPermi="['storage:matlwarehousingdet:remove']"
             >删除</el-button
           >
@@ -223,6 +225,7 @@
           <el-select
             v-model="purchaserequisition.subscribeID"
             placeholder="请选择申购单"
+            clearable
             @focus="getListPurchaserequisition()"
           >
             <el-option
@@ -475,6 +478,8 @@ export default {
       warehouseEntryID: "",
       // 材料入库详细
       matlwarehousingdet: {},
+      // 父单状态
+      upper_status:null,
       // 申购单列表
       purchaserequisitionlist: [],
       // 选中申购单
@@ -500,6 +505,7 @@ export default {
     getExist() {
       this.warehouseEntryID = this.$route.query.id;
       this.queryParams.warehouseEntryID = this.warehouseEntryID;
+      this.upper_status = this.$route.query.status;
       this.getList();
     },
     /** 查询材料入库详细列表 */
@@ -542,9 +548,22 @@ export default {
       this.loading = true;
       getDetailmaterialsubscription(id).then((response) => {
         this.detailmaterialsubscription = response.data;
+        this.tmp={
+          materialSubscription: null,
+          materialID: null,
+          name: null,
+          typeName: null,
+          specificationsType: null,
+          specificationModel: null,
+          materialDensity: null,
+        }
+        setIntersectionObj(
+          this.tmp,
+          this.detailmaterialsubscription
+        );
         setIntersectionObj(
           this.matlwarehousingdet,
-          this.detailmaterialsubscription
+          this.tmp
         );
         this.loading = false;
       });
@@ -562,11 +581,22 @@ export default {
       this.loading = true;
       getBasicinformationofmaterials(id).then((response) => {
         this.basicinformationofmaterials = response.data;
-        this.basicinformationofmaterials.materialID =
-          this.basicinformationofmaterials.id;
+        this.basicinformationofmaterials.materialID = this.basicinformationofmaterials.id;
+        this.tmp={
+          materialID: null,
+          name: null,
+          typeName: null,
+          specificationsType: null,
+          specificationModel: null,
+          materialDensity: null,
+        }
+        setIntersectionObj(
+          this.tmp,
+          this.basicinformationofmaterials
+        );
         setIntersectionObj(
           this.matlwarehousingdet,
-          this.basicinformationofmaterials
+          this.tmp
         );
         this.loading = false;
       });
@@ -585,7 +615,15 @@ export default {
       getReceiptinvoice(id).then((response) => {
         this.receiptinvoice = response.data;
         this.loading = false;
-        setIntersectionObj(this.matlwarehousingdet, this.receiptinvoice);
+        this.tmp={
+          receiptInvoiceID: null,
+          invoiceType: null,
+          invoiceTaxRate: null,
+          purchaseUnitPriceExcludingTax: null,
+          purchaseUnitPriceIncludingTax: null
+        }
+        setIntersectionObj(this.tmp,this.receiptinvoice)
+        setIntersectionObj(this.matlwarehousingdet, this.tmp);
       });
     },
     // 取消按钮
@@ -751,6 +789,12 @@ export default {
       immediate:true,
       handler(){
         this.getExist()
+      }
+    },
+    "this.$route.query.status":{
+      immediate:true,
+      handler(){
+        this.getExist();
       }
     }
   }

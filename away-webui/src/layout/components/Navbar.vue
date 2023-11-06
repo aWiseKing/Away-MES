@@ -110,6 +110,7 @@ export default {
   background: #fff;
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
   border-radius: 12px;
+  margin-left: 13px;
   margin-right: 13px;
   margin-top: 13px;
   .hamburger-container {

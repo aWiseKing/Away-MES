@@ -406,7 +406,7 @@ export default {
        let  warehouseEntryID=row.warehouseEntryID;
       this.$router.push({
         path: "matlwarehousingdet",
-        query: { id: warehouseEntryID },
+        query: { id: warehouseEntryID,status:row.status },
       });
       // this.view_open = true;
     },
@@ -459,7 +459,6 @@ export default {
       let warehouseEntryID = row.warehouseEntryID
       listMatlwarehousingdet({warehouseEntryID:warehouseEntryID}).then((response)=>{
         this.matlwarehousingdetlist=response.rows;
-        console.log(this.matlwarehousingdetlist);
         if(this.matlwarehousingdetlist.length > 0){
           this.setStatus(row,"2");
         }else{

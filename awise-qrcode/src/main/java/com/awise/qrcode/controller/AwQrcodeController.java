@@ -68,7 +68,7 @@ public class AwQrcodeController extends BaseController
         AjaxResult to_ajax = toAjax(1);
         AwQrcode awQrcode =  awQrcodeService.selectAwQrcodeByProcessingprocessID(Long.valueOf(processingprocessID));// 写一个sql用工序id来查询，通过二维码创建时间排序，取最新码。
         if(awQrcode == null){
-            awQrcode = this.qrCodeUnit.createQrCode(this.url, this.size, this.multiple, this.filetype, this.filepath, processingprocessID, "?fafasfsa");
+            awQrcode = this.qrCodeUnit.createQrCode(this.url, this.size, this.multiple, this.filetype, this.filepath, processingprocessID, String.format("?processingprocessID=%s",processingprocessID));
             awQrcodeService.insertAwQrcode(awQrcode);
         }
 
@@ -80,7 +80,7 @@ public class AwQrcodeController extends BaseController
         if (date.before(new_date)){
 
         }else {
-            awQrcode = this.qrCodeUnit.createQrCode(this.url, this.size, this.multiple, this.filetype, this.filepath, processingprocessID, "?fafasfsa");
+            awQrcode = this.qrCodeUnit.createQrCode(this.url, this.size, this.multiple, this.filetype, this.filepath, processingprocessID, "");
             awQrcodeService.insertAwQrcode(awQrcode);
         }
         String fileurl = awQrcode.getFileurl();

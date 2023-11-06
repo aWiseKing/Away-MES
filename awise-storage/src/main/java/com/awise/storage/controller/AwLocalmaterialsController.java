@@ -83,6 +83,16 @@ public class AwLocalmaterialsController extends BaseController
         return awLocalmaterialsService.addByNumber(lmlist)?success():error();
     }
 
+    /***
+     *  本地实时库存减少
+     */
+    @PreAuthorize("@ss.hasPermi('storage:localmaterials:addnumber')")
+    @PostMapping("/ByNumbner/reduce")
+    public AjaxResult reduceByNumber(@RequestBody() List<Map<String,String>> lmlist){
+
+        return awLocalmaterialsService.reduceByNumber(lmlist)?success():error();
+    }
+
     /**
      * 获取本地材料实时库存详细信息
      */

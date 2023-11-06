@@ -34,16 +34,17 @@
       </el-row>
     </el-form>
 
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
+    <el-row :gutter="10" class="mb8" >
+      <el-col :span="1.5" v-if="upper_status=='0'">
         <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
           v-hasPermi="['storage:matloutbounddet:add']">新增</el-button>
+
       </el-col>
-      <el-col :span="1.5">
+      <el-col :span="1.5" v-if="upper_status=='0'">
         <el-button type="success" plain icon="el-icon-edit" size="mini" :disabled="single" @click="handleUpdate"
           v-hasPermi="['storage:matloutbounddet:edit']">修改</el-button>
       </el-col>
-      <el-col :span="1.5">
+      <el-col :span="1.5"  v-if="upper_status=='0'">
         <el-button type="danger" plain icon="el-icon-delete" size="mini" :disabled="multiple" @click="handleDelete"
           v-hasPermi="['storage:matloutbounddet:remove']">删除</el-button>
       </el-col>
@@ -70,9 +71,11 @@
           <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)"
             v-hasPermi="['storage:matloutbounddet:edit']">查看</el-button>
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-            v-hasPermi="['storage:matloutbounddet:edit']">修改</el-button>
+          v-if="upper_status=='0'"
+          v-hasPermi="['storage:matloutbounddet:edit']">修改</el-button>
           <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-            v-hasPermi="['storage:matloutbounddet:remove']">删除</el-button>
+          v-if="upper_status=='0'"
+          v-hasPermi="['storage:matloutbounddet:remove']">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -82,7 +85,7 @@
 
     <!-- 添加或修改材料出库详细对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="matloutbounddet" :model="matloutbounddet" :rules="rules" label-width="80px">
+      <el-form :disabled="view_open" ref="matloutbounddet" :model="matloutbounddet" :rules="rules" label-width="80px">
         <el-form-item label="出库单编号" prop="deliveryNoteID">
           <el-input disabled v-model="matloutbounddet.deliveryNoteID" placeholder="请输入出库单编号" />
         </el-form-item>
@@ -141,7 +144,7 @@
           <el-input v-model="matloutbounddet.notes" placeholder="请输入备注" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <div slot="footer" v-if="!view_open" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
@@ -215,6 +218,8 @@ export default {
       deliveryNoteID: null,
       // 当前选中材料出库详细
       matloutbounddet: {},
+      // 父单状态
+      upper_status: null,
 
       // 任务单列表
       productiontasklistlist: [],
@@ -237,6 +242,7 @@ export default {
     getExist() {
       this.deliveryNoteID = this.$route.query.id;
       this.queryParams.deliveryNoteID = this.deliveryNoteID;
+      this.upper_status = this.$route.query.status;
       this.getList();
     },
     /** 查询材料出库详细列表 */
@@ -399,6 +405,7 @@ export default {
     submitForm() {
       this.$refs["matloutbounddet"].validate(valid => {
         if (valid) {
+
           setIntersectionObj(this.form,this.matloutbounddet)
           console.log(this.form);
           if (!this.isadd) {
@@ -436,6 +443,12 @@ export default {
   },
   watch:{
     "$route.query.id":{
+      immediate:true,
+      handler(){
+        this.getExist();
+      }
+    },
+    "this.$route.query.status":{
       immediate:true,
       handler(){
         this.getExist();

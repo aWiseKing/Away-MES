@@ -191,8 +191,63 @@
           <el-button
             size="mini"
             type="text"
+            icon="el-icon-view"
+            @click="handleRelease(scope.row)"
+            v-if="scope.row.status == '0'"
+            v-hasPermi="['storage:outboundorder:edit']"
+            >发布</el-button
+          >
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-view"
+            @click="handleUnpublish(scope.row)"
+            v-if="scope.row.status == '1'"
+            v-hasPermi="['storage:outboundorder:edit']"
+            >撤销发布</el-button
+          >
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-view"
+            @click="handleFinish(scope.row)"
+            v-if="scope.row.status == '1'"
+            v-hasPermi="['storage:outboundorder:edit']"
+            >完成出库</el-button
+          >
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-view"
+            @click="handlePause(scope.row)"
+            v-if="scope.row.status == '1'"
+            v-hasPermi="['storage:outboundorder:edit']"
+            >暂停</el-button
+          >
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-view"
+            @click="handleCancelPause(scope.row)"
+            v-if="scope.row.status == '3'"
+            v-hasPermi="['storage:outboundorder:edit']"
+            >取消暂停</el-button
+          >
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-view"
+            @click="handleDiscard(scope.row)"
+            v-if="scope.row.status == '3'"
+            v-hasPermi="['storage:outboundorder:edit']"
+            >废弃</el-button
+          >
+          <el-button
+            size="mini"
+            type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
+            v-if="scope.row.status == '0'"
             v-hasPermi="['storage:outboundorder:edit']"
             >修改</el-button
           >
@@ -200,6 +255,7 @@
             size="mini"
             type="text"
             icon="el-icon-delete"
+            v-if="scope.row.status == '0'"
             @click="handleDelete(scope.row)"
             v-hasPermi="['storage:outboundorder:remove']"
             >删除</el-button
@@ -252,7 +308,7 @@
           <el-input v-model="form.notes" placeholder="请输入备注" />
         </el-form-item>
         <el-form-item label="状态" prop="status">
-          <el-select v-model="form.status" placeholder="请选择状态">
+          <el-select disabled v-model="form.status" placeholder="请选择状态">
             <el-option
               v-for="dict in dict.type.aw_storage_outboundorder_status"
               :key="dict.value"
@@ -278,7 +334,8 @@ import {
   addOutboundorder,
   updateOutboundorder,
 } from "@/api/storage/outboundorder";
-
+import { listMatloutbounddet } from "@/api/storage/matloutbounddet.js"
+import { reduceByNumber } from "@/api/storage/localmaterials.js"
 export default {
   name: "Outboundorder",
   dicts: ["aw_storage_outboundorder_status"],
@@ -340,6 +397,8 @@ export default {
           { required: true, message: "状态不能为空", trigger: "change" },
         ],
       },
+      // 出库材料单材料列表
+      matloutbounddetlist:[]
     };
   },
   created() {
@@ -369,7 +428,7 @@ export default {
         warehouseKeeper: null,
         materialReceiver: null,
         notes: null,
-        status: null,
+        status: "0",
       };
       this.resetForm("form");
     },
@@ -389,9 +448,69 @@ export default {
       this.single = selection.length !== 1;
       this.multiple = !selection.length;
     },
+    /** 状态调整 */
+    setStatus(row,status){
+      this.reset();
+      this.loading = true;
+      const deliveryNoteID  = row.deliveryNoteID || this.ids
+      getOutboundorder(deliveryNoteID).then(response => {
+        this.form = response.data;
+        this.form.status=status;
+        updateOutboundorder(this.form).then(response => {
+          this.$modal.msgSuccess("状态变更成功");
+          this.open = false;
+          this.getList();
+          this.loading = false;
+        });
+      });
+    },
+     /** 发布按钮操作 */
+     handleRelease(row) {
+      this.setStatus(row,"1");
+    },
+    /** 撤销发布按钮操作 */
+    handleUnpublish(row){
+      this.setStatus(row,"0");
+    },
+    /** 完成按钮操作 */
+    handleFinish(row) {
+      let deliveryNoteID = row.deliveryNoteID
+      this.loading=true;
+      // 出库材料列表
+      listMatloutbounddet({deliveryNoteID:deliveryNoteID}).then((response)=>{
+        this.matloutbounddetlist=response.rows;
+        if(this.matloutbounddetlist.length > 0){
+          let lmlist = []
+          for(let num in this.matloutbounddetlist){
+            let materialID = this.matloutbounddetlist[num].materialID;
+            let value = this.matloutbounddetlist[num].outboundQuantity;
+            lmlist.push({"key":materialID,"value":value})
+          }
+          reduceByNumber(JSON.stringify(lmlist)).then(response=>{
+              if (response.code == '200'){
+                this.setStatus(row,"2");
+              }
+            })
+        }
+        this.loading=false;
+      });
+    },
+
+    /** 暂停按钮操作 */
+    handlePause(row) {
+      this.setStatus(row,"3");
+    },
+    /** 取消暂停按钮操作 */
+    handleCancelPause(row) {
+      this.setStatus(row,"1");
+    },
+    /** 废弃按钮操作 */
+    handleDiscard(row) {
+      this.setStatus(row,"4");
+    },
     handleView(row) {
       this.view_open = true;
-      this.$router.push({path:"/storage/inandoutofstorage/matloutbounddet",query:{id:row.deliveryNoteID}})
+      this.$router.push({path:"/storage/inandoutofstorage/matloutbounddet",query:{id:row.deliveryNoteID,status:row.status}})
     },
     /** 新增按钮操作 */
     handleAdd() {

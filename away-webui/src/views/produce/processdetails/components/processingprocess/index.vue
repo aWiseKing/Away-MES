@@ -47,7 +47,10 @@
       <el-table-column label="工时成本" align="center" prop="laborCost" />
       <el-table-column label="工序外协" align="center" prop="outsourcing">
         <template slot-scope="scope">
-          {{ getValue(isoutsourced, scope.row.outsourcing) }}
+          <dict-tag
+            :options="dict.type.aw_produce_outsource_status"
+            :value="scope.row.outsourcing"
+          />
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -56,7 +59,8 @@
           <el-popover placement="top-start" width="130" trigger="click">
             <el-Image style="width: 120px;height: 120px;" :src="qrcode" :preview-src-list="[qrcode]"></el-Image>
             <el-button slot="reference" size="mini" type="text" icon="el-icon-share"
-              @click="getProcessingProcessQrcode(scope.row)">二维码</el-button>
+            v-if="productionTasksID != null && productionTasks_status == '1'"
+            @click="getProcessingProcessQrcode(scope.row)">二维码</el-button>
           </el-popover>
 
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
@@ -130,7 +134,11 @@
           <el-col :span="12">
             <el-form-item label="工序外协" prop="outsourcing">
               <el-radio-group v-model="form.outsourcing">
-                <el-radio v-for="item in isoutsourced" :key="item.key" :label="item.key">{{ item.value }}</el-radio>
+                <el-radio v-for="dict in dict.type.aw_produce_outsource_status"
+                :key="dict.value"
+                :label="dict.label"
+                >{{ dict.label }}
+                </el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -167,13 +175,21 @@
         <el-descriptions-item label="加工工艺">{{ view_form.processingTechnologyID }}</el-descriptions-item>
 
         <el-descriptions-item label="工序名称" :span="2">{{ view_form.name }}</el-descriptions-item>
-        <el-descriptions-item label="状态">{{ view_form.status }}</el-descriptions-item>
+        <el-descriptions-item label="状态"><dict-tag
+            :options="dict.type.aw_produce_productionprocess_status"
+            :value="view_form.status"
+          /></el-descriptions-item>
         <el-descriptions-item label="所用工装">{{ view_form.usedTooling }}</el-descriptions-item>
 
         <el-descriptions-item label="准备工时">{{ view_form.preparationHours }}</el-descriptions-item>
         <el-descriptions-item label="单件工时">{{ view_form.taktTime }}</el-descriptions-item>
         <el-descriptions-item label="工时成本">{{ view_form.laborCost }}</el-descriptions-item>
-        <el-descriptions-item label="工序外协">{{ getValue(isoutsourced, view_form.outsourcing) }}</el-descriptions-item>
+        <el-descriptions-item label="工序外协">
+          <dict-tag
+            :options="dict.type.aw_produce_outsource_status"
+            :value="view_form.outsourcing"
+          />
+        </el-descriptions-item>
 
         <el-descriptions-item label="工序内容" :span="2">
           <div v-html="view_form.content"></div>
@@ -200,6 +216,7 @@ import { fileUpdate, fileDownload } from "@/api/file/file";
 
 export default {
   name: "Processingprocess",
+  dicts: ["aw_produce_productionprocess_status","aw_produce_outsource_status"],
   data() {
     return {
       // 遮罩层
@@ -222,16 +239,6 @@ export default {
       open: false,
       // 是否显示详细信息
       view_open: false,
-      // 工序状态
-      state_options: [
-        { key: "0", value: "未发布" },
-        { key: "1", value: "发布" },
-        { key: "2", value: "生产中" },
-        { key: "3", value: "生产完成" },
-        { key: "4", value: "质检中" },
-        { key: "5", value: "生产合格" },
-        { key: "6", value: "生产不合格" }
-      ],
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -282,6 +289,10 @@ export default {
           { required: true, message: "工时成本不能为空", trigger: "blur" }
         ],
       },
+      // 是否存在已发布的任务ID
+      productionTasksID:null,
+      // 任务发布状态,
+      productionTasks_status:null,
       // 是否存在生产工艺单
       processingtechnology_exist: false,
       // 生产任务编号
@@ -290,11 +301,6 @@ export default {
       processingTechnologyID: null,
       // 文件列表
       fileList: [],
-      // 是否外协
-      isoutsourced: [
-        { key: "0", value: "否" },
-        { key: "1", value: "是" }
-      ],
       // 当前模板工序
       processtemplate_name: null,
       // 模板工序列表
@@ -307,13 +313,16 @@ export default {
   components: {
   },
   created() {
-    this.getProcessingtechnologyExist()
+    this.getExist()
   },
   methods: {
-    async getProcessingtechnologyExist() {
-      this.processingtechnology_exist = true
-      this.processingTechnologyID = this.$route.query.id
+    async getExist() {
+      this.processingtechnology_exist = true;
+      this.processingTechnologyID = this.$route.query.id;
+      this.productionTasksID = this.$route.query.productionTasksID;
+      this.productionTasks_status = this.$route.query.productionTasks_status;
       this.queryParams.processingTechnologyID = this.processingTechnologyID;
+
       this.getList();
     },
     /** 查询加工工序信息列表 */
@@ -517,7 +526,19 @@ export default {
     "$route.query.id":{
       immediate: true,
       handler() {
-      this.getProcessingtechnologyExist()
+      this.getExist()
+      }
+    },
+    "this.$route.query.productionTasksID":{
+      immediate: true,
+      handler() {
+      this.getExist()
+      }
+    },
+    "this.$route.query.productionTasks_status":{
+      immediate: true,
+      handler() {
+      this.getExist()
       }
     }
   }

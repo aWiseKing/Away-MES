@@ -30,8 +30,21 @@ public interface IAwLocalmaterialsService
      */
     public List<AwLocalmaterials> selectAwLocalmaterialsList(AwLocalmaterials awLocalmaterials);
 
+    /***
+     *  本地实时库存新增
+     * @param lmlist 需要新增库存的材料列表
+     * @return 结果
+     */
     @Transactional
     boolean addByNumber(List<Map<String,String>> lmlist);
+
+    /***
+     *  本地实时库存减少
+     * @param lmlist 需要减少库存的材料列表
+     * @return 结果
+     */
+    @Transactional
+    boolean reduceByNumber(List<Map<String,String>> lmlist);
 
     /**
      * 新增本地材料实时库存

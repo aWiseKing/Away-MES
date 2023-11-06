@@ -30,10 +30,11 @@ export default {
 .app-main {
   /* 50= navbar  50  */
   min-height: calc(100vh - 50px - 26px);
-  width: calc(100% - 13px);
+  width: calc(100% - 26px);
   position: relative;
   overflow: hidden;
   margin-bottom: 13px;
+  margin-left: 13px;
   margin-right: 13px;
   border-radius: 12px;
   background-color: rgba(255,255,255,1);

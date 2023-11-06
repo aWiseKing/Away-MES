@@ -1,5 +1,6 @@
 package com.awise.storage.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +55,7 @@ public class AwLocalmaterialsServiceImpl implements IAwLocalmaterialsService
     @Override
     @Transactional
     public boolean addByNumber(List<Map<String,String>> lmlist){
+        List<AwLocalmaterials> cache_awLocalmaterials = new ArrayList<AwLocalmaterials>();
         for(Map<String, String> line : lmlist) {
             String materialID = line.get("key");
             Integer num = Integer.valueOf(line.get("value"));
@@ -64,16 +66,58 @@ public class AwLocalmaterialsServiceImpl implements IAwLocalmaterialsService
             if (!list.isEmpty()) {
                 awLocalmaterials = list.get(0);
                 awLocalmaterials.setNumber(awLocalmaterials.getNumber() + num);
-                updateAwLocalmaterials(awLocalmaterials);
+                cache_awLocalmaterials.add(awLocalmaterials);
             } else {
                 try {
-                    awLocalmaterials.setNumber(Long.valueOf(num));
+                    awLocalmaterials.setNumber(Long.valueOf(0));
                     insertAwLocalmaterials(awLocalmaterials);
+                    list = selectAwLocalmaterialsList(awLocalmaterials);
+                    awLocalmaterials = list.get(0);
+                    awLocalmaterials.setNumber(awLocalmaterials.getNumber() + num);
+                    cache_awLocalmaterials.add(awLocalmaterials);
                 }catch (Exception e){
                     return false;
                 }
 
             }
+        }
+        for (AwLocalmaterials awLocalmaterials :cache_awLocalmaterials){
+            updateAwLocalmaterials(awLocalmaterials);
+        }
+        return true;
+    }
+
+    /***
+     *  本地实时库存减少
+     * @param lmlist 需要减少库存的材料列表
+     * @return 结果
+     */
+    @Override
+    @Transactional
+    public boolean reduceByNumber(List<Map<String,String>> lmlist){
+        List<AwLocalmaterials> cache_awLocalmaterials = new ArrayList<AwLocalmaterials>();
+
+        for(Map<String, String> line : lmlist) {
+            String materialID = line.get("key");
+            Integer num = Integer.valueOf(line.get("value"));
+            AwLocalmaterials awLocalmaterials = new AwLocalmaterials();
+            awLocalmaterials.setMaterialID(materialID);
+            List<AwLocalmaterials> list = selectAwLocalmaterialsList(awLocalmaterials);
+
+            if (!list.isEmpty()) {
+                awLocalmaterials = list.get(0);
+                if (awLocalmaterials.getNumber() - num>0){
+                    awLocalmaterials.setNumber(awLocalmaterials.getNumber() - num);
+                    cache_awLocalmaterials.add(awLocalmaterials);
+                }else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+        for(AwLocalmaterials awLocalmaterials : cache_awLocalmaterials) {
+            updateAwLocalmaterials(awLocalmaterials);
         }
         return true;
     }
