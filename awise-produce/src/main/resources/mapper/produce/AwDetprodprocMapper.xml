@@ -41,6 +41,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectAwDetprodprocVo"/>
         where productionTasksFormID = #{productionTasksFormID}
     </select>
+    <select id="selectAwDetprodproc" parameterType="AwDetprodproc" resultMap="AwDetprodprocResult">
+        <include refid="selectAwDetprodprocVo"/>
+        <where>
+            productionTasksFormID = #{productionTasksFormID}
+            and productionTasksID = #{productionTasksID}
+            and processingprocessID = #{processingprocessID}
+        </where>
+    </select>
+
         
     <insert id="insertAwDetprodproc" parameterType="AwDetprodproc">
         insert into aw_detprodproc

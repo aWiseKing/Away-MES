@@ -10,20 +10,11 @@ export function listQrcode(query) {
 }
 
 // 获取工序对应二维码
-export function getProcessingProcessQrcode(query){
+export function getQrCode(query){
   return request({
     url: '/awise/qrcode/get',
     method: "get",
     params: query
-  })
-}
-
-
-// 查询二维码详细
-export function getQrcode(id) {
-  return request({
-    url: '/awise/qrcode/' + id,
-    method: 'get'
   })
 }
 

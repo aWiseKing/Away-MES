@@ -54,14 +54,13 @@ public class QrCodeUnit {
             ImageIO.write(image, fileType, qrFile);
     }
 
-    public AwQrcode createQrCode(String url, int size,int multiple, String fileType,String filepath,String processingprocessID,String query) {
+    public AwQrcode createQrCode(String url, int size,int multiple, String fileType,String filepath,String productiontasksformID,String productiontasksID,String processingprocessID,String query) {
         AwQrcode awQrcode = new AwQrcode();
         String fileurl = UUID.randomUUID().toString()+".png";
         File file = new File(String.format("%s/%s",filepath,fileurl));
         url = url + query;
 
         try {
-
             this.createQrCode(url,size * multiple,fileType,file);
         } catch (WriterException e) {
             e.printStackTrace();
@@ -71,6 +70,8 @@ public class QrCodeUnit {
 
         awQrcode.setFileurl(fileurl);
         awQrcode.setEffectiveDuration("10");
+        awQrcode.setProductionTasksFormID(Long.valueOf(productiontasksformID));
+        awQrcode.setProductionTasksID(Long.valueOf(productiontasksID));
         awQrcode.setProcessingprocessID(Long.valueOf(processingprocessID));
         awQrcode.setCreateTime(new Date());
 

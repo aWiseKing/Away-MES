@@ -63,10 +63,13 @@ public class AwDetprodprocController extends BaseController
      * 获取生产工艺工序详细详细信息
      */
     @PreAuthorize("@ss.hasPermi('produce:detprodproc:query')")
-    @GetMapping(value = "/{productionTasksFormID}")
-    public AjaxResult getInfo(@PathVariable("productionTasksFormID") Long productionTasksFormID)
+    @GetMapping(value = "/get")
+    public AjaxResult getInfo(AwDetprodproc awDetprodproc)
     {
-        return success(awDetprodprocService.selectAwDetprodprocByProductionTasksFormID(productionTasksFormID));
+        System.out.println(">>>>>>>>>>>>>>>>>");
+        System.out.println(awDetprodprocService.selectAwDetprodproc(awDetprodproc));
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>");
+        return success(awDetprodprocService.selectAwDetprodproc(awDetprodproc));
     }
 
     /**

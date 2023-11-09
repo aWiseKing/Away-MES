@@ -1,70 +1,5 @@
 <template>
   <div class="app-container">
-    <el-table v-loading="loading" :data="detprodprocList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="生产任务单编号" align="center" prop="productionTasksFormID" />
-      <el-table-column label="任务编号" align="center" prop="productionTasksID" />
-      <el-table-column label="工艺编号" align="center" prop="processingTechnologyID" />
-      <el-table-column label="工序编号" align="center" prop="processingprocessID" />
-      <el-table-column label="工序序号" align="center" prop="number" />
-      <el-table-column label="工序名称" align="center" prop="name" />
-      <el-table-column label="工序内容" align="center" prop="content" />
-      <el-table-column label="工序简图URL" align="center" prop="diagramURL" width="100">
-        <template slot-scope="scope">
-          <image-preview :src="scope.row.diagramURL" :width="50" :height="50"/>
-        </template>
-      </el-table-column>
-      <el-table-column label="所用工装" align="center" prop="usedTooling" />
-      <el-table-column label="准备工时" align="center" prop="preparationHours" />
-      <el-table-column label="单件工时" align="center" prop="taktTime" />
-      <el-table-column label="工时成本" align="center" prop="laborCost" />
-      <el-table-column label="工序外协" align="center" prop="outsourcing">
-        <template slot-scope="scope">
-          <dict-tag :options="dict.type.aw_produce_outsource_status" :value="scope.row.outsourcing"/>
-        </template>
-      </el-table-column>
-      <el-table-column label="状态" align="center" prop="status">
-        <template slot-scope="scope">
-          <dict-tag :options="dict.type.aw_produce_productionprocess_status" :value="scope.row.status"/>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-        <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-view"
-            @click="handleView(scope.row)"
-            v-hasPermi="['produce:detprodproc:edit']"
-          >查看</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['produce:detprodproc:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['produce:detprodproc:remove']"
-          >删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
-
-    <!-- 添加或修改生产工艺工序详细对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="生产任务单编号" prop="productionTasksFormID">
           <el-input v-model="form.productionTasksFormID" placeholder="请输入生产任务单编号" />
@@ -116,16 +51,11 @@
           </el-select>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import { listDetprodproc, getDetprodproc, delDetprodproc, addDetprodproc, updateDetprodproc } from "@/api/produce/detprodproc";
+import {  getDetprodproc, delDetprodproc, addDetprodproc, updateDetprodproc } from "@/api/produce/detprodproc";
 
 export default {
   name: "Detprodproc",
@@ -205,19 +135,38 @@ export default {
         status: [
           { required: true, message: "状态不能为空", trigger: "change" }
         ]
-      }
+      },
+      // 任务单id
+      productionTasksFormID:null,
+      // 任务id
+      productiontasksID:null,
+      // 工序id
+      processingprocessID : null,
     };
   },
   created() {
-    this.getList();
+    this.getExist();
   },
   methods: {
-    /** 查询生产工艺工序详细列表 */
-    getList() {
+    getExist(){
       this.loading = true;
-      listDetprodproc(this.queryParams).then(response => {
-        this.detprodprocList = response.rows;
-        this.total = response.total;
+      this.productionTasksFormID = this.$route.query.productionTasksFormID;
+      this.productiontasksID = this.$route.query.productiontasksID;
+      this.processingprocessID = this.$route.query.processingprocessID;
+      this.getDetprodproc();
+      this.loading = false;
+    },
+    /** 查询生产工艺工序详细列表 */
+    getDetprodproc() {
+      this.loading = true;
+      let query = {
+        "productionTasksFormID":this.productionTasksFormID,
+        "processingprocessID":this.processingprocessID,
+        "processingprocessID":this.processingprocessID
+      }
+      getDetprodproc(query).then(response => {
+        console.log(response);
+        this.form = response.data;
         this.loading = false;
       });
     },
@@ -318,6 +267,14 @@ export default {
       this.download('produce/detprodproc/export', {
         ...this.queryParams
       }, `detprodproc_${new Date().getTime()}.xlsx`)
+    }
+  },
+  watch:{
+    "this.$route.query.processingprocessID":{
+      immediate:true,
+      handler(){
+        this.getExist();
+      }
     }
   }
 };

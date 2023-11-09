@@ -28,6 +28,15 @@ public interface IAwDetprodprocService
     public List<AwDetprodproc> selectAwDetprodprocList(AwDetprodproc awDetprodproc);
 
     /**
+     * 查询生产工艺工序详细列表
+     *
+     * @param awDetprodproc 生产工艺工序详细
+     * @return 生产工艺工序详细
+     */
+    public AwDetprodproc selectAwDetprodproc(AwDetprodproc awDetprodproc);
+
+
+    /**
      * 新增生产工艺工序详细
      * 
      * @param awDetprodproc 生产工艺工序详细

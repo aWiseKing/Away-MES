@@ -48,7 +48,14 @@
         </template>
       </el-table-column>
       <el-table-column label="备注信息" align="center" prop="notes" />
-      <el-table-column label="状态" align="center" prop="status" />
+      <el-table-column label="状态" align="center" prop="status" >
+        <template slot-scope="scope">
+          <dict-tag
+            :options="dict.type.aw_produce_form_status"
+            :value="scope.row.status"
+          />
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)">查看</el-button>
@@ -75,7 +82,11 @@
           <el-col :span="12">
             <el-form-item label="订单状态" prop="state">
               <el-select v-model="form.status" value-key="value" placeholder="请选择订单状态">
-                <el-option v-for="item in state_options" :key="item.key" :label="item.value" :value="item.key">
+                <el-option v-for="dict in dict.type.aw_produce_form_status"
+                :key="dict.value"
+                :label="dict.label"
+                :value="dict.value"
+                >
                 </el-option>
               </el-select>
             </el-form-item>
@@ -110,6 +121,7 @@ import ProductiontasksDialog from "./components/productiontasksDialog/index";
 export default {
   name: "Productiontasklist",
   components: { "productiontasksDialog": ProductiontasksDialog },
+  dicts: ["aw_produce_form_status","aw_produce_outsource_status"],
   data() {
     return {
       // 遮罩层
@@ -141,14 +153,6 @@ export default {
         notes: null,
         status: null
       },
-      // 任务单状态
-      state_options: [
-        { key: "0", value: "未发布" },
-        { key: "1", value: "发布" },
-        { key: "2", value: "暂停" },
-        { key: "3", value: "完成" },
-        { key: "4", value: "取消" }
-      ],
       // 是否外协
       isoutsourced: [
         { key: "0", value: "否" },

@@ -44,6 +44,18 @@ public class AwDetprodprocServiceImpl implements IAwDetprodprocService
     }
 
     /**
+     * 查询生产工艺工序详细列表
+     *
+     * @param awDetprodproc 生产工艺工序详细
+     * @return 生产工艺工序详细
+     */
+    @Override
+    public AwDetprodproc selectAwDetprodproc(AwDetprodproc awDetprodproc)
+    {
+        return awDetprodprocMapper.selectAwDetprodproc(awDetprodproc);
+    }
+
+    /**
      * 新增生产工艺工序详细
      * 
      * @param awDetprodproc 生产工艺工序详细

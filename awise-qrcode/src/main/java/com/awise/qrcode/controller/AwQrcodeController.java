@@ -64,17 +64,22 @@ public class AwQrcodeController extends BaseController
 
     @PreAuthorize("@ss.hasPermi('awise:qrcode:get')")
     @GetMapping("/get")
-    public AjaxResult getQrCode(@RequestParam("processingprocessID")String processingprocessID) throws IOException, WriterException, ParseException {
+    public AjaxResult getQrCode(
+            @RequestParam("productiontasksformID")String productiontasksformID,
+            @RequestParam("productiontasksID")String productiontasksID,
+            @RequestParam("processingprocessID")String processingprocessID
+    ) throws IOException, WriterException, ParseException {
         AjaxResult to_ajax = toAjax(1);
         AwQrcode awQrcode =  awQrcodeService.selectAwQrcodeByProcessingprocessID(Long.valueOf(processingprocessID));// 写一个sql用工序id来查询，通过二维码创建时间排序，取最新码。
+        String query = String.format("?productiontasksformID=%s&productiontasksID=%s&processingprocessID=%s",productiontasksformID,productiontasksID,processingprocessID);
         if(awQrcode == null){
-            awQrcode = this.qrCodeUnit.createQrCode(this.url, this.size, this.multiple, this.filetype, this.filepath, processingprocessID, String.format("?processingprocessID=%s",processingprocessID));
+            awQrcode = this.qrCodeUnit.createQrCode(this.url, this.size, this.multiple, this.filetype, this.filepath, productiontasksformID, productiontasksID, processingprocessID, query);
             awQrcodeService.insertAwQrcode(awQrcode);
         }else {
             String fileurl = awQrcode.getFileurl();
             File file = new File(this.filepath+fileurl);
             if (!file.exists()){
-                awQrcode = this.qrCodeUnit.createQrCode(this.url, this.size, this.multiple, this.filetype, this.filepath, processingprocessID, String.format("?processingprocessID=%s",processingprocessID));
+                awQrcode = this.qrCodeUnit.createQrCode(this.url, this.size, this.multiple, this.filetype, this.filepath, productiontasksformID, productiontasksID, processingprocessID, query);
                 awQrcodeService.insertAwQrcode(awQrcode);
             }
         }
@@ -88,7 +93,7 @@ public class AwQrcodeController extends BaseController
         if (date.before(new_date)){
 
         }else {
-            awQrcode = this.qrCodeUnit.createQrCode(this.url, this.size, this.multiple, this.filetype, this.filepath, processingprocessID, "");
+            awQrcode = this.qrCodeUnit.createQrCode(this.url, this.size, this.multiple, this.filetype, this.filepath, productiontasksformID, productiontasksID, processingprocessID, query);
             awQrcodeService.insertAwQrcode(awQrcode);
         }
         String fileurl = awQrcode.getFileurl();

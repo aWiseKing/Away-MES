@@ -47,7 +47,7 @@
           <el-popover placement="top-start" width="130" trigger="click">
             <el-Image style="width: 120px;height: 120px;" :src="qrcode" :preview-src-list="[qrcode]"></el-Image>
             <el-button slot="reference" size="mini" type="text" icon="el-icon-share"
-            @click="getProcessingProcessQrcode(scope.row)">二维码</el-button>
+            @click="getQrCode(productiontasksFormID,productionTasksID,scope.row.id)">二维码</el-button>
           </el-popover>
         </template>
       </el-table-column>
@@ -193,7 +193,7 @@
 <script>
 import { listProcessingprocess, getProcessingprocess, delProcessingprocess, addProcessingprocess, updateProcessingprocess } from "@/api/produce/processingprocess";
 import { listProcesstemplate } from "@/api/produce/processtemplate";
-import { getProcessingProcessQrcode } from "@/api/qrcode/qrcode";
+import { getQrCode } from "@/api/qrcode/qrcode";
 import { fileUpdate, fileDownload } from "@/api/file/file";
 
 export default {
@@ -271,8 +271,8 @@ export default {
           { required: true, message: "工时成本不能为空", trigger: "blur" }
         ],
       },
-      // 是否存在已发布的任务ID
-      productionTasksID:null,
+      // 任务单编号
+      productiontasksFormID:null,
       // 任务发布状态,
       productionTasks_status:null,
       // 是否存在生产工艺单
@@ -299,10 +299,10 @@ export default {
   },
   methods: {
     async getExist() {
-      this.processingtechnology_exist = true;
-      this.processingTechnologyID = this.$route.query.id;
+      this.processingTechnologyID = this.$route.query.processingTechnologyID;
+      this.productiontasksFormID = this.$route.query.productiontasksFormID;
+      this.productionTasksID = this.$route.query.productionTasksID;
       this.queryParams.processingTechnologyID = this.processingTechnologyID;
-
       this.getList();
     },
     /** 查询加工工序信息列表 */
@@ -322,9 +322,13 @@ export default {
       })
     },
     /** 获取工序对应二维码 */
-    getProcessingProcessQrcode(row) {
-      console.log(row);
-      getProcessingProcessQrcode({ "processingprocessID": row.id }).then(async response => {
+    getQrCode(productiontasksFormID,productiontasksID,processingprocessID) {
+      let query = {
+          "productiontasksformID":productiontasksFormID,
+          "productiontasksID":productiontasksID,
+          "processingprocessID": processingprocessID
+        }
+      getQrCode(query).then(async response => {
         let tmp = await fileDownload(response.date);
         this.qrcode = tmp.getUrl()
       })
@@ -503,7 +507,7 @@ export default {
     }
   },
   watch:{
-    "$route.query.id":{
+    "$route.query.processingTechnologyID":{
       immediate: true,
       handler() {
       this.getExist()

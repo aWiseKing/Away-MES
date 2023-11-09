@@ -10,10 +10,11 @@ export function listDetprodproc(query) {
 }
 
 // 查询生产工艺工序详细详细
-export function getDetprodproc(productionTasksFormID) {
+export function getDetprodproc(query) {
   return request({
-    url: '/produce/detprodproc/' + productionTasksFormID,
-    method: 'get'
+    url: '/produce/detprodproc/get',
+    method: 'get',
+    params: query
   })
 }
 

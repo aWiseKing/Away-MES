@@ -110,7 +110,9 @@ export default {
       // 生产工艺列表
       processingtechnology_list:[],
       // 生成任务单ID
-      productiontasksFormID:null,
+      productiontasksFormID:this.proformid,
+      //任务编号
+      productionTasksID:null,
       // 初始化produceformid参数
       produceformid:this.proformid
     }
@@ -143,8 +145,13 @@ export default {
     },
     /** 跳转详情页面 */
     async jumpDetailPage(row){
-      let id = row.processingTechnologyID;
-      this.$router.push({ path:"/produce/ProcessDetailsTask", query:{ id:id} })
+      let processingTechnologyID = row.processingTechnologyID;
+      let query = {
+        "processingTechnologyID":processingTechnologyID,
+        "productionTasksID":row.id,
+        "productiontasksFormID":this.productiontasksFormID
+      }
+      this.$router.push({ path:"/produce/ProcessDetailsTask", query: query})
 
     },
     /** 提交需修改或添加的任务 */
