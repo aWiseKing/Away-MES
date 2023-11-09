@@ -1,31 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="away@81.68.156.23">
   <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.49">
-    <root id="1">
-      <DefaultCasing>exact</DefaultCasing>
-      <DefaultEngine>InnoDB</DefaultEngine>
-      <DefaultTmpEngine>InnoDB</DefaultTmpEngine>
-      <Grants>away|schema||away||ALTER|G
-away|schema||away||ALTER ROUTINE|G
-away|schema||away||CREATE|G
-away|schema||away||CREATE ROUTINE|G
-away|schema||away||CREATE TEMPORARY TABLES|G
-away|schema||away||CREATE VIEW|G
-away|schema||away||DELETE|G
-away|schema||away||DROP|G
-away|schema||away||EVENT|G
-away|schema||away||EXECUTE|G
-away|schema||away||INDEX|G
-away|schema||away||INSERT|G
-away|schema||away||LOCK TABLES|G
-away|schema||away||REFERENCES|G
-away|schema||away||SELECT|G
-away|schema||away||SHOW VIEW|G
-away|schema||away||TRIGGER|G
-away|schema||away||UPDATE|G
-away|schema||away||grant option|G</Grants>
-      <ServerVersion>5.7.40</ServerVersion>
-    </root>
+    <root id="1"/>
     <collation id="2" parent="1" name="armscii8_bin">
       <Charset>armscii8</Charset>
     </collation>

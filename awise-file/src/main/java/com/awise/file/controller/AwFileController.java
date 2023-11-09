@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.URLEncoder;
 
 import com.awise.file.utils.OpenFile;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,7 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/awise/file")
 public class AwFileController {
 
-    private String file_path = "f:/file";
+    @Value("${away.profile}")
+    String file_path;
 
     /**
      * 文件上传

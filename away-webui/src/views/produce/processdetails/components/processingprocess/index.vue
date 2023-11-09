@@ -56,13 +56,6 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)">详细</el-button>
-          <el-popover placement="top-start" width="130" trigger="click">
-            <el-Image style="width: 120px;height: 120px;" :src="qrcode" :preview-src-list="[qrcode]"></el-Image>
-            <el-button slot="reference" size="mini" type="text" icon="el-icon-share"
-            v-if="productionTasksID != null && productionTasks_status == '1'"
-            @click="getProcessingProcessQrcode(scope.row)">二维码</el-button>
-          </el-popover>
-
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
             v-hasPermi="['produce:processingprocess:edit']">修改</el-button>
           <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"

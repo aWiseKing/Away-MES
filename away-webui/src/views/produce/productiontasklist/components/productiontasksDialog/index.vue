@@ -144,7 +144,7 @@ export default {
     /** 跳转详情页面 */
     async jumpDetailPage(row){
       let id = row.processingTechnologyID;
-      this.$router.push({ path:"/produce/processdetails", query:{ id:id} })
+      this.$router.push({ path:"/produce/ProcessDetailsTask", query:{ id:id} })
 
     },
     /** 提交需修改或添加的任务 */

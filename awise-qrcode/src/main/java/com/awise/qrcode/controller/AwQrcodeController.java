@@ -47,7 +47,7 @@ public class AwQrcodeController extends BaseController
     @Value("${qrcode.size}")
     Integer size;
 
-    @Value("${qrcode.filepath}")
+    @Value("${away.profile}")
     String filepath;
 
     @Value("${qrcode.filetype}")
@@ -70,7 +70,15 @@ public class AwQrcodeController extends BaseController
         if(awQrcode == null){
             awQrcode = this.qrCodeUnit.createQrCode(this.url, this.size, this.multiple, this.filetype, this.filepath, processingprocessID, String.format("?processingprocessID=%s",processingprocessID));
             awQrcodeService.insertAwQrcode(awQrcode);
+        }else {
+            String fileurl = awQrcode.getFileurl();
+            File file = new File(this.filepath+fileurl);
+            if (!file.exists()){
+                awQrcode = this.qrCodeUnit.createQrCode(this.url, this.size, this.multiple, this.filetype, this.filepath, processingprocessID, String.format("?processingprocessID=%s",processingprocessID));
+                awQrcodeService.insertAwQrcode(awQrcode);
+            }
         }
+
 
         SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String s_date = df.format(new Date(awQrcode.getCreateTime().getTime() + Long.valueOf(awQrcode.getEffectiveDuration()) * 60 * 1000));

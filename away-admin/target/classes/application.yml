@@ -9,7 +9,7 @@ away:
   # 实例演示开关
   demoEnabled: true
   # 文件路径 示例（ Windows配置D:/away/uploadPath，Linux配置 /home/away/uploadPath）
-  profile: D:/away/uploadPath
+  profile: D:/data/jxsd/file/
   # 获取ip地址开关
   addressEnabled: false
   # 验证码类型 math 数组计算 char 字符验证
@@ -136,8 +136,7 @@ xss:
 
 # 配置二维码部分
 qrcode:
-  url: xxxx
+  url: localhost/produce/detprodproc
   size: 48
-  filepath: f:/file/
   multiple: 30
   filetype: png

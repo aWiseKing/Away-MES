@@ -61,6 +61,7 @@ public class QrCodeUnit {
         url = url + query;
 
         try {
+
             this.createQrCode(url,size * multiple,fileType,file);
         } catch (WriterException e) {
             e.printStackTrace();
