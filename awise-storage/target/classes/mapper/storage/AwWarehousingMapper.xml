@@ -16,12 +16,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwWarehousingVo">
-        select warehouseEntryID, warehousingDate, creator, acceptedBy, warehouseKeeper, operator, notes, status from aw_warehousing
+        select warehouseEntryID, warehousingDate, creator, acceptedBy, warehouseKeeper, operator, notes, status from aw_Warehousing
     </sql>
 
     <select id="selectAwWarehousingList" parameterType="AwWarehousing" resultMap="AwWarehousingResult">
         <include refid="selectAwWarehousingVo"/>
-        <where>  
+        <where>
+            warehouseEntryID not in (select warehouseEntryID from aw_CsmtdmtlsstinwList)
             <if test="warehousingDate != null "> and warehousingDate = #{warehousingDate}</if>
             <if test="creator != null  and creator != ''"> and creator = #{creator}</if>
             <if test="acceptedBy != null  and acceptedBy != ''"> and acceptedBy = #{acceptedBy}</if>
@@ -36,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertAwWarehousing" parameterType="AwWarehousing">
-        insert into aw_warehousing
+        insert into aw_Warehousing
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="warehouseEntryID != null and warehouseEntryID != ''">warehouseEntryID,</if>
             <if test="warehousingDate != null">warehousingDate,</if>
@@ -60,7 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateAwWarehousing" parameterType="AwWarehousing">
-        update aw_warehousing
+        update aw_Warehousing
         <trim prefix="SET" suffixOverrides=",">
             <if test="warehousingDate != null">warehousingDate = #{warehousingDate},</if>
             <if test="creator != null and creator != ''">creator = #{creator},</if>
@@ -74,11 +75,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAwWarehousingByWarehouseEntryID" parameterType="String">
-        delete from aw_warehousing where warehouseEntryID = #{warehouseEntryID}
+        delete from aw_Warehousing where warehouseEntryID = #{warehouseEntryID}
     </delete>
 
     <delete id="deleteAwWarehousingByWarehouseEntryIDs" parameterType="String">
-        delete from aw_warehousing where warehouseEntryID in 
+        delete from aw_Warehousing where warehouseEntryID in
         <foreach item="warehouseEntryID" collection="array" open="(" separator="," close=")">
             #{warehouseEntryID}
         </foreach>

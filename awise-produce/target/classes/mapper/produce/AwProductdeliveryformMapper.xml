@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwProductdeliveryformVo">
-        select deliveryNoteID, warehousingDate, creator, warehouseKeeper, notes, status from aw_productdeliveryform
+        select deliveryNoteID, warehousingDate, creator, warehouseKeeper, notes, status from aw_ProductDeliveryForm
     </sql>
 
     <select id="selectAwProductdeliveryformList" parameterType="AwProductdeliveryform" resultMap="AwProductdeliveryformResult">
@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertAwProductdeliveryform" parameterType="AwProductdeliveryform">
-        insert into aw_productdeliveryform
+        insert into aw_ProductDeliveryForm
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="deliveryNoteID != null">deliveryNoteID,</if>
             <if test="warehousingDate != null">warehousingDate,</if>
@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateAwProductdeliveryform" parameterType="AwProductdeliveryform">
-        update aw_productdeliveryform
+        update aw_ProductDeliveryForm
         <trim prefix="SET" suffixOverrides=",">
             <if test="warehousingDate != null">warehousingDate = #{warehousingDate},</if>
             <if test="creator != null and creator != ''">creator = #{creator},</if>
@@ -65,11 +65,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAwProductdeliveryformByDeliveryNoteID" parameterType="String">
-        delete from aw_productdeliveryform where deliveryNoteID = #{deliveryNoteID}
+        delete from aw_ProductDeliveryForm where deliveryNoteID = #{deliveryNoteID}
     </delete>
 
     <delete id="deleteAwProductdeliveryformByDeliveryNoteIDs" parameterType="String">
-        delete from aw_productdeliveryform where deliveryNoteID in 
+        delete from aw_ProductDeliveryForm where deliveryNoteID in
         <foreach item="deliveryNoteID" collection="array" open="(" separator="," close=")">
             #{deliveryNoteID}
         </foreach>

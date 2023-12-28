@@ -142,16 +142,6 @@
               </el-radio-group>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item v-if="form.iscustomersuppliedmaterials == 1" label-width="200" label="客供材料编号"
-              prop="customersuppliedmaterialsID">
-              <el-select v-model="form.customersuppliedmaterialsID" placeholder="请选择客供材料">
-                <el-option v-for="item in customersuppliedmaterialss" :key="item.id"
-                  :label="item.customer + '的' + item.material" :value="String(item.id)">
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
         </el-row>
         <!-- 第五行 合同信息 发票信息 -->
         <el-row :gutter="12">
@@ -363,11 +353,11 @@ export default {
       })
     },
     /** 查询库存客供材料信息*/
-    getListCustomersuppliedmaterials() {
-      listCustomersuppliedmaterials({}).then(response => {
-        this.customersuppliedmaterialss = response.rows;
-      })
-    },
+    // getListCustomersuppliedmaterials() {
+    //   listCustomersuppliedmaterials({}).then(response => {
+    //     this.customersuppliedmaterialss = response.rows;
+    //   })
+    // },
     /** 查询合同信息*/
     getListContract() {
       listContract({}).then(response => {
@@ -495,14 +485,16 @@ export default {
     },
     /** 新增按钮操作 */
     handleAdd() {
+
       this.additionals = [];
       this.reset();
       this.getListCustom();
       this.getListInvoice();
       this.getListProduct();
       this.getListContract();
-      this.getListCustomersuppliedmaterials();
+      // this.getListCustomersuppliedmaterials();
       this.open = true;
+
       this.title = "添加订单";
     },
     /** 修改按钮操作 */
@@ -513,7 +505,7 @@ export default {
       this.getListInvoice();
       this.getListProduct();
       this.getListContract();
-      this.getListCustomersuppliedmaterials();
+      // this.getListCustomersuppliedmaterials();
       const id = row.id || this.ids
       getSaleorder(id).then(response => {
         this.form = response.data;

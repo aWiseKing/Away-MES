@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwProductiontasklistVo">
-        select id, referred, founder, createTime, notes, status from aw_productiontasklist
+        select id, referred, founder, createTime, notes, status from aw_ProductionTaskList
     </sql>
 
     <select id="selectAwProductiontasklistList" parameterType="AwProductiontasklist" resultMap="AwProductiontasklistResult">
@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertAwProductiontasklist" parameterType="AwProductiontasklist" useGeneratedKeys="true" keyProperty="id">
-        insert into aw_productiontasklist
+        insert into aw_ProductionTaskList
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="referred != null and referred != ''">referred,</if>
             <if test="founder != null and founder != ''">founder,</if>
@@ -52,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateAwProductiontasklist" parameterType="AwProductiontasklist">
-        update aw_productiontasklist
+        update aw_ProductionTaskList
         <trim prefix="SET" suffixOverrides=",">
             <if test="referred != null and referred != ''">referred = #{referred},</if>
             <if test="founder != null and founder != ''">founder = #{founder},</if>
@@ -64,11 +64,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAwProductiontasklistById" parameterType="Long">
-        delete from aw_productiontasklist where id = #{id}
+        delete from aw_ProductionTaskList where id = #{id}
     </delete>
 
     <delete id="deleteAwProductiontasklistByIds" parameterType="String">
-        delete from aw_productiontasklist where id in 
+        delete from aw_ProductionTaskList where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

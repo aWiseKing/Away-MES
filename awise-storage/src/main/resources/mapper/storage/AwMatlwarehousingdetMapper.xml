@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwMatlwarehousingdetVo">
-        select id, warehouseEntryID, materialSubscription, materialID, name, typeName, specificationsType, specificationModel, materialDensity, receiptInvoiceID, invoiceType, invoiceTaxRate, purchaseUnitPriceExcludingTax, purchaseUnitPriceIncludingTax, receiptQuantity, sampleURL, notes from aw_matlwarehousingdet
+        select id, warehouseEntryID, materialSubscription, materialID, name, typeName, specificationsType, specificationModel, materialDensity, receiptInvoiceID, invoiceType, invoiceTaxRate, purchaseUnitPriceExcludingTax, purchaseUnitPriceIncludingTax, receiptQuantity, sampleURL, notes from aw_MatlWarehousingDet
     </sql>
 
     <select id="selectAwMatlwarehousingdetList" parameterType="AwMatlwarehousingdet" resultMap="AwMatlwarehousingdetResult">
@@ -46,7 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertAwMatlwarehousingdet" parameterType="AwMatlwarehousingdet">
-        insert into aw_matlwarehousingdet
+        insert into aw_MatlWarehousingDet
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="warehouseEntryID != null and warehouseEntryID != ''">warehouseEntryID,</if>
@@ -88,7 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateAwMatlwarehousingdet" parameterType="AwMatlwarehousingdet">
-        update aw_matlwarehousingdet
+        update aw_MatlWarehousingDet
         <trim prefix="SET" suffixOverrides=",">
             <if test="warehouseEntryID != null and warehouseEntryID != ''">warehouseEntryID = #{warehouseEntryID},</if>
             <if test="materialSubscription != null">materialSubscription = #{materialSubscription},</if>
@@ -111,11 +111,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAwMatlwarehousingdetById" parameterType="Long">
-        delete from aw_matlwarehousingdet where id = #{id}
+        delete from aw_MatlWarehousingDet where id = #{id}
     </delete>
 
     <delete id="deleteAwMatlwarehousingdetByIds" parameterType="String">
-        delete from aw_matlwarehousingdet where id in 
+        delete from aw_MatlWarehousingDet where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

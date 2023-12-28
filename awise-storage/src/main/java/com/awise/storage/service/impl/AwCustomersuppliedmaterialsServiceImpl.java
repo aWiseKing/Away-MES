@@ -11,7 +11,7 @@ import com.awise.storage.service.IAwCustomersuppliedmaterialsService;
  * 客供材料实时库存Service业务层处理
  * 
  * @author awise
- * @date 2023-08-03
+ * @date 2023-12-27
  */
 @Service
 public class AwCustomersuppliedmaterialsServiceImpl implements IAwCustomersuppliedmaterialsService 

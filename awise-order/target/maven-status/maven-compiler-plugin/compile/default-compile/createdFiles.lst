@@ -7,6 +7,7 @@ com\awise\order\controller\AwDetailmaterialsubscriptionController.class
 com\awise\order\controller\AwProductController.class
 com\awise\order\service\IAwSaleorderEnService.class
 com\awise\order\mapper\AwProductMapper.class
+com\awise\order\service\IAwBasicorderinformationService.class
 com\awise\order\mapper\AwAdditionalMapper.class
 com\awise\order\domain\AwMaterialsubscription.class
 com\awise\order\controller\AwPurchaserequisitionController.class
@@ -16,6 +17,8 @@ com\awise\order\service\IAwOutsourcingorderService.class
 com\awise\order\domain\AwSaleorderEn.class
 com\awise\order\mapper\AwPurchaserequisitionMapper.class
 com\awise\order\domain\AwPurchaserequisition.class
+com\awise\order\mapper\AwBasicorderinformationMapper.class
+com\awise\order\service\impl\AwBasicorderinformationServiceImpl.class
 com\awise\order\service\impl\AwMaterialsubscriptionServiceImpl.class
 com\awise\order\mapper\AwSaleorderEnMapper.class
 com\awise\order\domain\AwSaleorder.class
@@ -27,6 +30,7 @@ com\awise\order\domain\AwContract.class
 com\awise\order\domain\AwOutsourcingorder.class
 com\awise\order\service\impl\AwContractServiceImpl.class
 com\awise\order\service\impl\AwOutsourcingorderServiceImpl.class
+com\awise\order\domain\AwBasicorderinformation.class
 com\awise\order\service\IAwAdditionalService.class
 com\awise\order\service\IAwContractService.class
 com\awise\order\domain\AwDetailmaterialsubscription.class
@@ -36,6 +40,7 @@ com\awise\order\service\IAwPurchaserequisitionService.class
 com\awise\order\domain\AwProduct.class
 com\awise\order\service\IAwProductService.class
 com\awise\order\service\impl\AwSaleorderEnServiceImpl.class
+com\awise\order\controller\AwBasicorderinformationController.class
 com\awise\order\service\impl\AwAdditionalServiceImpl.class
 com\awise\order\service\impl\AwProductServiceImpl.class
 com\awise\order\controller\AwOutsourcingorderController.class

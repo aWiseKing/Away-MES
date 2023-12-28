@@ -67,7 +67,14 @@ public class AwDetprodprocController extends BaseController
     public AjaxResult getInfo(AwDetprodproc awDetprodproc)
     {
         System.out.println(">>>>>>>>>>>>>>>>>");
+        System.out.println(">>>>>>>>>>>>>>>>>");
+        System.out.println(">>>>>>>>>>>>>>>>>");
+        System.out.println(">>>>>>>>>>>>>>>>>");
+        System.out.println(awDetprodproc);
         System.out.println(awDetprodprocService.selectAwDetprodproc(awDetprodproc));
+        System.out.println(">>>>>>>>>>>>>>>>>");
+        System.out.println(">>>>>>>>>>>>>>>>>");
+        System.out.println(">>>>>>>>>>>>>>>>>");
         System.out.println(">>>>>>>>>>>>>>>>>>>>>");
         return success(awDetprodprocService.selectAwDetprodproc(awDetprodproc));
     }

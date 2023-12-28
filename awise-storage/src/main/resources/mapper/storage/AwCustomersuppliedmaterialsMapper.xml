@@ -6,20 +6,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="AwCustomersuppliedmaterials" id="AwCustomersuppliedmaterialsResult">
         <result property="id"    column="id"    />
+        <result property="saleorderID"    column="saleorderID"    />
         <result property="materialID"    column="materialID"    />
         <result property="number"    column="number"    />
         <result property="weight"    column="weight"    />
-        <result property="customerID"    column="customerID"    />
     </resultMap>
 
     <sql id="selectAwCustomersuppliedmaterialsVo">
-        select id, materialID, number, weight, customerID from aw_customersuppliedmaterials
+        select id, saleorderID, materialID, number, weight from aw_customersuppliedmaterials
     </sql>
 
     <select id="selectAwCustomersuppliedmaterialsList" parameterType="AwCustomersuppliedmaterials" resultMap="AwCustomersuppliedmaterialsResult">
         <include refid="selectAwCustomersuppliedmaterialsVo"/>
         <where>  
-            <if test="customerID != null  and customerID != ''"> and customerID = #{customerID}</if>
         </where>
     </select>
     
@@ -31,26 +30,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertAwCustomersuppliedmaterials" parameterType="AwCustomersuppliedmaterials" useGeneratedKeys="true" keyProperty="id">
         insert into aw_customersuppliedmaterials
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="saleorderID != null and saleorderID != ''">saleorderID,</if>
             <if test="materialID != null and materialID != ''">materialID,</if>
             <if test="number != null">number,</if>
             <if test="weight != null">weight,</if>
-            <if test="customerID != null and customerID != ''">customerID,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="saleorderID != null and saleorderID != ''">#{saleorderID},</if>
             <if test="materialID != null and materialID != ''">#{materialID},</if>
             <if test="number != null">#{number},</if>
             <if test="weight != null">#{weight},</if>
-            <if test="customerID != null and customerID != ''">#{customerID},</if>
          </trim>
     </insert>
 
     <update id="updateAwCustomersuppliedmaterials" parameterType="AwCustomersuppliedmaterials">
         update aw_customersuppliedmaterials
         <trim prefix="SET" suffixOverrides=",">
+            <if test="saleorderID != null and saleorderID != ''">saleorderID = #{saleorderID},</if>
             <if test="materialID != null and materialID != ''">materialID = #{materialID},</if>
             <if test="number != null">number = #{number},</if>
             <if test="weight != null">weight = #{weight},</if>
-            <if test="customerID != null and customerID != ''">customerID = #{customerID},</if>
         </trim>
         where id = #{id}
     </update>

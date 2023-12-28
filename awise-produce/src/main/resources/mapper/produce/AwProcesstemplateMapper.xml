@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwProcesstemplateVo">
-        select id, name, content, diagramURL, usedTooling, preparationHours, taktTime, laborCost, outsourcing, status from aw_processtemplate
+        select id, name, content, diagramURL, usedTooling, preparationHours, taktTime, laborCost, outsourcing, status from aw_ProcessTemplate
     </sql>
 
     <select id="selectAwProcesstemplateList" parameterType="AwProcesstemplate" resultMap="AwProcesstemplateResult">
@@ -42,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertAwProcesstemplate" parameterType="AwProcesstemplate">
-        insert into aw_processtemplate
+        insert into aw_ProcessTemplate
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="name != null and name != ''">name,</if>
@@ -70,7 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateAwProcesstemplate" parameterType="AwProcesstemplate">
-        update aw_processtemplate
+        update aw_ProcessTemplate
         <trim prefix="SET" suffixOverrides=",">
             <if test="name != null and name != ''">name = #{name},</if>
             <if test="content != null and content != ''">content = #{content},</if>
@@ -86,11 +86,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAwProcesstemplateById" parameterType="Long">
-        delete from aw_processtemplate where id = #{id}
+        delete from aw_ProcessTemplate where id = #{id}
     </delete>
 
     <delete id="deleteAwProcesstemplateByIds" parameterType="String">
-        delete from aw_processtemplate where id in 
+        delete from aw_ProcessTemplate where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

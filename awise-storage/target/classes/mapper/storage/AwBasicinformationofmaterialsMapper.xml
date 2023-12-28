@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwBasicinformationofmaterialsVo">
-        select id, name, typeID, specificationsID, materialDensity, notes, typeName, specificationsType, specificationModel from aw_basicinformationofmaterials
+        select id, name, typeID, specificationsID, materialDensity, notes, typeName, specificationsType, specificationModel from aw_BasicInformationOfMaterials
     </sql>
 
     <select id="selectAwBasicinformationofmaterialsList" parameterType="AwBasicinformationofmaterials" resultMap="AwBasicinformationofmaterialsResult">
@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertAwBasicinformationofmaterials" parameterType="AwBasicinformationofmaterials">
-        insert into aw_basicinformationofmaterials
+        insert into aw_BasicInformationOfMaterials
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null and id != ''">id,</if>
             <if test="name != null and name != ''">name,</if>
@@ -67,7 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateAwBasicinformationofmaterials" parameterType="AwBasicinformationofmaterials">
-        update aw_basicinformationofmaterials
+        update aw_BasicInformationOfMaterials
         <trim prefix="SET" suffixOverrides=",">
             <if test="name != null and name != ''">name = #{name},</if>
             <if test="typeID != null">typeID = #{typeID},</if>
@@ -82,11 +82,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAwBasicinformationofmaterialsById" parameterType="String">
-        delete from aw_basicinformationofmaterials where id = #{id}
+        delete from aw_BasicInformationOfMaterials where id = #{id}
     </delete>
 
     <delete id="deleteAwBasicinformationofmaterialsByIds" parameterType="String">
-        delete from aw_basicinformationofmaterials where id in 
+        delete from aw_BasicInformationOfMaterials where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

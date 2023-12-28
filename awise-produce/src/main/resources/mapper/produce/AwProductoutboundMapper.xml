@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwProductoutboundVo">
-        select id, deliveryNoteID, productID, shippingInspectionID, receiptQuantity, contractID, notes from aw_productoutbound
+        select id, deliveryNoteID, productID, shippingInspectionID, receiptQuantity, contractID, notes from aw_ProductOutbound
     </sql>
 
     <select id="selectAwProductoutboundList" parameterType="AwProductoutbound" resultMap="AwProductoutboundResult">
@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertAwProductoutbound" parameterType="AwProductoutbound">
-        insert into aw_productoutbound
+        insert into aw_ProductOutbound
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="deliveryNoteID != null and deliveryNoteID != ''">deliveryNoteID,</if>
@@ -58,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateAwProductoutbound" parameterType="AwProductoutbound">
-        update aw_productoutbound
+        update aw_ProductOutbound
         <trim prefix="SET" suffixOverrides=",">
             <if test="deliveryNoteID != null and deliveryNoteID != ''">deliveryNoteID = #{deliveryNoteID},</if>
             <if test="productID != null and productID != ''">productID = #{productID},</if>
@@ -71,11 +71,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAwProductoutboundById" parameterType="Long">
-        delete from aw_productoutbound where id = #{id}
+        delete from aw_ProductOutbound where id = #{id}
     </delete>
 
     <delete id="deleteAwProductoutboundByIds" parameterType="String">
-        delete from aw_productoutbound where id in 
+        delete from aw_ProductOutbound where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

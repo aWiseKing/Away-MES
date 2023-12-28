@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwLocalmaterialoutboundVo">
-        select id, deliveryNoteID, materialID, productionTasksID, processingTechnologyID, outboundQuantity, notes from aw_localmaterialoutbound
+        select id, deliveryNoteID, materialID, productionTasksID, processingTechnologyID, outboundQuantity, notes from aw_LocalMaterialOutbound
     </sql>
 
     <select id="selectAwLocalmaterialoutboundList" parameterType="AwLocalmaterialoutbound" resultMap="AwLocalmaterialoutboundResult">
@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertAwLocalmaterialoutbound" parameterType="AwLocalmaterialoutbound" useGeneratedKeys="true" keyProperty="id">
-        insert into aw_localmaterialoutbound
+        insert into aw_LocalMaterialOutbound
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="deliveryNoteID != null and deliveryNoteID != ''">deliveryNoteID,</if>
             <if test="materialID != null and materialID != ''">materialID,</if>
@@ -54,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateAwLocalmaterialoutbound" parameterType="AwLocalmaterialoutbound">
-        update aw_localmaterialoutbound
+        update aw_LocalMaterialOutbound
         <trim prefix="SET" suffixOverrides=",">
             <if test="deliveryNoteID != null and deliveryNoteID != ''">deliveryNoteID = #{deliveryNoteID},</if>
             <if test="materialID != null and materialID != ''">materialID = #{materialID},</if>
@@ -67,11 +67,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAwLocalmaterialoutboundById" parameterType="Long">
-        delete from aw_localmaterialoutbound where id = #{id}
+        delete from aw_LocalMaterialOutbound where id = #{id}
     </delete>
 
     <delete id="deleteAwLocalmaterialoutboundByIds" parameterType="String">
-        delete from aw_localmaterialoutbound where id in 
+        delete from aw_LocalMaterialOutbound where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

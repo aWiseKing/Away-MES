@@ -167,7 +167,7 @@
             icon="el-icon-edit"
             v-if="scope.row.status == '2'"
             @click="handleFinish(scope.row)"
-            v-hasPermi="['storage:warehousing:edit']"
+            v-hasPermi="['storage:localmaterials:addnumber']"
           >完成入库</el-button>
           <el-button
             size="mini"

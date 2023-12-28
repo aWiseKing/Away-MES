@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwProductstorageVo">
-        select id, warehouseEntryID, productID, FinishedProductInspectionID, receiptQuantity, notes from aw_productstorage
+        select id, warehouseEntryID, productID, FinishedProductInspectionID, receiptQuantity, notes from aw_ProductStorage
     </sql>
 
     <select id="selectAwProductstorageList" parameterType="AwProductstorage" resultMap="AwProductstorageResult">
@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertAwProductstorage" parameterType="AwProductstorage">
-        insert into aw_productstorage
+        insert into aw_ProductStorage
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="warehouseEntryID != null and warehouseEntryID != ''">warehouseEntryID,</if>
@@ -54,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateAwProductstorage" parameterType="AwProductstorage">
-        update aw_productstorage
+        update aw_ProductStorage
         <trim prefix="SET" suffixOverrides=",">
             <if test="warehouseEntryID != null and warehouseEntryID != ''">warehouseEntryID = #{warehouseEntryID},</if>
             <if test="productID != null and productID != ''">productID = #{productID},</if>
@@ -66,11 +66,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAwProductstorageById" parameterType="Long">
-        delete from aw_productstorage where id = #{id}
+        delete from aw_ProductStorage where id = #{id}
     </delete>
 
     <delete id="deleteAwProductstorageByIds" parameterType="String">
-        delete from aw_productstorage where id in 
+        delete from aw_ProductStorage where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

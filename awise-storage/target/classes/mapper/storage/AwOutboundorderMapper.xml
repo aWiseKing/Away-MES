@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwOutboundorderVo">
-        select deliveryNoteID, deliveryDate, creator, warehouseKeeper, materialReceiver, notes, status from aw_outboundorder
+        select deliveryNoteID, deliveryDate, creator, warehouseKeeper, materialReceiver, notes, status from aw_OutboundOrder
     </sql>
 
     <select id="selectAwOutboundorderList" parameterType="AwOutboundorder" resultMap="AwOutboundorderResult">
@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertAwOutboundorder" parameterType="AwOutboundorder">
-        insert into aw_outboundorder
+        insert into aw_OutboundOrder
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="deliveryNoteID != null and deliveryNoteID != ''">deliveryNoteID,</if>
             <if test="deliveryDate != null">deliveryDate,</if>
@@ -58,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateAwOutboundorder" parameterType="AwOutboundorder">
-        update aw_outboundorder
+        update aw_OutboundOrder
         <trim prefix="SET" suffixOverrides=",">
             <if test="deliveryDate != null">deliveryDate = #{deliveryDate},</if>
             <if test="creator != null and creator != ''">creator = #{creator},</if>
@@ -71,11 +71,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAwOutboundorderByDeliveryNoteID" parameterType="String">
-        delete from aw_outboundorder where deliveryNoteID = #{deliveryNoteID}
+        delete from aw_OutboundOrder where deliveryNoteID = #{deliveryNoteID}
     </delete>
 
     <delete id="deleteAwOutboundorderByDeliveryNoteIDs" parameterType="String">
-        delete from aw_outboundorder where deliveryNoteID in 
+        delete from aw_OutboundOrder where deliveryNoteID in
         <foreach item="deliveryNoteID" collection="array" open="(" separator="," close=")">
             #{deliveryNoteID}
         </foreach>

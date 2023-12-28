@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form disabled ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="生产任务单编号" prop="productionTasksFormID">
           <el-input v-model="form.productionTasksFormID" placeholder="请输入生产任务单编号" />
         </el-form-item>
@@ -150,7 +150,7 @@ export default {
   methods: {
     getExist(){
       this.loading = true;
-      this.productionTasksFormID = this.$route.query.productionTasksFormID;
+      this.productionTasksFormID = this.$route.query.productiontasksformID;
       this.productiontasksID = this.$route.query.productiontasksID;
       this.processingprocessID = this.$route.query.processingprocessID;
       this.getDetprodproc();
@@ -161,7 +161,7 @@ export default {
       this.loading = true;
       let query = {
         "productionTasksFormID":this.productionTasksFormID,
-        "processingprocessID":this.processingprocessID,
+        "productionTasksID":this.productiontasksID,
         "processingprocessID":this.processingprocessID
       }
       getDetprodproc(query).then(response => {

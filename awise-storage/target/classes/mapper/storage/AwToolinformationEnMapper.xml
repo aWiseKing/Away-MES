@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.awise.storage.mapper.AwToolinformationEnMapper">
-    
+
     <resultMap type="AwToolinformationEn" id="AwToolinformationEnResult">
         <result property="id"    column="id"    />
         <result property="name"    column="name"    />
@@ -16,24 +16,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <sql id="selectAwToolinformationEnVo">
         SELECT
-        aw_toolinformation.id,
-        aw_toolinformation.`name`,
-        aw_toolclassification.`name` AS type,
-        aw_specifications.type as specification,
-        aw_specifications.specificationModel,
-        aw_units.unit,
-        aw_toolinformation.notes
+            aw_toolInformation.id,
+            aw_toolInformation.`name`,
+            aw_toolclassification.`name` AS type,
+            aw_specifications.type as specification,
+            aw_specifications.specificationModel,
+            aw_units.unit,
+            aw_toolInformation.notes
         FROM
-        aw_toolinformation
-        LEFT JOIN aw_toolclassification ON aw_toolclassification.id = aw_toolinformation.typeID
-        LEFT JOIN aw_specifications ON aw_toolinformation.specificationsID = aw_specifications.id
-        LEFT JOIN aw_units ON aw_toolinformation.unitID = aw_units.id
+            aw_toolInformation
+                LEFT JOIN aw_toolclassification ON aw_toolclassification.id = aw_toolInformation.typeID
+                LEFT JOIN aw_specifications ON aw_toolInformation.specificationsID = aw_specifications.id
+                LEFT JOIN aw_units ON aw_toolInformation.unitID = aw_units.id
     </sql>
 
     <select id="selectAwToolinformationEnList" parameterType="AwToolinformationEn" resultMap="AwToolinformationEnResult">
         <include refid="selectAwToolinformationEnVo"/>
         <where>
-            <if test="name !=null and name != ''">and aw_toolinformation.`name` like concat('%', #{name}, '%')</if>
+            <if test="name !=null and name != ''">and aw_toolInformation.`name` like concat('%', #{name}, '%')</if>
             <if test="specification !=null and specification != ''">and aw_toolclassification.`name` like concat('%', #{specification}, '%')</if>
             <if test="type !=null and type != ''">and aw_specifications.type like concat('%', #{type}, '%')</if>
             <if test="specificationModel !=null and specificationModel != ''">and aw_specifications.specificationModel like concat('%', #{specificationModel}, '%')</if>

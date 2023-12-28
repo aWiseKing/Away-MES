@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.awise.finance.mapper.AwReconciliationMapper">
+    
+    <resultMap type="AwReconciliation" id="AwReconciliationResult">
+        <result property="id"    column="id"    />
+        <result property="statementOfAccountID"    column="statementOfAccountID"    />
+        <result property="saleorderID"    column="saleorderID"    />
+        <result property="numberOfProductsSupplied"    column="numberOfProductsSupplied"    />
+        <result property="amountDue"    column="amountDue"    />
+        <result property="outOfPocketAmount"    column="outOfPocketAmount"    />
+        <result property="unpaidAmount"    column="unpaidAmount"    />
+        <result property="notes"    column="notes"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectAwReconciliationVo">
+        select id, statementOfAccountID, saleorderID, numberOfProductsSupplied, amountDue, outOfPocketAmount, unpaidAmount, notes, status from aw_Reconciliation
+    </sql>
+
+    <select id="selectAwReconciliationList" parameterType="AwReconciliation" resultMap="AwReconciliationResult">
+        <include refid="selectAwReconciliationVo"/>
+        <where>  
+            <if test="statementOfAccountID != null  and statementOfAccountID != ''"> and statementOfAccountID = #{statementOfAccountID}</if>
+            <if test="saleorderID != null  and saleorderID != ''"> and saleorderID = #{saleorderID}</if>
+            <if test="numberOfProductsSupplied != null "> and numberOfProductsSupplied = #{numberOfProductsSupplied}</if>
+            <if test="amountDue != null  and amountDue != ''"> and amountDue = #{amountDue}</if>
+            <if test="outOfPocketAmount != null  and outOfPocketAmount != ''"> and outOfPocketAmount = #{outOfPocketAmount}</if>
+            <if test="unpaidAmount != null  and unpaidAmount != ''"> and unpaidAmount = #{unpaidAmount}</if>
+            <if test="notes != null  and notes != ''"> and notes = #{notes}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectAwReconciliationById" parameterType="Long" resultMap="AwReconciliationResult">
+        <include refid="selectAwReconciliationVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAwReconciliation" parameterType="AwReconciliation" useGeneratedKeys="true" keyProperty="id">
+        insert into aw_Reconciliation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="statementOfAccountID != null">statementOfAccountID,</if>
+            <if test="saleorderID != null">saleorderID,</if>
+            <if test="numberOfProductsSupplied != null">numberOfProductsSupplied,</if>
+            <if test="amountDue != null">amountDue,</if>
+            <if test="outOfPocketAmount != null">outOfPocketAmount,</if>
+            <if test="unpaidAmount != null">unpaidAmount,</if>
+            <if test="notes != null">notes,</if>
+            <if test="status != null">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="statementOfAccountID != null">#{statementOfAccountID},</if>
+            <if test="saleorderID != null">#{saleorderID},</if>
+            <if test="numberOfProductsSupplied != null">#{numberOfProductsSupplied},</if>
+            <if test="amountDue != null">#{amountDue},</if>
+            <if test="outOfPocketAmount != null">#{outOfPocketAmount},</if>
+            <if test="unpaidAmount != null">#{unpaidAmount},</if>
+            <if test="notes != null">#{notes},</if>
+            <if test="status != null">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAwReconciliation" parameterType="AwReconciliation">
+        update aw_Reconciliation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="statementOfAccountID != null">statementOfAccountID = #{statementOfAccountID},</if>
+            <if test="saleorderID != null">saleorderID = #{saleorderID},</if>
+            <if test="numberOfProductsSupplied != null">numberOfProductsSupplied = #{numberOfProductsSupplied},</if>
+            <if test="amountDue != null">amountDue = #{amountDue},</if>
+            <if test="outOfPocketAmount != null">outOfPocketAmount = #{outOfPocketAmount},</if>
+            <if test="unpaidAmount != null">unpaidAmount = #{unpaidAmount},</if>
+            <if test="notes != null">notes = #{notes},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAwReconciliationById" parameterType="Long">
+        delete from aw_Reconciliation where id = #{id}
+    </delete>
+
+    <delete id="deleteAwReconciliationByIds" parameterType="String">
+        delete from aw_Reconciliation where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwFinishedproductinspectionVo">
-        select id, nameOfQualityInspection, productionTasksID, productID, detectionQuantity, qualifiedQuantity, unqualifiedQuantity, testDate, testResult, testingPersonnel, notes from aw_finishedproductinspection
+        select id, nameOfQualityInspection, productionTasksID, productID, detectionQuantity, qualifiedQuantity, unqualifiedQuantity, testDate, testResult, testingPersonnel, notes from aw_FinishedProductInspection
     </sql>
 
     <select id="selectAwFinishedproductinspectionList" parameterType="AwFinishedproductinspection" resultMap="AwFinishedproductinspectionResult">
@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertAwFinishedproductinspection" parameterType="AwFinishedproductinspection">
-        insert into aw_finishedproductinspection
+        insert into aw_FinishedProductInspection
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="nameOfQualityInspection != null and nameOfQualityInspection != ''">nameOfQualityInspection,</if>
@@ -67,7 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateAwFinishedproductinspection" parameterType="AwFinishedproductinspection">
-        update aw_finishedproductinspection
+        update aw_FinishedProductInspection
         <trim prefix="SET" suffixOverrides=",">
             <if test="nameOfQualityInspection != null and nameOfQualityInspection != ''">nameOfQualityInspection = #{nameOfQualityInspection},</if>
             <if test="productionTasksID != null">productionTasksID = #{productionTasksID},</if>
@@ -84,11 +84,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAwFinishedproductinspectionById" parameterType="String">
-        delete from aw_finishedproductinspection where id = #{id}
+        delete from aw_FinishedProductInspection where id = #{id}
     </delete>
 
     <delete id="deleteAwFinishedproductinspectionByIds" parameterType="String">
-        delete from aw_finishedproductinspection where id in 
+        delete from aw_FinishedProductInspection where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

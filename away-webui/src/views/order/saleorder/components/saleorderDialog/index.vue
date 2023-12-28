@@ -23,7 +23,6 @@
       <el-descriptions-item label="需求数量">{{ view_form.number }}</el-descriptions-item>
       <el-descriptions-item label="要求交期">{{ view_form.requiredDeliveryTime }}</el-descriptions-item>
       <el-descriptions-item label="客供材料">{{ view_form.iscustomersuppliedmaterials == 0 ? "否" : "是" }}</el-descriptions-item>
-      <el-descriptions-item label="材料入库编号">{{ view_form.customersuppliedmaterialsID }}</el-descriptions-item>
       <el-descriptions-item label="合同编号">{{ view_form.contractID }}</el-descriptions-item>
       <el-descriptions-item label="合同金额">{{ view_form.contractmoney }}</el-descriptions-item>
       <el-descriptions-item label="合同附件" :span="2">

@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwLocalmaterialwarehousingVo">
-        select id, warehouseEntryID, materialSubscription, receiptInvoiceID, materialID, receiptQuantity, sampleURL, notes from aw_localmaterialwarehousing
+        select id, warehouseEntryID, materialSubscription, receiptInvoiceID, materialID, receiptQuantity, sampleURL, notes from aw_LocalMaterialWarehousing
     </sql>
 
     <select id="selectAwLocalmaterialwarehousingList" parameterType="AwLocalmaterialwarehousing" resultMap="AwLocalmaterialwarehousingResult">
@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertAwLocalmaterialwarehousing" parameterType="AwLocalmaterialwarehousing" useGeneratedKeys="true" keyProperty="id">
-        insert into aw_localmaterialwarehousing
+        insert into aw_LocalMaterialWarehousing
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="warehouseEntryID != null and warehouseEntryID != ''">warehouseEntryID,</if>
             <if test="materialSubscription != null">materialSubscription,</if>
@@ -57,7 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateAwLocalmaterialwarehousing" parameterType="AwLocalmaterialwarehousing">
-        update aw_localmaterialwarehousing
+        update aw_LocalMaterialWarehousing
         <trim prefix="SET" suffixOverrides=",">
             <if test="warehouseEntryID != null and warehouseEntryID != ''">warehouseEntryID = #{warehouseEntryID},</if>
             <if test="materialSubscription != null">materialSubscription = #{materialSubscription},</if>
@@ -71,11 +71,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAwLocalmaterialwarehousingById" parameterType="Long">
-        delete from aw_localmaterialwarehousing where id = #{id}
+        delete from aw_LocalMaterialWarehousing where id = #{id}
     </delete>
 
     <delete id="deleteAwLocalmaterialwarehousingByIds" parameterType="String">
-        delete from aw_localmaterialwarehousing where id in 
+        delete from aw_LocalMaterialWarehousing where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwDetailmaterialsubscriptionVo">
-        select materialSubscription, subscribeID, productionTasksID, materialID, name, typeName, specificationsType, specificationModel, materialDensity, processingTechnologyID, subscriptionQuantity, requiredDate, sampleURL, note from aw_detailmaterialsubscription
+        select materialSubscription, subscribeID, productionTasksID, materialID, name, typeName, specificationsType, specificationModel, materialDensity, processingTechnologyID, subscriptionQuantity, requiredDate, sampleURL, note from aw_Detailmaterialsubscription
     </sql>
 
     <select id="selectAwDetailmaterialsubscriptionList" parameterType="AwDetailmaterialsubscription" resultMap="AwDetailmaterialsubscriptionResult">
@@ -42,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertAwDetailmaterialsubscription" parameterType="AwDetailmaterialsubscription">
-        insert into aw_detailmaterialsubscription
+        insert into aw_Detailmaterialsubscription
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="materialSubscription != null and materialSubscription != ''">materialSubscription,</if>
             <if test="subscribeID != null and subscribeID != ''">subscribeID,</if>
@@ -78,7 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateAwDetailmaterialsubscription" parameterType="AwDetailmaterialsubscription">
-        update aw_detailmaterialsubscription
+        update aw_Detailmaterialsubscription
         <trim prefix="SET" suffixOverrides=",">
             <if test="subscribeID != null and subscribeID != ''">subscribeID = #{subscribeID},</if>
             <if test="productionTasksID != null">productionTasksID = #{productionTasksID},</if>
@@ -98,11 +98,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAwDetailmaterialsubscriptionByMaterialSubscription" parameterType="String">
-        delete from aw_detailmaterialsubscription where materialSubscription = #{materialSubscription}
+        delete from aw_Detailmaterialsubscription where materialSubscription = #{materialSubscription}
     </delete>
 
     <delete id="deleteAwDetailmaterialsubscriptionByMaterialSubscriptions" parameterType="String">
-        delete from aw_detailmaterialsubscription where materialSubscription in 
+        delete from aw_Detailmaterialsubscription where materialSubscription in
         <foreach item="materialSubscription" collection="array" open="(" separator="," close=")">
             #{materialSubscription}
         </foreach>

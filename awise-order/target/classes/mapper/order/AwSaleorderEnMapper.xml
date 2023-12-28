@@ -34,10 +34,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="reconciliationDate"    column="reconciliationDate"    />
         <result property="customerReconciliationPersonnel"    column="customerReconciliationPersonnel"    />
         <result property="iscustomersuppliedmaterials"    column="iscustomersuppliedmaterials"    />
-        <result property="customersuppliedmaterialsID"    column="customersuppliedmaterialsID"    />
-        <result property="customersuppliedmaterial"    column="customersuppliedmaterial"    />
-        <result property="customersuppliedmaterialnumber"    column="customersuppliedmaterialnumber"    />
-        <result property="customersuppliedmaterialweight"    column="customersuppliedmaterialweight"    />
         <result property="state"    column="state"    />
         <result property="note"    column="note"    />
         <result property="isDel"    column="isDel"    />
@@ -70,10 +66,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         aw_contract.money,
         aw_contract.contractURL as contractURL,
         aw_contract.id AS contractid,
-        aw_customersuppliedmaterials.id as customersuppliedmaterialsID,
-        aw_customersuppliedmaterials.number as customersuppliedmaterialnumber,
-        aw_material.`name` as customersuppliedmaterial,
-        aw_customersuppliedmaterials.weight as customersuppliedmaterialweight,
         aw_invoice.invoiceType,
         aw_invoice.id AS invoiceID,
         aw_invoice.invoiceCreateTime,
@@ -107,18 +99,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         aw_product
         ON
         aw_saleorder.productID = aw_product.id
-        LEFT JOIN
-        aw_customersuppliedmaterials
-        ON
-        aw_saleorder.customersuppliedmaterialsID = aw_customersuppliedmaterials.id
+
         LEFT JOIN
         aw_partner
         ON
         aw_saleorder.customerID = aw_partner.id
-        LEFT JOIN
-        aw_material
-        ON
-        aw_customersuppliedmaterials.materialID = aw_material.id
+
     </sql>
 
     <select id="selectAwSaleorderEnList" parameterType="AwSaleorderEn" resultMap="AwSaleorderEnResult">

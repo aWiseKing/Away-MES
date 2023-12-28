@@ -130,22 +130,6 @@ public class AwSaleorderEn extends BaseEntity
     @Excel(name = "客供材料否")
     private Long iscustomersuppliedmaterials;
 
-    /** 发票信息 */
-    @Excel(name = "客供材料编号")
-    private String customersuppliedmaterialsID;
-
-    /** 材料基本信息 */
-    @Excel(name = "材料基本信息")
-    private String customersuppliedmaterial;
-
-    /** 材料库存数量 */
-    @Excel(name = "材料库存数量")
-    private Long customersuppliedmaterialnumber;
-
-    /** 材料库存重量 */
-    @Excel(name = "材料库存重量")
-    private Long customersuppliedmaterialweight;
-
     /** 当前订单状态 */
     @Excel(name = "当前订单状态")
     private String state;
@@ -374,46 +358,6 @@ public class AwSaleorderEn extends BaseEntity
         this.customerReconciliationPersonnel = customerReconciliationPersonnel;
     }
 
-    public Long getIscustomersuppliedmaterials() {
-        return iscustomersuppliedmaterials;
-    }
-
-    public void setIscustomersuppliedmaterials(Long iscustomersuppliedmaterials) {
-        this.iscustomersuppliedmaterials = iscustomersuppliedmaterials;
-    }
-
-    public String getCustomersuppliedmaterialsID() {
-        return customersuppliedmaterialsID;
-    }
-
-    public void setCustomersuppliedmaterialsID(String customersuppliedmaterialsID) {
-        this.customersuppliedmaterialsID = customersuppliedmaterialsID;
-    }
-
-    public String getCustomersuppliedmaterial() {
-        return customersuppliedmaterial;
-    }
-
-    public void setCustomersuppliedmaterial(String customersuppliedmaterial) {
-        this.customersuppliedmaterial = customersuppliedmaterial;
-    }
-
-    public Long getCustomersuppliedmaterialnumber() {
-        return customersuppliedmaterialnumber;
-    }
-
-    public void setCustomersuppliedmaterialnumber(Long customersuppliedmaterialnumber) {
-        this.customersuppliedmaterialnumber = customersuppliedmaterialnumber;
-    }
-
-    public Long getCustomersuppliedmaterialweight() {
-        return customersuppliedmaterialweight;
-    }
-
-    public void setCustomersuppliedmaterialweight(Long customersuppliedmaterialweight) {
-        this.customersuppliedmaterialweight = customersuppliedmaterialweight;
-    }
-
     public String getState() {
         return state;
     }
@@ -470,10 +414,6 @@ public class AwSaleorderEn extends BaseEntity
                 ", reconciliationDate=" + reconciliationDate +
                 ", customerReconciliationPersonnel='" + customerReconciliationPersonnel + '\'' +
                 ", iscustomersuppliedmaterials=" + iscustomersuppliedmaterials +
-                ", customersuppliedmaterialsID='" + customersuppliedmaterialsID + '\'' +
-                ", customersuppliedmaterial='" + customersuppliedmaterial + '\'' +
-                ", customersuppliedmaterialnumber=" + customersuppliedmaterialnumber +
-                ", customersuppliedmaterialweight=" + customersuppliedmaterialweight +
                 ", state='" + state + '\'' +
                 ", note='" + note + '\'' +
                 ", isDel='" + isDel + '\'' +

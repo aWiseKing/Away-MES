@@ -445,7 +445,7 @@ export default {
       await getProcessingprocess(id).then(async response => {
         this.form = response.data;
         if (response.data.diagramURL != null) {
-          let num = 0;
+          let num = 0;  
           let urls = response.data.diagramURL.split(";");
           urls.pop();
           for (num in urls) {

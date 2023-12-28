@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询客供材料实时库存列表
 export function listCustomersuppliedmaterials(query) {
   return request({
-    url: '/storage/customersuppliedmaterials/enlist',
+    url: '/storage/customersuppliedmaterials/list',
     method: 'get',
     params: query
   })

@@ -1,18 +1,18 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="客户信息" prop="customerID">
-        <el-input
-          v-model="queryParams.customerID"
-          placeholder="请输入客户信息"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+    <el-row :gutter="1">
+            <el-col :span="21">
+              <div style="overflow-x: auto;scrollbar-width: none; white-space: nowrap;">
+ </div>
+        </el-col>
+        <el-col :span="3">
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
+      </el-col>
+    </el-row>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -64,12 +64,19 @@
     <el-table v-loading="loading" :data="customersuppliedmaterialsList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="材料库存id" align="center" prop="id" />
-      <el-table-column label="材料基本信息" align="center" prop="material" />
-      <el-table-column label="客户信息" align="center" prop="customer" />
+      <el-table-column label="销售订单编号" align="center" prop="saleorderID" />
+      <el-table-column label="材料基本信息id" align="center" prop="materialID" />
       <el-table-column label="材料库存数量" align="center" prop="number" />
       <el-table-column label="材料库存重量" align="center" prop="weight" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
+        <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-view"
+            @click="handleView(scope.row)"
+            v-hasPermi="['storage:customersuppliedmaterials:edit']"
+          >查看</el-button>
           <el-button
             size="mini"
             type="text"
@@ -87,7 +94,7 @@
         </template>
       </el-table-column>
     </el-table>
-
+    
     <pagination
       v-show="total>0"
       :total="total"
@@ -99,25 +106,11 @@
     <!-- 添加或修改客供材料实时库存对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="材料基本信息" prop="materialID">
-          <el-select v-model="form.materialID" placeholder="请选择材料基本信息">
-            <el-option
-              v-for="item in materials_info"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id">
-            </el-option>
-          </el-select>
+        <el-form-item label="销售订单编号" prop="saleorderID">
+          <el-input v-model="form.saleorderID" placeholder="请输入销售订单编号" />
         </el-form-item>
-        <el-form-item label="客户信息" prop="customerID">
-          <el-select v-model="form.customerID" placeholder="请选择客户">
-            <el-option
-              v-for="item in customers_info"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id">
-            </el-option>
-          </el-select>
+        <el-form-item label="材料基本信息id" prop="materialID">
+          <el-input v-model="form.materialID" placeholder="请输入材料基本信息id" />
         </el-form-item>
         <el-form-item label="材料库存数量" prop="number">
           <el-input v-model="form.number" placeholder="请输入材料库存数量" />
@@ -136,8 +129,6 @@
 
 <script>
 import { listCustomersuppliedmaterials, getCustomersuppliedmaterials, delCustomersuppliedmaterials, addCustomersuppliedmaterials, updateCustomersuppliedmaterials } from "@/api/storage/customersuppliedmaterials";
-import { listMaterial } from "@/api/storage/material"
-import { listCustom } from "@/api/comprehensive/custom";
 
 export default {
   name: "Customersuppliedmaterials",
@@ -161,20 +152,22 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      // 是否显示查看窗口
+      view_open: false,
+      // 是否新增
+      isadd: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        customerID: null
       },
       // 表单参数
       form: {},
-      // 材料基本信息
-      materials_info:[],
-      // 客户基本信息
-      customers_info:[],
       // 表单校验
       rules: {
+        saleorderID: [
+          { required: true, message: "销售订单编号不能为空", trigger: "blur" }
+        ],
         materialID: [
           { required: true, message: "材料基本信息id不能为空", trigger: "blur" }
         ],
@@ -183,9 +176,6 @@ export default {
         ],
         weight: [
           { required: true, message: "材料库存重量不能为空", trigger: "blur" }
-        ],
-        customerID: [
-          { required: true, message: "客户信息不能为空", trigger: "blur" }
         ]
       }
     };
@@ -203,18 +193,6 @@ export default {
         this.loading = false;
       });
     },
-    /** 查询材料基本信息*/
-    getListMaterial(){
-      listMaterial({}).then(respoense => {
-        this.materials_info = respoense.rows
-      })
-    },
-    /** 查询客户基本信息*/
-    getListCustom(){
-      listCustom({}).then(respoense => {
-        this.customers_info = respoense.rows
-      })
-    },
     // 取消按钮
     cancel() {
       this.open = false;
@@ -224,10 +202,10 @@ export default {
     reset() {
       this.form = {
         id: null,
+        saleorderID: null,
         materialID: null,
         number: null,
-        weight: null,
-        customerID: null
+        weight: null
       };
       this.resetForm("form");
     },
@@ -247,19 +225,20 @@ export default {
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
+    handleView(row) {
+      this.view_open = true;
+    },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
-      this.getListMaterial();
-      this.getListCustom();
+      this.isadd = true;
       this.open = true;
       this.title = "添加客供材料实时库存";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      this.getListMaterial();
-      this.getListCustom();
+      this.isadd = false;
       const id = row.id || this.ids
       getCustomersuppliedmaterials(id).then(response => {
         this.form = response.data;
@@ -271,7 +250,7 @@ export default {
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.id != null) {
+          if (!this.isadd) {
             updateCustomersuppliedmaterials(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;

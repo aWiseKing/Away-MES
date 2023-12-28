@@ -86,7 +86,7 @@ public class AwLocalmaterialsController extends BaseController
     /***
      *  本地实时库存减少
      */
-    @PreAuthorize("@ss.hasPermi('storage:localmaterials:addnumber')")
+    @PreAuthorize("@ss.hasPermi('storage:localmaterials:reducenumber')")
     @PostMapping("/ByNumbner/reduce")
     public AjaxResult reduceByNumber(@RequestBody() List<Map<String,String>> lmlist){
 

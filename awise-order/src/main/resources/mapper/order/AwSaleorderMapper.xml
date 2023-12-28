@@ -16,14 +16,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="contractID"    column="contractID"    />
         <result property="invoiceID"    column="invoiceID"    />
         <result property="iscustomersuppliedmaterials"    column="iscustomersuppliedmaterials"    />
-        <result property="customersuppliedmaterialsID"    column="customersuppliedmaterialsID"    />
+
         <result property="state"    column="state"    />
         <result property="note"    column="note"    />
         <result property="isDel"    column="isDel"    />
     </resultMap>
 
     <sql id="selectAwSaleorderVo">
-        select id, createTime, createUserName, orderDate, number, requiredDeliveryTime, customerID, productID, contractID, invoiceID, iscustomersuppliedmaterials, customersuppliedmaterialsID, state, note, isDel from aw_saleorder
+        select id, createTime, createUserName, orderDate, number, requiredDeliveryTime, customerID, productID, contractID, invoiceID, iscustomersuppliedmaterials, state, note, isDel from aw_saleorder
     </sql>
 
     <select id="selectAwSaleorderList" parameterType="AwSaleorder" resultMap="AwSaleorderResult">
@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="contractID != null">contractID,</if>
             <if test="invoiceID != null">invoiceID,</if>
             <if test="iscustomersuppliedmaterials != null and iscustomersuppliedmaterials != ''">iscustomersuppliedmaterials,</if>
-            <if test="customersuppliedmaterialsID != null and customersuppliedmaterialsID != ''">customersuppliedmaterialsID,</if>
+
             <if test="state != null and state != ''">state,</if>
             <if test="note != null">note,</if>
             <if test="isDel != null and isDel != ''">isDel,</if>
@@ -70,7 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="contractID != null">#{contractID},</if>
             <if test="invoiceID != null">#{invoiceID},</if>
             <if test="iscustomersuppliedmaterials != null and iscustomersuppliedmaterials != ''">#{iscustomersuppliedmaterials},</if>
-            <if test="customersuppliedmaterialsID != null and customersuppliedmaterialsID != ''">#{customersuppliedmaterialsID},</if>
+
             <if test="state != null and state != ''">#{state},</if>
             <if test="note != null">#{note},</if>
             <if test="isDel != null and isDel != ''">#{isDel},</if>
@@ -90,7 +90,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="contractID != null">contractID = #{contractID},</if>
             <if test="invoiceID != null">invoiceID = #{invoiceID},</if>
             <if test="iscustomersuppliedmaterials != null and iscustomersuppliedmaterials != ''">iscustomersuppliedmaterials = #{iscustomersuppliedmaterials},</if>
-            <if test="customersuppliedmaterialsID != null and customersuppliedmaterialsID != ''">customersuppliedmaterialsID = #{customersuppliedmaterialsID},</if>
+
             <if test="state != null and state != ''">state = #{state},</if>
             <if test="note != null">note = #{note},</if>
             <if test="isDel != null and isDel != ''">isDel = #{isDel},</if>

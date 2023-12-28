@@ -7,7 +7,7 @@ import com.awise.storage.domain.AwCustomersuppliedmaterials;
  * 客供材料实时库存Service接口
  * 
  * @author awise
- * @date 2023-08-03
+ * @date 2023-12-27
  */
 public interface IAwCustomersuppliedmaterialsService 
 {

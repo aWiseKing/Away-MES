@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="city != null "> and  city = #{city}</if>
             <if test="address != null  and address != ''"> and address = #{address}</if>
             <if test="notes != null  and notes != ''"> and notes = #{notes}</if>
-            <if test="type != null  and type != '' "> and  type = #{type}</if>
+            <if test="type != null   "> and  type = #{type}</if>
         </where>
     </select>
 </mapper>

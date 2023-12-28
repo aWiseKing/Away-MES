@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwOutsourcingorderVo">
-        select outsourcingOrderID, productionTasksFormID, productionTasksID, processingprocessID, outsourcingType, orderTime, notes from aw_outsourcingorder
+        select outsourcingOrderID, productionTasksFormID, productionTasksID, processingprocessID, outsourcingType, orderTime, notes from aw_OutsourcingOrder
     </sql>
 
     <select id="selectAwOutsourcingorderList" parameterType="AwOutsourcingorder" resultMap="AwOutsourcingorderResult">
@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertAwOutsourcingorder" parameterType="AwOutsourcingorder">
-        insert into aw_outsourcingorder
+        insert into aw_OutsourcingOrder
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="outsourcingOrderID != null">outsourcingOrderID,</if>
             <if test="productionTasksFormID != null">productionTasksFormID,</if>
@@ -54,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateAwOutsourcingorder" parameterType="AwOutsourcingorder">
-        update aw_outsourcingorder
+        update aw_OutsourcingOrder
         <trim prefix="SET" suffixOverrides=",">
             <if test="productionTasksFormID != null">productionTasksFormID = #{productionTasksFormID},</if>
             <if test="productionTasksID != null">productionTasksID = #{productionTasksID},</if>
@@ -67,11 +67,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAwOutsourcingorderByOutsourcingOrderID" parameterType="String">
-        delete from aw_outsourcingorder where outsourcingOrderID = #{outsourcingOrderID}
+        delete from aw_OutsourcingOrder where outsourcingOrderID = #{outsourcingOrderID}
     </delete>
 
     <delete id="deleteAwOutsourcingorderByOutsourcingOrderIDs" parameterType="String">
-        delete from aw_outsourcingorder where outsourcingOrderID in 
+        delete from aw_OutsourcingOrder where outsourcingOrderID in
         <foreach item="outsourcingOrderID" collection="array" open="(" separator="," close=")">
             #{outsourcingOrderID}
         </foreach>

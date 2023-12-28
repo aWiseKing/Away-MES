@@ -54,9 +54,7 @@ public class AwSaleorder extends BaseEntity
     @Excel(name = "客供材料否")
     private Long iscustomersuppliedmaterials;
 
-    /** 发票信息 */
-    @Excel(name = "客供材料编号")
-    private String customersuppliedmaterialsID;
+
 
     /** 当前订单状态 */
     @Excel(name = "当前订单状态")
@@ -150,13 +148,8 @@ public class AwSaleorder extends BaseEntity
         this.iscustomersuppliedmaterials = iscustomersuppliedmaterials;
     }
 
-    public String getCustomersuppliedmaterialsID() {
-        return customersuppliedmaterialsID;
-    }
 
-    public void setCustomersuppliedmaterialsID(String customersuppliedmaterialsID) {
-        this.customersuppliedmaterialsID = customersuppliedmaterialsID;
-    }
+
 
     public String getState() {
         return state;
@@ -196,7 +189,6 @@ public class AwSaleorder extends BaseEntity
             .append("contractID", getContractID())
             .append("invoiceID", getInvoiceID())
             .append("iscustomersuppliedmaterials", getIscustomersuppliedmaterials())
-            .append("customersuppliedmaterialsID", getCustomersuppliedmaterialsID())
             .append("state", getState())
             .append("note", getNote())
             .append("isDel", getIsDel())

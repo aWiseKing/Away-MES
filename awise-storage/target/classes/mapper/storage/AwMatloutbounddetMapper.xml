@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwMatloutbounddetVo">
-        select id, deliveryNoteID, materialID, name, typeName, specificationsType, specificationModel, productionTasksID, processingTechnologyID, outboundQuantity, notes from aw_matloutbounddet
+        select id, deliveryNoteID, materialID, name, typeName, specificationsType, specificationModel, productionTasksID, processingTechnologyID, outboundQuantity, notes from aw_MatlOutboundDet
     </sql>
 
     <select id="selectAwMatloutbounddetList" parameterType="AwMatloutbounddet" resultMap="AwMatloutbounddetResult">
@@ -40,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertAwMatloutbounddet" parameterType="AwMatloutbounddet">
-        insert into aw_matloutbounddet
+        insert into aw_MatlOutboundDet
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="deliveryNoteID != null and deliveryNoteID != ''">deliveryNoteID,</if>
@@ -70,7 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateAwMatloutbounddet" parameterType="AwMatloutbounddet">
-        update aw_matloutbounddet
+        update aw_MatlOutboundDet
         <trim prefix="SET" suffixOverrides=",">
             <if test="deliveryNoteID != null and deliveryNoteID != ''">deliveryNoteID = #{deliveryNoteID},</if>
             <if test="materialID != null and materialID != ''">materialID = #{materialID},</if>
@@ -87,11 +87,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAwMatloutbounddetById" parameterType="Long">
-        delete from aw_matloutbounddet where id = #{id}
+        delete from aw_MatlOutboundDet where id = #{id}
     </delete>
 
     <delete id="deleteAwMatloutbounddetByIds" parameterType="String">
-        delete from aw_matloutbounddet where id in 
+        delete from aw_MatlOutboundDet where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

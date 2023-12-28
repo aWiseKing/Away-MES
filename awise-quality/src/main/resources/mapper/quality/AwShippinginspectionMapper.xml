@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwShippinginspectionVo">
-        select id, productID, contractID, shipmentQuantity, detectionQuantity, qualifiedQuantity, unqualifiedQuantity, testDate, testResult, testingPersonnel, notes from aw_shippinginspection
+        select id, productID, contractID, shipmentQuantity, detectionQuantity, qualifiedQuantity, unqualifiedQuantity, testDate, testResult, testingPersonnel, notes from aw_ShippingInspection
     </sql>
 
     <select id="selectAwShippinginspectionList" parameterType="AwShippinginspection" resultMap="AwShippinginspectionResult">
@@ -44,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertAwShippinginspection" parameterType="AwShippinginspection">
-        insert into aw_shippinginspection
+        insert into aw_ShippingInspection
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="productID != null and productID != ''">productID,</if>
@@ -74,7 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateAwShippinginspection" parameterType="AwShippinginspection">
-        update aw_shippinginspection
+        update aw_ShippingInspection
         <trim prefix="SET" suffixOverrides=",">
             <if test="productID != null and productID != ''">productID = #{productID},</if>
             <if test="contractID != null and contractID != ''">contractID = #{contractID},</if>
@@ -91,11 +91,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAwShippinginspectionById" parameterType="String">
-        delete from aw_shippinginspection where id = #{id}
+        delete from aw_ShippingInspection where id = #{id}
     </delete>
 
     <delete id="deleteAwShippinginspectionByIds" parameterType="String">
-        delete from aw_shippinginspection where id in 
+        delete from aw_ShippingInspection where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

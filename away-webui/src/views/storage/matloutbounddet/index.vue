@@ -84,15 +84,28 @@
       @pagination="getList" />
 
     <!-- 添加或修改材料出库详细对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" width="900px" append-to-body>
+
+
       <el-form :disabled="view_open" ref="matloutbounddet" :model="matloutbounddet" :rules="rules" label-width="80px">
-        <el-form-item label="出库单编号" prop="deliveryNoteID">
+
+        <el-row :gutter="12">
+        <el-col :span="12" >
+          <el-form-item label="出库单编号" prop="deliveryNoteID">
           <el-input disabled v-model="matloutbounddet.deliveryNoteID" placeholder="请输入出库单编号" />
         </el-form-item>
-        <el-form-item label="出库数量" prop="outboundQuantity">
+        </el-col>
+
+        <el-col :span="12">
+          <el-form-item label="出库数量" prop="outboundQuantity">
           <el-input type="Number" v-model="matloutbounddet.outboundQuantity" placeholder="请输入出库数量" />
         </el-form-item>
-        <el-form-item label="任务单" prop="productionTasksID">
+        </el-col>
+      </el-row>
+
+      <el-row :gutter="12">
+        <el-col :span="12">
+          <el-form-item label="任务单" prop="productionTasksID">
           <el-select v-model="productiontasklist.id" placeholder="请选择任务单" @focus="getListProductiontasklist()">
             <el-option
             v-for="item, index in productiontasklistlist"
@@ -104,6 +117,8 @@
             </el-option>
           </el-select>
         </el-form-item>
+        </el-col>
+        <el-col :span="12">
         <el-form-item label="任务编号" prop="productionTasksID">
           <el-select :disabled="productiontasklist.id == null" v-model="matloutbounddet.productionTasksID" placeholder="请选择任务编号" @focus="getListProductiontasks(productiontasklist.id)">
             <el-option
@@ -116,9 +131,23 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="工艺编号" prop="processingTechnologyID">
-          <el-input disabled v-model="matloutbounddet.processingTechnologyID" placeholder="请输入工艺编号" />
+        </el-col>
+      </el-row>
+
+      <el-row :gutter="12">
+        <el-col :span="12">
+
+          <el-form-item label="工艺编号" prop="processingTechnologyID">
+          <el-select v-model="matloutbounddet.processingTechnologyID" placeholder="请选择工艺编号" @focus="getListProcessingTechnologys()">
+            <el-option v-for="item,index in Processingtechnology" :key="index" :label="item.id" :value="item.id">
+
+            </el-option>
+          </el-select>
         </el-form-item>
+        </el-col>
+
+        <el-col :span="12">
+
         <el-form-item label="材料信息编号" prop="materialID">
           <el-select :disabled="matloutbounddet.processingTechnologyID==null" v-model="matloutbounddet.materialID" placeholder="请选择材料信息编号" @focus="getListMateriallistoftechnology(matloutbounddet.processingTechnologyID)">
             <el-option
@@ -131,23 +160,45 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="材料名称" prop="name">
+        </el-col>
+      </el-row>
+
+      <el-row :gutter="12">
+        <el-col :span="12">
+          <el-form-item label="材料名称" prop="name">
           <el-input disabled v-model="matloutbounddet.name" placeholder="请输入材料名称" />
         </el-form-item>
+        </el-col>
+
+        <el-col :span="12">
+
+
         <el-form-item label="类别名称" prop="typeName">
           <el-input disabled v-model="matloutbounddet.typeName" placeholder="请输入类别名称" />
         </el-form-item>
-        <el-form-item label="规格型号" prop="specificationModel">
+        </el-col>
+      </el-row>
+
+
+      <el-row :gutter="12">
+        <el-col :span="12">
+          <el-form-item label="规格型号" prop="specificationModel">
           <el-input disabled v-model="matloutbounddet.specificationModel" placeholder="请输入规格型号" />
         </el-form-item>
-        <el-form-item label="备注" prop="notes">
+        </el-col>
+
+        <el-col :span="12">
+          <el-form-item label="备注" prop="notes">
           <el-input v-model="matloutbounddet.notes" placeholder="请输入备注" />
         </el-form-item>
+        </el-col>
+      </el-row>
       </el-form>
       <div slot="footer" v-if="!view_open" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
+
     </el-dialog>
   </div>
 </template>
@@ -157,6 +208,7 @@ import { listMatloutbounddet, getMatloutbounddet } from "@/api/storage/matloutbo
 import { addLocalmaterialoutbound, updateLocalmaterialoutbound, delLocalmaterialoutbound } from "@/api/storage/localmaterialoutbound.js"
 import { listProductiontasklist, getProductiontasklist } from "@/api/produce/productiontasklist.js";
 import { listProductiontasks, getProductiontasks } from "@/api/produce/productiontasks.js";
+import { listProcessingtechnology, getProcessingtechnology } from "@/api/produce/processingtechnology";
 import { listMaterialListOfTechnology, getMaterialListOfTechnology } from "@/api/produce/MaterialListOfTechnology.js";
 import { setIntersectionObj } from "@/utils/utils.js"
 
@@ -229,6 +281,8 @@ export default {
       productiontaskslist: [],
       // 当前选中任务
       productiontasks: {},
+      //加工工艺
+      processingtechnology:[],
       // 工艺所需材料列表
       materiallistoftechnologylist: [],
       // 当前所选工艺所需材料
@@ -286,6 +340,15 @@ export default {
         this.matloutbounddet.processingTechnologyID = this.productiontasks.processingTechnologyID
         this.loading = false;
       });
+    },
+
+    getListProcessingTechnologys(){
+      this.loading=true
+      listProcessingtechnology().then((response) => {
+        this.Processingtechnology= response.rows
+          this.loading=false
+      })
+
     },
     /** 查询工艺所需材料列表 */
     getListMateriallistoftechnology(processingTechnologyID) {

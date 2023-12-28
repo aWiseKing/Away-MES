@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwProcessinspectionVo">
-        select id, nameOfQualityInspection, qualityInspectionCategory, productionTasksID, processingprocessID, detectionQuantity, qualifiedQuantity, unqualifiedQuantity, numberOfRepairs, scrappedQuantity, testDate, testResult, testingPersonnel, note from aw_processinspection
+        select id, nameOfQualityInspection, qualityInspectionCategory, productionTasksID, processingprocessID, detectionQuantity, qualifiedQuantity, unqualifiedQuantity, numberOfRepairs, scrappedQuantity, testDate, testResult, testingPersonnel, note from aw_processInspection
     </sql>
 
     <select id="selectAwProcessinspectionList" parameterType="AwProcessinspection" resultMap="AwProcessinspectionResult">
@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertAwProcessinspection" parameterType="AwProcessinspection" useGeneratedKeys="true" keyProperty="id">
-        insert into aw_processinspection
+        insert into aw_processInspection
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="nameOfQualityInspection != null and nameOfQualityInspection != ''">nameOfQualityInspection,</if>
             <if test="qualityInspectionCategory != null and qualityInspectionCategory != ''">qualityInspectionCategory,</if>
@@ -84,7 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateAwProcessinspection" parameterType="AwProcessinspection">
-        update aw_processinspection
+        update aw_processInspection
         <trim prefix="SET" suffixOverrides=",">
             <if test="nameOfQualityInspection != null and nameOfQualityInspection != ''">nameOfQualityInspection = #{nameOfQualityInspection},</if>
             <if test="qualityInspectionCategory != null and qualityInspectionCategory != ''">qualityInspectionCategory = #{qualityInspectionCategory},</if>
@@ -104,11 +104,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAwProcessinspectionById" parameterType="Long">
-        delete from aw_processinspection where id = #{id}
+        delete from aw_processInspection where id = #{id}
     </delete>
 
     <delete id="deleteAwProcessinspectionByIds" parameterType="String">
-        delete from aw_processinspection where id in 
+        delete from aw_processInspection where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

@@ -2,9 +2,6 @@ package com.awise.storage.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
-
-import com.awise.storage.domain.AwCustomersuppliedmaterialsEn;
-import com.awise.storage.service.IAwCustomersuppliedmaterialsEnService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +25,7 @@ import com.away.common.core.page.TableDataInfo;
  * 客供材料实时库存Controller
  * 
  * @author awise
- * @date 2023-08-03
+ * @date 2023-12-27
  */
 @RestController
 @RequestMapping("/storage/customersuppliedmaterials")
@@ -36,9 +33,6 @@ public class AwCustomersuppliedmaterialsController extends BaseController
 {
     @Autowired
     private IAwCustomersuppliedmaterialsService awCustomersuppliedmaterialsService;
-
-    @Autowired
-    private IAwCustomersuppliedmaterialsEnService awCustomersuppliedmaterialsEnService;
 
     /**
      * 查询客供材料实时库存列表
@@ -49,18 +43,6 @@ public class AwCustomersuppliedmaterialsController extends BaseController
     {
         startPage();
         List<AwCustomersuppliedmaterials> list = awCustomersuppliedmaterialsService.selectAwCustomersuppliedmaterialsList(awCustomersuppliedmaterials);
-        return getDataTable(list);
-    }
-
-    /**
-     * 查询客供材料实时库存实体列表
-     */
-    @PreAuthorize("@ss.hasPermi('storage:customersuppliedmaterials:enlist')")
-    @GetMapping("/enlist")
-    public TableDataInfo list(AwCustomersuppliedmaterialsEn awCustomersuppliedmaterialsEn)
-    {
-        startPage();
-        List<AwCustomersuppliedmaterialsEn> list = awCustomersuppliedmaterialsEnService.selectAwCustomersuppliedmaterialsEnList(awCustomersuppliedmaterialsEn);
         return getDataTable(list);
     }
 

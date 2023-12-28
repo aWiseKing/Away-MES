@@ -151,7 +151,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -186,7 +186,19 @@
           </el-select>
         </el-form-item>
         <el-form-item label="联系人所属公司id" prop="companyID">
-          <el-input v-model="form.companyID" placeholder="请输入联系人所属公司id" />
+          <el-select
+            v-model="form.companyID"
+            placeholder="请选择联系人所属公司id"
+            @focus="getpartnearList()"
+          >
+            <el-option
+              v-for="(item, index) in partnearList"
+              :key="index"
+              :label="item.id"
+              :value="item.id"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="备注信息" prop="notes">
           <el-input v-model="form.notes" placeholder="请输入备注信息" />
@@ -202,6 +214,7 @@
 
 <script>
 import { listContacts, getContacts, delContacts, addContacts, updateContacts } from "@/api/comprehensive/contacts";
+import { listCustom } from "@/api/comprehensive/partner";
 
 export default {
   name: "Contacts",
@@ -245,7 +258,7 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        
+
       }
     };
   },
@@ -259,6 +272,14 @@ export default {
       listContacts(this.queryParams).then(response => {
         this.contactsList = response.rows;
         this.total = response.total;
+        this.loading = false;
+      });
+    },
+
+    getpartnearList() {
+      this.loading = true;
+      listCustom().then((res) => {
+        this.partnearList = res.rows;
         this.loading = false;
       });
     },

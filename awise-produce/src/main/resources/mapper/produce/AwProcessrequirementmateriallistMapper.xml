@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwProcessrequirementmateriallistVo">
-        select id, materialID, processingTechnologyID, cuttingSize, numberProducibleParts from aw_processrequirementmateriallist
+        select id, materialID, processingTechnologyID, cuttingSize, numberProducibleParts from aw_ProcessRequirementMaterialList
     </sql>
 
     <select id="selectAwProcessrequirementmateriallistList" parameterType="AwProcessrequirementmateriallist" resultMap="AwProcessrequirementmateriallistResult">
@@ -29,7 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertAwProcessrequirementmateriallist" parameterType="AwProcessrequirementmateriallist" useGeneratedKeys="true" keyProperty="id">
-        insert into aw_processrequirementmateriallist
+        insert into aw_ProcessRequirementMaterialList
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="materialID != null and materialID != ''">materialID,</if>
             <if test="processingTechnologyID != null and processingTechnologyID != ''">processingTechnologyID,</if>
@@ -45,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateAwProcessrequirementmateriallist" parameterType="AwProcessrequirementmateriallist">
-        update aw_processrequirementmateriallist
+        update aw_ProcessRequirementMaterialList
         <trim prefix="SET" suffixOverrides=",">
             <if test="materialID != null and materialID != ''">materialID = #{materialID},</if>
             <if test="processingTechnologyID != null and processingTechnologyID != ''">processingTechnologyID = #{processingTechnologyID},</if>
@@ -56,11 +56,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAwProcessrequirementmateriallistById" parameterType="Long">
-        delete from aw_processrequirementmateriallist where id = #{id}
+        delete from aw_ProcessRequirementMaterialList where id = #{id}
     </delete>
 
     <delete id="deleteAwProcessrequirementmateriallistByIds" parameterType="String">
-        delete from aw_processrequirementmateriallist where id in 
+        delete from aw_ProcessRequirementMaterialList where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

@@ -212,7 +212,7 @@
             icon="el-icon-view"
             @click="handleFinish(scope.row)"
             v-if="scope.row.status == '1'"
-            v-hasPermi="['storage:outboundorder:edit']"
+            v-hasPermi="['storage:localmaterials:reducenumber']"
             >完成出库</el-button
           >
           <el-button

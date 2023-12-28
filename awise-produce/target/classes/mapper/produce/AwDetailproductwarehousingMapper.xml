@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwDetailproductwarehousingVo">
-        select id, warehouseEntryID, productID, receiptQuantity, FinishedProductInspectionID, testResult, notes from aw_detailproductwarehousing
+        select id, warehouseEntryID, productID, receiptQuantity, FinishedProductInspectionID, testResult, notes from aw_DetailProductWarehousing
     </sql>
 
     <select id="selectAwDetailproductwarehousingList" parameterType="AwDetailproductwarehousing" resultMap="AwDetailproductwarehousingResult">
@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertAwDetailproductwarehousing" parameterType="AwDetailproductwarehousing">
-        insert into aw_detailproductwarehousing
+        insert into aw_DetailProductWarehousing
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="warehouseEntryID != null and warehouseEntryID != ''">warehouseEntryID,</if>
@@ -55,7 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateAwDetailproductwarehousing" parameterType="AwDetailproductwarehousing">
-        update aw_detailproductwarehousing
+        update aw_DetailProductWarehousing
         <trim prefix="SET" suffixOverrides=",">
             <if test="warehouseEntryID != null and warehouseEntryID != ''">warehouseEntryID = #{warehouseEntryID},</if>
             <if test="productID != null and productID != ''">productID = #{productID},</if>
@@ -68,11 +68,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAwDetailproductwarehousingById" parameterType="Long">
-        delete from aw_detailproductwarehousing where id = #{id}
+        delete from aw_DetailProductWarehousing where id = #{id}
     </delete>
 
     <delete id="deleteAwDetailproductwarehousingByIds" parameterType="String">
-        delete from aw_detailproductwarehousing where id in 
+        delete from aw_DetailProductWarehousing where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

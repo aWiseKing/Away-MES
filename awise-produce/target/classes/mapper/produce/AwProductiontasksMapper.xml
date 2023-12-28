@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwProductiontasksVo">
-        select id, productionTasksFormID, serialNum, processingTechnologyID, saleOrderID, outsourced, notes, status from aw_productiontasks
+        select id, productionTasksFormID, serialNum, processingTechnologyID, saleOrderID, outsourced, notes, status from aw_ProductionTasks
     </sql>
 
     <select id="selectAwProductiontasksList" parameterType="AwProductiontasks" resultMap="AwProductiontasksResult">
@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertAwProductiontasks" parameterType="AwProductiontasks" useGeneratedKeys="true" keyProperty="id">
-        insert into aw_productiontasks
+        insert into aw_ProductionTasks
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="productionTasksFormID != null">productionTasksFormID,</if>
             <if test="serialNum != null">serialNum,</if>
@@ -60,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateAwProductiontasks" parameterType="AwProductiontasks">
-        update aw_productiontasks
+        update aw_ProductionTasks
         <trim prefix="SET" suffixOverrides=",">
             <if test="productionTasksFormID != null">productionTasksFormID = #{productionTasksFormID},</if>
             <if test="serialNum != null">serialNum = #{serialNum},</if>
@@ -74,11 +74,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAwProductiontasksById" parameterType="Long">
-        delete from aw_productiontasks where id = #{id}
+        delete from aw_ProductionTasks where id = #{id}
     </delete>
 
     <delete id="deleteAwProductiontasksByIds" parameterType="String">
-        delete from aw_productiontasks where id in 
+        delete from aw_ProductionTasks where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

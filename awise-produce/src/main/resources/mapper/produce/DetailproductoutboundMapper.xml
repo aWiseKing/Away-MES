@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectDetailproductoutboundVo">
-        select id, deliveryNoteID, productID, productname, shippingInspectionID, shipmentQuantity, detectionQuantity, qualifiedQuantity, unqualifiedQuantity, testResult, testDate, testingPersonnel, receiptQuantity, contractID, customname from aw_detailproductoutbound
+        select id, deliveryNoteID, productID, productname, shippingInspectionID, shipmentQuantity, detectionQuantity, qualifiedQuantity, unqualifiedQuantity, testResult, testDate, testingPersonnel, receiptQuantity, contractID, customname from aw_DetailProductOutbound
     </sql>
 
     <select id="selectDetailproductoutboundList" parameterType="Detailproductoutbound" resultMap="DetailproductoutboundResult">
@@ -52,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertDetailproductoutbound" parameterType="Detailproductoutbound">
-        insert into detailproductoutbound
+        insert into aw_DetailProductOutbound
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="deliveryNoteID != null and deliveryNoteID != ''">deliveryNoteID,</if>
@@ -90,7 +90,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateDetailproductoutbound" parameterType="Detailproductoutbound">
-        update detailproductoutbound
+        update aw_DetailProductOutbound
         <trim prefix="SET" suffixOverrides=",">
             <if test="deliveryNoteID != null and deliveryNoteID != ''">deliveryNoteID = #{deliveryNoteID},</if>
             <if test="productID != null and productID != ''">productID = #{productID},</if>
@@ -111,11 +111,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteDetailproductoutboundById" parameterType="Long">
-        delete from detailproductoutbound where id = #{id}
+        delete from aw_DetailProductOutbound where id = #{id}
     </delete>
 
     <delete id="deleteDetailproductoutboundByIds" parameterType="String">
-        delete from detailproductoutbound where id in 
+        delete from aw_DetailProductOutbound where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

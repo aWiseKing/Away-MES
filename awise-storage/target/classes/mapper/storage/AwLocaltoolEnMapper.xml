@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.awise.storage.mapper.AwLocaltoolEnMapper">
+
+    <resultMap type="AwLocaltoolEn" id="AwLocaltoolEnResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="number"    column="number"    />
+        <result property="weight"    column="weight"    />
+    </resultMap>
+
+    <sql id="selectAwLocaltoolEnVo">
+        select  aw_LocalTool.id, aw_LocalTool.number,aw_LocalTool.weight,aw_toolInformation.name
+        from  aw_LocalTool  left join aw_toolInformation on
+            aw_LocalTool.toolInformationID =aw_toolInformation.id
+    </sql>
+
+
+    <select id="selectAwLocaltoolEnList" parameterType="AwLocaltoolEn" resultMap="AwLocaltoolEnResult">
+        <include refid="selectAwLocaltoolEnVo"/>
+    </select>
+</mapper>

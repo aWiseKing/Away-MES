@@ -9,7 +9,7 @@ import com.away.common.core.domain.BaseEntity;
  * 客供材料实时库存对象 aw_customersuppliedmaterials
  * 
  * @author awise
- * @date 2023-08-03
+ * @date 2023-12-27
  */
 public class AwCustomersuppliedmaterials extends BaseEntity
 {
@@ -17,6 +17,10 @@ public class AwCustomersuppliedmaterials extends BaseEntity
 
     /** 材料库存id */
     private Long id;
+
+    /** 销售订单编号 */
+    @Excel(name = "销售订单编号")
+    private String saleorderID;
 
     /** 材料基本信息id */
     @Excel(name = "材料基本信息id")
@@ -30,10 +34,6 @@ public class AwCustomersuppliedmaterials extends BaseEntity
     @Excel(name = "材料库存重量")
     private Long weight;
 
-    /** 客户信息 */
-    @Excel(name = "客户信息")
-    private String customerID;
-
     public void setId(Long id) 
     {
         this.id = id;
@@ -42,6 +42,15 @@ public class AwCustomersuppliedmaterials extends BaseEntity
     public Long getId() 
     {
         return id;
+    }
+    public void setSaleorderID(String saleorderID) 
+    {
+        this.saleorderID = saleorderID;
+    }
+
+    public String getSaleorderID() 
+    {
+        return saleorderID;
     }
     public void setMaterialID(String materialID) 
     {
@@ -70,24 +79,15 @@ public class AwCustomersuppliedmaterials extends BaseEntity
     {
         return weight;
     }
-    public void setCustomerID(String customerID) 
-    {
-        this.customerID = customerID;
-    }
-
-    public String getCustomerID() 
-    {
-        return customerID;
-    }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
+            .append("saleorderID", getSaleorderID())
             .append("materialID", getMaterialID())
             .append("number", getNumber())
             .append("weight", getWeight())
-            .append("customerID", getCustomerID())
             .toString();
     }
 }
