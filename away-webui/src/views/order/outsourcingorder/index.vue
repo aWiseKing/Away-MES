@@ -37,6 +37,15 @@
               >
               </el-date-picker>
             </el-form-item>
+            <el-form-item label="备注" prop="notes">
+              <el-input
+                v-model="queryParams.notes"
+                placeholder="请输入备注"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
+
           </div>
         </el-col>
         <el-col :span="3">
@@ -370,6 +379,7 @@ export default {
         pageSize: 10,
         outsourcingType: null,
         orderTime: null,
+        notes:null
       },
       // 表单参数
       form: {},
@@ -452,10 +462,12 @@ export default {
     },
     /** 查询工序信息 */
     getListprocessingprocess(processingTechnologyID) {
+
+      console.log(processingTechnologyID)
       this.loading = true;
       listProcessingprocess({
         processingTechnologyID: processingTechnologyID,
-        outsourcing: "1"
+        outsourcing: "外协"
       }).then((response) => {
         this.processingprocesslist = response.rows;
         this.loading = false;
@@ -506,6 +518,10 @@ export default {
       getOutsourcingorder(outsourcingOrderID).then((response) => {
         this.form = response.data;
         this.view_open = true;
+        listProductiontasklist().then((response) => {
+        this.productiontasklistlist = response.rows;
+        this.loading = false;
+      });
         this.open = true;
         this.title = "修改外协";
       });

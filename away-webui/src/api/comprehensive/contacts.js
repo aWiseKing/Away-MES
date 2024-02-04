@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询联系人信息列表
 export function listContacts(query) {
   return request({
-    url: '/comprehensive/contacts/list',
+    url: '/comprehensive/contacts/enlist',
     method: 'get',
     params: query
   })

@@ -254,6 +254,7 @@ export default {
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
+      this.getToolinformationList()
       this.reset();
       this.isadd = false;
       const id = row.id || this.ids

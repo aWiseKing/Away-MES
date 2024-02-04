@@ -178,11 +178,7 @@
           view_form.name
         }}</el-descriptions-item>
         <el-descriptions-item label="产品图纸附件" :span="2">
-          <el-carousel :interval="4000" type="card" height="200px">
-            <el-carousel-item v-for="item in view_form.files" :key="item">
-              <el-image :src="item" :preview-src-list="[item]"> </el-image>
-            </el-carousel-item>
-          </el-carousel>
+          <filedown :files="view_form.files"/>
         </el-descriptions-item>
       </el-descriptions>
     </el-dialog>
@@ -198,9 +194,11 @@ import {
   updateProduct,
 } from "@/api/order/product";
 import { fileDownload, fileUpdate } from "@/api/file/file";
-
+import filedown from "@/components/FileDown/filedown.vue"
+import Filedown from '../../../components/FileDown/filedown.vue';
 export default {
   name: "Product",
+  components:{"filedown":Filedown},
   data() {
     return {
       // 遮罩层
@@ -272,7 +270,7 @@ export default {
     /** 文件下载 */
     async fileDown(file_name) {
       let tmp = await fileDownload(file_name);
-      this.view_form.files.push(tmp.getUrl());
+      this.view_form.files.push(tmp);
     },
     // 取消按钮
     cancel() {
@@ -286,6 +284,8 @@ export default {
         name: null,
         drawingURL: null,
       };
+
+      this.fileList=[]
       this.resetForm("form");
     },
     /** 搜索按钮操作 */
@@ -304,23 +304,40 @@ export default {
       this.single = selection.length !== 1;
       this.multiple = !selection.length;
     },
-    /** 查看产品详细信息 */
-    handleView(row) {
-      const id = row.id || this.ids;
-      getProduct(id).then(async (response) => {
-        this.view_form = response.data;
-        this.view_form.files = [];
-        if (response.data.drawingURL != null) {
-          let num = 0;
-          let urls = response.data.drawingURL.split(";");
-          urls.pop();
-          for (num in urls) {
-            await this.fileDown(urls[num]);
-          }
-        }
-        this.view_open = true;
-      });
+    // /** 查看产品详细信息 */
+    async handleView(row) {
+      this.view_form=row
+      this.view_form.files=[];
+     if(row.drawingURL==null){
+      this.view_open = true
+      return 0;
+     }else{
+      let urls=row.drawingURL.split(";");
+      urls.pop();
+      let num=0;
+      for(num in urls){
+        let tmp=await fileDownload(urls[num])
+        this.view_form.files.push(tmp);
+      }
+     }
+     this.view_open = true
     },
+    // handleView(row) {
+    //   const id = row.id || this.ids;
+    //   getProduct(id).then(async (response) => {
+    //     this.view_form = response.data;
+    //     this.view_form.files = [];
+    //     if (response.data.drawingURL != null) {
+    //       let num = 0;
+    //       let urls = response.data.drawingURL.split(";");
+    //       urls.pop();
+    //       for (num in urls) {
+    //         await this.fileDown(urls[num]);
+    //       }
+    //     }
+    //     this.view_open = true;
+    //   });
+    // },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();

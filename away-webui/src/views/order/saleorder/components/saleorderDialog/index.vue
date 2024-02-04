@@ -13,12 +13,7 @@
       <el-descriptions-item label="产品编号">{{ view_form.productID }}</el-descriptions-item>
       <el-descriptions-item label="产品名称">{{ view_form.productname }}</el-descriptions-item>
       <el-descriptions-item label="产品图纸" :span="2">
-        <el-carousel :interval="4000" type="card" height="200px">
-          <el-carousel-item v-for="item in view_form.productfiles" :key="item">
-            <el-image :src="item" :preview-src-list="[item]">
-            </el-image>
-          </el-carousel-item>
-        </el-carousel>
+        <filedown :files = "view_form.productfiles"/>
       </el-descriptions-item>
       <el-descriptions-item label="需求数量">{{ view_form.number }}</el-descriptions-item>
       <el-descriptions-item label="要求交期">{{ view_form.requiredDeliveryTime }}</el-descriptions-item>
@@ -26,12 +21,7 @@
       <el-descriptions-item label="合同编号">{{ view_form.contractID }}</el-descriptions-item>
       <el-descriptions-item label="合同金额">{{ view_form.contractmoney }}</el-descriptions-item>
       <el-descriptions-item label="合同附件" :span="2">
-        <el-carousel :interval="4000" type="card" height="200px">
-          <el-carousel-item v-for="item in view_form.contractfiles" :key="item">
-            <el-image :src="item" :preview-src-list="[item]">
-            </el-image>
-          </el-carousel-item>
-        </el-carousel>
+        <filedown :files = "view_form.contractfiles" />
       </el-descriptions-item>
     </el-descriptions>
     <el-descriptions title="发票信息" :column="2" border>
@@ -67,9 +57,11 @@ import { listCustomersuppliedmaterials } from "@/api/storage/customersuppliedmat
 import { listContract } from "@/api/order/contract"
 import { fileDownload } from "@/api/file/file"
 import { listAdditional } from "@/api/order/additional";
+import filedown from "@/components/FileDown/filedown.vue"
 
 export default {
   name: "saleorderDialog",
+  components:{"filedown":filedown},
   data() {
     return {
       view_open: false,
@@ -118,18 +110,21 @@ export default {
     /** 查询合同信息*/
     getListContract() {
       listContract({}).then(response => {
+
         this.contracts = response.rows;
+
       })
     },
     /** 产品图纸下载 */
     async productFileDown(file_name) {
       let tmp = await fileDownload(file_name);
-      this.view_form.productfiles.push(tmp.getUrl());
+
+      this.view_form.productfiles.push(tmp);
     },
     /** 合同附件下载 */
     async customerFileDown(file_name) {
       let tmp = await fileDownload(file_name);
-      this.view_form.contractfiles.push(tmp.getUrl());
+      this.view_form.contractfiles.push(tmp);
     },
     /** 获取订单对应附加信息 */
     async getListAdditional(id) {
@@ -198,6 +193,7 @@ export default {
       await this.handleCustomerView(row);
       await this.getListAdditional(row.id);
       this.view_open = true
+
     }
   }
 }

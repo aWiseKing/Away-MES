@@ -32,4 +32,9 @@ public class AwCustomEnServiceImpl implements IAwCustomEnService
         return awCustomEnMapper.selectAwCustomEnList(awCustomEn);
     }
 
+    @Override
+    public AwCustomEn selectAwCustomByID(String id) {
+        return awCustomEnMapper.selectAwCustomByID(id);
+    }
+
 }

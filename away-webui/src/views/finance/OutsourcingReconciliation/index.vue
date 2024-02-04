@@ -55,6 +55,14 @@
                 @keyup.enter.native="handleQuery"
               />
             </el-form-item>
+            <el-form-item label="备注" prop="notes">
+              <el-input
+                v-model="queryParams.notes"
+                placeholder="请输入备注"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
 
             <el-form-item label="状态" prop="status">
               <el-select
@@ -174,7 +182,8 @@
         align="center"
         prop="unfinishedQuantity"
       />
-      <el-table-column label="应付金额" align="center" prop="amountDue" />
+      <el-table-column label="订单金额" align="center" prop="orderAmount" />
+
       <el-table-column
         label="实付金额"
         align="center"
@@ -290,6 +299,15 @@
               </el-select>
             </el-form-item>
           </el-col>
+          <el-col :span="12">
+            <el-form-item label="订单金额" prop="orderAmount">
+              <el-input
+                v-model="form.orderAmount"
+                placeholder="请输入订单金额"
+              />
+            </el-form-item>
+          </el-col>
+
         </el-row>
 
         <el-row :gutter="12">
@@ -370,7 +388,7 @@
         </el-row>
       </el-form>
 
-      <div slot="footer" class="dialog-footer">
+      <div slot="footer" class="dialog-footer" v-if="!view_open">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
@@ -426,6 +444,7 @@ export default {
         outsourcingQuantity: null,
         completedQuantity: null,
         unfinishedQuantity: null,
+        orderAmount:null,
         amountDue: null,
         outOfPocketAmount: null,
         unpaidAmount: null,
@@ -513,6 +532,7 @@ export default {
         outsourcingQuantity: null,
         completedQuantity: null,
         unfinishedQuantity: null,
+        orderAmount:null,
         amountDue: null,
         outOfPocketAmount: null,
         unpaidAmount: null,

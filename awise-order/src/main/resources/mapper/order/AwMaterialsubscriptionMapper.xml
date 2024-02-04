@@ -77,7 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="sampleURL != null">sampleURL = #{sampleURL},</if>
             <if test="note != null">note = #{note},</if>
         </trim>
-        where aw_MaterialSubscription = #{materialSubscription}
+        where materialSubscription = #{materialSubscription}
     </update>
 
     <delete id="deleteAwMaterialsubscriptionByMaterialSubscription" parameterType="String">

@@ -1,6 +1,13 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form
+      :model="queryParams"
+      ref="queryForm"
+      size="small"
+      :inline="true"
+      v-show="showSearch"
+      label-width="68px"
+    >
       <el-form-item label="客户姓名" prop="name">
         <el-input
           v-model="queryParams.name"
@@ -25,21 +32,19 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="证照附件" prop="certificateURL">
-        <el-input
-          v-model="queryParams.certificateURL"
-          placeholder="请输入证照附件"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="城市" prop="cityid">
-        <el-input
-          v-model="queryParams.cityid"
-          placeholder="请输入城市"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+
+      <el-form-item label="城市" prop="city">
+        <el-cascader
+            v-model="queryParams.city"
+            :options="city_options"
+            :props="{ expandTrigger: 'hover' }"
+            :value="cityid_value"
+            placeholder="请选择城市地区"
+            @change="setCityID"
+            clearable
+            filterable
+          >
+          </el-cascader>
       </el-form-item>
       <el-form-item label="详细地址" prop="address">
         <el-input
@@ -58,8 +63,16 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          size="mini"
+          @click="handleQuery"
+          >搜索</el-button
+        >
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
+          >重置</el-button
+        >
       </el-form-item>
     </el-form>
 
@@ -72,7 +85,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['comprehensive:custom:add']"
-        >新增</el-button>
+          >新增</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -83,7 +97,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['comprehensive:custom:edit']"
-        >修改</el-button>
+          >修改</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -94,7 +109,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['comprehensive:custom:remove']"
-        >删除</el-button>
+          >删除</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -104,18 +120,34 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['comprehensive:custom:export']"
-        >导出</el-button>
+          >导出</el-button
+        >
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar
+        :showSearch.sync="showSearch"
+        @queryTable="getList"
+      ></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="customList" @selection-change="handleSelectionChange">
+    <el-table
+      v-loading="loading"
+      :data="customList"
+      @selection-change="handleSelectionChange"
+    >
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="客户编号" align="center" prop="id" />
       <el-table-column label="客户姓名" align="center" prop="name" />
       <el-table-column label="客户简称" align="center" prop="nameAbbrevation" />
-      <el-table-column label="社会统一信用代码" align="center" prop="unifiedCreditCode" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column
+        label="社会统一信用代码"
+        align="center"
+        prop="unifiedCreditCode"
+      />
+      <el-table-column
+        label="操作"
+        align="center"
+        class-name="small-padding fixed-width"
+      >
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -123,27 +155,30 @@
             icon="el-icon-view"
             @click="handleShow(scope.row)"
             v-hasPermi="['comprehensive:custom:view']"
-          >查看</el-button>
+            >查看</el-button
+          >
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['comprehensive:custom:edit']"
-          >修改</el-button>
+            >修改</el-button
+          >
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['comprehensive:custom:remove']"
-          >删除</el-button>
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
 
     <pagination
-      v-show="total>0"
+      v-show="total > 0"
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
@@ -151,19 +186,38 @@
     />
 
     <!-- 查看客户详细信息对话框 -->
-    <el-dialog title="客户信息" :visible.sync="isshow" width="900px" append-to-body>
-        <el-descriptions :title="form.name" border>
-            <el-descriptions-item label="客户编号">{{ form.id }}</el-descriptions-item>
-            <el-descriptions-item label="客户姓名">{{ form.name }}</el-descriptions-item>
-            <el-descriptions-item label="客户简称">{{ form.nameAbbrevation }}</el-descriptions-item>
-            <el-descriptions-item label="社会统一信用代码">{{ form.unifiedCreditCode }}</el-descriptions-item>
-            <el-descriptions-item label="城市地区">{{ form.city }}</el-descriptions-item>
-            <el-descriptions-item label="详细地址">{{ form.address }}</el-descriptions-item>
-            <el-descriptions-item label="联系人信息">
-              <el-table></el-table>
-            </el-descriptions-item>
-            <el-descriptions-item label="证照"></el-descriptions-item>
-        </el-descriptions>
+    <el-dialog
+      title="客户信息"
+      :visible.sync="isshow"
+      width="900px"
+      append-to-body
+    >
+      <el-descriptions :title="view_form.name" border>
+        <el-descriptions-item label="客户编号">{{
+          view_form.id
+        }}</el-descriptions-item>
+        <el-descriptions-item label="客户姓名">{{
+          view_form.name
+        }}</el-descriptions-item>
+        <el-descriptions-item label="客户简称">{{
+          view_form.nameAbbrevation
+        }}</el-descriptions-item>
+        <el-descriptions-item label="社会统一信用代码">{{
+          view_form.unifiedCreditCode
+        }}</el-descriptions-item>
+        <el-descriptions-item label="城市地区">{{
+          view_form.city
+        }}</el-descriptions-item>
+        <el-descriptions-item label="详细地址">{{
+          view_form.address
+        }}</el-descriptions-item>
+        <el-descriptions-item label="联系人信息">
+          <el-table></el-table>
+        </el-descriptions-item>
+        <el-descriptions-item label="证件" :span="2">
+          <filedown :files="view_form.files"/>
+        </el-descriptions-item>
+      </el-descriptions>
     </el-dialog>
 
     <!-- 添加或修改客户信息对话框 -->
@@ -176,13 +230,22 @@
           <el-input v-model="form.name" placeholder="请输入客户姓名" />
         </el-form-item>
         <el-form-item label="客户简称" prop="nameAbbrevation">
-          <el-input v-model="form.nameAbbrevation" placeholder="请输入客户简称" />
+          <el-input
+            v-model="form.nameAbbrevation"
+            placeholder="请输入客户简称"
+          />
         </el-form-item>
         <el-form-item label="社会统一信用代码" prop="unifiedCreditCode">
-          <el-input v-model="form.unifiedCreditCode" placeholder="请输入社会统一信用代码" minlength="18" maxlength="18"/>
+          <el-input
+            v-model="form.unifiedCreditCode"
+            placeholder="请输入社会统一信用代码"
+            minlength="18"
+            maxlength="18"
+          />
         </el-form-item>
         <el-form-item label="城市地区" prop="cityid">
           <el-cascader
+            v-model="form.cityid"
             :options="city_options"
             :props="{ expandTrigger: 'hover' }"
             :value="cityid_value"
@@ -192,6 +255,21 @@
             filterable
           >
           </el-cascader>
+        </el-form-item>
+        <el-form-item label="证件" prop="certificateURL">
+         <el-upload
+            ref="upload"
+            :file-list="fileList"
+            action="String"
+            :http-request="fileUpdate"
+            :auto-upload="false"
+            list-type="picture"
+          >
+            <el-button size="small" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">
+              只能上传jpg/png文件，且不超过500kb
+            </div>
+          </el-upload>
         </el-form-item>
         <el-form-item label="详细地址" prop="address">
           <el-input v-model="form.address" placeholder="请输入详细地址" />
@@ -209,11 +287,22 @@
 </template>
 
 <script>
-import { listCustom, getCustom, delCustom, addCustom, updateCustom } from "@/api/comprehensive/custom";
+import {
+  listCustom,
+  getCustom,
+  delCustom,
+  addCustom,
+  updateCustom,
+} from "@/api/comprehensive/custom";
 import { jsonCity } from "@/api/city/city";
+import { fileDownload, fileUpdate } from "@/api/file/file";
+
+import filedown from '../../../components/FileDown/filedown.vue';
 
 export default {
   name: "Custom",
+ components:{"filedown":filedown},
+
   data() {
     return {
       // 遮罩层
@@ -239,9 +328,13 @@ export default {
       // 是否新建
       isadd: true,
       // 城市地区选择器
-      city_options:[],
+      city_options: [],
       // 城市地区选择器值
-      cityid_value:[],
+      cityid_value: [],
+      // 文件列表
+      fileList: [],
+      // 订单详细查看
+      view_form: {},
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -260,22 +353,26 @@ export default {
       // 表单校验
       rules: {
         name: [
-          { required: true, message: "客户姓名不能为空", trigger: "blur" }
+          { required: true, message: "客户姓名不能为空", trigger: "blur" },
         ],
         nameAbbrevation: [
-          { required: true, message: "客户简称不能为空", trigger: "blur" }
+          { required: true, message: "客户简称不能为空", trigger: "blur" },
         ],
         unifiedCreditCode: [
-          { required: true, message: "社会统一信用代码不能为空", trigger: "blur"},
-          { min: 18, message: "社会统一信用代码不能少于18位", trigger: "blur"}
+          {
+            required: true,
+            message: "社会统一信用代码不能为空",
+            trigger: "blur",
+          },
+          { min: 18, message: "社会统一信用代码不能少于18位", trigger: "blur" },
         ],
         type: [
-          { required: true, message: "实体类型不能为空", trigger: "change" }
+          { required: true, message: "实体类型不能为空", trigger: "change" },
         ],
         isdel: [
-          { required: true, message: "是否删除不能为空", trigger: "blur" }
-        ]
-      }
+          { required: true, message: "是否删除不能为空", trigger: "blur" },
+        ],
+      },
     };
   },
   created() {
@@ -285,17 +382,36 @@ export default {
     /** 查询客户信息列表 */
     getList() {
       this.loading = true;
-      listCustom(this.queryParams).then(response => {
+      listCustom(this.queryParams).then((response) => {
         this.customList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
     },
     /** 查询城市地区json*/
-    getJsonCity(){
-      jsonCity({}).then(respones => {
-        this.city_options = respones
-      })
+    getJsonCity() {
+      jsonCity({}).then((respones) => {
+        this.city_options = respones;
+      });
+    },
+
+    /** 文件上传 */
+    async fileUpdate() {
+      let file_list = this.$refs.upload.uploadFiles;
+      if (file_list.length > 0) {
+        let num = 0;
+        let formData = new FormData();
+        for (num in file_list) {
+          formData.append("files", file_list[num].raw);
+        }
+        let response = await fileUpdate(formData);
+        this.form.certificateURL = response;
+      }
+    },
+    /** 文件下载 */
+    async fileDown(file_name) {
+      let tmp = await fileDownload(file_name);
+      this.view_form.files.push(tmp);
     },
     // 取消按钮
     cancel() {
@@ -314,13 +430,13 @@ export default {
         address: null,
         notes: null,
         type: 0,
-        isdel: 0
+        isdel: 0,
       };
+        this.fileList = [];
       this.resetForm("form");
     },
-    setCityID(value){
-      this.form.cityid = value[2]
-
+    setCityID(value) {
+      this.form.cityid = value[2];
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -334,14 +450,29 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
-      this.multiple = !selection.length
+      this.ids = selection.map((item) => item.id);
+      this.single = selection.length !== 1;
+      this.multiple = !selection.length;
     },
-    /** 查看详细按钮 */
-    handleShow(row){
+// 查看详细
+    async handleShow(row) {
+      this.view_form = row;
+      this.view_form.files = [];
+      if (row.certificateURL == null) {
+        this.isshow = true;
+        return 0;
+      } else {
+        let urls = row.certificateURL.split(";");
+        urls.pop();
+        let num = 0;
+        for (num in urls) {
+          let tmp = await fileDownload(urls[num]);
+          this.view_form.files.push(tmp);
+          console.log(tmp)
+        }
+      }
       this.isshow = true;
-      this.form = row;
+
     },
     /** 新增按钮操作 */
     handleAdd() {
@@ -356,25 +487,36 @@ export default {
       this.reset();
       this.getJsonCity();
       this.isadd = false;
-      const id = row.id || this.ids
-      getCustom(id).then(response => {
+      const id = row.id || this.ids;
+      getCustom(id).then(async (response) => {
         this.form = response.data;
+        if (response.data.certificateURL != null) {
+          let num = 0;
+          let urls = response.data.certificateURL.split(";");
+          urls.pop();
+          for (num in urls) {
+            let tmp = await fileDownload(urls[num]);
+            this.fileList.push({ url: tmp.getUrl(), raw: tmp.getFile() });
+            console.log(tmp)
+          }
+        }
         this.open = true;
         this.title = "修改客户信息";
       });
     },
     /** 提交按钮 */
-    submitForm() {
-      this.$refs["form"].validate(valid => {
+   async submitForm() {
+      await this.fileUpdate();
+      this.$refs["form"].validate((valid) => {
         if (valid) {
           if (!this.isadd) {
-            updateCustom(this.form).then(response => {
+            updateCustom(this.form).then((response) => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addCustom(this.form).then(response => {
+            addCustom(this.form).then((response) => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -386,19 +528,27 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除客户信息编号为"' + ids + '"的数据项？').then(function() {
-        return delCustom(ids);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      this.$modal
+        .confirm('是否确认删除客户信息编号为"' + ids + '"的数据项？')
+        .then(function () {
+          return delCustom(ids);
+        })
+        .then(() => {
+          this.getList();
+          this.$modal.msgSuccess("删除成功");
+        })
+        .catch(() => {});
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('comprehensive/custom/export', {
-        ...this.queryParams
-      }, `custom_${new Date().getTime()}.xlsx`)
-    }
-  }
+      this.download(
+        "comprehensive/custom/export",
+        {
+          ...this.queryParams,
+        },
+        `custom_${new Date().getTime()}.xlsx`
+      );
+    },
+  },
 };
 </script>

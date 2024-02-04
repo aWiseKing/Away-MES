@@ -13,14 +13,7 @@
           <div
             style="overflow-x: auto; scrollbar-width: none; white-space: nowrap"
           >
-            <el-form-item label="出库单编号" prop="deliveryNoteID">
-              <el-input
-                v-model="queryParams.deliveryNoteID"
-                placeholder="请输入出库单编号"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
+    
             <el-form-item label="产品图号" prop="productID">
               <el-input
                 v-model="queryParams.productID"
@@ -444,6 +437,7 @@ export default {
     async getExist() {
       this.deliveryNoteID = this.$route.query.id;
       this.queryParams.deliveryNoteID = this.deliveryNoteID;
+      console.log()
       this.getList();
     },
     /** 查询产品出库详单列表 */
@@ -474,7 +468,7 @@ export default {
     /** 查询出货检验单 */
     getListshippinginspection() {
       this.loading = true;
-      listShippinginspection().then((response) => {
+      listShippinginspection({productID:this.form.productID}).then((response) => {
         this.shippinginspectionlist = response.rows;
         this.loading = false;
       });
@@ -495,7 +489,6 @@ export default {
     setDeliveryNoteOfShippinginspection(id) {
       getShippinginspection(id).then((response) => {
 
-        console.log(JSON.stringify(response));
         let data = response.data;
         let value = {
           shipmentQuantity: data.shipmentQuantity,
@@ -508,7 +501,6 @@ export default {
         };
         let deliveryNote = this.deliveryNote;
         this.deliveryNote = { ...deliveryNote,...value };
-        console.log(this.deliveryNote);
       });
     },
     // 取消按钮
@@ -520,7 +512,7 @@ export default {
     reset() {
       this.form = {
         id: null,
-        deliveryNoteID: this.deliveryNoteID,
+        deliveryNoteID: this.$route.query.id,
         productID: null,
         shippingInspectionID: null,
         receiptQuantity: null,
@@ -629,7 +621,7 @@ export default {
     },
   },
   watch: {
-    "$ruote.query.id": {
+    "$route.query.id": {
       immediate: true,
       handler() {
         this.getExist();

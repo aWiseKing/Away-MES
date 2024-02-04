@@ -223,12 +223,14 @@ import { listProduct } from "@/api/order/product"
 import { listCustomersuppliedmaterials } from "@/api/storage/customersuppliedmaterials"
 import { listContract } from "@/api/order/contract"
 import { fileDownload } from "@/api/file/file"
+import filedown from "@/components/FileDown/filedown.vue"
 import { listAdditional, delAdditional, addAdditional, updateAdditional } from "@/api/order/additional";
 import SaleorderDialog from "./components/saleorderDialog/index";
-
+import store from '@/store'
 
 export default {
   name: "Saleorder",
+  components:{"filedown":filedown},
   data() {
     return {
       // 遮罩层
@@ -367,12 +369,12 @@ export default {
     /** 产品图纸下载 */
     async productFileDown(file_name) {
       let tmp = await fileDownload(file_name);
-      this.view_form.productfiles.push(tmp.getUrl());
+      this.view_form.productfiles.push(tmp);
     },
     /** 合同附件下载 */
     async customerFileDown(file_name) {
       let tmp = await fileDownload(file_name);
-      this.view_form.contractfiles.push(tmp.getUrl());
+      this.view_form.contractfiles.push(tmp);
     },
     /** 获取订单对应附加信息 */
     async getListAdditional(id) {
@@ -394,7 +396,7 @@ export default {
     reset() {
       this.form = {
         id: null,
-        createUserName: document.cookie.split("username=")[1].split(";")[0],
+        createUserName: store.getters.name,
         number: null,
         requiredDeliveryTime: null,
         customerID: null,
@@ -533,10 +535,8 @@ export default {
             this.open = false;
             this.getList();
           }
-          console.log(response);
 
           if (response.code == 200) {
-            console.log("测试看看");
             // 插入或更新附加信息
             if (this.additionals.length > 0) {
               let tmp_additional_add_form = [];

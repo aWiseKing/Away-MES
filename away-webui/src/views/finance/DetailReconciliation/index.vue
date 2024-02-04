@@ -29,6 +29,41 @@
                 @keyup.enter.native="handleQuery"
               />
             </el-form-item>
+            <el-form-item label="应付金额" prop="amountDue">
+              <el-input
+                v-model="queryParams.amountDue"
+                placeholder="请输入应付金额"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
+
+            <el-form-item label="实付金额" prop="outOfPocketAmount">
+              <el-input
+                v-model="queryParams.outOfPocketAmount"
+                placeholder="请输入实付金额"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
+
+            <el-form-item label="未付金额" prop="unpaidAmount">
+              <el-input
+                v-model="queryParams.unpaidAmount"
+                placeholder="请输入未付金额"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
+
+            <el-form-item label="备注" prop="notes">
+              <el-input
+                v-model="queryParams.notes"
+                placeholder="请输入产品名称"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
           </div>
         </el-col>
         <el-col :span="3">
@@ -122,6 +157,7 @@
         align="center"
         prop="numberOfProductsSupplied"
       />
+      <el-table-column label="应付金额" align="center" prop="orderAmount" />
       <el-table-column label="应付金额" align="center" prop="amountDue" />
       <el-table-column
         label="实付金额"
@@ -237,7 +273,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-
         <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="产品名称" prop="productName">
@@ -271,13 +306,19 @@
           </el-col>
 
           <el-col :span="12">
-            <el-form-item label="应付金额" prop="amountDue">
-              <el-input v-model="form.amountDue" placeholder="请输入应付金额" />
+            <el-form-item label="订单金额" prop="orderAmount">
+              <el-input v-model="form.orderAmount" placeholder="请输入订单金额" />
             </el-form-item>
           </el-col>
         </el-row>
 
         <el-row :gutter="12">
+
+          <el-col :span="12">
+            <el-form-item label="应付金额" prop="amountDue">
+              <el-input v-model="form.amountDue" placeholder="请输入应付金额" />
+            </el-form-item>
+          </el-col>
           <el-col :span="12">
             <el-form-item label="实付金额" prop="outOfPocketAmount">
               <el-input
@@ -286,6 +327,10 @@
               />
             </el-form-item>
           </el-col>
+        </el-row>
+
+        <el-row :gutter="12">
+
 
           <el-col :span="12">
             <el-form-item label="未付金额" prop="unpaidAmount">
@@ -295,9 +340,6 @@
               />
             </el-form-item>
           </el-col>
-        </el-row>
-
-        <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="状态" prop="status">
               <el-select v-model="form.status" placeholder="请选择状态">
@@ -310,6 +352,9 @@
               </el-select>
             </el-form-item>
           </el-col>
+        </el-row>
+
+        <el-row :gutter="12">
 
           <el-col :span="12">
             <el-form-item label="备注" prop="notes">
@@ -378,19 +423,19 @@ export default {
         statementOfAccountID: null,
         name: null,
         productName: null,
+        orderAmount:null,
+        amountDue:null,
+        outOfPocketAmount: null,
+        unpaidAmount: null,
+        notes:null
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
         id: [{ required: true, message: "对账id不能为空", trigger: "blur" }],
-        statementOfAccountID:[{required: true, message: "", trigger: "blur"}],
+        statementOfAccountID:[{required: true, message: "对账单不能为空", trigger: "blur"}],
         saleorderID:[{required: true, message: "订单id不能为空", trigger: "blur"}],
-        numberOfProductsSupplied:[{required: true, message: "已供产品量不能未为空", trigger: "blur"}],
-        amountDue:[{required: true, message: "应付金额不能为空", trigger: "blur"}],
-        outOfPocketAmount:[{required: true, message: "已付金额不能为空", trigger: "blur"}],
-        unpaidAmount:[{required: true, message: "未付金额不能空", trigger: "blur"}],
-         status:[{required: true, message: "状态不能为空", trigger: "blur"}],
       },
       //当前对账单id
       statementOfAccountID: "",
@@ -453,6 +498,7 @@ export default {
         statementOfAccountID: this.$route.query.id,
         saleorderID: null,
         numberOfProductsSupplied: null,
+        orderAmount:null,
         amountDue: null,
         outOfPocketAmount: null,
         unpaidAmount: null,

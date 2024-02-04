@@ -11,6 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="outsourcingQuantity"    column="outsourcingQuantity"    />
         <result property="completedQuantity"    column="completedQuantity"    />
         <result property="unfinishedQuantity"    column="unfinishedQuantity"    />
+        <result property="orderAmount"    column="orderAmount"    />
         <result property="amountDue"    column="amountDue"    />
         <result property="outOfPocketAmount"    column="outOfPocketAmount"    />
         <result property="unpaidAmount"    column="unpaidAmount"    />
@@ -19,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwOutsourcingreconciliationVo">
-        select id, outsourcingStatementsID, outsourcingOrderID, outsourcingQuantity, completedQuantity, unfinishedQuantity, amountDue, outOfPocketAmount, unpaidAmount, notes, status from aw_OutsourcingReconciliation
+        select id, outsourcingStatementsID, outsourcingOrderID, outsourcingQuantity, completedQuantity, unfinishedQuantity,orderAmount,amountDue, outOfPocketAmount, unpaidAmount, notes, status from aw_OutsourcingReconciliation
     </sql>
 
     <select id="selectAwOutsourcingreconciliationList" parameterType="AwOutsourcingreconciliation" resultMap="AwOutsourcingreconciliationResult">
@@ -30,6 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="outsourcingQuantity != null "> and outsourcingQuantity = #{outsourcingQuantity}</if>
             <if test="completedQuantity != null "> and completedQuantity = #{completedQuantity}</if>
             <if test="unfinishedQuantity != null "> and unfinishedQuantity = #{unfinishedQuantity}</if>
+            <if test="orderAmount != null  and orderAmount != ''"> and orderAmount = #{orderAmount}</if>
             <if test="amountDue != null  and amountDue != ''"> and amountDue = #{amountDue}</if>
             <if test="outOfPocketAmount != null  and outOfPocketAmount != ''"> and outOfPocketAmount = #{outOfPocketAmount}</if>
             <if test="unpaidAmount != null  and unpaidAmount != ''"> and unpaidAmount = #{unpaidAmount}</if>
@@ -51,6 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="outsourcingQuantity != null">outsourcingQuantity,</if>
             <if test="completedQuantity != null">completedQuantity,</if>
             <if test="unfinishedQuantity != null">unfinishedQuantity,</if>
+            <if test="orderAmount != null and orderAmount != ''">orderAmount,</if>
             <if test="amountDue != null and amountDue != ''">amountDue,</if>
             <if test="outOfPocketAmount != null and outOfPocketAmount != ''">outOfPocketAmount,</if>
             <if test="unpaidAmount != null and unpaidAmount != ''">unpaidAmount,</if>
@@ -63,6 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="outsourcingQuantity != null">#{outsourcingQuantity},</if>
             <if test="completedQuantity != null">#{completedQuantity},</if>
             <if test="unfinishedQuantity != null">#{unfinishedQuantity},</if>
+            <if test="orderAmount != null and orderAmount != ''">#{orderAmount},</if>
             <if test="amountDue != null and amountDue != ''">#{amountDue},</if>
             <if test="outOfPocketAmount != null and outOfPocketAmount != ''">#{outOfPocketAmount},</if>
             <if test="unpaidAmount != null and unpaidAmount != ''">#{unpaidAmount},</if>
@@ -79,6 +83,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="outsourcingQuantity != null">outsourcingQuantity = #{outsourcingQuantity},</if>
             <if test="completedQuantity != null">completedQuantity = #{completedQuantity},</if>
             <if test="unfinishedQuantity != null">unfinishedQuantity = #{unfinishedQuantity},</if>
+            <if test="orderAmount != null and orderAmount != ''">orderAmount = #{orderAmount},</if>
             <if test="amountDue != null and amountDue != ''">amountDue = #{amountDue},</if>
             <if test="outOfPocketAmount != null and outOfPocketAmount != ''">outOfPocketAmount = #{outOfPocketAmount},</if>
             <if test="unpaidAmount != null and unpaidAmount != ''">unpaidAmount = #{unpaidAmount},</if>

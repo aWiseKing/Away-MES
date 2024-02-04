@@ -4,10 +4,7 @@
       <el-row :gutter="1">
         <el-col :span="21">
           <div style="overflow-x: auto;scrollbar-width: none; white-space: nowrap;">
-            <el-form-item label="出库单编号" prop="deliveryNoteID">
-              <el-input v-model="queryParams.deliveryNoteID" placeholder="请输入出库单编号" clearable
-                @keyup.enter.native="handleQuery" />
-            </el-form-item>
+
             <el-form-item label="材料名称" prop="name">
               <el-input v-model="queryParams.name" placeholder="请输入材料名称" clearable @keyup.enter.native="handleQuery" />
             </el-form-item>
@@ -440,6 +437,18 @@ export default {
       getMatloutbounddet(id).then(response => {
         this.matloutbounddet = response.data;
         this.view_open = true;
+        getProductiontasks(row.productionTasksID).then((response) => {
+        let productionTasksFormID = response.data.productionTasksFormID;
+        listProductiontasklist().then((response) => {
+        this.productiontasklistlist = response.rows;
+        this.loading = false;
+      });
+        getProductiontasklist(productionTasksFormID).then((response) => {
+        this.productiontasklist = response.data;
+        this.loading = false;
+      });
+
+      });
         this.open = true;
         this.title = "材料出库详细";
       });
@@ -460,8 +469,20 @@ export default {
       getMatloutbounddet(id).then(response => {
         this.matloutbounddet = response.data;
         this.view_open = false;
+        getProductiontasks(row.productionTasksID).then((response) => {
+        let productionTasksFormID = response.data.productionTasksFormID;
+        listProductiontasklist().then((response) => {
+        this.productiontasklistlist = response.rows;
+        this.loading = false;
+      });
+        getProductiontasklist(productionTasksFormID).then((response) => {
+        this.productiontasklist = response.data;
+        this.loading = false;
+      });
+
+      });
         this.open = true;
-        this.title = "修改材料出库详细";
+        this.title = "修改材料出库";
       });
     },
     /** 提交按钮 */

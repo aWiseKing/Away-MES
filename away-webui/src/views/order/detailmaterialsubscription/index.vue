@@ -280,18 +280,18 @@
                   placeholder="请选择任务编号"
                   @focus="
                     getListproductiontasks(
-                      productiontasklistlist.productionTasksFormID
+                      productiontasklist.id
                     )
                   "
                 >
-                  <el-optioncol
+                  <el-option
                     v-for="(item, index) in productiontaskslist"
                     :key="index"
                     :label="item.name"
                     :value="item.id"
                     @click.native="setProductiontasks(item.id)"
                   >
-                  </el-optioncol>
+                  </el-option>
                 </el-select> </el-form-item></el-col
             ><el-col :span="12">
               <el-form-item label="工艺编号" prop="processingTechnologyID">
@@ -359,7 +359,6 @@
                   v-model="materiallistoftechnology.materialDensity"
                   placeholder="请输入材料密度"
                   disabled
-                 
                 /> </el-form-item></el-col
           ></el-row>
           <el-row :gutter="12"
@@ -515,6 +514,8 @@ export default {
       materiallistoftechnologylist: [],
       // 工艺所需材料详细信息
       materiallistoftechnology: {},
+
+
     };
   },
   created() {
@@ -524,6 +525,7 @@ export default {
     getExist() {
       this.subscribeID = this.$route.query.subscribeID;
       this.queryParams.subscribeID = this.subscribeID;
+
       getPurchaserequisition(this.subscribeID).then((response) => {
         this.purchaserequisition = response.data;
       });
@@ -533,6 +535,7 @@ export default {
     getList() {
       this.loading = true;
       listDetailmaterialsubscription(this.queryParams).then((response) => {
+        console.log(this.queryParams)
         this.detailmaterialsubscriptionList = response.rows;
         this.total = response.total;
         this.loading = false;
@@ -551,11 +554,14 @@ export default {
       this.loading = true;
       getProductiontasklist(id).then((response) => {
         this.productiontasklist = response.data;
+
+
         this.loading = false;
       });
     },
     /** 查询任务信息 */
     getListproductiontasks(productionTasksFormID) {
+
       this.loading = true;
       listProductiontasks({
         productionTasksFormID: productionTasksFormID,
@@ -589,8 +595,7 @@ export default {
     setMaterialListOfTechnology(id) {
       this.loading = true;
       getMaterialListOfTechnology(id).then((response) => {
-        console.log(response.data);
-        this.materiallistoftechnology = response.data;
+             this.materiallistoftechnology = response.data;
         this.loading = false;
       });
     },
@@ -702,6 +707,7 @@ export default {
               this.getList();
             });
           } else {
+
             addMaterialsubscription(this.form).then((response) => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;

@@ -31,6 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="typeName != null  and typeName != ''"> and typeName like concat('%', #{typeName}, '%')</if>
             <if test="specificationModel != null  and specificationModel != ''"> and specificationModel = #{specificationModel}</if>
+            <if test="subscribeID != null  and materialID != ''"> and subscribeID = #{subscribeID}</if>
             <if test="processingTechnologyID != null  and processingTechnologyID != ''"> and processingTechnologyID = #{processingTechnologyID}</if>
             <if test="requiredDate != null "> and requiredDate = #{requiredDate}</if>
         </where>

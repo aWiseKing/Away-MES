@@ -25,17 +25,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="证照附件" prop="certificateURL">
+
+      <el-form-item label="城市" prop="city">
         <el-input
-          v-model="queryParams.certificateURL"
-          placeholder="请输入证照附件"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="城市" prop="cityid">
-        <el-input
-          v-model="queryParams.cityid"
+          v-model="queryParams.city"
           placeholder="请输入城市"
           clearable
           @keyup.enter.native="handleQuery"
@@ -152,17 +145,20 @@
 
     <!-- 查看供货商详细信息对话框 -->
     <el-dialog title="供货商信息" :visible.sync="isshow" width="900px" append-to-body>
-        <el-descriptions :title="form.name" border>
-            <el-descriptions-item label="供货商编号">{{ form.id }}</el-descriptions-item>
-            <el-descriptions-item label="供货商姓名">{{ form.name }}</el-descriptions-item>
-            <el-descriptions-item label="供货商简称">{{ form.nameAbbrevation }}</el-descriptions-item>
-            <el-descriptions-item label="社会统一信用代码">{{ form.unifiedCreditCode }}</el-descriptions-item>
-            <el-descriptions-item label="城市地区">{{ form.city }}</el-descriptions-item>
-            <el-descriptions-item label="详细地址">{{ form.address }}</el-descriptions-item>
+        <el-descriptions :title="view_form.name" border>
+            <el-descriptions-item label="供货商编号">{{ view_form.id }}</el-descriptions-item>
+            <el-descriptions-item label="供货商姓名">{{ view_form.name }}</el-descriptions-item>
+            <el-descriptions-item label="供货商简称">{{ view_form.nameAbbrevation }}</el-descriptions-item>
+            <el-descriptions-item label="社会统一信用代码">{{ view_form.unifiedCreditCode }}</el-descriptions-item>
+            <el-descriptions-item label="城市地区">{{ view_form.city }}</el-descriptions-item>
+            <el-descriptions-item label="详细地址">{{ view_form.address }}</el-descriptions-item>
             <el-descriptions-item label="联系人信息">
               <el-table></el-table>
             </el-descriptions-item>
-            <el-descriptions-item label="证照"></el-descriptions-item>
+            <el-descriptions-item label="证照">
+                        <filedown :files="view_form.files"/>
+
+            </el-descriptions-item>
         </el-descriptions>
     </el-dialog>
 
@@ -195,6 +191,23 @@
         <el-form-item label="详细地址" prop="address">
           <el-input v-model="form.address" placeholder="请输入详细地址" />
         </el-form-item>
+
+        <el-form-item label="合同附件上传" prop="certificateURL">
+          <el-upload
+            ref="upload"
+            :file-list="fileList"
+            action="String"
+            :http-request="fileUpdate"
+            :auto-upload="false"
+            list-type="picture"
+          >
+            <el-button size="small" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">
+              只能上传jpg/png文件，且不超过500kb
+            </div>
+          </el-upload>
+        </el-form-item>
+
         <el-form-item label="备注信息" prop="notes">
           <el-input v-model="form.notes" placeholder="请输入备注信息" />
         </el-form-item>
@@ -209,10 +222,17 @@
 
 <script>
 import { listCustom, getCustom, delCustom, addCustom, updateCustom } from "@/api/comprehensive/partner";
+
 import { jsonCity } from "@/api/city/city";
+
+import { fileDownload, fileUpdate } from "@/api/file/file";
+
+import Filedown from '../../../components/FileDown/filedown.vue';
 
 export default {
   name: "Custom",
+ components:{"filedown":Filedown},
+
   data() {
     return {
       // 遮罩层
@@ -241,6 +261,10 @@ export default {
       city_options:[],
       // 城市地区选择器值
       cityid_value:[],
+            // 文件列表
+      fileList: [],
+      // 订单详细查看
+      view_form: {},
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -297,6 +321,23 @@ export default {
         this.city_options = respones
       })
     },
+        async fileUpdate() {
+      let file_list = this.$refs.upload.uploadFiles;
+      if (file_list.length > 0) {
+        let num = 0;
+        let formData = new FormData();
+        for (num in file_list) {
+          formData.append("files", file_list[num].raw);
+        }
+        let response = await fileUpdate(formData);
+        this.form.certificateURL = response;
+      }
+    },
+    /** 文件下载 */
+    async fileDown(file_name) {
+      let tmp = await fileDownload(file_name);
+      this.view_form.files.push(tmp);
+    },
     // 取消按钮
     cancel() {
       this.open = false;
@@ -316,6 +357,7 @@ export default {
         type: 1,
         isdel: 0
       };
+      this.fileList=[]
       this.resetForm("form");
     },
     setCityID(value){
@@ -337,10 +379,25 @@ export default {
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
-    /** 查看详细按钮 */
-    handleShow(row){
+    // 查看详细
+    async handleShow(row) {
+      this.view_form = row;
+      this.view_form.files = [];
+      if (row.certificateURL == null) {
+        this.isshow = true;
+        return 0;
+      } else {
+        let urls = row.certificateURL.split(";");
+        urls.pop();
+        let num = 0;
+        for (num in urls) {
+          let tmp = await fileDownload(urls[num]);
+          this.view_form.files.push(tmp);
+          console.log(tmp)
+        }
+      }
       this.isshow = true;
-      this.form = row;
+
     },
     /** 新增按钮操作 */
     handleAdd() {
@@ -351,29 +408,40 @@ export default {
       this.title = "添加供货商信息";
     },
     /** 修改按钮操作 */
-    handleUpdate(row) {
+  handleUpdate(row) {
       this.reset();
       this.getJsonCity();
       this.isadd = false;
-      const id = row.id || this.ids
-      getCustom(id).then(response => {
+      const id = row.id || this.ids;
+      getCustom(id).then(async (response) => {
         this.form = response.data;
+        if (response.data.certificateURL != null) {
+          let num = 0;
+          let urls = response.data.certificateURL.split(";");
+          urls.pop();
+          for (num in urls) {
+            let tmp = await fileDownload(urls[num]);
+            this.fileList.push({ url: tmp.getUrl(), raw: tmp.getFile() });
+            console.log(tmp)
+          }
+        }
         this.open = true;
-        this.title = "修改供货商信息";
+        this.title = "修改客户信息";
       });
     },
     /** 提交按钮 */
-    submitForm() {
-      this.$refs["form"].validate(valid => {
+    async submitForm() {
+      await this.fileUpdate();
+      this.$refs["form"].validate((valid) => {
         if (valid) {
           if (!this.isadd) {
-            updateCustom(this.form).then(response => {
+            updateCustom(this.form).then((response) => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addCustom(this.form).then(response => {
+            addCustom(this.form).then((response) => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();

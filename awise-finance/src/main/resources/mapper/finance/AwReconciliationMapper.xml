@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="statementOfAccountID"    column="statementOfAccountID"    />
         <result property="saleorderID"    column="saleorderID"    />
         <result property="numberOfProductsSupplied"    column="numberOfProductsSupplied"    />
+        <result property="orderAmount"    column="orderAmount"    />
         <result property="amountDue"    column="amountDue"    />
         <result property="outOfPocketAmount"    column="outOfPocketAmount"    />
         <result property="unpaidAmount"    column="unpaidAmount"    />
@@ -17,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwReconciliationVo">
-        select id, statementOfAccountID, saleorderID, numberOfProductsSupplied, amountDue, outOfPocketAmount, unpaidAmount, notes, status from aw_Reconciliation
+        select id, statementOfAccountID, saleorderID, numberOfProductsSupplied,orderAmount, amountDue, outOfPocketAmount, unpaidAmount, notes, status from aw_Reconciliation
     </sql>
 
     <select id="selectAwReconciliationList" parameterType="AwReconciliation" resultMap="AwReconciliationResult">
@@ -26,6 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="statementOfAccountID != null  and statementOfAccountID != ''"> and statementOfAccountID = #{statementOfAccountID}</if>
             <if test="saleorderID != null  and saleorderID != ''"> and saleorderID = #{saleorderID}</if>
             <if test="numberOfProductsSupplied != null "> and numberOfProductsSupplied = #{numberOfProductsSupplied}</if>
+            <if test="orderAmount != null  and orderAmount != ''"> and orderAmount = #{orderAmount}</if>
             <if test="amountDue != null  and amountDue != ''"> and amountDue = #{amountDue}</if>
             <if test="outOfPocketAmount != null  and outOfPocketAmount != ''"> and outOfPocketAmount = #{outOfPocketAmount}</if>
             <if test="unpaidAmount != null  and unpaidAmount != ''"> and unpaidAmount = #{unpaidAmount}</if>
@@ -45,6 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="statementOfAccountID != null">statementOfAccountID,</if>
             <if test="saleorderID != null">saleorderID,</if>
             <if test="numberOfProductsSupplied != null">numberOfProductsSupplied,</if>
+            <if test="orderAmount != null">orderAmount,</if>
             <if test="amountDue != null">amountDue,</if>
             <if test="outOfPocketAmount != null">outOfPocketAmount,</if>
             <if test="unpaidAmount != null">unpaidAmount,</if>
@@ -55,6 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="statementOfAccountID != null">#{statementOfAccountID},</if>
             <if test="saleorderID != null">#{saleorderID},</if>
             <if test="numberOfProductsSupplied != null">#{numberOfProductsSupplied},</if>
+            <if test="orderAmount != null">#{orderAmount},</if>
             <if test="amountDue != null">#{amountDue},</if>
             <if test="outOfPocketAmount != null">#{outOfPocketAmount},</if>
             <if test="unpaidAmount != null">#{unpaidAmount},</if>
@@ -69,6 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="statementOfAccountID != null">statementOfAccountID = #{statementOfAccountID},</if>
             <if test="saleorderID != null">saleorderID = #{saleorderID},</if>
             <if test="numberOfProductsSupplied != null">numberOfProductsSupplied = #{numberOfProductsSupplied},</if>
+            <if test="orderAmount != null">orderAmount = #{orderAmount},</if>
             <if test="amountDue != null">amountDue = #{amountDue},</if>
             <if test="outOfPocketAmount != null">outOfPocketAmount = #{outOfPocketAmount},</if>
             <if test="unpaidAmount != null">unpaidAmount = #{unpaidAmount},</if>

@@ -20,4 +20,5 @@ public interface AwCustomEnMapper
      */
     public List<AwCustomEn> selectAwCustomEnList(AwCustomEn awCustomEn);
 
+    AwCustomEn selectAwCustomByID(String id);
 }

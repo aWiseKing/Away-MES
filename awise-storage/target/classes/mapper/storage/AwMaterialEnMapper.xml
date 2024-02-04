@@ -25,18 +25,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         aw_material.materialDensity
         FROM
         aw_material
-        LEFT JOIN aw_specifications ON aw_material.typeID = aw_specifications.id
-        LEFT JOIN aw_materialclassification ON aw_material.specificationsID = aw_materialclassification.id
+        LEFT JOIN aw_specifications ON aw_material.specificationsID = aw_specifications.id
+        LEFT JOIN aw_materialclassification ON aw_material.typeID = aw_materialclassification.id
     </sql>
 
     <select id="selectAwMaterialEnList" parameterType="AwMaterialEn" resultMap="AwMaterialEnResult">
         <include refid="selectAwMaterialEnVo"/>
         <where>  
-            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
-            <if test="type != null and type != ''"> and type like concat('%', #{type}, '%')</if>
-            <if test="specification != null  and specification != ''"> and specification like concat('%', #{specification}, '%')</if>
+            <if test="name != null  and name != ''"> and aw_material. name like concat('%', #{name}, '%')</if>
+            <if test="type != null and type != ''"> and aw_materialclassification.name like concat('%', #{type}, '%')</if>
+            <if test="specification != null  and specification != ''"> and aw_specifications.type like concat('%', #{specification}, '%')</if>
             <if test="materialDensity != null  and materialDensity != ''"> and materialDensity like concat('%', #{materialDensity}, '%')</if>
-            <if test="notes != null  and notes != ''"> and notes like concat('%', #{notes}, '%')</if>
+            <if test="notes != null  and notes != ''"> and  aw_material.notes like concat('%', #{notes}, '%')</if>
         </where>
     </select>
 </mapper>

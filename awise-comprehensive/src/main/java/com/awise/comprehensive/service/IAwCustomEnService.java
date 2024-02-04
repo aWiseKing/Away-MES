@@ -13,6 +13,7 @@ import java.util.List;
 public interface IAwCustomEnService 
 {
 
+
     /**
      * 查询客户信息列表
      * 
@@ -20,4 +21,6 @@ public interface IAwCustomEnService
      * @return 客户信息集合
      */
     public List<AwCustomEn> selectAwCustomEnList(AwCustomEn awCustomEn);
+
+    AwCustomEn selectAwCustomByID(String id);
 }

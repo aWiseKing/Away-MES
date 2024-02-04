@@ -13,6 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="productName"    column="productName"    />
         <result property="number"    column="number"    />
         <result property="numberOfProductsSupplied"    column="numberOfProductsSupplied"    />
+        <result property="orderAmount"    column="orderAmount"    />
         <result property="amountDue"    column="amountDue"    />
         <result property="outOfPocketAmount"    column="outOfPocketAmount"    />
         <result property="unpaidAmount"    column="unpaidAmount"    />
@@ -21,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwDetailreconciliationVo">
-        select id, statementOfAccountID, saleorderID, money, name, productName, number, numberOfProductsSupplied, amountDue, outOfPocketAmount, unpaidAmount, notes, status from aw_DetailReconciliation
+        select id, statementOfAccountID, saleorderID, money, name, productName, number, numberOfProductsSupplied,orderAmount,amountDue, outOfPocketAmount, unpaidAmount, notes, status from aw_DetailReconciliation
     </sql>
 
     <select id="selectAwDetailreconciliationList" parameterType="AwDetailreconciliation" resultMap="AwDetailreconciliationResult">
@@ -34,6 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="productName != null  and productName != ''"> and productName like concat('%', #{productName}, '%')</if>
             <if test="number != null "> and number = #{number}</if>
             <if test="numberOfProductsSupplied != null "> and numberOfProductsSupplied = #{numberOfProductsSupplied}</if>
+            <if test="orderAmount != null  and orderAmount != ''"> and orderAmount = #{orderAmount}</if>
             <if test="amountDue != null  and amountDue != ''"> and amountDue = #{amountDue}</if>
             <if test="outOfPocketAmount != null  and outOfPocketAmount != ''"> and outOfPocketAmount = #{outOfPocketAmount}</if>
             <if test="unpaidAmount != null  and unpaidAmount != ''"> and unpaidAmount = #{unpaidAmount}</if>
@@ -58,6 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="productName != null">productName,</if>
             <if test="number != null">number,</if>
             <if test="numberOfProductsSupplied != null">numberOfProductsSupplied,</if>
+            <if test="orderAmount != null">orderAmount,</if>
             <if test="amountDue != null">amountDue,</if>
             <if test="outOfPocketAmount != null">outOfPocketAmount,</if>
             <if test="unpaidAmount != null">unpaidAmount,</if>
@@ -73,6 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="productName != null">#{productName},</if>
             <if test="number != null">#{number},</if>
             <if test="numberOfProductsSupplied != null">#{numberOfProductsSupplied},</if>
+            <if test="orderAmount != null">#{orderAmount},</if>
             <if test="amountDue != null">#{amountDue},</if>
             <if test="outOfPocketAmount != null">#{outOfPocketAmount},</if>
             <if test="unpaidAmount != null">#{unpaidAmount},</if>
@@ -91,6 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="productName != null">productName = #{productName},</if>
             <if test="number != null">number = #{number},</if>
             <if test="numberOfProductsSupplied != null">numberOfProductsSupplied = #{numberOfProductsSupplied},</if>
+            <if test="orderAmount != null">orderAmount = #{orderAmount},</if>
             <if test="amountDue != null">amountDue = #{amountDue},</if>
             <if test="outOfPocketAmount != null">outOfPocketAmount = #{outOfPocketAmount},</if>
             <if test="unpaidAmount != null">unpaidAmount = #{unpaidAmount},</if>

@@ -46,6 +46,9 @@ public class AwDetailreconciliation extends BaseEntity
     @Excel(name = "以供产品数")
     private Long numberOfProductsSupplied;
 
+    @Excel(name = "订单金额")
+    private String orderAmount;
+
     /** 应付金额 */
     @Excel(name = "应付金额")
     private String amountDue;
@@ -138,7 +141,16 @@ public class AwDetailreconciliation extends BaseEntity
     {
         return numberOfProductsSupplied;
     }
-    public void setAmountDue(String amountDue) 
+
+    public String getOrderAmount() {
+        return orderAmount;
+    }
+
+    public void setOrderAmount(String orderAmount) {
+        this.orderAmount = orderAmount;
+    }
+
+    public void setAmountDue(String amountDue)
     {
         this.amountDue = amountDue;
     }

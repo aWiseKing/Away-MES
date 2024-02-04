@@ -4,6 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.awise.comprehensive.domain.AwContactsEn;
+import com.awise.comprehensive.service.IAwContactsEnService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +39,9 @@ public class AwContactsController extends BaseController
     @Autowired
     private IAwContactsService awContactsService;
 
+    @Autowired
+    private IAwContactsEnService awContactsEnService;
+
     /**
      * 查询联系人信息列表
      */
@@ -45,6 +51,17 @@ public class AwContactsController extends BaseController
     {
         startPage();
         List<AwContacts> list = awContactsService.selectAwContactsList(awContacts);
+        return getDataTable(list);
+    }
+
+
+//    扩展
+    @PreAuthorize("@ss.hasPermi('comprehensive:contacts:enlist')")
+    @GetMapping("/enlist")
+    public TableDataInfo list(AwContactsEn awContactsEn)
+    {
+        startPage();
+        List<AwContactsEn> list = awContactsEnService.selectAwContactsEnList(awContactsEn);
         return getDataTable(list);
     }
 

@@ -4,9 +4,9 @@
       <el-form-item label="工序名称" prop="name">
         <el-input v-model="queryParams.name" placeholder="请输入工序名称" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="工序简图" prop="diagramURL">
+      <!-- <el-form-item label="工序简图" prop="diagramURL">
         <el-input v-model="queryParams.diagramURL" placeholder="请输入工序简图" clearable @keyup.enter.native="handleQuery" />
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="所用工装" prop="usedTooling">
         <el-input v-model="queryParams.usedTooling" placeholder="请输入所用工装" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
@@ -21,7 +21,10 @@
         <el-input v-model="queryParams.laborCost" placeholder="请输入工时成本" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
       <el-form-item label="工序外协" prop="outsourcing">
-        <el-input v-model="queryParams.outsourcing" placeholder="请输入工序外协" clearable @keyup.enter.native="handleQuery" />
+        <el-select v-model="queryParams.outsourcing" placeholder="请选择状态">
+                <el-option v-for="item, index in isoutsourced" :key="item.key" :label="item.value"
+                  :value="item.key"></el-option>
+              </el-select>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -158,7 +161,7 @@
     <!--  查看工序模板对话框 -->
     <el-dialog :title="title" :visible.sync="view_open" width="900px" append-to-body>
       <el-descriptions :column="2" border>
-        <el-descriptions-item label="工序状态" :span="2">{{ getValue(view_form.status) }}</el-descriptions-item>
+        <el-descriptions-item label="工序状态" :span="2">{{ getValue(state_options,view_form.status) }}</el-descriptions-item>
         <el-descriptions-item label="工序名称">{{ view_form.name }}</el-descriptions-item>
         <el-descriptions-item label="所用工装">{{ view_form.usedTooling }}</el-descriptions-item>
 
@@ -171,12 +174,7 @@
           <div v-html="view_form.content"></div>
         </el-descriptions-item>
         <el-descriptions-item label="产品图纸" :span="2">
-          <el-carousel :interval="4000" type="card" height="200px">
-            <el-carousel-item v-for="item in view_form.files" :key="item">
-              <el-image :src="item" :preview-src-list="[item]">
-              </el-image>
-            </el-carousel-item>
-          </el-carousel>
+          <filedown :files="view_form.files"/>
         </el-descriptions-item>
       </el-descriptions>
     </el-dialog>
@@ -186,9 +184,12 @@
 <script>
 import { listProcesstemplate, getProcesstemplate, delProcesstemplate, addProcesstemplate, updateProcesstemplate } from "@/api/produce/processtemplate";
 import { fileUpdate, fileDownload, fileDelete } from "@/api/file/file";
+import filedown from "@/components/FileDown/filedown.vue"
+import Filedown from '../../../components/FileDown/filedown.vue';
 
 export default {
   name: "Processtemplate",
+  components:{"filedown":Filedown},
   data() {
     return {
       // 遮罩层
@@ -300,7 +301,7 @@ export default {
     /** 文件下载 */
     async fileDown(file_name) {
       let tmp = await fileDownload(file_name)
-      this.view_form.files.push(tmp.getUrl());
+      this.view_form.files.push(tmp);
     },
     // 取消按钮
     cancel() {
@@ -321,6 +322,7 @@ export default {
         outsourcing: "0",
         status: "0"
       };
+      this.fileList=[]
       this.resetForm("form");
     },
     /** 搜索按钮操作 */
@@ -334,24 +336,39 @@ export default {
       this.handleQuery();
     },
     /** 查看工序详细信息 */
-    handleView(row) {
-      const id = row.id || this.ids
-      getProcesstemplate(id).then(async response => {
-        this.view_form = response.data;
-        this.view_form.files = [];
-        let num = 0;
-        if(response.data.diagramURL == null){}
-        else{
-          let urls = response.data.diagramURL.split(";");
-          urls.pop();
-          for (num in urls) {
-            await this.fileDown(urls[num]);
-          }
-        }
-        this.view_open = true;
-      });
+    // handleView(row) {
+    //   const id = row.id || this.ids
+    //   getProcesstemplate(id).then(async response => {
+    //     this.view_form = response.data;
+    //     this.view_form.files = [];
+    //     let num = 0;
+    //     if(response.data.diagramURL == null){}
+    //     else{
+    //       let urls = response.data.diagramURL.split(";");
+    //       urls.pop();
+    //       for (num in urls) {
+    //         await this.fileDown(urls[num]);
+    //       }
+    //     }
+    //     this.view_open = true;
+    //   });
+    // },
+    async handleView(row) {
+      this.view_form=row
+     this.view_form.files=[];
+     if(row.diagramURL==null){
+      return 0;
+     }else{
+      let urls=row.diagramURL.split(";");
+      urls.pop();
+      let num=0;
+      for(num in urls){
+        let tmp=await fileDownload(urls[num])
+        this.view_form.files.push(tmp);
+      }
+     }
+     this.view_open = true
     },
-    // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
       this.single = selection.length !== 1

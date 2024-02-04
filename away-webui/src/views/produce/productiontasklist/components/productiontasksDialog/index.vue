@@ -149,6 +149,7 @@ export default {
       let query = {
         "processingTechnologyID":processingTechnologyID,
         "productionTasksID":row.id,
+        id:processingTechnologyID,
         "productiontasksFormID":this.productiontasksFormID
       }
       this.$router.push({ path:"/produce/ProcessDetailsTask", query: query})

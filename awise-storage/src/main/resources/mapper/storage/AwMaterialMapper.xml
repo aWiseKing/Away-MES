@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwMaterialVo">
-        select id, name, typeID, specificationsID, materialDensity, notes from aw_material
+        select id, name, typeID, specificationsID, materialDensity,notes from aw_material
     </sql>
 
     <select id="selectAwMaterialList" parameterType="AwMaterial" resultMap="AwMaterialResult">

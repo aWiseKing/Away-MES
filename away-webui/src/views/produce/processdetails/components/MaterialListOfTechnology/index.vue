@@ -68,7 +68,7 @@
 
     <!-- 添加或修改需求材料对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px" :disabled="view_open">
         <el-row :gutter='12'><el-col :span='12'> <el-form-item label="工艺编号" prop="processingTechnologyID">
               <el-input v-model="form.processingTechnologyID" placeholder="请输入工艺编号" disabled />
             </el-form-item></el-col><el-col :span='12'>
@@ -98,7 +98,7 @@
               <el-input v-model="form.numberProducibleParts" placeholder="请输入可制件数" />
             </el-form-item></el-col></el-row>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <div slot="footer" class="dialog-footer" v-if="!view_open">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
@@ -245,10 +245,22 @@ export default {
       this.multiple = !selection.length
     },
     handleView(row) {
-      this.view_open = true;
+      this.reset();
+      this.isadd = false;
+      const id = row.id || this.ids
+      getMaterialListOfTechnology(id).then(response => {
+        this.form = response.data;
+        this.view_open=true
+        getBasicinformationofmaterials(response.data.materialID).then(response => {
+          this.clickBasicinformationofmaterials = response.data
+        })
+        this.open = true;
+        this.title = "修改需求材料";
+      });
     },
     /** 新增按钮操作 */
     handleAdd() {
+      this.view_open=false
       this.reset();
       this.isadd = true;
       this.open = true;
@@ -256,6 +268,7 @@ export default {
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
+      this.view_open=false
       this.reset();
       this.isadd = false;
       const id = row.id || this.ids

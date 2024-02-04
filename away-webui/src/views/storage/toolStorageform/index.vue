@@ -269,6 +269,10 @@
         <el-form-item label="经办人" prop="operator">
           <el-input v-model="form.operator" placeholder="请输入经办人" />
         </el-form-item>
+
+        <el-form-item label="备注" prop="notes">
+          <el-input v-model="form.notes" placeholder="备注" />
+        </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-select v-model="form.status" placeholder="请选择状态"  disabled>
             <el-option

@@ -28,6 +28,14 @@
           placeholder="请选择对账时间">
         </el-date-picker>
       </el-form-item>
+      <el-form-item label="对账人" prop="notes">
+        <el-input
+          v-model="queryParams.notes"
+          placeholder="请输入对账人"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
 
       <el-form-item label="状态" prop="status">
         <el-select v-model="queryParams.status" placeholder="请选择状态" clearable>

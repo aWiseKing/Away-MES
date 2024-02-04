@@ -11,7 +11,7 @@
       </el-form-item>
       <el-form-item label="材料分类" prop="type">
         <el-input
-          v-model="queryParams.typeID"
+          v-model="queryParams.type"
           placeholder="请输入材料分类"
           clearable
           @keyup.enter.native="handleQuery"
@@ -19,7 +19,7 @@
       </el-form-item>
       <el-form-item label="规格类型" prop="specification">
         <el-input
-          v-model="queryParams.specificationsID"
+          v-model="queryParams.specification"
           placeholder="请输入规格类型"
           clearable
           @keyup.enter.native="handleQuery"

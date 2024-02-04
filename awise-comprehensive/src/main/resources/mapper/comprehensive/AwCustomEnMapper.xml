@@ -44,4 +44,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="type != null   "> and  type = #{type}</if>
         </where>
     </select>
+
+
+    <select id="selectAwCustomByID" parameterType="String" resultMap="AwCustomEnResult" >
+        <include refid="selectAwCustomEnVo"/>
+         where   aw_partner.id=#{id}
+    </select>
 </mapper>

@@ -27,6 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="nameOfQualityInspection != null  and nameOfQualityInspection != ''"> and nameOfQualityInspection = #{nameOfQualityInspection}</if>
             <if test="testResult != null  and testResult != ''"> and testResult = #{testResult}</if>
+            <if test="testDate != null "> and testDate = #{testDate}</if>
             <if test="testingPersonnel != null  and testingPersonnel != ''"> and testingPersonnel = #{testingPersonnel}</if>
         </where>
     </select>

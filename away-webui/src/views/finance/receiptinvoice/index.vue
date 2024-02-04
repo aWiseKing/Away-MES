@@ -182,7 +182,13 @@
 
     <!-- 添加或修改入库发票信息对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form
+        ref="form"
+        :model="form"
+        :rules="rules"
+        label-width="80px"
+        :disabled="view_open"
+      >
         <el-form-item label="发票编号" prop="receiptInvoiceID">
           <el-input v-model="form.receiptInvoiceID" placeholder="发票编号" />
         </el-form-item>
@@ -213,7 +219,7 @@
           />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <div slot="footer" class="dialog-footer" v-if="!view_open">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
@@ -328,10 +334,21 @@ export default {
       this.multiple = !selection.length;
     },
     handleView(row) {
-      this.view_open = true;
+
+      this.reset();
+      this.isadd = false;
+      const receiptInvoiceID = row.receiptInvoiceID || this.ids;
+      getReceiptinvoice(receiptInvoiceID).then((response) => {
+        this.view_open = true;
+        this.form = response.data;
+        this.open = true;
+        this.title = "查看";
+      });
     },
     /** 新增按钮操作 */
     handleAdd() {
+    this.view_open=false
+
       this.reset();
       this.isadd = true;
       this.open = true;
@@ -339,6 +356,7 @@ export default {
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
+      this.view_open=false
       this.reset();
       this.isadd = false;
       const receiptInvoiceID = row.receiptInvoiceID || this.ids;

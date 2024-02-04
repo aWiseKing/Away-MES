@@ -1,9 +1,11 @@
 package com.awise.file.controller;
 
 import java.io.*;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 
 import com.awise.file.utils.OpenFile;
+import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -47,6 +49,8 @@ public class AwFileController {
         // 将文件写入输入流
         File file = new File(file_path+"/"+filename);
         FileInputStream fileInputStream = new FileInputStream(file);
+        Tika tika = new Tika();
+        String mimeType = tika.detect(file);
         InputStream fis = new BufferedInputStream(fileInputStream);
         byte[] buffer = new byte[fis.available()];
         fis.read(buffer);
@@ -63,9 +67,11 @@ public class AwFileController {
         // 告知浏览器文件的大小
         response.addHeader("Content-Length", "" + file.length());
         OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
-        response.setContentType("application/octet-stream");
+//        response.setContentType("application/octet-stream");
+        response.setContentType(mimeType);
         outputStream.write(buffer);
         outputStream.flush();
+
 
     }
 

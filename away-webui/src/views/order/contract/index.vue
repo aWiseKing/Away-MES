@@ -174,11 +174,7 @@
           view_form.money
         }}</el-descriptions-item>
         <el-descriptions-item label="合同附件" :span="2">
-          <el-carousel :interval="4000" type="card" height="200px">
-            <el-carousel-item v-for="item in view_form.files" :key="item">
-              <el-image :src="item" :preview-src-list="[item]"> </el-image>
-            </el-carousel-item>
-          </el-carousel>
+          <filedown :files="view_form.files"/>
         </el-descriptions-item>
       </el-descriptions>
     </el-dialog>
@@ -186,6 +182,7 @@
 </template>
 
 <script>
+
 import {
   listContract,
   getContract,
@@ -194,8 +191,11 @@ import {
   updateContract,
 } from "@/api/order/contract";
 import { fileDownload, fileUpdate } from "@/api/file/file";
+
+import Filedown from '../../../components/FileDown/filedown.vue';
 export default {
   name: "Contract",
+  components:{"filedown":Filedown},
   data() {
     return {
       // 遮罩层
@@ -219,7 +219,7 @@ export default {
       // 是否显示详细信息
       view_open: false,
       // 详细信息表单
-      view_form: [],
+      view_form: {},
       // 是否新建
       isadd: true,
       // 查询参数
@@ -266,7 +266,7 @@ export default {
     /** 文件下载 */
     async fileDown(file_name) {
       let tmp = await fileDownload(file_name);
-      this.view_form.files.push(tmp.getUrl());
+      this.view_form.files.push(tmp);
     },
     // 取消按钮
     cancel() {
@@ -300,21 +300,39 @@ export default {
       this.multiple = !selection.length;
     },
     /** 查看合同详细信息 */
-    handleView(row) {
-      const id = row.id || this.ids;
-      getContract(id).then(async (response) => {
-        this.view_form = response.data;
-        this.view_form.files = [];
-        if (response.data.contractURL != null) {
-          let num = 0;
-          let urls = response.data.contractURL.split(";");
-          urls.pop();
-          for (num in urls) {
-            await this.fileDown(urls[num]);
-          }
-        }
-        this.view_open = true;
-      });
+    // handleView(row) {
+    //   const id = row.id || this.ids;
+    //   getContract(id).then(async (response) => {
+    //     this.view_form = response.data;
+    //     this.view_form.files = [];
+    //     if (response.data.contractURL != null) {
+    //       let num = 0;
+    //       let urls = response.data.contractURL.split(";");
+    //       urls.pop();
+    //       for (num in urls) {
+    //         await this.fileDown(urls[num]);
+    //       }
+    //     }
+    //     this.view_open = true;
+    //   });
+    // },
+
+    async handleView(row) {
+      this.view_form=row
+     this.view_form.files=[];
+     if(row.contractURL==null){
+      this.view_open = true
+      return 0;
+     }else{
+      let urls=row.contractURL.split(";");
+      urls.pop();
+      let num=0;
+      for(num in urls){
+        let tmp=await fileDownload(urls[num])
+        this.view_form.files.push(tmp);
+      }
+     }
+     this.view_open = true
     },
     /** 新增按钮操作 */
     handleAdd() {

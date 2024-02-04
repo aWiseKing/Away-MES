@@ -177,6 +177,9 @@
         <el-form-item label="订单id" prop="saleorderID">
           <el-input v-model="form.saleorderID" placeholder="请输入订单id" />
         </el-form-item>
+        <el-form-item label="订单金额" prop="orderAmount">
+          <el-input v-model="form.orderAmount" placeholder="请输入订单金额" />
+        </el-form-item>
         <el-form-item label="应付金额" prop="amountDue">
           <el-input v-model="form.amountDue" placeholder="请输入应付金额" />
         </el-form-item>
@@ -244,6 +247,7 @@ export default {
         pageSize: 10,
         statementOfAccountID: null,
         saleorderID: null,
+        orderAmount:null,
         amountDue: null,
         outOfPocketAmount: null,
         unpaidAmount: null,
@@ -281,6 +285,7 @@ export default {
         id: null,
         statementOfAccountID: null,
         saleorderID: null,
+        orderAmount:null,
         amountDue: null,
         outOfPocketAmount: null,
         unpaidAmount: null,

@@ -5,6 +5,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.away.common.annotation.Excel;
 import com.away.common.core.domain.BaseEntity;
 
+import javax.lang.model.element.NestingKind;
+
 /**
  * 外协对账详细对象 aw_OutsourcingReconciliation
  * 
@@ -38,6 +40,12 @@ public class AwOutsourcingreconciliation extends BaseEntity
     /** 未完成数量 */
     @Excel(name = "未完成数量")
     private Long unfinishedQuantity;
+
+
+    @Excel(name="订单金额")
+     private String orderAmount;
+
+
 
     /** 应付金额 */
     @Excel(name = "应付金额")
@@ -112,6 +120,14 @@ public class AwOutsourcingreconciliation extends BaseEntity
     public Long getUnfinishedQuantity() 
     {
         return unfinishedQuantity;
+    }
+
+    public String getOrderAmount() {
+        return orderAmount;
+    }
+
+    public void setOrderAmount(String orderAmount) {
+        this.orderAmount = orderAmount;
     }
     public void setAmountDue(String amountDue) 
     {

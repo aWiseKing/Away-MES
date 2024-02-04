@@ -251,7 +251,7 @@
           ><el-col :span="12">
             <el-form-item label="任务单号">
               <el-select
-                v-model="productiontasklist"
+                v-model="productiontasklist.productionTasksFormID"
                 placeholder="请选择任务单"
                 @focus="getListproductiontasklist()"
               >
@@ -516,7 +516,7 @@ export default {
         testingPersonnel: null,
         notes: null,
       };
-      this.productiontasklist={};
+      this.productiontasklist = {};
       this.resetForm("form");
     },
     /** 搜索按钮操作 */
@@ -542,8 +542,16 @@ export default {
       getFinishedproductinspection(id).then((response) => {
         this.form = response.data;
         this.view_open = true;
+
+        listProductiontasklist().then((response) => {
+          this.productiontasklistlist = response.rows;
+          getProductiontasks(row.productionTasksID).then((response) => {
+            this.productiontasklist = response.data;
+          });
+        });
+
         this.open = true;
-        this.title = "修改成品检验";
+        this.title = "查看成品检验";
       });
     },
     /** 新增按钮操作 */
@@ -562,6 +570,12 @@ export default {
       getFinishedproductinspection(id).then((response) => {
         this.form = response.data;
         this.view_open = false;
+        listProductiontasklist().then((response) => {
+          this.productiontasklistlist = response.rows;
+          getProductiontasks(row.productionTasksID).then((response) => {
+            this.productiontasklist = response.data;
+          });
+        });
         this.open = true;
         this.title = "修改成品检验";
       });

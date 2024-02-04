@@ -2,6 +2,7 @@ package com.awise.comprehensive.service;
 
 import java.util.List;
 import com.awise.comprehensive.domain.AwContacts;
+import com.awise.comprehensive.domain.AwContactsEn;
 
 /**
  * 联系人信息Service接口
@@ -26,6 +27,8 @@ public interface IAwContactsService
      * @return 联系人信息集合
      */
     public List<AwContacts> selectAwContactsList(AwContacts awContacts);
+
+
 
     /**
      * 新增联系人信息

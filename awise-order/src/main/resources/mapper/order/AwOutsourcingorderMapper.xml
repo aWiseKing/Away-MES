@@ -23,6 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="outsourcingType != null  and outsourcingType != ''"> and outsourcingType = #{outsourcingType}</if>
             <if test="orderTime != null "> and orderTime = #{orderTime}</if>
+            <if test="notes != null  and notes != ''"> and notes = #{notes}</if>
         </where>
     </select>
     
