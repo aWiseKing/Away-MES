@@ -205,7 +205,7 @@ export default {
     reset() {
       this.form = {
         id: null,
-        founder: document.cookie.split("username=")[1].split(";")[0],
+        founder: this.$store.state.user.name,
         createTime: null,
         notes: null,
         status: "0"
