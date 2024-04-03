@@ -116,6 +116,8 @@
           v-hasPermi="['finance:Reconciliation:export']"
         >导出</el-button>
       </el-col>
+
+
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -366,6 +368,18 @@ export default {
       this.download('finance/Reconciliation/export', {
         ...this.queryParams
       }, `Reconciliation_${new Date().getTime()}.xlsx`)
+    },
+
+  //  导出全部
+      handleAllExport(){
+              this.download(
+        "finance/DetailReconciliation/exportAll",
+        {
+          ...this.queryParams,
+        },
+        `DetailReconciliation_${new Date().getTime()}.xlsx`
+      );
+
     }
   }
 };

@@ -1,11 +1,12 @@
 package com.awise.finance.service.impl;
 
-import java.util.List;
+import com.awise.finance.domain.AwOutsourcingreconciliation;
+import com.awise.finance.mapper.AwOutsourcingreconciliationMapper;
+import com.awise.finance.service.IAwOutsourcingreconciliationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.awise.finance.mapper.AwOutsourcingreconciliationMapper;
-import com.awise.finance.domain.AwOutsourcingreconciliation;
-import com.awise.finance.service.IAwOutsourcingreconciliationService;
+
+import java.util.List;
 
 /**
  * 外协对账详细Service业务层处理
@@ -89,5 +90,10 @@ public class AwOutsourcingreconciliationServiceImpl implements IAwOutsourcingrec
     public int deleteAwOutsourcingreconciliationById(Long id)
     {
         return awOutsourcingreconciliationMapper.deleteAwOutsourcingreconciliationById(id);
+    }
+
+    @Override
+    public List<AwOutsourcingreconciliation> selectOne() {
+        return awOutsourcingreconciliationMapper.selectAll();
     }
 }

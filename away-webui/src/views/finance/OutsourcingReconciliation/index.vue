@@ -13,8 +13,6 @@
           <div
             style="overflow-x: auto; scrollbar-width: none; white-space: nowrap"
           >
-
-
             <el-form-item label="外协完成数量" prop="completedQuantity">
               <el-input
                 v-model="queryParams.completedQuantity"
@@ -51,6 +49,38 @@
               <el-input
                 v-model="queryParams.unpaidAmount"
                 placeholder="请输入未付金额"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
+            <el-form-item label="客户价格" prop="customerPrice">
+              <el-input
+                v-model="queryParams.customerPrice"
+                placeholder="请输入客户价格"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
+            <el-form-item label="发票价格" prop="invoicePrice">
+              <el-input
+                v-model="queryParams.invoicePrice"
+                placeholder="请输入发票价格"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
+            <el-form-item label="外协价格" prop="outsourcingPrice">
+              <el-input
+                v-model="queryParams.outsourcingPrice"
+                placeholder="请输入外协价格"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
+            <el-form-item label="工艺价格" prop="processPrice">
+              <el-input
+                v-model="queryParams.processPrice"
+                placeholder="请输入工艺价格"
                 clearable
                 @keyup.enter.native="handleQuery"
               />
@@ -144,6 +174,8 @@
           >导出</el-button
         >
       </el-col>
+         
+
       <right-toolbar
         :showSearch.sync="showSearch"
         @queryTable="getList"
@@ -190,6 +222,14 @@
         prop="outOfPocketAmount"
       />
       <el-table-column label="未付金额" align="center" prop="unpaidAmount" />
+      <el-table-column label="客户价格" align="center" prop="customerPrice" />
+      <el-table-column label="发票价格" align="center" prop="invoicePrice" />
+      <el-table-column
+        label="外协价格"
+        align="center"
+        prop="outsourcingPrice"
+      />
+      <el-table-column label="工艺价格" align="center" prop="processPrice" />
 
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
@@ -253,7 +293,7 @@
           <el-col :span="12">
             <el-form-item label="外协对账单编号" prop="outsourcingStatementsID">
               <el-input
-               disabled
+                disabled
                 v-model="this.outsourcingStatementsID"
                 placeholder="请输入外协对账单编号"
               />
@@ -307,7 +347,6 @@
               />
             </el-form-item>
           </el-col>
-
         </el-row>
 
         <el-row :gutter="12">
@@ -367,28 +406,68 @@
 
         <el-row :gutter="12">
           <el-col :span="12">
+            <el-form-item label="客户价格" prop="customerPrice">
+              <el-input
+                v-model="form.customerPrice"
+                placeholder="请输入客户价格"
+              />
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12">
+            <el-form-item label="发票价格" prop="invoicePrice">
+              <el-input
+                v-model="form.invoicePrice"
+                placeholder="请输入发票价格"
+              />
+            </el-form-item>
+          </el-col>
+        
+        </el-row>
+
+        <el-row :gutter="12">
+          <el-col :span="12">
+            <el-form-item label="工艺价格" prop="processPrice">
+              <el-input
+                v-model="form.processPrice"
+                placeholder="请输入工艺价格"
+              />
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12"> 
+              <el-form-item label="外协价格" prop="outsourcingPrice">
+            <el-input
+              v-model="form.outsourcingPrice"
+              placeholder="请输入外协价格"
+            />
+          </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :gutter="12">
+          <el-col :span="12">
             <el-form-item label="备注" prop="notes">
               <el-input v-model="form.notes" placeholder="请输入备注" />
             </el-form-item>
           </el-col>
 
-           <el-col :span="12">
-                        <el-form-item label="状态" prop="status">
-            <el-select v-model="form.status" placeholder="请选择状态">
-              <el-option
-                v-for="dict in dict.type.aw_finance_reconciliation"
-                :key="dict.value"
-                :label="dict.label"
-                :value="dict.value"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-            </el-col>
-
+          <el-col :span="12">
+            <el-form-item label="状态" prop="status">
+              <el-select v-model="form.status" placeholder="请选择状态">
+                <el-option
+                  v-for="dict in dict.type.aw_finance_reconciliation"
+                  :key="dict.value"
+                  :label="dict.label"
+                  :value="dict.value"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
 
-      <div slot="footer" class="dialog-footer" v-if="!view_open">
+      <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
@@ -444,7 +523,7 @@ export default {
         outsourcingQuantity: null,
         completedQuantity: null,
         unfinishedQuantity: null,
-        orderAmount:null,
+        orderAmount: null,
         amountDue: null,
         outOfPocketAmount: null,
         unpaidAmount: null,
@@ -482,7 +561,6 @@ export default {
     this.getExist();
   },
 
-
   methods: {
     /** 查询外协对账列表 */
 
@@ -495,11 +573,11 @@ export default {
       });
     },
 
-      getExist() {
-    this.outsourcingStatementsID = this.$route.query.id;
-    this.queryParams.outsourcingStatementsID = this.outsourcingStatementsID;
-    this.getList();
-  },
+    getExist() {
+      this.outsourcingStatementsID = this.$route.query.id;
+      this.queryParams.outsourcingStatementsID = this.outsourcingStatementsID;
+      this.getList();
+    },
     //获取外协订单列表
     getoutsourcingOrderList() {
       this.loading = true;
@@ -532,7 +610,7 @@ export default {
         outsourcingQuantity: null,
         completedQuantity: null,
         unfinishedQuantity: null,
-        orderAmount:null,
+        orderAmount: null,
         amountDue: null,
         outOfPocketAmount: null,
         unpaidAmount: null,
@@ -540,9 +618,9 @@ export default {
         status: null,
       };
 
-      this.outsourcingOrderList=[],
-      this.outsourcingOrder={},
-      this.resetForm("form");
+      (this.outsourcingOrderList = []),
+        (this.outsourcingOrder = {}),
+        this.resetForm("form");
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -561,16 +639,16 @@ export default {
       this.multiple = !selection.length;
     },
     handleView(row) {
-     this.view_open=true;
+      this.view_open = true;
       this.reset();
       this.isadd = false;
       const id = row.id || this.ids;
       getOutsourcingReconciliation(id).then((response) => {
         this.form = response.data;
         this.open = true;
-        getOutsourcingorder(row.outsourcingOrderID).then(response=>{
-          this.outsourcingOrder=response.data
-        })
+        getOutsourcingorder(row.outsourcingOrderID).then((response) => {
+          this.outsourcingOrder = response.data;
+        });
         this.title = "修改外协对账";
       });
     },
@@ -578,23 +656,23 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
-      this.view_open=false;
+      this.view_open = false;
       this.isadd = true;
       this.open = true;
       this.title = "添加外协对账";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      this.view_open=false;
+      this.view_open = false;
       this.reset();
       this.isadd = false;
       const id = row.id || this.ids;
       getOutsourcingReconciliation(id).then((response) => {
         this.form = response.data;
         this.open = true;
-        getOutsourcingorder(row.outsourcingOrderID).then(response=>{
-          this.outsourcingOrder=response.data
-        })
+        getOutsourcingorder(row.outsourcingOrderID).then((response) => {
+          this.outsourcingOrder = response.data;
+        });
         this.title = "修改外协对账";
       });
     },
@@ -642,6 +720,8 @@ export default {
         `OutsourcingReconciliation_${new Date().getTime()}.xlsx`
       );
     },
+
+
   },
   watch: {
     "$route.query.id": {

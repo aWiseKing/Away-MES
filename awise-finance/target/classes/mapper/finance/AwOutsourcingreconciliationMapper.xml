@@ -15,12 +15,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="amountDue"    column="amountDue"    />
         <result property="outOfPocketAmount"    column="outOfPocketAmount"    />
         <result property="unpaidAmount"    column="unpaidAmount"    />
+        <result property="customerPrice"    column="customerPrice"    />
+        <result property="invoicePrice"    column="invoicePrice"    />
+        <result property="outsourcingPrice"    column="outsourcingPrice"    />
+        <result property="processPrice"    column="processPrice"    />
         <result property="notes"    column="notes"    />
         <result property="status"    column="status"    />
     </resultMap>
 
     <sql id="selectAwOutsourcingreconciliationVo">
-        select id, outsourcingStatementsID, outsourcingOrderID, outsourcingQuantity, completedQuantity, unfinishedQuantity,orderAmount,amountDue, outOfPocketAmount, unpaidAmount, notes, status from aw_OutsourcingReconciliation
+        select id, outsourcingStatementsID, outsourcingOrderID, outsourcingQuantity, completedQuantity, unfinishedQuantity, orderAmount, amountDue, outOfPocketAmount, unpaidAmount, customerPrice, invoicePrice, outsourcingPrice, processPrice, notes, status from aw_OutsourcingReconciliation
     </sql>
 
     <select id="selectAwOutsourcingreconciliationList" parameterType="AwOutsourcingreconciliation" resultMap="AwOutsourcingreconciliationResult">
@@ -35,6 +39,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="amountDue != null  and amountDue != ''"> and amountDue = #{amountDue}</if>
             <if test="outOfPocketAmount != null  and outOfPocketAmount != ''"> and outOfPocketAmount = #{outOfPocketAmount}</if>
             <if test="unpaidAmount != null  and unpaidAmount != ''"> and unpaidAmount = #{unpaidAmount}</if>
+            <if test="customerPrice != null  and customerPrice != ''"> and customerPrice = #{customerPrice}</if>
+            <if test="invoicePrice != null  and invoicePrice != ''"> and invoicePrice = #{invoicePrice}</if>
+            <if test="outsourcingPrice != null  and outsourcingPrice != ''"> and outsourcingPrice = #{outsourcingPrice}</if>
+            <if test="processPrice != null  and processPrice != ''"> and processPrice = #{processPrice}</if>
             <if test="notes != null  and notes != ''"> and notes = #{notes}</if>
             <if test="status != null  and status != ''"> and status = #{status}</if>
         </where>
@@ -44,7 +52,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectAwOutsourcingreconciliationVo"/>
         where id = #{id}
     </select>
-        
+    <select id="selectAll" resultType="com.awise.finance.domain.AwOutsourcingreconciliation">
+        select  * from aw_OutsourcingReconciliation
+    </select>
+
     <insert id="insertAwOutsourcingreconciliation" parameterType="AwOutsourcingreconciliation" useGeneratedKeys="true" keyProperty="id">
         insert into aw_OutsourcingReconciliation
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -53,10 +64,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="outsourcingQuantity != null">outsourcingQuantity,</if>
             <if test="completedQuantity != null">completedQuantity,</if>
             <if test="unfinishedQuantity != null">unfinishedQuantity,</if>
-            <if test="orderAmount != null and orderAmount != ''">orderAmount,</if>
+            <if test="orderAmount != null">orderAmount,</if>
             <if test="amountDue != null and amountDue != ''">amountDue,</if>
             <if test="outOfPocketAmount != null and outOfPocketAmount != ''">outOfPocketAmount,</if>
             <if test="unpaidAmount != null and unpaidAmount != ''">unpaidAmount,</if>
+            <if test="customerPrice != null">customerPrice,</if>
+            <if test="invoicePrice != null">invoicePrice,</if>
+            <if test="outsourcingPrice != null">outsourcingPrice,</if>
+            <if test="processPrice != null">processPrice,</if>
             <if test="notes != null">notes,</if>
             <if test="status != null and status != ''">status,</if>
          </trim>
@@ -66,10 +81,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="outsourcingQuantity != null">#{outsourcingQuantity},</if>
             <if test="completedQuantity != null">#{completedQuantity},</if>
             <if test="unfinishedQuantity != null">#{unfinishedQuantity},</if>
-            <if test="orderAmount != null and orderAmount != ''">#{orderAmount},</if>
+            <if test="orderAmount != null">#{orderAmount},</if>
             <if test="amountDue != null and amountDue != ''">#{amountDue},</if>
             <if test="outOfPocketAmount != null and outOfPocketAmount != ''">#{outOfPocketAmount},</if>
             <if test="unpaidAmount != null and unpaidAmount != ''">#{unpaidAmount},</if>
+            <if test="customerPrice != null">#{customerPrice},</if>
+            <if test="invoicePrice != null">#{invoicePrice},</if>
+            <if test="outsourcingPrice != null">#{outsourcingPrice},</if>
+            <if test="processPrice != null">#{processPrice},</if>
             <if test="notes != null">#{notes},</if>
             <if test="status != null and status != ''">#{status},</if>
          </trim>
@@ -83,10 +102,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="outsourcingQuantity != null">outsourcingQuantity = #{outsourcingQuantity},</if>
             <if test="completedQuantity != null">completedQuantity = #{completedQuantity},</if>
             <if test="unfinishedQuantity != null">unfinishedQuantity = #{unfinishedQuantity},</if>
-            <if test="orderAmount != null and orderAmount != ''">orderAmount = #{orderAmount},</if>
+            <if test="orderAmount != null">orderAmount = #{orderAmount},</if>
             <if test="amountDue != null and amountDue != ''">amountDue = #{amountDue},</if>
             <if test="outOfPocketAmount != null and outOfPocketAmount != ''">outOfPocketAmount = #{outOfPocketAmount},</if>
             <if test="unpaidAmount != null and unpaidAmount != ''">unpaidAmount = #{unpaidAmount},</if>
+            <if test="customerPrice != null">customerPrice = #{customerPrice},</if>
+            <if test="invoicePrice != null">invoicePrice = #{invoicePrice},</if>
+            <if test="outsourcingPrice != null">outsourcingPrice = #{outsourcingPrice},</if>
+            <if test="processPrice != null">processPrice = #{processPrice},</if>
             <if test="notes != null">notes = #{notes},</if>
             <if test="status != null and status != ''">status = #{status},</if>
         </trim>

@@ -15,6 +15,13 @@
           {{ scope.row.serialNum = scope.$index }}
         </template>
       </el-table-column>
+
+       <el-table-column label="生产任务id" align="center">
+        <template slot-scope="scope">
+
+          {{scope.row.id}}
+           </template>
+      </el-table-column>
       <el-table-column label="销售订单" align="center">
         <template slot-scope="scope">
           <el-select v-model="scope.row.saleOrderID" placeholder="请选择销售订单" filterable>

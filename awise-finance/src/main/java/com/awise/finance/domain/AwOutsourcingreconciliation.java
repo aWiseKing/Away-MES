@@ -1,17 +1,15 @@
 package com.awise.finance.domain;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.away.common.annotation.Excel;
 import com.away.common.core.domain.BaseEntity;
-
-import javax.lang.model.element.NestingKind;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * 外协对账详细对象 aw_OutsourcingReconciliation
  * 
  * @author awise
- * @date 2023-12-26
+ * @date 2024-03-16
  */
 public class AwOutsourcingreconciliation extends BaseEntity
 {
@@ -41,11 +39,9 @@ public class AwOutsourcingreconciliation extends BaseEntity
     @Excel(name = "未完成数量")
     private Long unfinishedQuantity;
 
-
-    @Excel(name="订单金额")
-     private String orderAmount;
-
-
+    /** 订单金额 */
+    @Excel(name = "订单金额")
+    private String orderAmount;
 
     /** 应付金额 */
     @Excel(name = "应付金额")
@@ -58,6 +54,22 @@ public class AwOutsourcingreconciliation extends BaseEntity
     /** 未付金额 */
     @Excel(name = "未付金额")
     private String unpaidAmount;
+
+    /** 客户价格 */
+    @Excel(name = "客户价格")
+    private String customerPrice;
+
+    /** 发票价格 */
+    @Excel(name = "发票价格")
+    private String invoicePrice;
+
+    /** 外协价格 */
+    @Excel(name = "外协价格")
+    private String outsourcingPrice;
+
+    /** 工艺价格 */
+    @Excel(name = "工艺价格")
+    private String processPrice;
 
     /** 备注 */
     @Excel(name = "备注")
@@ -121,13 +133,14 @@ public class AwOutsourcingreconciliation extends BaseEntity
     {
         return unfinishedQuantity;
     }
-
-    public String getOrderAmount() {
-        return orderAmount;
+    public void setOrderAmount(String orderAmount) 
+    {
+        this.orderAmount = orderAmount;
     }
 
-    public void setOrderAmount(String orderAmount) {
-        this.orderAmount = orderAmount;
+    public String getOrderAmount() 
+    {
+        return orderAmount;
     }
     public void setAmountDue(String amountDue) 
     {
@@ -155,6 +168,42 @@ public class AwOutsourcingreconciliation extends BaseEntity
     public String getUnpaidAmount() 
     {
         return unpaidAmount;
+    }
+    public void setCustomerPrice(String customerPrice) 
+    {
+        this.customerPrice = customerPrice;
+    }
+
+    public String getCustomerPrice() 
+    {
+        return customerPrice;
+    }
+    public void setInvoicePrice(String invoicePrice) 
+    {
+        this.invoicePrice = invoicePrice;
+    }
+
+    public String getInvoicePrice() 
+    {
+        return invoicePrice;
+    }
+    public void setOutsourcingPrice(String outsourcingPrice) 
+    {
+        this.outsourcingPrice = outsourcingPrice;
+    }
+
+    public String getOutsourcingPrice() 
+    {
+        return outsourcingPrice;
+    }
+    public void setProcessPrice(String processPrice) 
+    {
+        this.processPrice = processPrice;
+    }
+
+    public String getProcessPrice() 
+    {
+        return processPrice;
     }
     public void setNotes(String notes) 
     {
@@ -184,9 +233,14 @@ public class AwOutsourcingreconciliation extends BaseEntity
             .append("outsourcingQuantity", getOutsourcingQuantity())
             .append("completedQuantity", getCompletedQuantity())
             .append("unfinishedQuantity", getUnfinishedQuantity())
+            .append("orderAmount", getOrderAmount())
             .append("amountDue", getAmountDue())
             .append("outOfPocketAmount", getOutOfPocketAmount())
             .append("unpaidAmount", getUnpaidAmount())
+            .append("customerPrice", getCustomerPrice())
+            .append("invoicePrice", getInvoicePrice())
+            .append("outsourcingPrice", getOutsourcingPrice())
+            .append("processPrice", getProcessPrice())
             .append("notes", getNotes())
             .append("status", getStatus())
             .toString();

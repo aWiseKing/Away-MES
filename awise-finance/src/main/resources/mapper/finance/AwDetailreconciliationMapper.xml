@@ -17,12 +17,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="amountDue"    column="amountDue"    />
         <result property="outOfPocketAmount"    column="outOfPocketAmount"    />
         <result property="unpaidAmount"    column="unpaidAmount"    />
+        <result property="customerPrice"    column="customerPrice"    />
+        <result property="invoicePrice"    column="invoicePrice"    />
+        <result property="processPrice"    column="processPrice"    />
         <result property="notes"    column="notes"    />
         <result property="status"    column="status"    />
     </resultMap>
 
     <sql id="selectAwDetailreconciliationVo">
-        select id, statementOfAccountID, saleorderID, money, name, productName, number, numberOfProductsSupplied,orderAmount,amountDue, outOfPocketAmount, unpaidAmount, notes, status from aw_DetailReconciliation
+        select id, statementOfAccountID, saleorderID, money, name, productName, number, numberOfProductsSupplied, orderAmount, amountDue, outOfPocketAmount, unpaidAmount, customerPrice, invoicePrice, processPrice, notes, status from aw_DetailReconciliation
     </sql>
 
     <select id="selectAwDetailreconciliationList" parameterType="AwDetailreconciliation" resultMap="AwDetailreconciliationResult">
@@ -39,6 +42,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="amountDue != null  and amountDue != ''"> and amountDue = #{amountDue}</if>
             <if test="outOfPocketAmount != null  and outOfPocketAmount != ''"> and outOfPocketAmount = #{outOfPocketAmount}</if>
             <if test="unpaidAmount != null  and unpaidAmount != ''"> and unpaidAmount = #{unpaidAmount}</if>
+            <if test="customerPrice != null  and customerPrice != ''"> and customerPrice = #{customerPrice}</if>
+            <if test="invoicePrice != null  and invoicePrice != ''"> and invoiceprice = #{invoiceprice}</if>
+            <if test="processPrice != null  and processPrice != ''"> and processPrice = #{processPrice}</if>
             <if test="notes != null  and notes != ''"> and notes = #{notes}</if>
             <if test="status != null  and status != ''"> and status = #{status}</if>
         </where>
@@ -48,13 +54,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectAwDetailreconciliationVo"/>
         where id = #{id}
     </select>
-        
+    <select id="selectAll" resultType="com.awise.finance.domain.AwDetailreconciliation">
+        select * from   aw_detailreconciliation
+    </select>
+
     <insert id="insertAwDetailreconciliation" parameterType="AwDetailreconciliation">
         insert into aw_DetailReconciliation
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
-            <if test="statementOfAccountID != null">statementOfAccountID,</if>
-            <if test="saleorderID != null">saleorderID,</if>
+            <if test="statementOfAccountID != null and statementOfAccountID != ''">statementOfAccountID,</if>
+            <if test="saleorderID != null and saleorderID != ''">saleorderID,</if>
             <if test="money != null">money,</if>
             <if test="name != null and name != ''">name,</if>
             <if test="productName != null">productName,</if>
@@ -64,13 +73,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="amountDue != null">amountDue,</if>
             <if test="outOfPocketAmount != null">outOfPocketAmount,</if>
             <if test="unpaidAmount != null">unpaidAmount,</if>
+            <if test="customerPrice != null">customerPrice,</if>
+            <if test="invoicePrice != null">invoicePrice,</if>
+            <if test="processPrice != null">processPrice,</if>
             <if test="notes != null">notes,</if>
-            <if test="status != null">status,</if>
+            <if test="status != null and status != ''">status,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
-            <if test="statementOfAccountID != null">#{statementOfAccountID},</if>
-            <if test="saleorderID != null">#{saleorderID},</if>
+            <if test="statementOfAccountID != null and statementOfAccountID != ''">#{statementOfAccountID},</if>
+            <if test="saleorderID != null and saleorderID != ''">#{saleorderID},</if>
             <if test="money != null">#{money},</if>
             <if test="name != null and name != ''">#{name},</if>
             <if test="productName != null">#{productName},</if>
@@ -80,16 +92,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="amountDue != null">#{amountDue},</if>
             <if test="outOfPocketAmount != null">#{outOfPocketAmount},</if>
             <if test="unpaidAmount != null">#{unpaidAmount},</if>
+            <if test="customerPrice != null">#{customerPrice},</if>
+            <if test="invoicePrice != null">#{invoicePrice},</if>
+            <if test="processPrice != null">#{processPrice},</if>
             <if test="notes != null">#{notes},</if>
-            <if test="status != null">#{status},</if>
+            <if test="status != null and status != ''">#{status},</if>
          </trim>
     </insert>
 
     <update id="updateAwDetailreconciliation" parameterType="AwDetailreconciliation">
         update aw_DetailReconciliation
         <trim prefix="SET" suffixOverrides=",">
-            <if test="statementOfAccountID != null">statementOfAccountID = #{statementOfAccountID},</if>
-            <if test="saleorderID != null">saleorderID = #{saleorderID},</if>
+            <if test="statementOfAccountID != null and statementOfAccountID != ''">statementOfAccountID = #{statementOfAccountID},</if>
+            <if test="saleorderID != null and saleorderID != ''">saleorderID = #{saleorderID},</if>
             <if test="money != null">money = #{money},</if>
             <if test="name != null and name != ''">name = #{name},</if>
             <if test="productName != null">productName = #{productName},</if>
@@ -99,8 +114,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="amountDue != null">amountDue = #{amountDue},</if>
             <if test="outOfPocketAmount != null">outOfPocketAmount = #{outOfPocketAmount},</if>
             <if test="unpaidAmount != null">unpaidAmount = #{unpaidAmount},</if>
+            <if test="customerPrice != null">customerPrice = #{customerPrice},</if>
+            <if test="invoicePrice != null">invoicePrice = #{invoicePrice},</if>
+            <if test="processPrice != null">processPrice = #{processPrice},</if>
             <if test="notes != null">notes = #{notes},</if>
-            <if test="status != null">status = #{status},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
         </trim>
         where id = #{id}
     </update>

@@ -1,7 +1,8 @@
 package com.awise.finance.service;
 
-import java.util.List;
 import com.awise.finance.domain.AwOutsourcingreconciliation;
+
+import java.util.List;
 
 /**
  * 外协对账详细Service接口
@@ -58,4 +59,6 @@ public interface IAwOutsourcingreconciliationService
      * @return 结果
      */
     public int deleteAwOutsourcingreconciliationById(Long id);
+
+    List<AwOutsourcingreconciliation> selectOne();
 }

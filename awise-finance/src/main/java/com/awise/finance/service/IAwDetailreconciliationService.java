@@ -1,7 +1,8 @@
 package com.awise.finance.service;
 
-import java.util.List;
 import com.awise.finance.domain.AwDetailreconciliation;
+
+import java.util.List;
 
 /**
  * 对账详细Service接口
@@ -58,4 +59,7 @@ public interface IAwDetailreconciliationService
      * @return 结果
      */
     public int deleteAwDetailreconciliationById(Long id);
+
+    List<AwDetailreconciliation> selectAll();
+
 }

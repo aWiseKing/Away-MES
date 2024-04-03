@@ -1,11 +1,12 @@
 package com.awise.finance.service.impl;
 
-import java.util.List;
+import com.awise.finance.domain.AwDetailreconciliation;
+import com.awise.finance.mapper.AwDetailreconciliationMapper;
+import com.awise.finance.service.IAwDetailreconciliationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.awise.finance.mapper.AwDetailreconciliationMapper;
-import com.awise.finance.domain.AwDetailreconciliation;
-import com.awise.finance.service.IAwDetailreconciliationService;
+
+import java.util.List;
 
 /**
  * 对账详细Service业务层处理
@@ -89,5 +90,10 @@ public class AwDetailreconciliationServiceImpl implements IAwDetailreconciliatio
     public int deleteAwDetailreconciliationById(Long id)
     {
         return awDetailreconciliationMapper.deleteAwDetailreconciliationById(id);
+    }
+
+    @Override
+    public List<AwDetailreconciliation> selectAll() {
+        return awDetailreconciliationMapper.selectAll();
     }
 }

@@ -104,7 +104,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         aw_partner
         ON
         aw_saleorder.customerID = aw_partner.id
-
     </sql>
 
     <select id="selectAwSaleorderEnList" parameterType="AwSaleorderEn" resultMap="AwSaleorderEnResult">

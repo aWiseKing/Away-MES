@@ -1,7 +1,8 @@
 package com.awise.finance.mapper;
 
-import java.util.List;
 import com.awise.finance.domain.AwOutsourcingreconciliation;
+
+import java.util.List;
 
 /**
  * 外协对账详细Mapper接口
@@ -58,4 +59,7 @@ public interface AwOutsourcingreconciliationMapper
      * @return 结果
      */
     public int deleteAwOutsourcingreconciliationByIds(Long[] ids);
+
+    List<AwOutsourcingreconciliation> selectAll();
+
 }

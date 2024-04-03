@@ -198,7 +198,7 @@ import filedown from "@/components/FileDown/filedown.vue"
 import Filedown from '../../../components/FileDown/filedown.vue';
 export default {
   name: "Product",
-  components:{"filedown":Filedown},
+  components:{"filedown":Filedown,"pdfindex":pdfindex},
   data() {
     return {
       // 遮罩层

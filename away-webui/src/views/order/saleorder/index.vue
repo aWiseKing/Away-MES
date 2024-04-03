@@ -192,8 +192,8 @@
           <div v-for="item, index in additionals" :key="index">
             <el-form-item label-width="200" :label="'附加信息' + (index + 1)">
               <el-row :gutter="10">
-                <el-col :span="6"><el-input maxlength="5" v-model="item.key" placeholder="字段名" /></el-col>
-                <el-col :span="6"><el-input maxlength="5" v-model="item.value" placeholder="值" /></el-col>
+                <el-col :span="6"><el-input v-model="item.key" placeholder="字段名" /></el-col>
+                <el-col :span="6"><el-input  v-model="item.value" placeholder="值" /></el-col>
                 <el-col :span="6">
                   <el-button size="mini" type="text" icon="el-icon-plus" @click="handleAddAdditional">新增</el-button>
                   <el-button size="mini" type="text" icon="el-icon-minus"

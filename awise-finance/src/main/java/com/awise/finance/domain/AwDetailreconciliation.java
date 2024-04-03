@@ -1,15 +1,15 @@
 package com.awise.finance.domain;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.away.common.annotation.Excel;
 import com.away.common.core.domain.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * 对账详细对象 aw_DetailReconciliation
  * 
  * @author awise
- * @date 2023-12-22
+ * @date 2024-03-16
  */
 public class AwDetailreconciliation extends BaseEntity
 {
@@ -30,15 +30,15 @@ public class AwDetailreconciliation extends BaseEntity
     @Excel(name = "合同金额")
     private String money;
 
-    /** 客户姓名 */
-    @Excel(name = "客户姓名")
+    /** 实体姓名 */
+    @Excel(name = "实体姓名")
     private String name;
 
     /** 产品名称 */
     @Excel(name = "产品名称")
     private String productName;
 
-    /** 需求数量 */
+    /** 需求数量#要求大于0# */
     @Excel(name = "需求数量")
     private Long number;
 
@@ -46,6 +46,7 @@ public class AwDetailreconciliation extends BaseEntity
     @Excel(name = "以供产品数")
     private Long numberOfProductsSupplied;
 
+    /** 订单金额 */
     @Excel(name = "订单金额")
     private String orderAmount;
 
@@ -61,12 +62,24 @@ public class AwDetailreconciliation extends BaseEntity
     @Excel(name = "未付金额")
     private String unpaidAmount;
 
+    /** 客户价格 */
+    @Excel(name = "客户价格")
+    private String customerPrice;
+
+    /** 外协价格 */
+    @Excel(name = "外协价格")
+    private String invoicePrice;
+
+    /** 工艺价格 */
+    @Excel(name = "工艺价格")
+    private String processPrice;
+
     /** 备注 */
     @Excel(name = "备注")
     private String notes;
 
     /** 是否通过 */
-    @Excel(name = "是否通过")
+    @Excel(name = "是否通过",readConverterExp = "0=通过,1=不通过,2=暂未对账")
     private String status;
 
     public void setId(Long id) 
@@ -141,16 +154,16 @@ public class AwDetailreconciliation extends BaseEntity
     {
         return numberOfProductsSupplied;
     }
-
-    public String getOrderAmount() {
-        return orderAmount;
-    }
-
-    public void setOrderAmount(String orderAmount) {
+    public void setOrderAmount(String orderAmount) 
+    {
         this.orderAmount = orderAmount;
     }
 
-    public void setAmountDue(String amountDue)
+    public String getOrderAmount() 
+    {
+        return orderAmount;
+    }
+    public void setAmountDue(String amountDue) 
     {
         this.amountDue = amountDue;
     }
@@ -176,6 +189,33 @@ public class AwDetailreconciliation extends BaseEntity
     public String getUnpaidAmount() 
     {
         return unpaidAmount;
+    }
+    public void setCustomerPrice(String customerPrice) 
+    {
+        this.customerPrice = customerPrice;
+    }
+
+    public String getCustomerPrice() 
+    {
+        return customerPrice;
+    }
+    public void setInvoicePrice(String invoicePrice)
+    {
+        this.invoicePrice = invoicePrice;
+    }
+
+    public String getInvoicePrice()
+    {
+        return invoicePrice;
+    }
+    public void setProcessPrice(String processPrice) 
+    {
+        this.processPrice = processPrice;
+    }
+
+    public String getProcessPrice() 
+    {
+        return processPrice;
     }
     public void setNotes(String notes) 
     {
@@ -207,9 +247,13 @@ public class AwDetailreconciliation extends BaseEntity
             .append("productName", getProductName())
             .append("number", getNumber())
             .append("numberOfProductsSupplied", getNumberOfProductsSupplied())
+            .append("orderAmount", getOrderAmount())
             .append("amountDue", getAmountDue())
             .append("outOfPocketAmount", getOutOfPocketAmount())
             .append("unpaidAmount", getUnpaidAmount())
+            .append("customerPrice", getCustomerPrice())
+            .append("invoicePrice", getInvoicePrice())
+            .append("processPrice", getProcessPrice())
             .append("notes", getNotes())
             .append("status", getStatus())
             .toString();

@@ -13,6 +13,8 @@
           <div
             style="overflow-x: auto; scrollbar-width: none; white-space: nowrap"
           >
+
+          
             <el-form-item label="客户姓名" prop="name">
               <el-input
                 v-model="queryParams.name"
@@ -130,6 +132,19 @@
           >导出</el-button
         >
       </el-col>
+
+      <el-col :span="1.5">
+        <el-button
+          type="warning"
+          plain
+          icon="el-icon-download"
+          size="mini"
+          @click="handleAllExport"
+          v-hasPermi="['finance:DetailReconciliation:export']"
+          >导出全部</el-button
+        >
+      </el-col>
+
       <right-toolbar
         :showSearch.sync="showSearch"
         @queryTable="getList"
@@ -165,9 +180,12 @@
         prop="outOfPocketAmount"
       />
       <el-table-column label="未付金额" align="center" prop="unpaidAmount" />
-            <el-table-column label="是否通过" align="center" prop="status">
+      <el-table-column label="是否通过" align="center" prop="status">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.aw_finance_reconciliation" :value="scope.row.status"/>
+          <dict-tag
+            :options="dict.type.aw_finance_reconciliation"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
       <el-table-column
@@ -273,6 +291,7 @@
             </el-form-item>
           </el-col>
         </el-row>
+        
         <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="产品名称" prop="productName">
@@ -307,13 +326,15 @@
 
           <el-col :span="12">
             <el-form-item label="订单金额" prop="orderAmount">
-              <el-input v-model="form.orderAmount" placeholder="请输入订单金额" />
+              <el-input
+                v-model="form.orderAmount"
+                placeholder="请输入订单金额"
+              />
             </el-form-item>
           </el-col>
         </el-row>
 
         <el-row :gutter="12">
-
           <el-col :span="12">
             <el-form-item label="应付金额" prop="amountDue">
               <el-input v-model="form.amountDue" placeholder="请输入应付金额" />
@@ -330,8 +351,6 @@
         </el-row>
 
         <el-row :gutter="12">
-
-
           <el-col :span="12">
             <el-form-item label="未付金额" prop="unpaidAmount">
               <el-input
@@ -354,7 +373,34 @@
           </el-col>
         </el-row>
 
+
+       
+       
+       
+
+        
         <el-row :gutter="12">
+          <el-col :span="12">
+            <el-form-item label="客户价格" prop="customerPrice">
+              <el-input
+                v-model="form.customerPrice"
+                placeholder="请输入客户价格"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+          <el-form-item label="发票价格" prop="invoicePrice">
+          <el-input v-model="form.invoicePrice" placeholder="请输入发票价格" />
+        </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :gutter="12">
+          <el-col :span="12">
+      <el-form-item label="工艺价格" prop="processPrice">
+          <el-input v-model="form.processPrice" placeholder="请输入工艺价格" />
+        </el-form-item>
+          </el-col>
 
           <el-col :span="12">
             <el-form-item label="备注" prop="notes">
@@ -375,7 +421,6 @@
 import {
   listDetailReconciliation,
   getDetailReconciliation,
-
 } from "@/api/finance/DetailReconciliation";
 
 import {
@@ -386,7 +431,6 @@ import {
 import {
   listBasicOrderInformation,
   getBasicOrderInformation,
-
 } from "@/api/order/BasicOrderInformation";
 
 export default {
@@ -423,19 +467,26 @@ export default {
         statementOfAccountID: null,
         name: null,
         productName: null,
-        orderAmount:null,
-        amountDue:null,
+        orderAmount: null,
+        amountDue: null,
         outOfPocketAmount: null,
         unpaidAmount: null,
-        notes:null
+        notes: null,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
         id: [{ required: true, message: "对账id不能为空", trigger: "blur" }],
-        statementOfAccountID:[{required: true, message: "对账单不能为空", trigger: "blur"}],
-        saleorderID:[{required: true, message: "订单id不能为空", trigger: "blur"}],
+        statementOfAccountID: [
+          { required: true, message: "对账单不能为空", trigger: "blur" },
+        ],
+        saleorderID: [
+          { required: true, message: "订单id不能为空", trigger: "blur" },
+        ],
+        status: [
+          { required: true, message: "订单id不能为空", trigger: "blur" },
+        ],
       },
       //当前对账单id
       statementOfAccountID: "",
@@ -497,16 +548,22 @@ export default {
         id: null,
         statementOfAccountID: this.$route.query.id,
         saleorderID: null,
+        money: null,
+        name: null,
+        productName: null,
+        number: null,
         numberOfProductsSupplied: null,
-        orderAmount:null,
+        orderAmount: null,
         amountDue: null,
         outOfPocketAmount: null,
         unpaidAmount: null,
+        customerPrice: null,
+        invoicePrice: null,
+        processPrice: null,
         notes: null,
-        status: null,
+        status: null
       };
-      this.BasicOrderInformationList=[],
-      this.BasicOrderInformation={}
+      (this.BasicOrderInformationList = []), (this.BasicOrderInformation = {});
 
       this.resetForm("form");
     },
@@ -534,10 +591,10 @@ export default {
       getDetailReconciliation(id).then((response) => {
         this.form = response.data;
         this.open = true;
-      getBasicOrderInformation(row.saleorderID).then((response) => {
-        this.BasicOrderInformation = response.data;
-        this.loading = false;
-      });
+        getBasicOrderInformation(row.saleorderID).then((response) => {
+          this.BasicOrderInformation = response.data;
+          this.loading = false;
+        });
         this.title = "查看对账详细";
         this.view_open = true;
       });
@@ -560,9 +617,9 @@ export default {
       getDetailReconciliation(id).then((response) => {
         this.form = response.data;
         getBasicOrderInformation(row.saleorderID).then((response) => {
-        this.BasicOrderInformation = response.data;
-        this.loading = false;
-      });
+          this.BasicOrderInformation = response.data;
+          this.loading = false;
+        });
         this.open = true;
         this.title = "修改对账详细";
       });
@@ -612,6 +669,8 @@ export default {
         `DetailReconciliation_${new Date().getTime()}.xlsx`
       );
     },
+
+
   },
 
   watch: {

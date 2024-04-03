@@ -1,7 +1,8 @@
 package com.awise.finance.mapper;
 
-import java.util.List;
 import com.awise.finance.domain.AwDetailreconciliation;
+
+import java.util.List;
 
 /**
  * 对账详细Mapper接口
@@ -58,4 +59,6 @@ public interface AwDetailreconciliationMapper
      * @return 结果
      */
     public int deleteAwDetailreconciliationByIds(Long[] ids);
+
+    List<AwDetailreconciliation> selectAll();
 }
