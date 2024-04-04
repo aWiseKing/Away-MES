@@ -238,6 +238,7 @@
           ><el-col :span="12"
             ><el-form-item label="任务单" prop="productionTasksFormID">
               <el-select
+                filterable
                 v-model="form.productionTasksFormID"
                 placeholder="请选择任务单"
                 @focus="getListproductiontasklist()"
@@ -254,6 +255,7 @@
           ><el-col :span="12">
             <el-form-item label="任务编号" prop="productionTasksID">
               <el-select
+                filterable
                 :disabled="productiontasklist.id == null || form.outsourcingType == null"
                 v-model="form.productionTasksID"
                 placeholder="请选择任务"
@@ -277,6 +279,7 @@
               prop="processingprocessID"
             >
               <el-select
+                filterable
                 :disabled="productionTasks.processingTechnologyID == null"
                 v-model="form.processingprocessID"
                 placeholder="请选择工序编号"
@@ -430,9 +433,11 @@ export default {
       });
     },
     /** 查询任务单信息 */
-    getListproductiontasklist() {
+    async getListproductiontasklist() {
       this.loading = true;
-      listProductiontasklist().then((response) => {
+          let total= (await listProductiontasklist())["total"];
+
+      listProductiontasklist({pageSize:total}).then((response) => {
         this.productiontasklistlist = response.rows;
         this.loading = false;
       });
@@ -461,13 +466,14 @@ export default {
       });
     },
     /** 查询工序信息 */
-    getListprocessingprocess(processingTechnologyID) {
+  async  getListprocessingprocess(processingTechnologyID) {
 
-      console.log(processingTechnologyID)
       this.loading = true;
+  let total= (await listProcessingprocess({processingTechnologyID: processingTechnologyID, outsourcing: "外协"}))["total"];
       listProcessingprocess({
         processingTechnologyID: processingTechnologyID,
-        outsourcing: "外协"
+        outsourcing: "外协",
+        pageSize:total
       }).then((response) => {
         this.processingprocesslist = response.rows;
         this.loading = false;

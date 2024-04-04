@@ -117,7 +117,7 @@
         <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="客户信息" prop="customerID">
-              <el-select v-model="form.customerID" placeholder="请选择订单客户">
+              <el-select v-model="form.customerID" placeholder="请选择订单客户" filterable>
                 <el-option v-for="item in customs" :key="item.id" :label="item.name" :value="item.id">
                 </el-option>
               </el-select>
@@ -125,7 +125,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="产品信息" prop="productID">
-              <el-select v-model="form.productID" placeholder="请选择产品">
+              <el-select v-model="form.productID" placeholder="请选择产品" filterable>
                 <el-option v-for="item in products" :key="item.id" :label="item.name" :value="String(item.id)">
                 </el-option>
               </el-select>
@@ -147,7 +147,7 @@
         <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="合同信息" prop="contractID">
-              <el-select v-model="form.contractID" placeholder="请选择合同信息">
+              <el-select v-model="form.contractID" placeholder="请选择合同信息" filterable>
                 <el-option v-for="item in contracts" :key="item.id" :label="item.name" :value="String(item.id)">
                 </el-option>
               </el-select>
@@ -155,7 +155,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="发票信息" prop="invoiceID">
-              <el-select v-model="form.invoiceID" placeholder="请选择合同信息">
+              <el-select v-model="form.invoiceID" placeholder="请选择合同信息"  filterable>
                 <el-option v-for="item in invoices" :key="item.id" :label="item.name" :value="String(item.id)">
                 </el-option>
               </el-select>
@@ -337,20 +337,24 @@ export default {
       });
     },
     /** 查询客户信息 */
-    getListCustom() {
-      listCustom({}).then(response => {
+   async getListCustom() {
+       let total=  (await listCustom())["total"];
+      listCustom({pageSize:total}).then(response => {
         this.customs = response.rows;
       })
     },
     /** 查询发票信息 */
-    getListInvoice() {
-      listInvoice({}).then(response => {
+   async getListInvoice() {
+        let total= (await (listInvoice()))["total"];
+        console.log(total)
+      listInvoice({pageSize:total}).then(response => {
         this.invoices = response.rows;
       })
     },
     /** 查询产品信息 */
-    getListProduct() {
-      listProduct({}).then(response => {
+  async  getListProduct() {
+    let total= (await listProduct())["total"];
+      listProduct({pageSize:total}).then(response => {
         this.products = response.rows;
       })
     },
@@ -361,8 +365,9 @@ export default {
     //   })
     // },
     /** 查询合同信息*/
-    getListContract() {
-      listContract({}).then(response => {
+   async getListContract() {
+        let total=  (await listContract({ state: "1" }))["total"];
+      listContract({pageSize:total}).then(response => {
         this.contracts = response.rows;
       })
     },

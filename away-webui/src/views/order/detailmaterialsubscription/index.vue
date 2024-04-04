@@ -260,6 +260,7 @@
                   v-model="productionTasksFormID"
                   placeholder="请选择任务单"
                   @focus="getListproductiontasklist()"
+                    filterable
                 >
                   <el-option
                     v-for="(item, index) in productiontasklistlist"
@@ -275,6 +276,7 @@
             ><el-col :span="12">
               <el-form-item label="任务编号" prop="productionTasksID">
                 <el-select
+                  filterable
                   v-model="form.productionTasksID"
                   :disabled="productiontasklist.id == null"
                   placeholder="请选择任务编号"
@@ -305,6 +307,7 @@
             ><el-col :span="12">
               <el-form-item label="材料编号" prop="materialID">
                 <el-select
+                  filterable
                   v-model="form.materialID"
                   placeholder="请选择材料编号"
                   :disabled="form.processingTechnologyID == null"
@@ -542,9 +545,10 @@ export default {
       });
     },
     /** 查询任务单信息 */
-    getListproductiontasklist() {
+  async  getListproductiontasklist() {
       this.loading = true;
-      listProductiontasklist().then((response) => {
+       let total=  (await listProductiontasklist())["total"];
+      listProductiontasklist({pageSize:total}).then((response) => {
         this.productiontasklistlist = response.rows;
         this.loading = false;
       });
@@ -552,6 +556,7 @@ export default {
     /** 选中任务单 */
     setProductiontasklist(id) {
       this.loading = true;
+      
       getProductiontasklist(id).then((response) => {
         this.productiontasklist = response.data;
 
@@ -560,11 +565,12 @@ export default {
       });
     },
     /** 查询任务信息 */
-    getListproductiontasks(productionTasksFormID) {
+ async   getListproductiontasks(productionTasksFormID) {
 
       this.loading = true;
+       let total= (await listProductiontasks())["total"];
       listProductiontasks({
-        productionTasksFormID: productionTasksFormID,
+        productionTasksFormID: productionTasksFormID,pageSize:total
       }).then((response) => {
         this.productiontaskslist = response.rows;
         this.loading = false;
@@ -582,10 +588,12 @@ export default {
       });
     },
     /** 工艺所需材料详细信息 */
-    getListmateriallistoftechnology(processingTechnologyID) {
+   async getListmateriallistoftechnology(processingTechnologyID) {
       this.loading = true;
+             let total= (await listMaterialListOfTechnology())["total"];
+
       listMaterialListOfTechnology({
-        processingTechnologyID: processingTechnologyID,
+        processingTechnologyID: processingTechnologyID, pageSize:total
       }).then((response) => {
         this.materiallistoftechnologylist = response.rows;
         this.loading = false;

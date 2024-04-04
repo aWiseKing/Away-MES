@@ -22,7 +22,7 @@
       </el-form-item>
       <el-form-item label="工序外协" prop="outsourcing">
         <el-select v-model="queryParams.outsourcing" placeholder="请选择状态">
-                <el-option v-for="item, index in isoutsourced" :key="item.key" :label="item.value"
+                <el-option v-for="item, index in isoutsourced" :key="item.index" :label="item.value"
                   :value="item.key"></el-option>
               </el-select>
       </el-form-item>

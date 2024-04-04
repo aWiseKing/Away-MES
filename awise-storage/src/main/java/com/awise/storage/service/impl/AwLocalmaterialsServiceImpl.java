@@ -57,10 +57,11 @@ public class AwLocalmaterialsServiceImpl implements IAwLocalmaterialsService
     public boolean addByNumber(List<Map<String,String>> lmlist){
         List<AwLocalmaterials> cache_awLocalmaterials = new ArrayList<AwLocalmaterials>();
         for(Map<String, String> line : lmlist) {
-            String materialID = line.get("key");
-            Integer num = Integer.valueOf(line.get("value"));
+            String materialID = line.get("key");//id
+            Integer num = Integer.valueOf(line.get("value"));//数量
             AwLocalmaterials awLocalmaterials = new AwLocalmaterials();
             awLocalmaterials.setMaterialID(materialID);
+            //加一个价格的条件
             List<AwLocalmaterials> list = selectAwLocalmaterialsList(awLocalmaterials);
 
             if (!list.isEmpty()) {

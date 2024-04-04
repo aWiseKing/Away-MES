@@ -180,7 +180,7 @@
             >模板选择</span
           >
           <div style="margin-bottom: 22px">
-            <el-select v-model="processtemplate_name" placeholder="模板工序">
+            <el-select v-model="processtemplate_name" placeholder="模板工序" filterable>
               <el-option
                 v-for="(item, index) in processtemplate_list"
                 :key="index"
@@ -481,8 +481,9 @@ export default {
       });
     },
     /** 查询模板工序列表 */
-    getListProcesstemplate() {
-      listProcesstemplate({ status: "1" }).then((response) => {
+  async  getListProcesstemplate() {
+      let total= (await  listProcesstemplate())["total"];
+      listProcesstemplate({ status: "1" ,pageSize:total}).then((response) => {
         this.processtemplate_list = response.rows;
       });
     },

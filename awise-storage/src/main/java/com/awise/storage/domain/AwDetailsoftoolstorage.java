@@ -40,20 +40,7 @@ public class AwDetailsoftoolstorage extends BaseEntity
     private String notes;
 
     /** 发票税率 */
-    @Excel(name = "发票税率")
-    private String invoiceTaxRate;
 
-    /** 发票类型 */
-    @Excel(name = "发票类型")
-    private String invoiceType;
-
-    /** 不含税采购单价 */
-    @Excel(name = "不含税采购单价")
-    private Long purchaseUnitPriceExcludingTax;
-
-    /** 含税采购单价 */
-    @Excel(name = "含税采购单价")
-    private Long purchaseUnitPriceIncludingTax;
 
     /** 刀具名称 */
     @Excel(name = "刀具名称")
@@ -129,43 +116,12 @@ public class AwDetailsoftoolstorage extends BaseEntity
     {
         return notes;
     }
-    public void setInvoiceTaxRate(String invoiceTaxRate) 
-    {
-        this.invoiceTaxRate = invoiceTaxRate;
-    }
 
-    public String getInvoiceTaxRate() 
-    {
-        return invoiceTaxRate;
-    }
-    public void setInvoiceType(String invoiceType) 
-    {
-        this.invoiceType = invoiceType;
-    }
 
-    public String getInvoiceType() 
-    {
-        return invoiceType;
-    }
-    public void setPurchaseUnitPriceExcludingTax(Long purchaseUnitPriceExcludingTax) 
-    {
-        this.purchaseUnitPriceExcludingTax = purchaseUnitPriceExcludingTax;
-    }
 
-    public Long getPurchaseUnitPriceExcludingTax() 
-    {
-        return purchaseUnitPriceExcludingTax;
-    }
-    public void setPurchaseUnitPriceIncludingTax(Long purchaseUnitPriceIncludingTax) 
-    {
-        this.purchaseUnitPriceIncludingTax = purchaseUnitPriceIncludingTax;
-    }
 
-    public Long getPurchaseUnitPriceIncludingTax() 
-    {
-        return purchaseUnitPriceIncludingTax;
-    }
-    public void setName(String name) 
+
+    public void setName(String name)
     {
         this.name = name;
     }
@@ -220,10 +176,7 @@ public class AwDetailsoftoolstorage extends BaseEntity
             .append("toolInformationID", getToolInformationID())
             .append("receiptQuantity", getReceiptQuantity())
             .append("notes", getNotes())
-            .append("invoiceTaxRate", getInvoiceTaxRate())
-            .append("invoiceType", getInvoiceType())
-            .append("purchaseUnitPriceExcludingTax", getPurchaseUnitPriceExcludingTax())
-            .append("purchaseUnitPriceIncludingTax", getPurchaseUnitPriceIncludingTax())
+
             .append("name", getName())
             .append("typeName", getTypeName())
             .append("specificationsType", getSpecificationsType())

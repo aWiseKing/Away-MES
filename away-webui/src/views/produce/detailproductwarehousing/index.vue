@@ -122,7 +122,7 @@
           <el-input disabled v-model="form.warehouseEntryID" placeholder="请输入产品入库单编号" />
         </el-form-item>
         <el-form-item label="产品图号" prop="productID">
-          <el-select v-model="form.productID" placeholder="请选择产品图号" @focus="getListproduct()">
+          <el-select filterable v-model="form.productID" placeholder="请选择产品图号" @focus="getListproduct()">
             <el-option
             v-for="item, index in productlist"
             :key="index"
@@ -136,7 +136,7 @@
           <el-input v-model="form.receiptQuantity" placeholder="请输入入库数量" />
         </el-form-item>
         <el-form-item label="成品检验编号" prop="finishedProductInspectionID">
-          <el-select v-model="form.finishedProductInspectionID" placeholder="请选择成品检验编号" @focus="getListfinishedproductinspection()">
+          <el-select filterable v-model="form.finishedProductInspectionID" placeholder="请选择成品检验编号" @focus="getListfinishedproductinspection()">
             <el-option
             v-for="item, index in finishedproductinspectionlist"
             :key="index"
@@ -252,9 +252,11 @@ export default {
       });
     },
     /** 查询成品检验信息 */
-    getListfinishedproductinspection() {
+    async getListfinishedproductinspection() {
       this.loading = true;
-      listFinishedproductinspection().then((response) => {
+        let total= (await listFinishedproductinspection())["total"];
+
+      listFinishedproductinspection({pageSize:total}).then((response) => {
         this.finishedproductinspectionlist = response.rows;
         this.loading = false;
       });
@@ -268,9 +270,12 @@ export default {
       });
     },
     /** 产品信息列表 */
-    getListproduct() {
+  async  getListproduct() {
       this.loading = true;
-      listProduct().then((response) => {
+              let total= (await listProduct())["total"];
+
+
+      listProduct({pageSize:total}).then((response) => {
         this.productlist = response.rows;
         this.loading = false;
       });
