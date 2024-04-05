@@ -455,9 +455,10 @@ export default {
       });
     },
     //查询刀具基本信息
-    getListbasicToolInfomations() {
+   async getListbasicToolInfomations() {
       this.loading = true;
-      listBasicToolInformation().then((res) => {
+       let total= (await listBasicToolInformation())["total"];
+      listBasicToolInformation({pageSize:total}).then((res) => {
         this.basicToolInfomations = res.rows;
         this.loading = false;
       });

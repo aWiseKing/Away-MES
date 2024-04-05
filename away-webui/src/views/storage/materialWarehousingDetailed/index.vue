@@ -272,6 +272,7 @@
           ><el-col :span="12">
             <el-form-item label="申购单编号" prop="subscribeID">
               <el-select
+              filterable
                 v-model="form.subscribeID"
                 placeholder="请选择申购单"
                 @focus="getListpurchaserequisition()"
@@ -289,6 +290,7 @@
           ><el-col :span="12">
             <el-form-item label="材料名称" prop="name">
               <el-select
+              filterable
                 :disabled="purchaserequisition.subscribeID == null"
                 v-model="form.materialID"
                 placeholder="请选择材料名称"
@@ -338,7 +340,7 @@
           ></el-row
         >
         <el-form-item label="发票">
-          <el-select v-model="form.receiptInvoiceID" placeholder="请选择" @focus="getListreceiptinvoice()">
+          <el-select filterable  v-model="form.receiptInvoiceID" placeholder="请选择" @focus="getListreceiptinvoice()">
           <el-option
           v-for="item, index in receiptinvoicelist"
           :key="index"
@@ -510,9 +512,10 @@ export default {
       });
     },
     /** 查询材料详细信息 */
-    getListbasicinformationofmaterials() {
+   async getListbasicinformationofmaterials() {
       this.loading = true;
-      listBasicinformationofmaterials().then((response) => {
+      let total= (await listBasicinformationofmaterials())["total"];
+      listBasicinformationofmaterials({pageSize:total}).then((response) => {
         this.basicinformationofmaterialslist = response.rows;
         this.loading = false;
       });
@@ -526,9 +529,10 @@ export default {
       });
     },
     /** 查询申购单信息 */
-    getListpurchaserequisition() {
+  async  getListpurchaserequisition() {
       this.loading = true;
-      listPurchaserequisition().then((response) => {
+      let total= (await listPurchaserequisition())["total"];
+      listPurchaserequisition({pageSize:total}).then((response) => {
         this.purchaserequisitionlist = response.rows;
         this.loading = false;
       });
@@ -542,9 +546,11 @@ export default {
       });
     },
     /** 查询申购材料列表信息 */
-    getListdetailmaterialsubscription() {
+  async  getListdetailmaterialsubscription() {
       this.loading = true;
+        let total= (await listDetailmaterialsubscription())["total"];
       listDetailmaterialsubscription({
+        pageSize:total,
         subscribeID: this.purchaserequisition.subscribeID,
       }).then((response) => {
         this.detailmaterialsubscriptionlist = response.rows;
@@ -568,9 +574,10 @@ export default {
       });
     },
     /** 查询入库材料发票 */
-    getListreceiptinvoice() {
+   async getListreceiptinvoice() {
       this.loading = true;
-      listReceiptinvoice().then((response) => {
+       let total= (await listReceiptinvoice())["total"];
+      listReceiptinvoice({pageSize:total}).then((response) => {
         this.receiptinvoicelist = response.rows;
         this.loading = false;
       });

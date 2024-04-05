@@ -253,6 +253,7 @@
           <el-col :span="12">
             <el-form-item label="订单信息" prop="saleorderID">
               <el-select
+              filterable
                 v-model="form.saleorderID"
                 placeholder="请选择需要对账的订单"
                 @focus="getSaleorderList()"
@@ -520,9 +521,10 @@ export default {
     },
     //查询订单列表
 
-    getSaleorderList() {
+  async  getSaleorderList() {
       this.loading = true;
-      listBasicOrderInformation().then((response) => {
+       let total= (await listBasicOrderInformation())["total"];
+      listBasicOrderInformation({pageSize:total}).then((response) => {
         this.BasicOrderInformationList = response.rows;
         this.loading = false;
       });

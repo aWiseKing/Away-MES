@@ -312,6 +312,7 @@
           <el-col :span="12">
             <el-form-item label="任务单">
               <el-select
+              
                 v-model="productiontasklist"
                 placeholder="请选择任务单"
                 filterable
@@ -626,17 +627,21 @@ export default {
       });
     },
     /** 查询任务单列表 */
-    getListProductiontasklist() {
+   async getListProductiontasklist() {
       this.loading = true;
-      listProductiontasklist({ status: "1" }).then((response) => {
+          let total= (await listProductiontasklist())["total"];
+
+      listProductiontasklist({ status: "1",pageSize:total }).then((response) => {
         this.productiontasklist_list = response.rows;
         this.loading = false;
       });
     },
     /** 查询任务列表 */
-    getListProductiontasks() {
+   async getListProductiontasks() {
       this.loading = true;
+      let total= (await listProductiontasks())["total"];
       listProductiontasks({
+        pageSize:total,
         status: "1",
         productionTasksFormID: String(this.productiontasklist),
       }).then((response) => {
@@ -645,10 +650,11 @@ export default {
       });
     },
     /** 查询工序列表 */
-    getListProcessingprocess() {
-      console.log(this.from);
+  async  getListProcessingprocess() {
       this.loading = true;
+      let total= (await listProcessingprocess())["total"];
       listProcessingprocess({
+        pageSize:total,
         processingTechnologyID: String(this.processingTechnologyID),
       }).then((response) => {
         this.processingprocess_list = response.rows;

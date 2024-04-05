@@ -453,25 +453,29 @@ export default {
       });
     },
     /** 查询产品列表 */
-    getListproduct() {
+   async getListproduct() {
       this.loading = true;
-      listProduct().then((response) => {
+        let total= (await listProduct())["total"];
+      listProduct({pageSize:total}).then((response) => {
         this.productlist = response.rows;
         this.loading = false;
       });
     },
     /** 查询客户信息 */
-    getListcustom() {
+   async getListcustom() {
       this.loading = true;
-      listCustom().then((response) => {
+       let total= (await listCustom())["total"];
+      listCustom({pageSize:total}).then((response) => {
         this.customlist = response.rows;
         this.loading = false;
       });
     },
     /** 查询出货检验单 */
-    getListshippinginspection() {
+   async getListshippinginspection() {
       this.loading = true;
-      listShippinginspection({productID:this.form.productID}).then((response) => {
+      let total= (await listShippinginspection())["total"];
+
+      listShippinginspection({productID:this.form.productID,pageSize:total}).then((response) => {
         this.shippinginspectionlist = response.rows;
         this.loading = false;
       });

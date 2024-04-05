@@ -251,6 +251,7 @@
           ><el-col :span="12">
             <el-form-item label="任务单号">
               <el-select
+              filterable
                 v-model="productiontasklist.productionTasksFormID"
                 placeholder="请选择任务单"
                 @focus="getListproductiontasklist()"
@@ -268,6 +269,7 @@
           <el-col :span="12">
             <el-form-item label="任务编号" prop="productionTasksID">
               <el-select
+              filterable
                 v-model="form.productionTasksID"
                 placeholder="请选择任务编号"
                 @focus="getListproductiontasks(productiontasklist.id)"
@@ -285,6 +287,7 @@
           ><el-col :span="12">
             <el-form-item label="产品图号" prop="productID">
               <el-select
+              filterable
                 v-model="form.productID"
                 placeholder="请选择产品图号"
                 @focus="getListproduct()"
@@ -465,26 +468,31 @@ export default {
       });
     },
     /** 查找产品信息 */
-    getListproduct() {
+   async  getListproduct() {
       this.loading = true;
-      listProduct().then((response) => {
+        let total= (await listProduct())["total"];
+      listProduct({pageSize:total}).then((response) => {
         this.productlist = response.rows;
         this.loading = false;
       });
     },
     /** 查找任务单信息 */
-    getListproductiontasklist() {
+  async  getListproductiontasklist() {
       this.loading = true;
-      listProductiontasklist().then((response) => {
+        let total= (await listProductiontasklist())["total"];
+
+      listProductiontasklist({pageSize:total}).then((response) => {
         this.productiontasklistlist = response.rows;
         this.loading = false;
       });
     },
     /** 查找任务信息 */
-    getListproductiontasks(productionTasksFormID) {
+ async   getListproductiontasks(productionTasksFormID) {
       this.loading = true;
+       let total= (await listProductiontasks())["total"];
       listProductiontasks({
         productionTasksFormID: productionTasksFormID,
+        pageSize: total
       }).then((response) => {
         this.productiontaskslist = response.rows;
         this.loading = false;

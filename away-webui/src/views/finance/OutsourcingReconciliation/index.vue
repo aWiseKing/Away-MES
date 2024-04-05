@@ -303,6 +303,7 @@
           <el-col :span="12">
             <el-form-item label="外协订单id" prop="outsourcingOrderID">
               <el-select
+              filterable
                 v-model="form.outsourcingOrderID"
                 placeholder="请输入外协订单id"
                 @focus="getoutsourcingOrderList()"
@@ -579,9 +580,10 @@ export default {
       this.getList();
     },
     //获取外协订单列表
-    getoutsourcingOrderList() {
+async    getoutsourcingOrderList() {
       this.loading = true;
-      listOutsourcingorder().then((response) => {
+         let total= (await listOutsourcingorder())["total"];
+      listOutsourcingorder({pageSize:total}).then((response) => {
         this.outsourcingOrderList = response.rows;
         this.loading = false;
       });

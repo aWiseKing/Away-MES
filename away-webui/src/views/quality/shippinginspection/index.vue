@@ -229,6 +229,7 @@
           ><el-col :span="12">
             <el-form-item label="产品图号" prop="productID">
               <el-select
+              filterable
                 v-model="form.productID"
                 placeholder="请选择产品图号"
                 @focus="getListproduct()"
@@ -244,6 +245,7 @@
           ><el-col :span="12">
             <el-form-item label="客户编号" prop="contractID">
               <el-select
+              filterable
                 v-model="form.contractID"
                 placeholder="请选择客户编号"
                 @focus="getListcustom()"

@@ -103,7 +103,7 @@
       <el-row :gutter="12">
         <el-col :span="12">
           <el-form-item label="任务单" prop="productionTasksID">
-          <el-select v-model="productiontasklist.id" placeholder="请选择任务单" @focus="getListProductiontasklist()">
+          <el-select filterable v-model="productiontasklist.id" placeholder="请选择任务单" @focus="getListProductiontasklist()">
             <el-option
             v-for="item, index in productiontasklistlist"
             :key="index"
@@ -117,7 +117,7 @@
         </el-col>
         <el-col :span="12">
         <el-form-item label="任务编号" prop="productionTasksID">
-          <el-select :disabled="productiontasklist.id == null" v-model="matloutbounddet.productionTasksID" placeholder="请选择任务编号" @focus="getListProductiontasks(productiontasklist.id)">
+          <el-select  filterable :disabled="productiontasklist.id == null" v-model="matloutbounddet.productionTasksID" placeholder="请选择任务编号" @focus="getListProductiontasks(productiontasklist.id)">
             <el-option
             v-for="item, index in productiontaskslist"
             :key="index"
@@ -135,7 +135,7 @@
         <el-col :span="12">
 
           <el-form-item label="工艺编号" prop="processingTechnologyID">
-          <el-select v-model="matloutbounddet.processingTechnologyID" placeholder="请选择工艺编号" @focus="getListProcessingTechnologys()">
+          <el-select  filterable v-model="matloutbounddet.processingTechnologyID" placeholder="请选择工艺编号" @focus="getListProcessingTechnologys()">
             <el-option v-for="item,index in Processingtechnology" :key="index" :label="item.id" :value="item.id">
 
             </el-option>
@@ -146,7 +146,7 @@
         <el-col :span="12">
 
         <el-form-item label="材料信息编号" prop="materialID">
-          <el-select :disabled="matloutbounddet.processingTechnologyID==null" v-model="matloutbounddet.materialID" placeholder="请选择材料信息编号" @focus="getListMateriallistoftechnology(matloutbounddet.processingTechnologyID)">
+          <el-select filterable :disabled="matloutbounddet.processingTechnologyID==null" v-model="matloutbounddet.materialID" placeholder="请选择材料信息编号" @focus="getListMateriallistoftechnology(matloutbounddet.processingTechnologyID)">
             <el-option
             v-for="item, index in materiallistoftechnologylist"
             :key="index"
@@ -299,6 +299,7 @@ export default {
     /** 查询材料出库详细列表 */
     getList() {
       this.loading = true;
+      
       listMatloutbounddet(this.queryParams).then(response => {
         this.matloutbounddetList = response.rows;
         this.total = response.total;
@@ -306,9 +307,10 @@ export default {
       });
     },
     /** 查询任务单列表 */
-    getListProductiontasklist() {
+   async getListProductiontasklist() {
       this.loading = true;
-      listProductiontasklist().then((response) => {
+       let total= (await listProductiontasklist())["total"];
+      listProductiontasklist({pageSize:total}).then((response) => {
         this.productiontasklistlist = response.rows;
         this.loading = false;
       });
@@ -316,15 +318,17 @@ export default {
     /** 选中当前选中任务单 */
     setProductiontasklist(id) {
       this.loading = true;
+
       getProductiontasklist(id).then((response) => {
         this.productiontasklist = response.data;
         this.loading = false;
       });
     },
     /** 查询任务列表 */
-    getListProductiontasks(productionTasksFormID) {
+  async  getListProductiontasks(productionTasksFormID) {
       this.loading = true;
-      listProductiontasks({productionTasksFormID:productionTasksFormID}).then((response) => {
+       let total= (await listProductiontasks())["total"];
+      listProductiontasks({productionTasksFormID:productionTasksFormID,pageSize:total}).then((response) => {
         this.productiontaskslist = response.rows;
         this.loading = false;
       });
@@ -334,23 +338,26 @@ export default {
       this.loading = true;
       getProductiontasks(id).then((response) => {
         this.productiontasks = response.data;
-        this.matloutbounddet.processingTechnologyID = this.productiontasks.processingTechnologyID
+        
         this.loading = false;
       });
     },
 
-    getListProcessingTechnologys(){
+   async getListProcessingTechnologys(){
       this.loading=true
-      listProcessingtechnology().then((response) => {
+             let total= (await listProcessingtechnology())["total"];
+
+      listProcessingtechnology({pageSize:total}).then((response) => {
         this.Processingtechnology= response.rows
           this.loading=false
       })
 
     },
     /** 查询工艺所需材料列表 */
-    getListMateriallistoftechnology(processingTechnologyID) {
+ async   getListMateriallistoftechnology(processingTechnologyID) {
       this.loading = true;
-      listMaterialListOfTechnology({processingTechnologyID:processingTechnologyID}).then((response) => {
+        let total= (await listMaterialListOfTechnology())["total"];
+      listMaterialListOfTechnology({processingTechnologyID:processingTechnologyID,pageSize:total}).then((response) => {
         this.materiallistoftechnologylist = response.rows;
         this.loading = false;
       });

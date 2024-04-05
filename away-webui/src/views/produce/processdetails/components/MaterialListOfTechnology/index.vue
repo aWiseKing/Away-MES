@@ -73,7 +73,7 @@
               <el-input v-model="form.processingTechnologyID" placeholder="请输入工艺编号" disabled />
             </el-form-item></el-col><el-col :span='12'>
             <el-form-item label="材料信息编号" prop="materialID">
-              <el-select v-model="form.materialID" placeholder="请选择材料" @focus="getListBasicinformationofmaterials()">
+              <el-select filterable v-model="form.materialID" placeholder="请选择材料" @focus="getListBasicinformationofmaterials()">
                 <el-option v-for="item, index in BasicinformationofmaterialsList" :key="index" :label="item.name"
                   @click.native="setMaterialInfo(item)" :value="item.id">
                 </el-option>
@@ -182,7 +182,7 @@ export default {
     this.getProcessingtechnologyExist();
   },
   methods: {
-    async getProcessingtechnologyExist() {
+     getProcessingtechnologyExist() {
       this.processingtechnology_exist = true
       this.processingTechnologyID = this.$route.query.id
       this.queryParams.processingTechnologyID = this.processingTechnologyID;
@@ -198,9 +198,11 @@ export default {
       });
     },
     /** 查询材料详细信息 */
-    getListBasicinformationofmaterials() {
+    async getListBasicinformationofmaterials() {
       this.loading = true;
-      listBasicinformationofmaterials().then(
+            let total= (await listBasicinformationofmaterials())["total"];
+
+      listBasicinformationofmaterials({pageSize:total}).then(
         response => {
           this.BasicinformationofmaterialsList = response.rows;
           this.loading = false;

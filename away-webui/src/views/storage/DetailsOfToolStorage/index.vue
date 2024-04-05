@@ -226,6 +226,7 @@
             <el-col :span="12">
               <el-form-item label="刀具基本信息" prop="toolInformationID">
                 <el-select
+                filterable
                   v-model="form.toolInformationID"
                   placeholder="请选刀具信息"
                   @focus="gettoolinformations()"
@@ -423,9 +424,10 @@ export default {
     },
 
     //刀具基本信息的下拉框
-    gettoolinformations() {
+  async  gettoolinformations() {
       this.loading = true;
-      listToolinformation().then((res) => {
+       let total= (await listToolinformation())["total"];
+      listToolinformation({pageSize:total}).then((res) => {
         this.toolinformations = res.rows;
         this.loading = false;
       });

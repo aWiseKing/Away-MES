@@ -331,9 +331,10 @@ export default {
       });
     },
     //查询合作方
-    getpartnearList() {
+    async getpartnearList() {
       this.loading = true;
-      listCustom().then((res) => {
+       let total= (await listCustom())["total"];
+      listCustom({pageSize:total}).then((res) => {
         this.partnearList = res.rows;
         this.loading = false;
       });
