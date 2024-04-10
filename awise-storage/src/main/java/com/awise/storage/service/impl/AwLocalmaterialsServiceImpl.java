@@ -1,9 +1,12 @@
 package com.awise.storage.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.awise.storage.domain.AwMaterial;
+import com.awise.storage.mapper.AwMaterialMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.awise.storage.mapper.AwLocalmaterialsMapper;
@@ -13,19 +16,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 本地材料实时库存Service业务层处理
- * 
+ *
  * @author awise
  * @date 2023-08-03
  */
 @Service
-public class AwLocalmaterialsServiceImpl implements IAwLocalmaterialsService 
+public class AwLocalmaterialsServiceImpl implements IAwLocalmaterialsService
 {
     @Autowired
     private AwLocalmaterialsMapper awLocalmaterialsMapper;
 
+    @Autowired
+    private AwMaterialMapper awMaterialMapper;
+
     /**
      * 查询本地材料实时库存
-     * 
+     *
      * @param id 本地材料实时库存主键
      * @return 本地材料实时库存
      */
@@ -37,7 +43,7 @@ public class AwLocalmaterialsServiceImpl implements IAwLocalmaterialsService
 
     /**
      * 查询本地材料实时库存列表
-     * 
+     *
      * @param awLocalmaterials 本地材料实时库存
      * @return 本地材料实时库存
      */
@@ -55,38 +61,78 @@ public class AwLocalmaterialsServiceImpl implements IAwLocalmaterialsService
     @Override
     @Transactional
     public boolean addByNumber(List<Map<String,String>> lmlist){
-        List<AwLocalmaterials> cache_awLocalmaterials = new ArrayList<AwLocalmaterials>();
         for(Map<String, String> line : lmlist) {
-            String materialID = line.get("key");//id
-            Integer num = Integer.valueOf(line.get("value"));//数量
-            AwLocalmaterials awLocalmaterials = new AwLocalmaterials();
-            awLocalmaterials.setMaterialID(materialID);
-            //加一个价格的条件
-            List<AwLocalmaterials> list = selectAwLocalmaterialsList(awLocalmaterials);
+            String materialID = line.get("key");
+            Integer num = Integer.valueOf(line.get("value"));
+            //拿到材料
+            AwMaterial awMaterial = awMaterialMapper.selectAwMaterialById(materialID);
 
-            if (!list.isEmpty()) {
-                awLocalmaterials = list.get(0);
-                awLocalmaterials.setNumber(awLocalmaterials.getNumber() + num);
-                cache_awLocalmaterials.add(awLocalmaterials);
-            } else {
-                try {
-                    awLocalmaterials.setNumber(Long.valueOf(0));
-                    insertAwLocalmaterials(awLocalmaterials);
-                    list = selectAwLocalmaterialsList(awLocalmaterials);
-                    awLocalmaterials = list.get(0);
-                    awLocalmaterials.setNumber(awLocalmaterials.getNumber() + num);
-                    cache_awLocalmaterials.add(awLocalmaterials);
-                }catch (Exception e){
-                    return false;
+            Map<AwMaterial, AwLocalmaterials> getmap = getmap();
+
+
+            if (getmap.size()!=0){
+                int flag=0;
+                AwLocalmaterials awLocalmaterials = new AwLocalmaterials();
+
+
+                for (Map.Entry<AwMaterial, AwLocalmaterials> entry : getmap.entrySet()) {
+                    AwMaterial key = entry.getKey();
+                    AwLocalmaterials value = entry.getValue();
+
+                    if (key.equals(awMaterial)) {//重写equals方法
+                        // 如果找到就累加
+                        flag = 1;
+
+                        awLocalmaterials=value;
+                        awLocalmaterials.setNumber(value.getNumber()+num);
+                        break;
+
+                    }
                 }
 
+                if (flag>0){
+                    this.updateAwLocalmaterials(awLocalmaterials);
+                }else {
+                    awLocalmaterials.setNumber(Long.valueOf(num));
+                    awLocalmaterials.setMaterialID(awMaterial.getId());
+                    this.insertAwLocalmaterials(awLocalmaterials);
+                }
+
+                flag=0;
+
+            }else {
+                AwLocalmaterials awLocalmaterials1 = new AwLocalmaterials();
+                awLocalmaterials1.setNumber(Long.valueOf(num));
+                awLocalmaterials1.setMaterialID(materialID);
+                awLocalmaterialsMapper.insertAwLocalmaterials(awLocalmaterials1);
             }
+
+
+
         }
-        for (AwLocalmaterials awLocalmaterials :cache_awLocalmaterials){
-            updateAwLocalmaterials(awLocalmaterials);
-        }
+
+
         return true;
     }
+
+//    拿到本地的库存对应的材料
+//拿到本地库存的材料
+public  Map<AwMaterial,AwLocalmaterials> getmap(){
+    Map<AwMaterial,AwLocalmaterials> Map_AwMaterial_AwLocalmaterials=new HashMap<>();
+    //查出所有的本地库存
+    List<AwLocalmaterials> awLocalmaterialsList = awLocalmaterialsMapper.selectAwLocalmaterialsList(new AwLocalmaterials());
+    List<AwMaterial> awMaterialsList=new ArrayList<>();//本地库存中所有的材料，上面这个集合对应着
+    for (AwLocalmaterials awLocalmaterial : awLocalmaterialsList) {
+        AwMaterial awMaterial1 = awMaterialMapper.selectAwMaterialById(awLocalmaterial.getMaterialID());
+        awMaterialsList.add(awMaterial1);
+    }
+    //给map集合赋值
+    for (int i = 0; i < awLocalmaterialsList.size(); i++) {
+        Map_AwMaterial_AwLocalmaterials.put(awMaterialsList.get(i),awLocalmaterialsList.get(i));
+    }
+    return   Map_AwMaterial_AwLocalmaterials;
+}
+
 
     /***
      *  本地实时库存减少
@@ -101,6 +147,7 @@ public class AwLocalmaterialsServiceImpl implements IAwLocalmaterialsService
         for(Map<String, String> line : lmlist) {
             String materialID = line.get("key");
             Integer num = Integer.valueOf(line.get("value"));
+
             AwLocalmaterials awLocalmaterials = new AwLocalmaterials();
             awLocalmaterials.setMaterialID(materialID);
             List<AwLocalmaterials> list = selectAwLocalmaterialsList(awLocalmaterials);
@@ -125,7 +172,7 @@ public class AwLocalmaterialsServiceImpl implements IAwLocalmaterialsService
 
     /**
      * 新增本地材料实时库存
-     * 
+     *
      * @param awLocalmaterials 本地材料实时库存
      * @return 结果
      */
@@ -137,7 +184,7 @@ public class AwLocalmaterialsServiceImpl implements IAwLocalmaterialsService
 
     /**
      * 修改本地材料实时库存
-     * 
+     *
      * @param awLocalmaterials 本地材料实时库存
      * @return 结果
      */
@@ -149,7 +196,7 @@ public class AwLocalmaterialsServiceImpl implements IAwLocalmaterialsService
 
     /**
      * 批量删除本地材料实时库存
-     * 
+     *
      * @param ids 需要删除的本地材料实时库存主键
      * @return 结果
      */
@@ -161,7 +208,7 @@ public class AwLocalmaterialsServiceImpl implements IAwLocalmaterialsService
 
     /**
      * 删除本地材料实时库存信息
-     * 
+     *
      * @param id 本地材料实时库存主键
      * @return 结果
      */

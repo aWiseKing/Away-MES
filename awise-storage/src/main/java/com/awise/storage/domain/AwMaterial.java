@@ -5,6 +5,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.away.common.annotation.Excel;
 import com.away.common.core.domain.BaseEntity;
 
+import java.util.Objects;
+
 /**
  * 材料基本信息对象 aw_material
  * 
@@ -103,5 +105,25 @@ public class AwMaterial extends BaseEntity
             .append("materialDensity", getMaterialDensity())
             .append("notes", getNotes())
             .toString();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        AwMaterial other = (AwMaterial) obj;
+        return
+                Objects.equals(this.notes, other.notes) &&
+                Objects.equals(this.name, other.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

@@ -2,6 +2,11 @@ package com.awise.produce.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.away.common.utils.bean.BeanCopyUtils;
+import com.awise.produce.domain.AwProductiontasks;
+import com.awise.produce.domain.Vo.AwProductiontasklistVo;
+import com.awise.produce.service.IAwProductiontasksService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +39,9 @@ public class AwProductiontasklistController extends BaseController
     @Autowired
     private IAwProductiontasklistService awProductiontasklistService;
 
+    @Autowired
+    private IAwProductiontasksService awProductiontasksService;
+
     /**
      * 查询生产任务单列表
      */
@@ -52,11 +60,20 @@ public class AwProductiontasklistController extends BaseController
     @PreAuthorize("@ss.hasPermi('produce:productiontasklist:export')")
     @Log(title = "生产任务单", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, AwProductiontasklist awProductiontasklist)
+    public void export(HttpServletResponse response, AwProductiontasklist  awProductiontasklist)
     {
         List<AwProductiontasklist> list = awProductiontasklistService.selectAwProductiontasklistList(awProductiontasklist);
-        ExcelUtil<AwProductiontasklist> util = new ExcelUtil<AwProductiontasklist>(AwProductiontasklist.class);
-        util.exportExcel(response, list, "生产任务单数据");
+        List<AwProductiontasklistVo>  listvo = BeanCopyUtils.copyBeanList(list,AwProductiontasklistVo.class);
+        for (AwProductiontasklistVo awProductiontasklistVo : listvo) {
+            AwProductiontasks awProductiontasks = new AwProductiontasks();
+            awProductiontasks.setProductionTasksFormID(awProductiontasklistVo.getId());
+            List<AwProductiontasks> list1 = awProductiontasksService.selectAwProductiontasksList(awProductiontasks);
+
+            awProductiontasklistVo.setAwProductiontaskslist(list1);
+        }
+
+        ExcelUtil<AwProductiontasklistVo> util = new ExcelUtil<AwProductiontasklistVo>(AwProductiontasklistVo.class);
+        util.exportExcel(response, listvo, "生产任务单数据");
     }
 
     /**

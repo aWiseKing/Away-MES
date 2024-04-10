@@ -21,6 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectAwProductiontasklistVo"/>
         <where>  
             <if test="referred != null  and referred != ''"> and referred = #{referred}</if>
+            <if test="id != null  and id != ''"> and id = #{id}</if>
             <if test="founder != null  and founder != ''"> and founder = #{founder}</if>
             <if test="createTime != null "> and createTime = #{createTime}</if>
             <if test="notes != null  and notes != ''"> and notes = #{notes}</if>

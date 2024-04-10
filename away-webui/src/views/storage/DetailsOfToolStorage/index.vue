@@ -140,6 +140,11 @@
       <el-table-column label="刀具名称" align="center" prop="name" />
       <el-table-column label="规格型号" align="center" prop="specificationModel" />
 
+      <el-table-column
+        label="发票信息编号"
+        align="center"
+        prop="receiptInvoiceID"
+      />
 
       <el-table-column
         label="操作"
@@ -226,7 +231,6 @@
             <el-col :span="12">
               <el-form-item label="刀具基本信息" prop="toolInformationID">
                 <el-select
-                filterable
                   v-model="form.toolInformationID"
                   placeholder="请选刀具信息"
                   @focus="gettoolinformations()"
@@ -293,14 +297,75 @@
             ></el-col>
           </el-row>
 
+          <!-- 发票信息 -->
 
-          <!-- 价格 -->
+          <el-row :gutter="12">
+            <el-col :span="12">
+              <el-form-item label="发票" prop="receiptinvoiceID">
+                <el-select
+                  v-model="form.receiptInvoiceID"
+                  placeholder="请选刀具信息"
+                  @focus="getreceiptinvoice()"
+                >
+                  <el-option
+                    v-for="(item, index) in receiptinvoices"
+                    :key="index"
+                    :label="item.receiptInvoiceID"
+                    :value="item.receiptInvoiceID"
+                    @click.native="setreceiptinvoice(item.receiptInvoiceID)"
+                  >
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+
+            <el-col :span="12">
+              <el-form-item label="发票类型" prop="invoiceType">
+                <el-input
+                  disabled
+                  v-model="receiptinvoice.invoiceType"
+                  placeholder="请输入发票类型"
+                /> </el-form-item
+            ></el-col>
+          </el-row>
+          <el-row :gutter="12"
+            ><el-col :span="12">
+              <el-form-item label="发票税率" prop="invoiceTaxRate">
+                <el-input
+                  disabled
+                  v-model="receiptinvoice.invoiceTaxRate"
+                  placeholder="请输入发票税率"
+                /> </el-form-item></el-col
+            ><el-col :span="12">
+              <el-form-item
+                label="不含税采购单价"
+                prop="purchaseUnitPriceExcludingTax"
+              >
+                <el-input
+                  disabled
+                  v-model="receiptinvoice.purchaseUnitPriceExcludingTax"
+                  placeholder="请输入不含税采购单价"
+                /> </el-form-item></el-col></el-row
+          ><el-row :gutter="12"
+            ><el-col :span="12">
+              <el-form-item
+                label="含税采购单价"
+                prop="purchaseUnitPriceIncludingTax"
+              >
+                <el-input
+                  disabled
+                  v-model="receiptinvoice.purchaseUnitPriceIncludingTax"
+                  placeholder="请输入含税采购单价"
+                /> </el-form-item></el-col
+          ></el-row>
+
+          <!-- 备注 -->
           <el-row :gutter="12"
             ><el-col :span="12"
-              ><el-form-item label="价格" prop="notes">
+              ><el-form-item label="备注" prop="notes">
                 <el-input
                   v-model="form.notes"
-                  placeholder="请输入价格"
+                  placeholder="请输入备注"
                 /> </el-form-item></el-col
           ></el-row>
         </el-form>
@@ -328,7 +393,11 @@ import { listToolinformation } from "@/api/storage/toolinformation";
 //刀具基本信息的视图
 import { getBasicToolInformation } from "@/api/storage/BasicToolInformation";
 
-
+//发票
+import {
+  listReceiptinvoice,
+  getReceiptinvoice,
+} from "@/api/finance/receiptinvoice";
 export default {
   name: "DetailsOfToolStorage",
   data() {
@@ -377,7 +446,13 @@ export default {
         warehouseEntryID: [
           { required: true, message: "入库单编号不能为空", trigger: "blur" },
         ],
-
+        receiptInvoiceID: [
+          {
+            required: true,
+            message: "发票信息编号不能为空",
+            trigger: "change",
+          },
+        ],
 
         receiptQuantity: [
           { required: true, message: "入库数量不能为空", trigger: "blur" },
@@ -400,7 +475,11 @@ export default {
 
       //通过下拉框最后查找的刀具
       BasicToolInformation: {},
+      //发票信息
+      receiptinvoices: [],
 
+      //下拉框查找的发票
+      receiptinvoice: {},
     };
   },
   created() {
@@ -424,10 +503,9 @@ export default {
     },
 
     //刀具基本信息的下拉框
-  async  gettoolinformations() {
+    gettoolinformations() {
       this.loading = true;
-       let total= (await listToolinformation())["total"];
-      listToolinformation({pageSize:total}).then((res) => {
+      listToolinformation().then((res) => {
         this.toolinformations = res.rows;
         this.loading = false;
       });
@@ -440,8 +518,23 @@ export default {
         this.loading = false;
       });
     },
+    //发票信息
+    getreceiptinvoice() {
+      this.loading = true;
+      listReceiptinvoice().then((res) => {
+        this.receiptinvoices = res.rows;
+        this.loading = false;
+      });
+    },
 
-
+    //下拉框查找的发票
+    setreceiptinvoice(id) {
+      this.loading = true;
+      getReceiptinvoice(id).then((res) => {
+        this.receiptinvoice = res.data;
+        this.loading = false;
+      });
+    },
 
     // 取消按钮
     cancel() {
@@ -491,7 +584,9 @@ export default {
       getBasicToolInformation(row.toolInformationID).then((res) => {
           this.BasicToolInformation = res.data;
         });
-  
+      getReceiptinvoice(row.receiptInvoiceID).then((res) => {
+          this.receiptinvoice = res.data;
+        });
         this.open = true;
         this.title = "查看刀具入库详细";
       });
@@ -515,7 +610,9 @@ export default {
         getBasicToolInformation(row.toolInformationID).then((res) => {
           this.BasicToolInformation = res.data;
         });
-    
+        getReceiptinvoice(row.receiptInvoiceID).then((res) => {
+          this.receiptinvoice = res.data;
+        });
          this.view_open = false;
         this.open = true;
         this.title = "修改刀具入库";

@@ -125,21 +125,15 @@ public class AwLocaltoolServiceImpl implements IAwLocaltoolService
                     awLocaltool = list.get(0);
                     awLocaltool.setNumber(awLocaltool.getNumber()+num);
                     cache_awLocaltools.add(awLocaltool);
-
                 }catch (Exception e){
 
                     return false;
                 }
-
             }
-
-
         }
         for (AwLocaltool cacheAwLocaltool : cache_awLocaltools) {
             updateAwLocaltool(cacheAwLocaltool);
         }
-
-
         return true;
     }
 

@@ -33,10 +33,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="备注信息" prop="notes">
+      <el-form-item label="价格" prop="notes">
         <el-input
           v-model="queryParams.notes"
-          placeholder="请输入备注信息"
+          placeholder="请输入价格"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -100,7 +100,7 @@
       <el-table-column label="材料分类" align="center" prop="type" />
       <el-table-column label="规格类型" align="center" prop="specification" />
       <el-table-column label="材料密度" align="center" prop="materialDensity" />
-      <el-table-column label="备注信息" align="center" prop="notes" />
+      <el-table-column label="价格" align="center" prop="notes" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -161,8 +161,8 @@
         <el-form-item label="材料密度" prop="materialDensity">
           <el-input v-model="form.materialDensity" placeholder="请输入材料密度" />
         </el-form-item>
-        <el-form-item label="备注信息" prop="notes">
-          <el-input v-model="form.notes" placeholder="请输入备注信息" />
+        <el-form-item label="价格" prop="notes">
+          <el-input v-model="form.notes" placeholder="请输入价格" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

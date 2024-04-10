@@ -273,6 +273,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
+        id:"",
         founder: null,
         createTime: null,
         notes: null,
@@ -420,14 +421,14 @@ export default {
         .catch(() => {});
     },
     /** 导出按钮操作 */
-    handleExport() {
+    handleExport( ) {      
       this.download(
         "produce/productiontasklist/export",
         {
           ...this.queryParams,
         },
         `productiontasklist_${new Date().getTime()}.xlsx`
-      );
+      );   
     },
   },
 };

@@ -179,6 +179,7 @@
         </el-form-item>
         <el-form-item label="城市地区" prop="cityid">
           <el-cascader
+           v-model="form.cityid" 
             :options="city_options"
             :props="{ expandTrigger: 'hover' }"
             placeholder="请选择城市地区"
