@@ -66,15 +66,10 @@ public class AwLocalmaterialsServiceImpl implements IAwLocalmaterialsService
             Integer num = Integer.valueOf(line.get("value"));
             //拿到材料
             AwMaterial awMaterial = awMaterialMapper.selectAwMaterialById(materialID);
-
             Map<AwMaterial, AwLocalmaterials> getmap = getmap();
-
-
             if (getmap.size()!=0){
                 int flag=0;
                 AwLocalmaterials awLocalmaterials = new AwLocalmaterials();
-
-
                 for (Map.Entry<AwMaterial, AwLocalmaterials> entry : getmap.entrySet()) {
                     AwMaterial key = entry.getKey();
                     AwLocalmaterials value = entry.getValue();
@@ -82,14 +77,11 @@ public class AwLocalmaterialsServiceImpl implements IAwLocalmaterialsService
                     if (key.equals(awMaterial)) {//重写equals方法
                         // 如果找到就累加
                         flag = 1;
-
                         awLocalmaterials=value;
                         awLocalmaterials.setNumber(value.getNumber()+num);
                         break;
-
                     }
                 }
-
                 if (flag>0){
                     this.updateAwLocalmaterials(awLocalmaterials);
                 }else {
@@ -97,24 +89,15 @@ public class AwLocalmaterialsServiceImpl implements IAwLocalmaterialsService
                     awLocalmaterials.setMaterialID(awMaterial.getId());
                     this.insertAwLocalmaterials(awLocalmaterials);
                 }
-
-                flag=0;
-
             }else {
                 AwLocalmaterials awLocalmaterials1 = new AwLocalmaterials();
                 awLocalmaterials1.setNumber(Long.valueOf(num));
                 awLocalmaterials1.setMaterialID(materialID);
                 awLocalmaterialsMapper.insertAwLocalmaterials(awLocalmaterials1);
             }
-
-
-
         }
-
-
         return true;
     }
-
 //    拿到本地的库存对应的材料
 //拿到本地库存的材料
 public  Map<AwMaterial,AwLocalmaterials> getmap(){
@@ -144,28 +127,44 @@ public  Map<AwMaterial,AwLocalmaterials> getmap(){
     public boolean reduceByNumber(List<Map<String,String>> lmlist){
         List<AwLocalmaterials> cache_awLocalmaterials = new ArrayList<AwLocalmaterials>();
 
+
         for(Map<String, String> line : lmlist) {
             String materialID = line.get("key");
             Integer num = Integer.valueOf(line.get("value"));
 
-            AwLocalmaterials awLocalmaterials = new AwLocalmaterials();
-            awLocalmaterials.setMaterialID(materialID);
-            List<AwLocalmaterials> list = selectAwLocalmaterialsList(awLocalmaterials);
+            //拿到材料
+            AwMaterial awMaterial = awMaterialMapper.selectAwMaterialById(materialID);
+            Map<AwMaterial, AwLocalmaterials> getmap = getmap();
 
-            if (!list.isEmpty()) {
-                awLocalmaterials = list.get(0);
-                if (awLocalmaterials.getNumber() - num>0){
-                    awLocalmaterials.setNumber(awLocalmaterials.getNumber() - num);
-                    cache_awLocalmaterials.add(awLocalmaterials);
-                }else {
-                    return false;
+            if (getmap.size()!=0){
+                int flag=0;
+                AwLocalmaterials awLocalmaterials = new AwLocalmaterials();
+                for (Map.Entry<AwMaterial, AwLocalmaterials> entry : getmap.entrySet()) {
+                    AwMaterial key = entry.getKey();
+                    AwLocalmaterials value = entry.getValue();
+
+                    if (key.equals(awMaterial)) {//重写equals方法
+                        // 如果找到就累加
+                        flag = 1;
+                        awLocalmaterials=value;
+
+                        if (value.getNumber()<num){
+                            throw  new RuntimeException("库存不足，入库失败");
+
+                        }
+                        awLocalmaterials.setNumber(value.getNumber()-num);
+                        break;
+                    }
                 }
-            } else {
+                if (flag>0){
+                    this.updateAwLocalmaterials(awLocalmaterials);
+                }else {
+                    throw  new RuntimeException("入库失败");//抛出异常回滚，不能return false;
+
+                }
+            }else {
                 return false;
             }
-        }
-        for(AwLocalmaterials awLocalmaterials : cache_awLocalmaterials) {
-            updateAwLocalmaterials(awLocalmaterials);
         }
         return true;
     }
