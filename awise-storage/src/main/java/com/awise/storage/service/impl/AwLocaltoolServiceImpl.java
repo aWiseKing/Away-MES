@@ -2,10 +2,15 @@ package com.awise.storage.service.impl;
 
 import java.awt.geom.FlatteningPathIterator;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.awise.storage.domain.AwLocalmaterials;
+import com.awise.storage.domain.AwMaterial;
+import com.awise.storage.domain.AwToolinformation;
+import com.awise.storage.mapper.AwLocalmaterialsMapper;
+import com.awise.storage.mapper.AwToolinformationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.awise.storage.mapper.AwLocaltoolMapper;
@@ -20,10 +25,12 @@ import org.springframework.transaction.annotation.Transactional;
  * @date 2023-12-18
  */
 @Service
-public class AwLocaltoolServiceImpl implements IAwLocaltoolService
-{
+public class AwLocaltoolServiceImpl implements IAwLocaltoolService {
     @Autowired
     private AwLocaltoolMapper awLocaltoolMapper;
+
+    @Autowired
+    private AwToolinformationMapper awToolinformationMapper;
 
     /**
      * 查询刀具库存
@@ -32,8 +39,7 @@ public class AwLocaltoolServiceImpl implements IAwLocaltoolService
      * @return 刀具库存
      */
     @Override
-    public AwLocaltool selectAwLocaltoolById(Long id)
-    {
+    public AwLocaltool selectAwLocaltoolById(Long id) {
         return awLocaltoolMapper.selectAwLocaltoolById(id);
     }
 
@@ -44,8 +50,7 @@ public class AwLocaltoolServiceImpl implements IAwLocaltoolService
      * @return 刀具库存
      */
     @Override
-    public List<AwLocaltool> selectAwLocaltoolList(AwLocaltool awLocaltool)
-    {
+    public List<AwLocaltool> selectAwLocaltoolList(AwLocaltool awLocaltool) {
         return awLocaltoolMapper.selectAwLocaltoolList(awLocaltool);
     }
 
@@ -56,8 +61,7 @@ public class AwLocaltoolServiceImpl implements IAwLocaltoolService
      * @return 结果
      */
     @Override
-    public int insertAwLocaltool(AwLocaltool awLocaltool)
-    {
+    public int insertAwLocaltool(AwLocaltool awLocaltool) {
         return awLocaltoolMapper.insertAwLocaltool(awLocaltool);
     }
 
@@ -68,8 +72,7 @@ public class AwLocaltoolServiceImpl implements IAwLocaltoolService
      * @return 结果
      */
     @Override
-    public int updateAwLocaltool(AwLocaltool awLocaltool)
-    {
+    public int updateAwLocaltool(AwLocaltool awLocaltool) {
         return awLocaltoolMapper.updateAwLocaltool(awLocaltool);
     }
 
@@ -80,8 +83,7 @@ public class AwLocaltoolServiceImpl implements IAwLocaltoolService
      * @return 结果
      */
     @Override
-    public int deleteAwLocaltoolByIds(Long[] ids)
-    {
+    public int deleteAwLocaltoolByIds(Long[] ids) {
         return awLocaltoolMapper.deleteAwLocaltoolByIds(ids);
     }
 
@@ -92,11 +94,9 @@ public class AwLocaltoolServiceImpl implements IAwLocaltoolService
      * @return 结果
      */
     @Override
-    public int deleteAwLocaltoolById(Long id)
-    {
+    public int deleteAwLocaltoolById(Long id) {
         return awLocaltoolMapper.deleteAwLocaltoolById(id);
     }
-
 
 
     /**
@@ -106,37 +106,59 @@ public class AwLocaltoolServiceImpl implements IAwLocaltoolService
     @Override
     @Transactional
     public boolean addByNumber(List<Map<String, String>> lmlist) {
-        ArrayList<AwLocaltool> cache_awLocaltools = new ArrayList<AwLocaltool>();
         for (Map<String, String> line : lmlist) {
-            String toolInformationID  = line.get("key");
+            String toolInformationID = line.get("key");
             Integer num = Integer.valueOf(line.get("value"));
-            AwLocaltool awLocaltool = new AwLocaltool();
-            awLocaltool.setToolInformationID(toolInformationID);
-            List<AwLocaltool> list = selectAwLocaltoolList(awLocaltool);
-            if (!list.isEmpty()){
-                awLocaltool =list.get(0);
-                awLocaltool.setNumber(awLocaltool.getNumber()+num);
-                cache_awLocaltools.add(awLocaltool);
-            }else {
-                try {
-                    awLocaltool.setNumber(Long.valueOf(0));
-                    insertAwLocaltool(awLocaltool);
-                    list = selectAwLocaltoolList(awLocaltool);
-                    awLocaltool = list.get(0);
-                    awLocaltool.setNumber(awLocaltool.getNumber()+num);
-                    cache_awLocaltools.add(awLocaltool);
-                }catch (Exception e){
-
-                    return false;
+            //拿到要入库刀具
+            AwToolinformation awToolinformation = awToolinformationMapper.selectAwToolinformationById(toolInformationID);
+            Map<AwToolinformation, AwLocaltool> getmap = getmap();
+            if (getmap.size() != 0) {
+                int flag = 0;
+                AwLocaltool awLocaltool = new AwLocaltool();
+                for (Map.Entry<AwToolinformation, AwLocaltool> entry : getmap.entrySet()) {
+                    AwLocaltool value = entry.getValue();
+                    AwToolinformation key = entry.getKey();
+                    if (awToolinformation.equals(key)) {
+                        flag = 1;
+                        //更新刀具
+                        awLocaltool = value;
+                        awLocaltool.setNumber(awLocaltool.getNumber() + num);
+                        break;
+                    }
                 }
+                if (flag > 0) {
+                    this.updateAwLocaltool(awLocaltool);
+                } else {
+                    awLocaltool.setNumber(Long.valueOf(num));
+                    awLocaltool.setToolInformationID(awToolinformation.getId());
+                    this.insertAwLocaltool(awLocaltool);
+                }
+            } else {
+                AwLocaltool awLocaltool = new AwLocaltool();
+                awLocaltool.setNumber(Long.valueOf(num));
+                awLocaltool.setToolInformationID(awToolinformation.getId());
+                this.insertAwLocaltool(awLocaltool);
             }
-        }
-        for (AwLocaltool cacheAwLocaltool : cache_awLocaltools) {
-            updateAwLocaltool(cacheAwLocaltool);
         }
         return true;
     }
 
+    public Map<AwToolinformation, AwLocaltool> getmap() {
+        Map<AwToolinformation, AwLocaltool> Map_AwToolinformation_AwLocaltool = new HashMap<>();
+        //查出所有的本地库存
+        List<AwLocaltool> awLocalmaterialsList = awLocaltoolMapper.selectAwLocaltoolList(new AwLocaltool());
+        List<AwToolinformation> AwToolinformationList = new ArrayList<>();//本地库存中所有的材料，上面这个集合对应着
+        for (AwLocaltool awLocaltool : awLocalmaterialsList) {
+
+            AwToolinformation awToolinformation = awToolinformationMapper.selectAwToolinformationById(awLocaltool.getToolInformationID());
+            AwToolinformationList.add(awToolinformation);
+        }
+        //给map集合赋值
+        for (int i = 0; i < awLocalmaterialsList.size(); i++) {
+            Map_AwToolinformation_AwLocaltool.put(AwToolinformationList.get(i), awLocalmaterialsList.get(i));
+        }
+        return Map_AwToolinformation_AwLocaltool;
+    }
 
 
     /**
@@ -145,29 +167,37 @@ public class AwLocaltoolServiceImpl implements IAwLocaltoolService
     @Override
     @Transactional
     public boolean reduceByNumber(List<Map<String, String>> lmlist) {
-        List<AwLocaltool> cache_awLocaltools = new ArrayList<AwLocaltool>();
         for (Map<String, String> line : lmlist) {
-            String toolInformationID  = line.get("key");
+            String toolInformationID = line.get("key");
             Integer num = Integer.valueOf(line.get("value"));
-            AwLocaltool awLocaltool = new AwLocaltool();
-            awLocaltool.setToolInformationID(toolInformationID);
-            List<AwLocaltool> list = selectAwLocaltoolList(awLocaltool);
-            if (!list.isEmpty()) {
-                awLocaltool = list.get(0);
-                if (awLocaltool.getNumber()-num>0){
-                    awLocaltool.setNumber(awLocaltool.getNumber()-num);
-                    cache_awLocaltools.add(awLocaltool);
-                }else {
-
-                    return false;
+            //拿到要入库刀具
+            AwToolinformation awToolinformation = awToolinformationMapper.selectAwToolinformationById(toolInformationID);
+            Map<AwToolinformation, AwLocaltool> getmap = getmap();
+            if (getmap.size() != 0) {
+                int flag = 0;
+                AwLocaltool awLocaltool = new AwLocaltool();
+                for (Map.Entry<AwToolinformation, AwLocaltool> entry : getmap.entrySet()) {
+                    AwLocaltool value = entry.getValue();
+                    AwToolinformation key = entry.getKey();
+                    if (awToolinformation.equals(key)) {
+                        // 如果找到就减
+                        flag = 1;
+                        awLocaltool = value;
+                        if (value.getNumber()<num){
+                            throw  new RuntimeException("库存不足，入库失败");
+                        }
+                        awLocaltool.setNumber(value.getNumber() - num);
+                        break;
+                    }
                 }
-            }else {
-                return  false;
+                if (flag>0){
+                    this.updateAwLocaltool(awLocaltool);
+                }else {
+                    throw  new RuntimeException("入库失败");//抛出异常回滚，不能return false;
+                }
+            } else {
+               return false;
             }
-
-        }
-        for (AwLocaltool awLocaltool : cache_awLocaltools) {
-            updateAwLocaltool(awLocaltool);
         }
         return true;
     }

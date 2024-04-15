@@ -131,11 +131,9 @@ public  Map<AwMaterial,AwLocalmaterials> getmap(){
         for(Map<String, String> line : lmlist) {
             String materialID = line.get("key");
             Integer num = Integer.valueOf(line.get("value"));
-
             //拿到材料
             AwMaterial awMaterial = awMaterialMapper.selectAwMaterialById(materialID);
             Map<AwMaterial, AwLocalmaterials> getmap = getmap();
-
             if (getmap.size()!=0){
                 int flag=0;
                 AwLocalmaterials awLocalmaterials = new AwLocalmaterials();
@@ -144,13 +142,12 @@ public  Map<AwMaterial,AwLocalmaterials> getmap(){
                     AwLocalmaterials value = entry.getValue();
 
                     if (key.equals(awMaterial)) {//重写equals方法
-                        // 如果找到就累加
+                        // 如果找到就减
                         flag = 1;
                         awLocalmaterials=value;
 
                         if (value.getNumber()<num){
                             throw  new RuntimeException("库存不足，入库失败");
-
                         }
                         awLocalmaterials.setNumber(value.getNumber()-num);
                         break;

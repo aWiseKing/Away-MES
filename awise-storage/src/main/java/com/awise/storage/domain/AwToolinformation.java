@@ -5,7 +5,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.away.common.annotation.Excel;
 import com.away.common.core.domain.BaseEntity;
 
+import javax.tools.Tool;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 刀具信息对象 aw_toolinformation
@@ -36,8 +38,8 @@ public class AwToolinformation extends BaseEntity
     @Excel(name = "计量单位id")
     private Long unitID;
 
-    /** 备注信息 */
-    @Excel(name = "备注信息")
+    /** 价格 */
+    @Excel(name = "价格")
     private String notes;
 
     public void setId(String id) 
@@ -109,4 +111,23 @@ public class AwToolinformation extends BaseEntity
     private List<AwSpecifications> aw_specifications;
     private List<AwSpecifications> awSpecifications;
     private List<AwUnits> awUnits;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        AwToolinformation other = (AwToolinformation) obj;
+        return Objects.equals(name, other.name) &&
+                Objects.equals(notes, other.notes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, notes);
+    }
 }

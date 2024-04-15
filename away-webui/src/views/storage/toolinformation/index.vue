@@ -68,7 +68,7 @@
       <el-table-column label="刀具分类" align="center" prop="type" />
       <el-table-column label="刀具规格" align="center" prop="specification" />
       <el-table-column label="计量单位" align="center" prop="unit" />
-      <el-table-column label="备注信息" align="center" prop="notes" />
+      <el-table-column label="价格" align="center" prop="notes" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -136,8 +136,8 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="备注信息" prop="notes">
-          <el-input v-model="form.notes" placeholder="请输入备注信息" />
+        <el-form-item label="价格" prop="notes">
+          <el-input v-model="form.notes" placeholder="请输入价格" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -207,6 +207,9 @@ export default {
         unitID: [
           { required: true, message: "计量单位id不能为空", trigger: "blur" }
         ],
+        notes:[
+           { required: true, message: "价格不能为空", trigger: "blur" }
+        ]
       },
       // 刀具分类参数
       formtypes:[],
