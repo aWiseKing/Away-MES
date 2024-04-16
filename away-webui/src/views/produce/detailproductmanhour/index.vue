@@ -13,10 +13,10 @@
           <div
             style="overflow-x: auto; scrollbar-width: none; white-space: nowrap"
           >
-            <el-form-item label="生产任务" prop="productiontasksID">
+            <el-form-item label="生产任务id" prop="productiontasksID">
               <el-input
                 v-model="queryParams.productiontasksID"
-                placeholder="请输入生产任务"
+                placeholder="请输入生产任务id"
                 clearable
                 @keyup.enter.native="handleQuery"
               />
@@ -29,10 +29,10 @@
                 @keyup.enter.native="handleQuery"
               />
             </el-form-item>
-            <el-form-item label="名称" prop="manhourName">
+            <el-form-item label="工时名字" prop="manhourName">
               <el-input
                 v-model="queryParams.manhourName"
-                placeholder="名称"
+                placeholder="请输入工时名字"
                 clearable
                 @keyup.enter.native="handleQuery"
               />
@@ -53,9 +53,9 @@
                 @keyup.enter.native="handleQuery"
               />
             </el-form-item>
-            <el-form-item label="投产数量" prop="productionQuantity">
+            <el-form-item label="投产数量" prop="number">
               <el-input
-                v-model="queryParams.productionQuantity"
+                v-model="queryParams.number"
                 placeholder="请输入投产数量"
                 clearable
                 @keyup.enter.native="handleQuery"
@@ -77,35 +77,37 @@
                 @keyup.enter.native="handleQuery"
               />
             </el-form-item>
-            <el-form-item label="制定者名称" prop="formulateName1">
+            <el-form-item label="批次号" prop="lotNumber">
+              <el-input
+                v-model="queryParams.lotNumber"
+                placeholder="请输入批次号"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
+            <el-form-item label="工时时间" prop="manhoursTime">
+              <el-date-picker
+                clearable
+                v-model="queryParams.manhoursTime"
+                type="date"
+                value-format="yyyy-MM-dd"
+                placeholder="请选择工时时间"
+              >
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item label="制定者名字" prop="formulateName1">
               <el-input
                 v-model="queryParams.formulateName1"
-                placeholder="请输入制定者名称"
+                placeholder="请输入制定者名字"
                 clearable
                 @keyup.enter.native="handleQuery"
               />
             </el-form-item>
-            <el-form-item label="工序名称" prop="processName1">
-              <el-input
-                v-model="queryParams.processName1"
-                placeholder="请输入工序名称"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="工艺制定工时" prop="craftdevelopmentHours1">
-              <el-input
-                disabled
-                v-model="queryParams.craftdevelopmentHours1"
-                placeholder="请输入工艺制定工时"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="操作者名称" prop="handlers1">
+
+            <el-form-item label="操作者" prop="handlers1">
               <el-input
                 v-model="queryParams.handlers1"
-                placeholder="请输入操作者名称"
+                placeholder="请输入操作者"
                 clearable
                 @keyup.enter.native="handleQuery"
               />
@@ -130,20 +132,18 @@
               >
               </el-date-picker>
             </el-form-item>
-            <el-form-item label="时间时间" prop="actualTime1">
-              <el-date-picker
-                clearable
+            <el-form-item label="实际时间" prop="actualTime1">
+              <el-input
                 v-model="queryParams.actualTime1"
-                type="date"
-                value-format="yyyy-MM-dd"
-                placeholder="请选择时间时间"
-              >
-              </el-date-picker>
+                placeholder="请输入实际时间"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
             </el-form-item>
-            <el-form-item label="制定者名称" prop="formulateName2">
+            <el-form-item label="制定者名字" prop="formulateName2">
               <el-input
                 v-model="queryParams.formulateName2"
-                placeholder="请输入制定者名称"
+                placeholder="请输入制定者名字"
                 clearable
                 @keyup.enter.native="handleQuery"
               />
@@ -158,17 +158,16 @@
             </el-form-item>
             <el-form-item label="工艺制定工时" prop="craftdevelopmentHours2">
               <el-input
-                disabled
                 v-model="queryParams.craftdevelopmentHours2"
                 placeholder="请输入工艺制定工时"
                 clearable
                 @keyup.enter.native="handleQuery"
               />
             </el-form-item>
-            <el-form-item label="操作者名称" prop="handlers2">
+            <el-form-item label="操作者" prop="handlers2">
               <el-input
                 v-model="queryParams.handlers2"
-                placeholder="请输入操作者名称"
+                placeholder="请输入操作者"
                 clearable
                 @keyup.enter.native="handleQuery"
               />
@@ -193,15 +192,45 @@
               >
               </el-date-picker>
             </el-form-item>
-            <el-form-item label="时间时间" prop="actualTime2">
-              <el-date-picker
-                clearable
+            <el-form-item label="实际时间" prop="actualTime2">
+              <el-input
                 v-model="queryParams.actualTime2"
-                type="date"
-                value-format="yyyy-MM-dd"
-                placeholder="请选择时间时间"
-              >
-              </el-date-picker>
+                placeholder="请输入实际时间"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
+            <el-form-item label="需求数量#要求大于0#" prop="number">
+              <el-input
+                v-model="queryParams.number"
+                placeholder="请输入需求数量#要求大于0#"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
+            <el-form-item label="工序名称" prop="name">
+              <el-input
+                v-model="queryParams.name"
+                placeholder="请输入工序名称"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
+            <el-form-item label="准备工时" prop="preparationHours">
+              <el-input
+                v-model="queryParams.preparationHours"
+                placeholder="请输入准备工时"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
+            <el-form-item label="单件工时" prop="taktTime">
+              <el-input
+                v-model="queryParams.taktTime"
+                placeholder="请输入单件工时"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
             </el-form-item>
           </div>
         </el-col>
@@ -230,7 +259,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['produce:productmanhour:add']"
+          v-hasPermi="['produce:detailproductmanhour:add']"
           >新增</el-button
         >
       </el-col>
@@ -242,7 +271,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['produce:productmanhour:edit']"
+          v-hasPermi="['produce:detailproductmanhour:edit']"
           >修改</el-button
         >
       </el-col>
@@ -254,7 +283,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['produce:productmanhour:remove']"
+          v-hasPermi="['produce:detailproductmanhour:remove']"
           >删除</el-button
         >
       </el-col>
@@ -265,21 +294,8 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['produce:productmanhour:export']"
+          v-hasPermi="['produce:detailproductmanhour:export']"
           >导出</el-button
-        >
-      </el-col>
-
-
-            <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleAllExport"
-          v-hasPermi="['produce:productmanhour:export']"
-          >导出全部</el-button
         >
       </el-col>
       <right-toolbar
@@ -290,13 +306,13 @@
 
     <el-table
       v-loading="loading"
-      :data="productmanhourList"
+      :data="detailproductmanhourList"
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="订单id" align="center" prop="saleorderID" />
       <el-table-column
-        label="生产任务"
+        label="生产任务id"
         align="center"
         prop="productiontasksID"
       />
@@ -305,104 +321,27 @@
         align="center"
         prop="processingprocess"
       />
-      <el-table-column label="名称" align="center" prop="manhourName" />
+      <el-table-column label="工时名字" align="center" prop="manhourName" />
       <el-table-column label="班别" align="center" prop="workClass" />
       <el-table-column label="机台号" align="center" prop="platformNumber" />
-      <el-table-column
-        label="投产数量"
-        align="center"
-        prop="productionQuantity"
-      />
+      <el-table-column label="投产数量" align="center" prop="number" />
       <el-table-column
         label="合格数量"
         align="center"
         prop="qualifiedQuantity"
       />
       <el-table-column label="报废数量" align="center" prop="scrapQuantity" />
+      <el-table-column label="批次号" align="center" prop="lotNumber" />
       <el-table-column
-        label="制定者名称"
+        label="工时时间"
         align="center"
-        prop="formulateName1"
-      />
-      <el-table-column label="工序名称" align="center" prop="processName1" />
-      <el-table-column
-        label="工艺制定工时"
-        align="center"
-        prop="craftdevelopmentHours1"
-      />
-      <!-- <el-table-column label="操作者" align="center" prop="handlers1" />
-      <el-table-column
-        label="开始时间"
-        align="center"
-        prop="beginTime1"
+        prop="manhoursTime"
         width="180"
       >
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.beginTime1, "{y}-{m}-{d}") }}</span>
+          <span>{{ parseTime(scope.row.manhoursTime, "{y}-{m}-{d}") }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        label="最后时间"
-        align="center"
-        prop="endTime1"
-        width="180"
-      >
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.endTime1, "{y}-{m}-{d}") }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="时间时间"
-        align="center"
-        prop="actualTime1"
-        width="180"
-      >
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.actualTime1, "{y}-{m}-{d}") }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="制定者名字"
-        align="center"
-        prop="formulateName2"
-      />
-      <el-table-column label="工序名称" align="center" prop="processName2" />
-      <el-table-column
-        label="工艺制定工时"
-        align="center"
-        prop="craftdevelopmentHours2"
-      />
-      <el-table-column label="操作者" align="center" prop="handlers2" />
-      <el-table-column
-        label="开始时间"
-        align="center"
-        prop="beginTime2"
-        width="180"
-      >
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.beginTime2, "{y}-{m}-{d}") }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="最后时间"
-        align="center"
-        prop="endTime2"
-        width="180"
-      >
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.endTime2, "{y}-{m}-{d}") }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="时间时间"
-        align="center"
-        prop="actualTime2"
-        width="180"
-      >
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.actualTime2, "{y}-{m}-{d}") }}</span>
-        </template> -->
-      <!-- </el-table-column> -->
       <el-table-column
         label="操作"
         align="center"
@@ -414,7 +353,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['produce:productmanhour:edit']"
+            v-hasPermi="['produce:detailproductmanhour:edit']"
             >查看</el-button
           >
           <el-button
@@ -422,7 +361,7 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['produce:productmanhour:edit']"
+            v-hasPermi="['produce:detailproductmanhour:edit']"
             >修改</el-button
           >
           <el-button
@@ -430,7 +369,7 @@
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['produce:productmanhour:remove']"
+            v-hasPermi="['produce:detailproductmanhour:remove']"
             >删除</el-button
           >
         </template>
@@ -445,7 +384,7 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改生产工时对话框 -->
+    <!-- 添加或修改工时统计详细对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="900px" append-to-body>
       <el-form
         ref="form"
@@ -468,7 +407,7 @@
           <el-col :span="12">
             <el-form-item label="任务单">
               <el-select
-              filterable
+                filterable
                 v-model="productiontasklist.id"
                 placeholder="请选择任务单"
                 @focus="getListProductiontasklist()"
@@ -490,7 +429,7 @@
           <el-col :span="12">
             <el-form-item label="生产任务" prop="productiontasksID">
               <el-select
-              filterable
+                filterable
                 :disabled="productiontasklist.id == null"
                 placeholder="请选择生产任务"
                 @focus="
@@ -501,7 +440,7 @@
                 <el-option
                   v-for="(item, index) in productiontaskslist"
                   :key="index"
-                  :label="item.id"
+                  :label="item.referred"
                   :value="item.id"
                   @click.native="setProductiontasks(item.id)"
                 >
@@ -513,7 +452,7 @@
           <el-col :span="12">
             <el-form-item label="生产工艺">
               <el-select
-              filterable
+                filterable
                 :disabled="productiontasks.id == null"
                 v-model="processingtechnology.id"
                 @focus="
@@ -539,7 +478,7 @@
           <el-col :span="12">
             <el-form-item label="工序" prop="processingprocess">
               <el-select
-              filterable
+                filterable
                 :disabled="processingtechnology.id == null"
                 @focus="getprocessingprocessList(processingtechnology.id)"
                 v-model="form.processingprocess"
@@ -582,10 +521,10 @@
 
         <el-row :gutter="12">
           <el-col :span="12">
-            <el-form-item label="投产数量" prop="productionQuantity">
+            <el-form-item label="投产数量" prop="number">
               <el-input
                 disabled
-                v-model="form.productionQuantity"
+                v-model="number"
                 placeholder="请输入投产数量"
               />
             </el-form-item>
@@ -648,7 +587,7 @@
             <el-form-item label="工序名称" prop="processName1">
               <el-input
                 disabled
-                v-model="form.processName1"
+                v-model="processingprocess.name"
                 placeholder="请输入工序名称"
               />
             </el-form-item>
@@ -660,7 +599,7 @@
             <el-form-item label="工艺制定工时" prop="craftdevelopmentHours1">
               <el-input
                 disabled
-                v-model="form.craftdevelopmentHours1"
+                v-model="processingprocess.preparationHours"
                 placeholder="请输入工艺制定工时"
               />
             </el-form-item>
@@ -668,7 +607,10 @@
 
           <el-col :span="12">
             <el-form-item label="操作者名称" prop="handlers1">
-              <el-input v-model="form.handlers1" placeholder="请输入操作者名称" />
+              <el-input
+                v-model="form.handlers1"
+                placeholder="请输入操作者名称"
+              />
             </el-form-item>
           </el-col>
         </el-row>
@@ -715,7 +657,7 @@
             <el-form-item label="工序名称" prop="processName2">
               <el-input
                 disabled
-                v-model="form.processName2"
+                v-model="processingprocess.name"
                 placeholder="请输入工序名称"
               />
             </el-form-item>
@@ -727,7 +669,7 @@
             <el-form-item label="工艺制定工时" prop="craftdevelopmentHours2">
               <el-input
                 disabled
-                v-model="form.craftdevelopmentHours2"
+                v-model="processingprocess.taktTime"
                 placeholder="请输入工艺制定工时"
               />
             </el-form-item>
@@ -735,7 +677,10 @@
 
           <el-col :span="12">
             <el-form-item label="操作者名称" prop="handlers2">
-              <el-input v-model="form.handlers2" placeholder="请输入操作者名称" />
+              <el-input
+                v-model="form.handlers2"
+                placeholder="请输入操作者名称"
+              />
             </el-form-item>
           </el-col>
         </el-row>
@@ -768,7 +713,7 @@
           <el-col :span="12"> </el-col>
         </el-row>
       </el-form>
-      <div slot="footer" class="dialog-footer" :disabled="view_open">
+      <div slot="footer" class="dialog-footer" v-if="!view_open">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
@@ -777,6 +722,21 @@
 </template>
 
 <script>
+import {
+  listSaleorder,
+  getSaleorder,
+  delSaleorder,
+  addSaleorder,
+  updateSaleorder,
+} from "@/api/order/saleorder";
+
+import {
+  listDetailproductmanhour,
+  getDetailproductmanhour,
+  delDetailproductmanhour,
+  addDetailproductmanhour,
+  updateDetailproductmanhour,
+} from "@/api/produce/detailproductmanhour";
 import {
   listProductmanhour,
   getProductmanhour,
@@ -802,9 +762,8 @@ import {
   listProcessingprocess,
   getProcessingprocess,
 } from "@/api/produce/processingprocess";
-
 export default {
-  name: "Productmanhour",
+  name: "Detailproductmanhour",
   data() {
     return {
       // 遮罩层
@@ -819,8 +778,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 生产工时表格数据
-      productmanhourList: [],
+      // 工时统计详细表格数据
+      detailproductmanhourList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -839,33 +798,43 @@ export default {
         manhourName: null,
         workClass: null,
         platformNumber: null,
-        productionQuantity: null,
+        number: null,
         qualifiedQuantity: null,
         scrapQuantity: null,
+        lotNumber: null,
+        manhoursTime: null,
         formulateName1: null,
-        processName1: null,
-        craftdevelopmentHours1: null,
         handlers1: null,
         beginTime1: null,
         endTime1: null,
         actualTime1: null,
         formulateName2: null,
-        processName2: null,
-        craftdevelopmentHours2: null,
         handlers2: null,
         beginTime2: null,
         endTime2: null,
         actualTime2: null,
+        number: null,
+        name: null,
+        preparationHours: null,
+        taktTime: null,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
+        id: [{ required: true, message: "工时id不能为空", trigger: "blur" }],
         saleorderID: [
           { required: true, message: "订单id不能为空", trigger: "blur" },
         ],
+        preparationHours: [
+          { required: true, message: "准备工时不能为空", trigger: "blur" },
+        ],
+        taktTime: [
+          { required: true, message: "单件工时不能为空", trigger: "blur" },
+        ],
       },
-      //数量
+
+      saleorder: {},
       number: "",
       //订单id
       saleorderID: "",
@@ -885,7 +854,6 @@ export default {
       processingprocessList: [],
       //当前选中的工艺
       processingprocess: {},
-
       twoTime1: [],
       twoTime2: [],
     };
@@ -893,12 +861,11 @@ export default {
   created() {
     this.getExist();
   },
-
   methods: {
-    //拿路由参数
     getExist() {
       this.saleorderID = this.$route.query.id;
       this.number = this.$route.query.number;
+
       this.queryParams.saleorderID = this.$route.query.id;
       this.getList();
     },
@@ -906,19 +873,18 @@ export default {
     /** 查询生产工时列表 */
     getList() {
       this.loading = true;
-      listProductmanhour(this.queryParams).then((response) => {
-        this.productmanhourList = response.rows;
+      listDetailproductmanhour(this.queryParams).then((response) => {
+        this.detailproductmanhourList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
     },
 
-    /** 查询任务单列表 */
-  async  getListProductiontasklist() {
+    async getListProductiontasklist() {
       this.loading = true;
-            let total= (await listProductiontasklist())["total"];
+      let total = (await listProductiontasklist())["total"];
 
-      listProductiontasklist({pageSize:total}).then((response) => {
+      listProductiontasklist({ pageSize: total }).then((response) => {
         this.productiontasklistlist = response.rows;
         this.loading = false;
       });
@@ -926,21 +892,19 @@ export default {
     /** 选中当前选中任务单 */
     setProductiontasklist(id) {
       this.loading = true;
-      
-
       getProductiontasklist(id).then((response) => {
         this.productiontasklist = response.data;
         this.loading = false;
       });
     },
     /** 查询任务列表 */
-   async getListProductiontasks(productionTasksFormID, saleorderID) {
+    async getListProductiontasks(productionTasksFormID, saleorderID) {
       this.loading = true;
-       let total= (await listProductiontasks())["total"];
+      let total = (await listProductiontasks())["total"];
       listProductiontasks({
         productionTasksFormID: productionTasksFormID,
         saleOrderID: saleorderID,
-        pageSize:total
+        pageSize: total,
       }).then((response) => {
         this.productiontaskslist = response.rows;
         this.loading = false;
@@ -957,15 +921,16 @@ export default {
 
     // 查询生产工艺单列表
 
-   async getprocessingtechnologyList(processingtechnologyID) {
+    async getprocessingtechnologyList(processingtechnologyID) {
       this.loading = true;
-      let total= (await listProcessingtechnology())["total"];
-      listProcessingtechnology({ id: processingtechnologyID,pageSize:total }).then(
-        (response) => {
-          this.processingtechnologyList = response.rows;
-          this.loading = false;
-        }
-      );
+      let total = (await listProcessingtechnology())["total"];
+      listProcessingtechnology({
+        id: processingtechnologyID,
+        pageSize: total,
+      }).then((response) => {
+        this.processingtechnologyList = response.rows;
+        this.loading = false;
+      });
     },
 
     //选中生产工艺单
@@ -977,14 +942,14 @@ export default {
       });
     },
 
-    //查询工序列表
-
-   async getprocessingprocessList(id) {
+    async getprocessingprocessList(id) {
       this.loading = true;
-      let total= (await listProcessingprocess())["total"];
+      let total = (await listProcessingprocess())["total"];
 
-      
-      listProcessingprocess({ processingTechnologyID: id ,pageSize:total}).then((response) => {
+      listProcessingprocess({
+        processingTechnologyID: id,
+        pageSize: total,
+      }).then((response) => {
         this.processingprocessList = response.rows;
         this.loading = false;
       });
@@ -995,68 +960,8 @@ export default {
       this.loading = true;
       getProcessingprocess(id).then((response) => {
         this.processingprocess = response.data;
-        this.form.processName1 = response.data.name;
-        this.form.processName2 = response.data.name;
-        this.form.craftdevelopmentHours1 = response.data.preparationHours;
-        this.form.craftdevelopmentHours2 = response.data.taktTime;
         this.loading = false;
       });
-    },
-
-    // 取消按钮
-    cancel() {
-      this.open = false;
-      this.reset();
-    },
-    // 表单重置
-    reset() {
-      this.form = {
-        id: null,
-        saleorderID: this.saleorderID,
-        productiontasksID: null,
-        processingprocess: null,
-        manhourName: null,
-        workClass: null,
-        platformNumber: null,
-        productionQuantity: this.number,
-        qualifiedQuantity: null,
-        scrapQuantity: null,
-        lotNumber: null,
-        manhoursTime: null,
-        formulateName1: null,
-        processName1: null,
-        craftdevelopmentHours1: null,
-        handlers1: null,
-        beginTime1: null,
-        endTime1: null,
-        actualTime1: null,
-        formulateName2: null,
-        processName2: null,
-        craftdevelopmentHours2: null,
-        handlers2: null,
-        beginTime2: null,
-        endTime2: null,
-        actualTime2: null,
-      };
-
-      (this.productiontasklistlist = []),
-        // 当前选中任务单
-        (this.productiontasklist = {}),
-        // 任务列表
-        (this.productiontaskslist = []),
-        // 当前选中任务
-        (this.productiontasks = {}),
-        //生产工艺单列表
-        (this.processingtechnologyList = []),
-        //当前选中工艺单
-        (this.processingtechnology = {}),
-        //工序列表
-        (this.processingprocessList = []),
-        //当前选中的工艺
-        (this.processingprocess = {}),
-        this.resetForm("form");
-        this.twoTime1=[]
-        this.twoTime2=[]
     },
 
     //计算时间
@@ -1091,6 +996,62 @@ export default {
       }
     },
 
+    // 取消按钮
+    cancel() {
+      this.open = false;
+      this.reset();
+    },
+    // 表单重置
+    reset() {
+      this.form = {
+        id: null,
+        saleorderID: this.saleorderID,
+        productiontasksID: null,
+        processingprocess: null,
+        manhourName: null,
+        workClass: null,
+        platformNumber: null,
+        qualifiedQuantity: null,
+        scrapQuantity: null,
+        lotNumber: null,
+        manhoursTime: null,
+        formulateName1: null,
+
+        handlers1: null,
+        beginTime1: null,
+        endTime1: null,
+        actualTime1: null,
+        formulateName2: null,
+        processName2: null,
+        craftdevelopmentHours2: null,
+        handlers2: null,
+        beginTime2: null,
+        endTime2: null,
+        actualTime2: null,
+      };
+
+      (this.saleorder = {}),
+        (this.productiontasklistlist = []),
+        // 当前选中任务单
+        (this.productiontasklist = {}),
+        // 任务列表
+        (this.productiontaskslist = []),
+        // 当前选中任务
+        (this.productiontasks = {}),
+        //生产工艺单列表
+        (this.processingtechnologyList = []),
+        //当前选中工艺单
+        (this.processingtechnology = {}),
+        //工序列表
+        (this.processingprocessList = []),
+        //当前选中的工艺
+        (this.processingprocess = {}),
+        this.resetForm("form");
+      this.twoTime1 = [];
+      this.twoTime2 = [];
+
+      this.resetForm("form");
+    },
     /** 搜索按钮操作 */
     handleQuery() {
       this.queryParams.pageNum = 1;
@@ -1113,28 +1074,35 @@ export default {
       const id = row.id || this.ids;
       getProductmanhour(id).then((response) => {
         this.form = response.data;
- 
         const time1 = new Date(response.data.beginTime1);
         const time2 = new Date(response.data.endTime1);
         this.twoTime1 = [time1, time2];
-         
-        const time3 =  new Date( response.data.beginTime2);
-        const time4  =new Date(response.data.endTime2) ;
-        this.twoTime2=[time3,time4]
+        const time3 = new Date(response.data.beginTime2);
+        const time4 = new Date(response.data.endTime2);
+        this.twoTime2 = [time3, time4];
+        //订单回显
+        getSaleorder(row.saleorderID).then((response) => {
+          this.number = response.data.number;
+        });
 
         //生产工艺下拉框回显
         getProcessingprocess(this.form.processingprocess).then((response) => {
           this.processingprocess = response.data;
+
+          console.log(this.processingprocess.processingTechnologyID);
           listProcessingtechnology({
             id: this.processingprocess.processingTechnologyID,
           }).then((response) => {
             this.processingtechnology = response.rows[0];
+            console.log(response.rows[0]);
           });
         });
 
         //任务回显
         getProductiontasks(this.form.productiontasksID).then((response) => {
           this.productiontasks = response.data;
+
+          this.getListProductiontasklist();
           listProductiontasklist({
             id: this.productiontasks.productionTasksFormID,
           }).then((response) => {
@@ -1149,40 +1117,44 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
-      this.view_open = false;
       this.isadd = true;
       this.open = true;
-      this.title = "添加生产工时";
+      this.view_open = false;
+      this.title = "添加工时统计详细";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       this.isadd = false;
-      this.view_open = false;
       const id = row.id || this.ids;
       getProductmanhour(id).then((response) => {
         this.form = response.data;
-              const time1 = new Date(response.data.beginTime1);
+        const time1 = new Date(response.data.beginTime1);
         const time2 = new Date(response.data.endTime1);
         this.twoTime1 = [time1, time2];
-         
-        const time3 =  new Date( response.data.beginTime2);
-        const time4  =new Date(response.data.endTime2) ;
-        this.twoTime2=[time3,time4]
+
+        const time3 = new Date(response.data.beginTime2);
+        const time4 = new Date(response.data.endTime2);
+        this.twoTime2 = [time3, time4];
+        //订单回显
+        getSaleorder(row.saleorderID).then((response) => {
+          this.number = response.data.number;
+        });
 
         //生产工艺下拉框回显
         getProcessingprocess(this.form.processingprocess).then((response) => {
           this.processingprocess = response.data;
+
           listProcessingtechnology({
             id: this.processingprocess.processingTechnologyID,
           }).then((response) => {
             this.processingtechnology = response.rows[0];
           });
         });
-
         //任务回显
         getProductiontasks(this.form.productiontasksID).then((response) => {
           this.productiontasks = response.data;
+          this.getListProductiontasklist();
           listProductiontasklist({
             id: this.productiontasks.productionTasksFormID,
           }).then((response) => {
@@ -1196,8 +1168,8 @@ export default {
     },
     /** 提交按钮 */
     submitForm() {
-      this.setTime();
       this.$refs["form"].validate((valid) => {
+        this.setTime();
         if (valid) {
           if (!this.isadd) {
             updateProductmanhour(this.form).then((response) => {
@@ -1219,7 +1191,7 @@ export default {
     handleDelete(row) {
       const ids = row.id || this.ids;
       this.$modal
-        .confirm('是否确认删除生产工时编号为"' + ids + '"的数据项？')
+        .confirm('是否确认删除工时统计详细编号为"' + ids + '"的数据项？')
         .then(function () {
           return delProductmanhour(ids);
         })
@@ -1232,30 +1204,12 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       this.download(
-        "produce/productmanhour/export",
+        "produce/detailproductmanhour/export",
         {
           ...this.queryParams,
         },
-        `productmanhour_${new Date().getTime()}.xlsx`
+        `detailproductmanhour_${new Date().getTime()}.xlsx`
       );
-    },
-    handleAllExport(){
-          this.download(
-        "produce/productmanhour/exportAll",
-        {
-          ...this.queryParams,
-        },
-        `productmanhour_${new Date().getTime()}.xlsx`
-      );
-    }
-  },
-
-  watch: {
-    "$ruote.query.id": {
-      immediate: true,
-      handler() {
-        this.getExist();
-      },
     },
   },
 };

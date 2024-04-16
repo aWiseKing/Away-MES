@@ -1,20 +1,19 @@
 package com.awise.produce.domain;
 
-import com.away.common.annotation.Excel;
-import com.away.common.core.domain.BaseEntity;
+import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-
-import java.util.Date;
+import com.away.common.annotation.Excel;
+import com.away.common.core.domain.BaseEntity;
 
 /**
- * 生产工时对象 aw_productmanhour
+ * 工时统计详细对象 aw_detailproductmanhour
  * 
  * @author awise
- * @date 2024-03-20
+ * @date 2024-04-14
  */
-public class AwProductmanhour extends BaseEntity
+public class AwDetailproductmanhour extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
@@ -25,8 +24,8 @@ public class AwProductmanhour extends BaseEntity
     @Excel(name = "订单id")
     private String saleorderID;
 
-    /** 生产任务 */
-    @Excel(name = "生产任务")
+    /** 生产任务id */
+    @Excel(name = "生产任务id")
     private Long productiontasksID;
 
     /** 加工工序 */
@@ -34,7 +33,7 @@ public class AwProductmanhour extends BaseEntity
     private Long processingprocess;
 
     /** 工时名字 */
-    @Excel(name = "名称")
+    @Excel(name = "工时名字")
     private String manhourName;
 
     /** 班别 */
@@ -45,7 +44,9 @@ public class AwProductmanhour extends BaseEntity
     @Excel(name = "机台号")
     private String PlatformNumber;
 
-
+    /** 投产数量 */
+    @Excel(name = "投产数量")
+    private Long ProductionQuantity;
 
     /** 合格数量 */
     @Excel(name = "合格数量")
@@ -57,61 +58,88 @@ public class AwProductmanhour extends BaseEntity
 
     /** 批次号 */
     @Excel(name = "批次号")
-    private String lotNumber;
+    private Long lotNumber;
 
     /** 工时时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @Excel(name = "工时时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date manhoursTime;
 
     /** 制定者名字 */
-    @Excel(name = "制定者名称")
+    @Excel(name = "制定者名字")
     private String formulateName1;
 
+    /** 工序名称 */
+    @Excel(name = "工序名称")
+    private String processName1;
+
+    /** 工艺制定工时 */
+    @Excel(name = "工艺制定工时")
+    private String craftdevelopmentHours1;
 
     /** 操作者 */
-    @Excel(name = "操作者名称")
+    @Excel(name = "操作者")
     private String handlers1;
 
     /** 开始时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Excel(name = "开始时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "开始时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date beginTime1;
 
     /** 最后时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Excel(name = "最后时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "最后时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date endTime1;
 
     /** 实际时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Excel(name = "实际时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "实际时间")
     private String actualTime1;
 
     /** 制定者名字 */
-    @Excel(name = "制定者名称")
+    @Excel(name = "制定者名字")
     private String formulateName2;
 
+    /** 工序名称 */
+    @Excel(name = "工序名称")
+    private String processName2;
 
+    /** 工艺制定工时 */
+    @Excel(name = "工艺制定工时")
+    private String craftdevelopmentHours2;
 
     /** 操作者 */
-    @Excel(name = "操作者名称")
+    @Excel(name = "操作者")
     private String handlers2;
 
     /** 开始时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Excel(name = "开始时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "开始时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date beginTime2;
 
     /** 最后时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Excel(name = "最后时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "最后时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date endTime2;
 
     /** 实际时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Excel(name = "实际时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "实际时间")
     private String actualTime2;
+
+    /** 需求数量#要求大于0# */
+    @Excel(name = "需求数量#要求大于0#")
+    private Long number;
+
+    /** 工序名称 */
+    @Excel(name = "工序名称")
+    private String name;
+
+    /** 准备工时 */
+    @Excel(name = "准备工时")
+    private String preparationHours;
+
+    /** 单件工时 */
+    @Excel(name = "单件工时")
+    private String taktTime;
 
     public void setId(Long id) 
     {
@@ -149,12 +177,12 @@ public class AwProductmanhour extends BaseEntity
     {
         return processingprocess;
     }
-    public void setManhourName(String manHourName)
+    public void setManhourName(String manhourName) 
     {
-        this.manhourName = manHourName;
+        this.manhourName = manhourName;
     }
 
-    public String getManhourName()
+    public String getManhourName() 
     {
         return manhourName;
     }
@@ -176,7 +204,15 @@ public class AwProductmanhour extends BaseEntity
     {
         return PlatformNumber;
     }
+    public void setProductionQuantity(Long ProductionQuantity) 
+    {
+        this.ProductionQuantity = ProductionQuantity;
+    }
 
+    public Long getProductionQuantity() 
+    {
+        return ProductionQuantity;
+    }
     public void setQualifiedQuantity(Long qualifiedQuantity) 
     {
         this.qualifiedQuantity = qualifiedQuantity;
@@ -195,21 +231,21 @@ public class AwProductmanhour extends BaseEntity
     {
         return scrapQuantity;
     }
-    public void setLotNumber(String lotNumber)
+    public void setLotNumber(Long lotNumber) 
     {
         this.lotNumber = lotNumber;
     }
 
-    public String getLotNumber()
+    public Long getLotNumber() 
     {
         return lotNumber;
     }
-    public void setManhoursTime(Date manhoursTime)
+    public void setManhoursTime(Date manhoursTime) 
     {
         this.manhoursTime = manhoursTime;
     }
 
-    public Date getManhoursTime()
+    public Date getManhoursTime() 
     {
         return manhoursTime;
     }
@@ -222,7 +258,24 @@ public class AwProductmanhour extends BaseEntity
     {
         return formulateName1;
     }
+    public void setProcessName1(String processName1) 
+    {
+        this.processName1 = processName1;
+    }
 
+    public String getProcessName1() 
+    {
+        return processName1;
+    }
+    public void setCraftdevelopmentHours1(String craftdevelopmentHours1) 
+    {
+        this.craftdevelopmentHours1 = craftdevelopmentHours1;
+    }
+
+    public String getCraftdevelopmentHours1() 
+    {
+        return craftdevelopmentHours1;
+    }
     public void setHandlers1(String handlers1) 
     {
         this.handlers1 = handlers1;
@@ -250,12 +303,12 @@ public class AwProductmanhour extends BaseEntity
     {
         return endTime1;
     }
-    public void setActualTime1(String actualTime1)
+    public void setActualTime1(String actualTime1) 
     {
         this.actualTime1 = actualTime1;
     }
 
-    public String getActualTime1()
+    public String getActualTime1() 
     {
         return actualTime1;
     }
@@ -268,10 +321,25 @@ public class AwProductmanhour extends BaseEntity
     {
         return formulateName2;
     }
+    public void setProcessName2(String processName2) 
+    {
+        this.processName2 = processName2;
+    }
 
+    public String getProcessName2() 
+    {
+        return processName2;
+    }
+    public void setCraftdevelopmentHours2(String craftdevelopmentHours2) 
+    {
+        this.craftdevelopmentHours2 = craftdevelopmentHours2;
+    }
 
-
-    public void setHandlers2(String handlers2)
+    public String getCraftdevelopmentHours2() 
+    {
+        return craftdevelopmentHours2;
+    }
+    public void setHandlers2(String handlers2) 
     {
         this.handlers2 = handlers2;
     }
@@ -298,14 +366,50 @@ public class AwProductmanhour extends BaseEntity
     {
         return endTime2;
     }
-    public void setActualTime2(String actualTime2)
+    public void setActualTime2(String actualTime2) 
     {
         this.actualTime2 = actualTime2;
     }
 
-    public String getActualTime2()
+    public String getActualTime2() 
     {
         return actualTime2;
+    }
+    public void setNumber(Long number) 
+    {
+        this.number = number;
+    }
+
+    public Long getNumber() 
+    {
+        return number;
+    }
+    public void setName(String name) 
+    {
+        this.name = name;
+    }
+
+    public String getName() 
+    {
+        return name;
+    }
+    public void setPreparationHours(String preparationHours) 
+    {
+        this.preparationHours = preparationHours;
+    }
+
+    public String getPreparationHours() 
+    {
+        return preparationHours;
+    }
+    public void setTaktTime(String taktTime) 
+    {
+        this.taktTime = taktTime;
+    }
+
+    public String getTaktTime() 
+    {
+        return taktTime;
     }
 
     @Override
@@ -318,20 +422,29 @@ public class AwProductmanhour extends BaseEntity
             .append("manhourName", getManhourName())
             .append("workClass", getWorkClass())
             .append("PlatformNumber", getPlatformNumber())
+            .append("ProductionQuantity", getProductionQuantity())
             .append("qualifiedQuantity", getQualifiedQuantity())
             .append("scrapQuantity", getScrapQuantity())
             .append("lotNumber", getLotNumber())
             .append("manhoursTime", getManhoursTime())
             .append("formulateName1", getFormulateName1())
+            .append("processName1", getProcessName1())
+            .append("craftdevelopmentHours1", getCraftdevelopmentHours1())
             .append("handlers1", getHandlers1())
             .append("beginTime1", getBeginTime1())
             .append("endTime1", getEndTime1())
             .append("actualTime1", getActualTime1())
             .append("formulateName2", getFormulateName2())
+            .append("processName2", getProcessName2())
+            .append("craftdevelopmentHours2", getCraftdevelopmentHours2())
             .append("handlers2", getHandlers2())
             .append("beginTime2", getBeginTime2())
             .append("endTime2", getEndTime2())
             .append("actualTime2", getActualTime2())
+            .append("number", getNumber())
+            .append("name", getName())
+            .append("preparationHours", getPreparationHours())
+            .append("taktTime", getTaktTime())
             .toString();
     }
 }

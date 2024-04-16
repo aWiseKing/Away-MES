@@ -29,6 +29,9 @@ public class AwMateriallistoftechnology extends BaseEntity
     @Excel(name = "材料名称")
     private String name;
 
+    @Excel(name = "材料价格")
+    private String notes;
+
     /** 材料密度 */
     @Excel(name = "材料密度")
     private String materialDensity;
@@ -143,6 +146,14 @@ public class AwMateriallistoftechnology extends BaseEntity
         return numberProducibleParts;
     }
 
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -150,6 +161,7 @@ public class AwMateriallistoftechnology extends BaseEntity
             .append("materialID", getMaterialID())
             .append("processingTechnologyID", getProcessingTechnologyID())
             .append("name", getName())
+            .append("notes", getNotes())
             .append("materialDensity", getMaterialDensity())
             .append("typeName", getTypeName())
             .append("specificationsType", getSpecificationsType())

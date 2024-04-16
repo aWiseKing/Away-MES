@@ -19,6 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectAwProcessingtechnologyVo"/>
         <where>  
             <if test="createTime != null "> and createTime = #{createTime}</if>
+            <if test="id != null and id!='' "> and id = #{id}</if>
             <if test="founder != null  and founder != ''"> and founder = #{founder}</if>
             <if test="status != null  and status != ''"> and status = #{status}</if>
         </where>

@@ -18,9 +18,15 @@ public class AwLocalmaterialsEn extends BaseEntity
     /** 材料库存id */
     private Long id;
 
+    @Excel(name = "材料ID")
+    private String materialID;
+
     /** 材料基本信息id */
     @Excel(name = "材料名称")
     private String name;
+
+    @Excel(name = "材料价格")
+    private String notes;
 
     /** 材料库存数量 */
     @Excel(name = "材料库存数量")
@@ -62,11 +68,29 @@ public class AwLocalmaterialsEn extends BaseEntity
         this.weight = weight;
     }
 
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getMaterialID() {
+        return materialID;
+    }
+
+    public void setMaterialID(String materialID) {
+        this.materialID = materialID;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("name", getName())
+            .append("notes", getNotes())
+            .append("materialID", getMaterialID())
             .append("number", getNumber())
             .append("weight", getWeight())
             .toString();

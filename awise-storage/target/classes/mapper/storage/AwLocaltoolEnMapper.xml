@@ -7,12 +7,14 @@
     <resultMap type="AwLocaltoolEn" id="AwLocaltoolEnResult">
         <result property="id"    column="id"    />
         <result property="name"    column="name"    />
+        <result property="toolInformationID"    column="toolInformationID"    />
         <result property="number"    column="number"    />
+        <result property="notes"    column="notes"    />
         <result property="weight"    column="weight"    />
     </resultMap>
 
     <sql id="selectAwLocaltoolEnVo">
-        select  aw_LocalTool.id, aw_LocalTool.number,aw_LocalTool.weight,aw_toolInformation.name
+        select  aw_LocalTool.id, aw_LocalTool.number,aw_LocalTool.weight,aw_toolInformation.name,aw_toolInformation.notes,aw_toolInformation.id as toolInformationID
         from  aw_LocalTool  left join aw_toolInformation on
             aw_LocalTool.toolInformationID =aw_toolInformation.id
     </sql>

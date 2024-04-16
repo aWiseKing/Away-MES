@@ -18,8 +18,12 @@ public class AwLocaltoolEn extends BaseEntity
     /** 库存id */
     private Long id;
 
-    /** 刀具id */
     @Excel(name = "刀具id")
+    private String toolInformationID;
+
+
+    /** 刀具名称 */
+    @Excel(name = "刀具名称")
     private String name;
 
     public String getName() {
@@ -37,6 +41,17 @@ public class AwLocaltoolEn extends BaseEntity
     /** 重量 */
     @Excel(name = "重量")
     private Long weight;
+
+    @Excel(name = "价格")
+    private  String notes;
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 
     public void setId(Long id)
     {
@@ -67,12 +82,22 @@ public class AwLocaltoolEn extends BaseEntity
         return weight;
     }
 
+    public String getToolInformationID() {
+        return toolInformationID;
+    }
+
+    public void setToolInformationID(String toolInformationID) {
+        this.toolInformationID = toolInformationID;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
                 .append("id", getId())
-                .append("toolInformationID", getNumber())
+                .append("toolInformationID", getToolInformationID())
+                .append("name", getName())
                 .append("number", getNumber())
+                .append("notes", getNotes())
                 .append("weight", getWeight())
                 .toString();
     }

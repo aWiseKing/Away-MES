@@ -324,7 +324,17 @@
                   >
                   </el-option>
                 </el-select> </el-form-item></el-col
-          ></el-row>
+          >
+          <el-col :span="12">
+              <el-form-item label="材料价格" prop="materialDensity">
+                <el-input
+                  v-model="materiallistoftechnology.notes"
+                  placeholder="请输入材料价格"
+                  disabled
+                /> </el-form-item></el-col
+          >
+          
+          </el-row>
           <el-row :gutter="12"
             ><el-col :span="12">
               <el-form-item label="材料名称" prop="name">
@@ -356,14 +366,8 @@
                   disabled
                 /> </el-form-item></el-col></el-row
           ><el-row :gutter="12"
-            ><el-col :span="12">
-              <el-form-item label="材料密度" prop="materialDensity">
-                <el-input
-                  v-model="materiallistoftechnology.materialDensity"
-                  placeholder="请输入材料密度"
-                  disabled
-                /> </el-form-item></el-col
-          ></el-row>
+            >
+          </el-row>
           <el-row :gutter="12"
             ><el-col :span="12"
               ><el-form-item label="申购数量" prop="subscriptionQuantity">

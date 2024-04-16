@@ -57,6 +57,7 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="材料库存id" align="center" prop="id" />
       <el-table-column label="材料名称" align="center" prop="name" />
+       <el-table-column label="材料价格" align="center" prop="notes" />
       <el-table-column label="材料库存数量" align="center" prop="number" />
       <el-table-column label="材料库存重量" align="center" prop="weight" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -91,15 +92,24 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="材料基本信息" prop="material">
-          <el-select v-model="form.materialID" placeholder="请选择材料基本信息">
+          <el-select v-model="form.materialID" @focus="getListMaterial()" placeholder="请选择材料基本信息">
             <el-option
+            @click.native="setMaterial(item.id)"
               v-for="item in materials_info"
               :key="item.id"
-              :label="item.name"
+              :label="item.id"
               :value="item.id">
             </el-option>
           </el-select>
         </el-form-item>
+               <el-form-item label="材料名称" >
+          <el-input v-model="materials.name" disabled placeholder="请输入材料名称" />
+        </el-form-item>
+
+              <el-form-item label="材料价格" >
+          <el-input v-model="materials.notes" disabled placeholder="请输入材料价格" />
+        </el-form-item>
+
         <el-form-item label="材料库存数量" prop="number">
           <el-input v-model="form.number" placeholder="请输入材料库存数量" />
         </el-form-item>
@@ -117,7 +127,7 @@
 
 <script>
 import { listLocalmaterials, getLocalmaterials, delLocalmaterials, addLocalmaterials, updateLocalmaterials } from "@/api/storage/localmaterials";
-import { listMaterial } from "@/api/storage/material"
+import { listMaterial,getMaterial } from "@/api/storage/material"
 
 export default {
   name: "Localmaterials",
@@ -148,6 +158,7 @@ export default {
       },
       // 材料基本信息
       materials_info:[],
+      materials:{},
       // 表单参数
       form: {},
       // 表单校验
@@ -181,6 +192,11 @@ export default {
     getListMaterial(){
       listMaterial({}).then(respoense => {
         this.materials_info = respoense.rows
+      })
+    },
+    setMaterial(id){
+      getMaterial(id).then(respoense => {
+        this.materials=respoense.data
       })
     },
     // 取消按钮
@@ -227,6 +243,10 @@ export default {
       this.getListMaterial();
       const id = row.id || this.ids
       getLocalmaterials(id).then(response => {
+    
+       getMaterial(row.materialID).then(response=>{
+          this.materials=response.data
+       })
         this.form = response.data;
         this.open = true;
         this.title = "修改本地材料实时库存";
