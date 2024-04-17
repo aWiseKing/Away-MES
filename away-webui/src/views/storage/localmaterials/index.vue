@@ -212,6 +212,8 @@ export default {
         number: null,
         weight: null
       };
+      this.materials_info=[]
+      this. materials={}
       this.resetForm("form");
     },
     /** 搜索按钮操作 */
@@ -246,6 +248,7 @@ export default {
     
        getMaterial(row.materialID).then(response=>{
           this.materials=response.data
+          console.log(response.data)
        })
         this.form = response.data;
         this.open = true;
