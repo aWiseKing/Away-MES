@@ -73,6 +73,7 @@ com\away\common\exception\user\UserException.class
 com\away\common\utils\poi\ExcelUtil.class
 com\away\common\constant\Constants.class
 com\away\common\core\domain\entity\SysDictType.class
+com\away\common\utils\bean\BeanCopyUtils.class
 com\away\common\utils\uuid\Seq.class
 com\away\common\annotation\DataScope.class
 com\away\common\exception\file\InvalidExtensionException$InvalidImageExtensionException.class
