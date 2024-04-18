@@ -328,12 +328,12 @@
           <el-col :span="12">
               <el-form-item label="材料价格" prop="materialDensity">
                 <el-input
-                  v-model="materiallistoftechnology.notes"
+                  v-model="materiallistoftechnology.materialPrice"
                   placeholder="请输入材料价格"
                   disabled
                 /> </el-form-item></el-col
           >
-          
+
           </el-row>
           <el-row :gutter="12"
             ><el-col :span="12">
@@ -560,7 +560,7 @@ export default {
     /** 选中任务单 */
     setProductiontasklist(id) {
       this.loading = true;
-      
+
       getProductiontasklist(id).then((response) => {
         this.productiontasklist = response.data;
 

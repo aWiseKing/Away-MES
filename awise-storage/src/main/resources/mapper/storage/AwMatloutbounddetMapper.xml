@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="deliveryNoteID"    column="deliveryNoteID"    />
         <result property="materialID"    column="materialID"    />
         <result property="name"    column="name"    />
+        <result property="materialPrice"    column="materialPrice"    />
         <result property="typeName"    column="typeName"    />
         <result property="specificationsType"    column="specificationsType"    />
         <result property="specificationModel"    column="specificationModel"    />
@@ -19,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwMatloutbounddetVo">
-        select id, deliveryNoteID, materialID, name, typeName, specificationsType, specificationModel, productionTasksID, processingTechnologyID, outboundQuantity, notes from aw_MatlOutboundDet
+        select id, deliveryNoteID, materialID, name,materialPrice, typeName, specificationsType, specificationModel, productionTasksID, processingTechnologyID, outboundQuantity, notes from aw_MatlOutboundDet
     </sql>
 
     <select id="selectAwMatloutbounddetList" parameterType="AwMatloutbounddet" resultMap="AwMatloutbounddetResult">
@@ -46,6 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="deliveryNoteID != null and deliveryNoteID != ''">deliveryNoteID,</if>
             <if test="materialID != null and materialID != ''">materialID,</if>
             <if test="name != null and name != ''">name,</if>
+            <if test="materialPrice != null and materialPrice != ''">materialPrice,</if>
             <if test="typeName != null">typeName,</if>
             <if test="specificationsType != null">specificationsType,</if>
             <if test="specificationModel != null">specificationModel,</if>
@@ -59,6 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="deliveryNoteID != null and deliveryNoteID != ''">#{deliveryNoteID},</if>
             <if test="materialID != null and materialID != ''">#{materialID},</if>
             <if test="name != null and name != ''">#{name},</if>
+            <if test="materialPrice != null and materialPrice != ''">#{materialPrice</if>
             <if test="typeName != null">#{typeName},</if>
             <if test="specificationsType != null">#{specificationsType},</if>
             <if test="specificationModel != null">#{specificationModel},</if>
@@ -75,6 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="deliveryNoteID != null and deliveryNoteID != ''">deliveryNoteID = #{deliveryNoteID},</if>
             <if test="materialID != null and materialID != ''">materialID = #{materialID},</if>
             <if test="name != null and name != ''">name = #{name},</if>
+            <if test="materialPrice != null and materialPrice != ''">materialPrice = #{materialPrice},</if>
             <if test="typeName != null">typeName = #{typeName},</if>
             <if test="specificationsType != null">specificationsType = #{specificationsType},</if>
             <if test="specificationModel != null">specificationModel = #{specificationModel},</if>
@@ -92,7 +96,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <delete id="deleteAwMatloutbounddetByIds" parameterType="String">
         delete from aw_MatlOutboundDet where id in
-        <foreach item="id" collection="array" open="(" separator="," close=")">
+        <foreach item="id" collection="array" open="(n" separator="," close=")">
             #{id}
         </foreach>
     </delete>

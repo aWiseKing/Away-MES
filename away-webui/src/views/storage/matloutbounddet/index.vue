@@ -190,6 +190,14 @@
         </el-form-item>
         </el-col>
       </el-row>
+
+      <el-row :gutter="12">
+        <el-col :span="12">
+          <el-form-item label="材料价格" prop="specificationModel">
+          <el-input disabled v-model="matloutbounddet.materialPrice" placeholder="请输入材料价格" />
+        </el-form-item>
+        </el-col>
+      </el-row>
       </el-form>
       <div slot="footer" v-if="!view_open" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -299,7 +307,7 @@ export default {
     /** 查询材料出库详细列表 */
     getList() {
       this.loading = true;
-      
+
       listMatloutbounddet(this.queryParams).then(response => {
         this.matloutbounddetList = response.rows;
         this.total = response.total;
@@ -338,7 +346,7 @@ export default {
       this.loading = true;
       getProductiontasks(id).then((response) => {
         this.productiontasks = response.data;
-        
+
         this.loading = false;
       });
     },
@@ -369,6 +377,7 @@ export default {
         this.materiallistoftechnology = response.data;
         let tmpObj = {
           name: null,
+          materialPrice:null,
           typeName: null,
           specificationsType: null,
           specificationModel: null
@@ -389,6 +398,7 @@ export default {
         id: null,
         deliveryNoteID: this.deliveryNoteID,
         materialID: null,
+        materialPrice:null,
         name: null,
         typeName: null,
         specificationsType: null,

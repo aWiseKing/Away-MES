@@ -327,7 +327,17 @@
         </el-row>
 
         <el-row :gutter="12"
-          ><el-col :span="12">
+          >
+                    <el-col :span="12">
+            <el-form-item label="刀具价格" prop="uint">
+              <el-input
+                disabled
+                v-model="basicToolInfomation.toolPrice"
+                placeholder="请输入刀具价格"
+              /> </el-form-item
+          ></el-col>
+
+          <el-col :span="12">
             <el-form-item label="备注" prop="notes">
               <el-input v-model="form.notes" placeholder="请输入备注" />
             </el-form-item>

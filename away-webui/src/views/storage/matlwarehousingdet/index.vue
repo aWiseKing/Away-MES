@@ -73,7 +73,7 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5" v-if="upper_status=='0'">
+      <el-col :span="1.5" v-if="upper_status == '0'">
         <el-button
           type="primary"
           plain
@@ -84,7 +84,7 @@
           >新增</el-button
         >
       </el-col>
-      <el-col :span="1.5" v-if="upper_status=='0'">
+      <el-col :span="1.5" v-if="upper_status == '0'">
         <el-button
           type="success"
           plain
@@ -96,7 +96,7 @@
           >修改</el-button
         >
       </el-col>
-      <el-col :span="1.5" v-if="upper_status=='0'">
+      <el-col :span="1.5" v-if="upper_status == '0'">
         <el-button
           type="danger"
           plain
@@ -172,7 +172,7 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-if="upper_status=='0'"
+            v-if="upper_status == '0'"
             v-hasPermi="['storage:matlwarehousingdet:edit']"
             >修改</el-button
           >
@@ -181,7 +181,7 @@
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-if="upper_status=='0'"
+            v-if="upper_status == '0'"
             v-hasPermi="['storage:matlwarehousingdet:remove']"
             >删除</el-button
           >
@@ -204,176 +204,210 @@
         :model="matlwarehousingdet"
         :rules="rules"
         label-width="80px"
-        :disabled = "view_open"
+        :disabled="view_open"
       >
         <!-- 入库信息 -->
-        <el-row :gutter='12'><el-col :span='12'><el-form-item label="入库单编号" prop="warehouseEntryID">
-          <el-input
-            disabled
-            v-model="matlwarehousingdet.warehouseEntryID"
-            placeholder="请输入入库单编号"
-          />
-        </el-form-item></el-col><el-col :span='12'>
-        <el-form-item label="入库数量" prop="receiptQuantity">
-          <el-input
-            v-model="matlwarehousingdet.receiptQuantity"
-            placeholder="请输入入库数量"
-          />
-        </el-form-item></el-col></el-row>
+        <el-row :gutter="12"
+          ><el-col :span="12"
+            ><el-form-item label="入库单编号" prop="warehouseEntryID">
+              <el-input
+                disabled
+                v-model="matlwarehousingdet.warehouseEntryID"
+                placeholder="请输入入库单编号"
+              /> </el-form-item></el-col
+          ><el-col :span="12">
+            <el-form-item label="入库数量" prop="receiptQuantity">
+              <el-input
+                v-model="matlwarehousingdet.receiptQuantity"
+                placeholder="请输入入库数量"
+              /> </el-form-item></el-col
+        ></el-row>
         <!-- 申购信息 -->
-        <el-row :gutter='12'><el-col :span='12'><el-form-item label="申购单">
-          <el-select
-          filterable
-            v-model="purchaserequisition.subscribeID"
-            placeholder="请选择申购单"
-            clearable
-            @focus="getListPurchaserequisition()"
-          >
-            <el-option
-              v-for="(item, index) in purchaserequisitionlist"
-              :key="index"
-              :label="item.subscribeID"
-              :value="item.subscribeID"
-              @click.native="setPurchaserequisition(item.subscribeID)"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item></el-col><el-col :span='12'>
-        <el-form-item label="申购材料编号" prop="materialSubscription">
-          <el-select
-          filterable
-            :disabled="purchaserequisition.subscribeID == null"
-            v-model="matlwarehousingdet.materialSubscription"
-            placeholder="请选择申购材料"
-            @focus="
-              getListDetailmaterialsubscription(purchaserequisition.subscribeID)
-            "
-          >
-            <el-option
-              v-for="(item, index) in detailmaterialsubscriptionlist"
-              :key="index"
-              :label="item.materialID"
-              :value="item.materialSubscription"
-              @click.native="
-                setDetailmaterialsubscription(item.materialSubscription)
-              "
-            >
-            </el-option>
-          </el-select>
-        </el-form-item></el-col></el-row>
+        <el-row :gutter="12"
+          ><el-col :span="12"
+            ><el-form-item label="申购单">
+              <el-select
+                filterable
+                v-model="purchaserequisition.subscribeID"
+                placeholder="请选择申购单"
+                clearable
+                @focus="getListPurchaserequisition()"
+              >
+                <el-option
+                  v-for="(item, index) in purchaserequisitionlist"
+                  :key="index"
+                  :label="item.subscribeID"
+                  :value="item.subscribeID"
+                  @click.native="setPurchaserequisition(item.subscribeID)"
+                >
+                </el-option>
+              </el-select> </el-form-item></el-col
+          ><el-col :span="12">
+            <el-form-item label="申购材料编号" prop="materialSubscription">
+              <el-select
+                filterable
+                :disabled="purchaserequisition.subscribeID == null"
+                v-model="matlwarehousingdet.materialSubscription"
+                placeholder="请选择申购材料"
+                @focus="
+                  getListDetailmaterialsubscription(
+                    purchaserequisition.subscribeID
+                  )
+                "
+              >
+                <el-option
+                  v-for="(item, index) in detailmaterialsubscriptionlist"
+                  :key="index"
+                  :label="item.materialID"
+                  :value="item.materialSubscription"
+                  @click.native="
+                    setDetailmaterialsubscription(item.materialSubscription)
+                  "
+                >
+                </el-option>
+              </el-select> </el-form-item></el-col
+        ></el-row>
         <!-- 材料信息 -->
-        <el-row :gutter='12'><el-col :span='12'><el-form-item label="材料信息编号" prop="materialID">
-          <el-select
-          filterable
-            :disabled="purchaserequisition.subscribeID != null"
-            v-model="matlwarehousingdet.materialID"
-            placeholder="请选择材料信息"
-            @focus="getListBasicinformationofmaterials()"
-          >
-            <el-option
-              v-for="(item, index) in basicinformationofmaterialslist"
-              :key="index"
-              :label="item.name"
-              :value="item.id"
-              @click.native="setBasicinformationofmaterials(item.id)"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item></el-col><el-col :span='12'>
-        <el-form-item label="材料名称" prop="name">
-          <el-input
-            disabled
-            v-model="matlwarehousingdet.name"
-            placeholder="请输入材料名称"
-          />
-        </el-form-item></el-col></el-row><el-row :gutter='12'><el-col :span='12'>
-        <el-form-item label="类别名称" prop="typeName">
-          <el-input
-            disabled
-            v-model="matlwarehousingdet.typeName"
-            placeholder="请输入类别名称"
-          />
-        </el-form-item></el-col><el-col :span='12'>
-        <el-form-item label="规格类型" prop="specificationsType">
-          <el-input
-            disabled
-            v-model="matlwarehousingdet.specificationsType"
-            placeholder="请输入规格类型"
-          />
-        </el-form-item></el-col></el-row><el-row :gutter='12'><el-col :span='12'>
-        <el-form-item label="规格型号" prop="specificationModel">
-          <el-input
-            disabled
-            v-model="matlwarehousingdet.specificationModel"
-            placeholder="请输入规格型号"
-          />
-        </el-form-item></el-col><el-col :span='12'>
-        <el-form-item label="材料密度" prop="materialDensity">
-          <el-input
-            disabled
-            v-model="matlwarehousingdet.materialDensity"
-            placeholder="请输入材料密度"
-          />
-        </el-form-item></el-col></el-row>
+        <el-row :gutter="12"
+          ><el-col :span="12"
+            ><el-form-item label="材料信息编号" prop="materialID">
+              <el-select
+                filterable
+                :disabled="purchaserequisition.subscribeID != null"
+                v-model="matlwarehousingdet.materialID"
+                placeholder="请选择材料信息"
+                @focus="getListBasicinformationofmaterials()"
+              >
+                <el-option
+                  v-for="(item, index) in basicinformationofmaterialslist"
+                  :key="index"
+                  :label="item.name"
+                  :value="item.id"
+                  @click.native="setBasicinformationofmaterials(item.id)"
+                >
+                </el-option>
+              </el-select> </el-form-item></el-col
+          ><el-col :span="12">
+            <el-form-item label="材料名称" prop="name">
+              <el-input
+                disabled
+                v-model="matlwarehousingdet.name"
+                placeholder="请输入材料名称"
+              /> </el-form-item></el-col></el-row
+        ><el-row :gutter="12"
+          ><el-col :span="12">
+            <el-form-item label="类别名称" prop="typeName">
+              <el-input
+                disabled
+                v-model="matlwarehousingdet.typeName"
+                placeholder="请输入类别名称"
+              /> </el-form-item></el-col
+          ><el-col :span="12">
+            <el-form-item label="规格类型" prop="specificationsType">
+              <el-input
+                disabled
+                v-model="matlwarehousingdet.specificationsType"
+                placeholder="请输入规格类型"
+              /> </el-form-item></el-col></el-row
+        ><el-row :gutter="12"
+          ><el-col :span="12">
+            <el-form-item label="规格型号" prop="specificationModel">
+              <el-input
+                disabled
+                v-model="matlwarehousingdet.specificationModel"
+                placeholder="请输入规格型号"
+              /> </el-form-item></el-col
+          ><el-col :span="12">
+            <el-form-item label="材料密度" prop="materialDensity">
+              <el-input
+                disabled
+                v-model="matlwarehousingdet.materialDensity"
+                placeholder="请输入材料密度"
+              /> </el-form-item></el-col
+        ></el-row>
         <!-- 发票信息 -->
-        <el-row :gutter='12'><el-col :span='12'><el-form-item label="发票信息编号" prop="receiptInvoiceID">
-          <el-select
-          filterable
-            v-model="matlwarehousingdet.receiptInvoiceID"
-            placeholder="请选择发票信息"
-            @focus="getListReceiptinvoice()"
-          >
-            <el-option
-              v-for="(item, index) in receiptinvoicelist"
-              :key="index"
-              :label="item.receiptInvoiceID"
-              :value="item.receiptInvoiceID"
-              @click.native="setReceiptinvoice(item.receiptInvoiceID)"
+        <el-row :gutter="12"
+          ><el-col :span="12"
+            ><el-form-item label="发票信息编号" prop="receiptInvoiceID">
+              <el-select
+                filterable
+                v-model="matlwarehousingdet.receiptInvoiceID"
+                placeholder="请选择发票信息"
+                @focus="getListReceiptinvoice()"
+              >
+                <el-option
+                  v-for="(item, index) in receiptinvoicelist"
+                  :key="index"
+                  :label="item.receiptInvoiceID"
+                  :value="item.receiptInvoiceID"
+                  @click.native="setReceiptinvoice(item.receiptInvoiceID)"
+                >
+                </el-option>
+              </el-select> </el-form-item></el-col
+          ><el-col :span="12">
+            <el-form-item label="发票类型" prop="invoiceType">
+              <el-input
+                disabled
+                v-model="matlwarehousingdet.invoiceType"
+                placeholder="请输入发票类型"
+              /> </el-form-item></el-col></el-row
+        ><el-row :gutter="12"
+          ><el-col :span="12">
+            <el-form-item label="发票税率" prop="invoiceTaxRate">
+              <el-input
+                disabled
+                v-model="matlwarehousingdet.invoiceTaxRate"
+                placeholder="请输入发票税率"
+              /> </el-form-item></el-col
+          ><el-col :span="12">
+            <el-form-item
+              label="不含税采购单价"
+              prop="purchaseUnitPriceExcludingTax"
             >
-            </el-option>
-          </el-select>
-        </el-form-item></el-col><el-col :span='12'>
-        <el-form-item label="发票类型" prop="invoiceType">
-          <el-input
-            disabled
-            v-model="matlwarehousingdet.invoiceType"
-            placeholder="请输入发票类型"
-          />
-        </el-form-item></el-col></el-row><el-row :gutter='12'><el-col :span='12'>
-        <el-form-item label="发票税率" prop="invoiceTaxRate">
-          <el-input
-            disabled
-            v-model="matlwarehousingdet.invoiceTaxRate"
-            placeholder="请输入发票税率"
-          />
-        </el-form-item></el-col><el-col :span='12'>
-        <el-form-item
-          label="不含税采购单价"
-          prop="purchaseUnitPriceExcludingTax"
+              <el-input
+                disabled
+                v-model="matlwarehousingdet.purchaseUnitPriceExcludingTax"
+                placeholder="请输入不含税采购单价"
+              /> </el-form-item></el-col></el-row
+        ><el-row :gutter="12"
+          ><el-col :span="12">
+            <el-form-item
+              label="含税采购单价"
+              prop="purchaseUnitPriceIncludingTax"
+            >
+              <el-input
+                disabled
+                v-model="matlwarehousingdet.purchaseUnitPriceIncludingTax"
+                placeholder="请输入含税采购单价"
+              /> </el-form-item></el-col
+
         >
-          <el-input
-            disabled
-            v-model="matlwarehousingdet.purchaseUnitPriceExcludingTax"
-            placeholder="请输入不含税采购单价"
-          />
-        </el-form-item></el-col></el-row><el-row :gutter='12'><el-col :span='12'>
-        <el-form-item label="含税采购单价" prop="purchaseUnitPriceIncludingTax">
-          <el-input
-            disabled
-            v-model="matlwarehousingdet.purchaseUnitPriceIncludingTax"
-            placeholder="请输入含税采购单价"
-          />
-        </el-form-item></el-col></el-row>
+
+        <el-col :span="12">
+               <el-form-item label="材料价格" prop="specificationsType">
+              <el-input
+                disabled
+                v-model="matlwarehousingdet.materialPrice"
+                placeholder="请输入材料价格"
+              /> </el-form-item>
+        </el-col>
+        </el-row>
         <!-- 其他信息 -->
-        <el-row :gutter='12'><el-col :span='12'><el-form-item label="附样" prop="sampleURL">
-          <image-upload v-model="matlwarehousingdet.sampleURL" />
-        </el-form-item></el-col></el-row>
-        <el-row :gutter='12'><el-col :span='24'><el-form-item label="备注" prop="notes">
-          <el-input
-            v-model="matlwarehousingdet.notes"
-            placeholder="请输入备注"
-          />
-        </el-form-item></el-col></el-row>
+        <el-row :gutter="12"
+          ><el-col :span="12"
+            ><el-form-item label="附样" prop="sampleURL">
+              <image-upload
+                v-model="matlwarehousingdet.sampleURL"
+              /> </el-form-item></el-col
+        ></el-row>
+        <el-row :gutter="12"
+          ><el-col :span="24"
+            ><el-form-item label="备注" prop="notes">
+              <el-input
+                v-model="matlwarehousingdet.notes"
+                placeholder="请输入备注"
+              /> </el-form-item></el-col
+        ></el-row>
       </el-form>
       <div v-if="!view_open" slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -409,7 +443,7 @@ import {
 } from "@/api/finance/receiptinvoice.js";
 
 import { setIntersectionObj } from "@/utils/utils.js";
-import '@/assets/styles/away-element-ui-disabled.scss' // away css
+import "@/assets/styles/away-element-ui-disabled.scss"; // away css
 
 export default {
   name: "Matlwarehousingdet",
@@ -483,7 +517,7 @@ export default {
       // 材料入库详细
       matlwarehousingdet: {},
       // 父单状态
-      upper_status:null,
+      upper_status: null,
       // 申购单列表
       purchaserequisitionlist: [],
       // 选中申购单
@@ -522,10 +556,10 @@ export default {
       });
     },
     /** 查询申购单列表 */
- async   getListPurchaserequisition() {
+    async getListPurchaserequisition() {
       this.loading = true;
-       let total= (await listPurchaserequisition())["total"];
-      listPurchaserequisition({pageSize:total}).then((response) => {
+      let total = (await listPurchaserequisition())["total"];
+      listPurchaserequisition({ pageSize: total }).then((response) => {
         this.purchaserequisitionlist = response.rows;
         this.loading = false;
       });
@@ -539,46 +573,42 @@ export default {
       });
     },
     /** 查询申购材料列表 */
-   async getListDetailmaterialsubscription(subscribeID) {
+    async getListDetailmaterialsubscription(subscribeID) {
       this.loading = true;
-       let total= (await listDetailmaterialsubscription())["total"];
-      listDetailmaterialsubscription({ subscribeID: subscribeID,pageSize:total }).then(
-        (response) => {
-          this.detailmaterialsubscriptionlist = response.rows;
-          this.loading = false;
-        }
-      );
+      let total = (await listDetailmaterialsubscription())["total"];
+      listDetailmaterialsubscription({
+        subscribeID: subscribeID,
+        pageSize: total,
+      }).then((response) => {
+        this.detailmaterialsubscriptionlist = response.rows;
+        this.loading = false;
+      });
     },
     /** 选中选中申购材料 */
     setDetailmaterialsubscription(id) {
       this.loading = true;
       getDetailmaterialsubscription(id).then((response) => {
         this.detailmaterialsubscription = response.data;
-        this.tmp={
+        this.tmp = {
           materialSubscription: null,
           materialID: null,
           name: null,
+          materialPrice: null,
           typeName: null,
           specificationsType: null,
           specificationModel: null,
           materialDensity: null,
-        }
-        setIntersectionObj(
-          this.tmp,
-          this.detailmaterialsubscription
-        );
-        setIntersectionObj(
-          this.matlwarehousingdet,
-          this.tmp
-        );
-        this.loading = false;
+        };
+        setIntersectionObj(this.tmp, this.detailmaterialsubscription);
+        setIntersectionObj(this.matlwarehousingdet, this.tmp);
+         this.loading = false;
       });
     },
     /** 查询材料信息列表 */
-  async  getListBasicinformationofmaterials() {
+    async getListBasicinformationofmaterials() {
       this.loading = true;
-      let total= (await listBasicinformationofmaterials())["total"];
-      listBasicinformationofmaterials({pageSize:total}).then((response) => {
+      let total = (await listBasicinformationofmaterials())["total"];
+      listBasicinformationofmaterials({ pageSize: total }).then((response) => {
         this.basicinformationofmaterialslist = response.rows;
         this.loading = false;
       });
@@ -588,32 +618,28 @@ export default {
       this.loading = true;
       getBasicinformationofmaterials(id).then((response) => {
         this.basicinformationofmaterials = response.data;
-        this.basicinformationofmaterials.materialID = this.basicinformationofmaterials.id;
-        this.tmp={
+        this.basicinformationofmaterials.materialID =
+          this.basicinformationofmaterials.id;
+        this.tmp = {
           materialID: null,
           name: null,
           typeName: null,
+          materialPrice: null,
           specificationsType: null,
           specificationModel: null,
           materialDensity: null,
-        }
-        setIntersectionObj(
-          this.tmp,
-          this.basicinformationofmaterials
-        );
-        setIntersectionObj(
-          this.matlwarehousingdet,
-          this.tmp
-        );
+        };
+        setIntersectionObj(this.tmp, this.basicinformationofmaterials);
+        setIntersectionObj(this.matlwarehousingdet, this.tmp);
         this.loading = false;
       });
     },
     /** 查询发票信息列表 */
-   async getListReceiptinvoice() {
+    async getListReceiptinvoice() {
       this.loading = true;
 
-       let total= (await listReceiptinvoice())["total"];
-      listReceiptinvoice({pageSize:total}).then((response) => {
+      let total = (await listReceiptinvoice())["total"];
+      listReceiptinvoice({ pageSize: total }).then((response) => {
         this.receiptinvoicelist = response.rows;
         this.loading = false;
       });
@@ -624,14 +650,14 @@ export default {
       getReceiptinvoice(id).then((response) => {
         this.receiptinvoice = response.data;
         this.loading = false;
-        this.tmp={
+        this.tmp = {
           receiptInvoiceID: null,
           invoiceType: null,
           invoiceTaxRate: null,
           purchaseUnitPriceExcludingTax: null,
-          purchaseUnitPriceIncludingTax: null
-        }
-        setIntersectionObj(this.tmp,this.receiptinvoice)
+          purchaseUnitPriceIncludingTax: null,
+        };
+        setIntersectionObj(this.tmp, this.receiptinvoice);
         setIntersectionObj(this.matlwarehousingdet, this.tmp);
       });
     },
@@ -648,6 +674,7 @@ export default {
         materialSubscription: null,
         materialID: null,
         name: null,
+        materialPrice: null,
         typeName: null,
         specificationsType: null,
         specificationModel: null,
@@ -711,10 +738,13 @@ export default {
       const id = row.id || this.ids;
       getMatlwarehousingdet(id).then((response) => {
         this.matlwarehousingdet = response.data;
-        if(this.matlwarehousingdet.materialSubscription!=null){
-          getDetailmaterialsubscription(this.matlwarehousingdet.materialSubscription).then(response => {
-            this.setPurchaserequisition(response.data.subscribeID)
-          })
+        console.log(response.data)
+        if (this.matlwarehousingdet.materialSubscription != null) {
+          getDetailmaterialsubscription(
+            this.matlwarehousingdet.materialSubscription
+          ).then((response) => {
+            this.setPurchaserequisition(response.data.subscribeID);
+          });
         }
         this.open = true;
         this.view_open = true;
@@ -737,10 +767,12 @@ export default {
       const id = row.id || this.ids;
       getMatlwarehousingdet(id).then((response) => {
         this.matlwarehousingdet = response.data;
-        if(this.matlwarehousingdet.materialSubscription!=null){
-          getDetailmaterialsubscription(this.matlwarehousingdet.materialSubscription).then(response => {
-            this.setPurchaserequisition(response.data.subscribeID)
-          })
+        if (this.matlwarehousingdet.materialSubscription != null) {
+          getDetailmaterialsubscription(
+            this.matlwarehousingdet.materialSubscription
+          ).then((response) => {
+            this.setPurchaserequisition(response.data.subscribeID);
+          });
         }
         this.open = true;
         this.view_open = false;
@@ -793,19 +825,19 @@ export default {
       );
     },
   },
-  watch:{
-    "$route.query.id":{
-      immediate:true,
-      handler(){
-        this.getExist()
-      }
-    },
-    "this.$route.query.status":{
-      immediate:true,
-      handler(){
+  watch: {
+    "$route.query.id": {
+      immediate: true,
+      handler() {
         this.getExist();
-      }
-    }
-  }
+      },
+    },
+    "this.$route.query.status": {
+      immediate: true,
+      handler() {
+        this.getExist();
+      },
+    },
+  },
 };
 </script>

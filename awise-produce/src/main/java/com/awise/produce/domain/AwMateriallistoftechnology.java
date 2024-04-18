@@ -30,7 +30,7 @@ public class AwMateriallistoftechnology extends BaseEntity
     private String name;
 
     @Excel(name = "材料价格")
-    private String notes;
+    private String materialPrice;
 
     /** 材料密度 */
     @Excel(name = "材料密度")
@@ -146,12 +146,12 @@ public class AwMateriallistoftechnology extends BaseEntity
         return numberProducibleParts;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getMaterialPrice() {
+        return materialPrice;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setMaterialPrice(String materialPrice) {
+        this.materialPrice = materialPrice;
     }
 
     @Override
@@ -161,7 +161,7 @@ public class AwMateriallistoftechnology extends BaseEntity
             .append("materialID", getMaterialID())
             .append("processingTechnologyID", getProcessingTechnologyID())
             .append("name", getName())
-            .append("notes", getNotes())
+            .append("materialPrice", getMaterialPrice())
             .append("materialDensity", getMaterialDensity())
             .append("typeName", getTypeName())
             .append("specificationsType", getSpecificationsType())

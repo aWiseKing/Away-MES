@@ -8610,7 +8610,7 @@ DYNAMIC</Options>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="1291" parent="287" name="table_id">
-      <AutoIncrement>137</AutoIncrement>
+      <AutoIncrement>138</AutoIncrement>
       <Comment>编号</Comment>
       <DasType>bigint(20)|0s</DasType>
       <NotNull>1</NotNull>
@@ -8731,7 +8731,7 @@ DYNAMIC</Options>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="1313" parent="288" name="column_id">
-      <AutoIncrement>1362</AutoIncrement>
+      <AutoIncrement>1370</AutoIncrement>
       <Comment>编号</Comment>
       <DasType>bigint(20)|0s</DasType>
       <NotNull>1</NotNull>
@@ -9966,7 +9966,7 @@ job_group</ColNames>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="1526" parent="306" name="info_id">
-      <AutoIncrement>1714</AutoIncrement>
+      <AutoIncrement>1715</AutoIncrement>
       <Comment>访问ID</Comment>
       <DasType>bigint(20)|0s</DasType>
       <NotNull>1</NotNull>
@@ -10228,7 +10228,7 @@ job_group</ColNames>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="1572" parent="309" name="oper_id">
-      <AutoIncrement>5183</AutoIncrement>
+      <AutoIncrement>5191</AutoIncrement>
       <Comment>日志主键</Comment>
       <DasType>bigint(20)|0s</DasType>
       <NotNull>1</NotNull>

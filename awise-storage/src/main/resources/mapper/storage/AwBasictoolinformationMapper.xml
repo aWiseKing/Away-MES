@@ -7,10 +7,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="AwBasictoolinformation" id="AwBasictoolinformationResult">
         <result property="id"    column="id"    />
         <result property="name"    column="name"    />
+        <result property="toolPrice"    column="toolPrice"    />
         <result property="typeID"    column="typeID"    />
         <result property="specificationsID"    column="specificationsID"    />
         <result property="unitID"    column="unitID"    />
-        <result property="notes"    column="notes"    />
         <result property="typeName"    column="typeName"    />
         <result property="uint"    column="uint"    />
         <result property="specificationsType"    column="specificationsType"    />
@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwBasictoolinformationVo">
-        select id, name, typeID, specificationsID, unitID, notes, typeName, uint, specificationsType, specificationModel from aw_BasicToolInformation
+        select id, name,toolPrice, typeID, specificationsID, unitID, typeName, uint, specificationsType, specificationModel from aw_BasicToolInformation
     </sql>
 
     <select id="selectAwBasictoolinformationList" parameterType="AwBasictoolinformation" resultMap="AwBasictoolinformationResult">
@@ -28,7 +28,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="typeID != null "> and typeID = #{typeID}</if>
             <if test="specificationsID != null "> and specificationsID = #{specificationsID}</if>
             <if test="unitID != null "> and unitID = #{unitID}</if>
-            <if test="notes != null  and notes != ''"> and notes = #{notes}</if>
             <if test="typeName != null  and typeName != ''"> and typeName like concat('%', #{typeName}, '%')</if>
             <if test="uint != null  and uint != ''"> and uint = #{uint}</if>
             <if test="specificationsType != null  and specificationsType != ''"> and specificationsType = #{specificationsType}</if>
@@ -46,10 +45,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null and id != ''">id,</if>
             <if test="name != null and name != ''">name,</if>
+            <if test="toolPrice != null and toolPrice != ''">toolPrice,</if>
             <if test="typeID != null">typeID,</if>
             <if test="specificationsID != null">specificationsID,</if>
             <if test="unitID != null">unitID,</if>
-            <if test="notes != null">notes,</if>
             <if test="typeName != null">typeName,</if>
             <if test="uint != null and uint != ''">uint,</if>
             <if test="specificationsType != null">specificationsType,</if>
@@ -58,10 +57,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null and id != ''">#{id},</if>
             <if test="name != null and name != ''">#{name},</if>
+            <if test="toolPrice != null and toolPrice != ''">#{toolPrice},</if>
             <if test="typeID != null">#{typeID},</if>
             <if test="specificationsID != null">#{specificationsID},</if>
             <if test="unitID != null">#{unitID},</if>
-            <if test="notes != null">#{notes},</if>
             <if test="typeName != null">#{typeName},</if>
             <if test="uint != null and uint != ''">#{uint},</if>
             <if test="specificationsType != null">#{specificationsType},</if>
@@ -73,10 +72,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update aw_BasicToolInformation
         <trim prefix="SET" suffixOverrides=",">
             <if test="name != null and name != ''">name = #{name},</if>
+            <if test="toolPrice != null and toolPrice != ''">toolPrice = #{toolPrice},</if>
             <if test="typeID != null">typeID = #{typeID},</if>
             <if test="specificationsID != null">specificationsID = #{specificationsID},</if>
             <if test="unitID != null">unitID = #{unitID},</if>
-            <if test="notes != null">notes = #{notes},</if>
             <if test="typeName != null">typeName = #{typeName},</if>
             <if test="uint != null and uint != ''">uint = #{uint},</if>
             <if test="specificationsType != null">specificationsType = #{specificationsType},</if>

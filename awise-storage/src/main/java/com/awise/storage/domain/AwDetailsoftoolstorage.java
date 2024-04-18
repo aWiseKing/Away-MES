@@ -46,6 +46,11 @@ public class AwDetailsoftoolstorage extends BaseEntity
     @Excel(name = "刀具名称")
     private String name;
 
+
+    /** 刀具价格 */
+    @Excel(name = "刀具价格")
+    private String toolPrice;
+
     /** 类别名称 */
     @Excel(name = "类别名称")
     private String typeName;
@@ -62,7 +67,16 @@ public class AwDetailsoftoolstorage extends BaseEntity
     @Excel(name = "计量单位")
     private String uint;
 
-    public void setId(Long id) 
+
+    public String getToolPrice() {
+        return toolPrice;
+    }
+
+    public void setToolPrice(String toolPrice) {
+        this.toolPrice = toolPrice;
+    }
+
+    public void setId(Long id)
     {
         this.id = id;
     }
@@ -176,8 +190,8 @@ public class AwDetailsoftoolstorage extends BaseEntity
             .append("toolInformationID", getToolInformationID())
             .append("receiptQuantity", getReceiptQuantity())
             .append("notes", getNotes())
-
             .append("name", getName())
+            .append("toolPrice", getToolPrice())
             .append("typeName", getTypeName())
             .append("specificationsType", getSpecificationsType())
             .append("specificationModel", getSpecificationModel())

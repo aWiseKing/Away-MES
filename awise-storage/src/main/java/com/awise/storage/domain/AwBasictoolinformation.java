@@ -22,6 +22,10 @@ public class AwBasictoolinformation extends BaseEntity
     @Excel(name = "刀具名称")
     private String name;
 
+
+    @Excel(name = "刀具价格")
+    private String toolPrice;
+
     /** 刀具分类 */
     @Excel(name = "刀具分类")
     private Long typeID;
@@ -35,8 +39,7 @@ public class AwBasictoolinformation extends BaseEntity
     private Long unitID;
 
     /** 备注信息 */
-    @Excel(name = "备注信息")
-    private String notes;
+
 
     /** 类别名称 */
     @Excel(name = "类别名称")
@@ -99,15 +102,7 @@ public class AwBasictoolinformation extends BaseEntity
     {
         return unitID;
     }
-    public void setNotes(String notes) 
-    {
-        this.notes = notes;
-    }
 
-    public String getNotes() 
-    {
-        return notes;
-    }
     public void setTypeName(String typeName) 
     {
         this.typeName = typeName;
@@ -145,15 +140,23 @@ public class AwBasictoolinformation extends BaseEntity
         return specificationModel;
     }
 
+    public String getToolPrice() {
+        return toolPrice;
+    }
+
+    public void setToolPrice(String toolPrice) {
+        this.toolPrice = toolPrice;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("name", getName())
+            .append("toolPrice", getToolPrice())
             .append("typeID", getTypeID())
             .append("specificationsID", getSpecificationsID())
             .append("unitID", getUnitID())
-            .append("notes", getNotes())
             .append("typeName", getTypeName())
             .append("uint", getUint())
             .append("specificationsType", getSpecificationsType())

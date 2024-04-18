@@ -46,6 +46,10 @@ public class AwDetailsoftooldelivery extends BaseEntity
     @Excel(name = "刀具名称")
     private String name;
 
+    /** 刀具价格 */
+    @Excel(name = "刀具价格")
+    private String toolPrice;
+
     /** 类别名称 */
     @Excel(name = "类别名称")
     private String typeName;
@@ -171,6 +175,14 @@ public class AwDetailsoftooldelivery extends BaseEntity
         return uint;
     }
 
+    public String getToolPrice() {
+        return toolPrice;
+    }
+
+    public void setToolPrice(String toolPrice) {
+        this.toolPrice = toolPrice;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -182,6 +194,7 @@ public class AwDetailsoftooldelivery extends BaseEntity
             .append("materialRequisition", getMaterialRequisition())
             .append("notes", getNotes())
             .append("name", getName())
+            .append("toolPrice", getToolPrice())
             .append("typeName", getTypeName())
             .append("specificationsType", getSpecificationsType())
             .append("specificationModel", getSpecificationModel())

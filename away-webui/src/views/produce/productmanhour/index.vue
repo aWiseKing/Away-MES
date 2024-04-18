@@ -926,7 +926,7 @@ export default {
     /** 选中当前选中任务单 */
     setProductiontasklist(id) {
       this.loading = true;
-      
+
 
       getProductiontasklist(id).then((response) => {
         this.productiontasklist = response.data;
@@ -983,7 +983,7 @@ export default {
       this.loading = true;
       let total= (await listProcessingprocess())["total"];
 
-      
+
       listProcessingprocess({ processingTechnologyID: id ,pageSize:total}).then((response) => {
         this.processingprocessList = response.rows;
         this.loading = false;
@@ -1113,11 +1113,11 @@ export default {
       const id = row.id || this.ids;
       getProductmanhour(id).then((response) => {
         this.form = response.data;
- 
+
         const time1 = new Date(response.data.beginTime1);
         const time2 = new Date(response.data.endTime1);
         this.twoTime1 = [time1, time2];
-         
+
         const time3 =  new Date( response.data.beginTime2);
         const time4  =new Date(response.data.endTime2) ;
         this.twoTime2=[time3,time4]
@@ -1165,7 +1165,7 @@ export default {
               const time1 = new Date(response.data.beginTime1);
         const time2 = new Date(response.data.endTime1);
         this.twoTime1 = [time1, time2];
-         
+
         const time3 =  new Date( response.data.beginTime2);
         const time4  =new Date(response.data.endTime2) ;
         this.twoTime2=[time3,time4]
@@ -1199,6 +1199,8 @@ export default {
       this.setTime();
       this.$refs["form"].validate((valid) => {
         if (valid) {
+
+
           if (!this.isadd) {
             updateProductmanhour(this.form).then((response) => {
               this.$modal.msgSuccess("修改成功");

@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="warehouseEntryID"    column="warehouseEntryID"    />
         <result property="materialSubscription"    column="materialSubscription"    />
         <result property="materialID"    column="materialID"    />
+        <result property="materialPrice"    column="materialPrice"    />
         <result property="name"    column="name"    />
         <result property="typeName"    column="typeName"    />
         <result property="specificationsType"    column="specificationsType"    />
@@ -25,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwMatlwarehousingdetVo">
-        select id, warehouseEntryID, materialSubscription, materialID, name, typeName, specificationsType, specificationModel, materialDensity, receiptInvoiceID, invoiceType, invoiceTaxRate, purchaseUnitPriceExcludingTax, purchaseUnitPriceIncludingTax, receiptQuantity, sampleURL, notes from aw_MatlWarehousingDet
+        select id, warehouseEntryID, materialSubscription, materialID,materialPrice, name, typeName, specificationsType, specificationModel, materialDensity, receiptInvoiceID, invoiceType, invoiceTaxRate, purchaseUnitPriceExcludingTax, purchaseUnitPriceIncludingTax, receiptQuantity, sampleURL, notes from aw_MatlWarehousingDet
     </sql>
 
     <select id="selectAwMatlwarehousingdetList" parameterType="AwMatlwarehousingdet" resultMap="AwMatlwarehousingdetResult">
@@ -53,6 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="materialSubscription != null">materialSubscription,</if>
             <if test="materialID != null and materialID != ''">materialID,</if>
             <if test="name != null and name != ''">name,</if>
+            <if test="materialPrice != null and materialPrice != ''">materialPrice,</if>
             <if test="typeName != null">typeName,</if>
             <if test="specificationsType != null">specificationsType,</if>
             <if test="specificationModel != null">specificationModel,</if>
@@ -72,6 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="materialSubscription != null">#{materialSubscription},</if>
             <if test="materialID != null and materialID != ''">#{materialID},</if>
             <if test="name != null and name != ''">#{name},</if>
+            <if test="materialPrice != null and materialPrice != ''">#{materialPrice},</if>
             <if test="typeName != null">#{typeName},</if>
             <if test="specificationsType != null">#{specificationsType},</if>
             <if test="specificationModel != null">#{specificationModel},</if>
@@ -94,6 +97,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="materialSubscription != null">materialSubscription = #{materialSubscription},</if>
             <if test="materialID != null and materialID != ''">materialID = #{materialID},</if>
             <if test="name != null and name != ''">name = #{name},</if>
+            <if test="materialPrice != null and materialPrice != ''">materialPrice = #{materialPrice},</if>
             <if test="typeName != null">typeName = #{typeName},</if>
             <if test="specificationsType != null">specificationsType = #{specificationsType},</if>
             <if test="specificationModel != null">specificationModel = #{specificationModel},</if>

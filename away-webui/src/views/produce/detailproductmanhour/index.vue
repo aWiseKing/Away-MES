@@ -1016,7 +1016,6 @@ export default {
         lotNumber: null,
         manhoursTime: null,
         formulateName1: null,
-
         handlers1: null,
         beginTime1: null,
         endTime1: null,
@@ -1089,12 +1088,10 @@ export default {
         getProcessingprocess(this.form.processingprocess).then((response) => {
           this.processingprocess = response.data;
 
-          console.log(this.processingprocess.processingTechnologyID);
           listProcessingtechnology({
             id: this.processingprocess.processingTechnologyID,
           }).then((response) => {
             this.processingtechnology = response.rows[0];
-            console.log(response.rows[0]);
           });
         });
 
@@ -1171,6 +1168,7 @@ export default {
       this.$refs["form"].validate((valid) => {
         this.setTime();
         if (valid) {
+           console.log(this.form)
           if (!this.isadd) {
             updateProductmanhour(this.form).then((response) => {
               this.$modal.msgSuccess("修改成功");

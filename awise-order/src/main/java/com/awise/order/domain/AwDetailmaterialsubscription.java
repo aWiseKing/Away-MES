@@ -36,6 +36,12 @@ public class AwDetailmaterialsubscription extends BaseEntity
     @Excel(name = "材料名称")
     private String name;
 
+
+
+    /** 材料价格 */
+    @Excel(name = "材料价格")
+    private String materialPrice;
+
     /** 类别名称 */
     @Excel(name = "类别名称")
     private String typeName;
@@ -196,6 +202,15 @@ public class AwDetailmaterialsubscription extends BaseEntity
         return note;
     }
 
+
+    public String getMaterialPrice() {
+        return materialPrice;
+    }
+
+    public void setMaterialPrice(String materialPrice) {
+        this.materialPrice = materialPrice;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -204,6 +219,7 @@ public class AwDetailmaterialsubscription extends BaseEntity
             .append("productionTasksID", getProductionTasksID())
             .append("materialID", getMaterialID())
             .append("name", getName())
+            .append("materialPrice", getMaterialPrice())
             .append("typeName", getTypeName())
             .append("specificationsType", getSpecificationsType())
             .append("specificationModel", getSpecificationModel())

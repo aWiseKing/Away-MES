@@ -30,6 +30,14 @@ public class AwMatlwarehousingdet extends BaseEntity
     @Excel(name = "材料信息编号")
     private String materialID;
 
+
+
+    /** 材料价格 */
+    @Excel(name = "材料价格")
+    private String materialPrice;
+
+
+
     /** 材料名称 */
     @Excel(name = "材料名称")
     private String name;
@@ -226,6 +234,14 @@ public class AwMatlwarehousingdet extends BaseEntity
         return notes;
     }
 
+    public String getMaterialPrice() {
+        return materialPrice;
+    }
+
+    public void setMaterialPrice(String materialPrice) {
+        this.materialPrice = materialPrice;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -233,6 +249,7 @@ public class AwMatlwarehousingdet extends BaseEntity
             .append("warehouseEntryID", getWarehouseEntryID())
             .append("materialSubscription", getMaterialSubscription())
             .append("materialID", getMaterialID())
+            .append("materialPrice", getMaterialPrice())
             .append("name", getName())
             .append("typeName", getTypeName())
             .append("specificationsType", getSpecificationsType())

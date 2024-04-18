@@ -297,8 +297,21 @@
             ></el-col>
           </el-row>
 
-          <!-- 发票信息 -->
+           <el-row :gutter="12">
+            <el-col :span="12">
+              <el-form-item label="材料价格" >
+                <el-input
+                  placeholder="请输入材料价格"
+                  v-model="BasicToolInformation.toolPrice"
+                  :disabled="true"
+                /> </el-form-item
+            ></el-col>
+          </el-row>
 
+
+
+
+          <!-- 发票信息 -->
           <el-row :gutter="12">
             <el-col :span="12">
               <el-form-item label="发票" prop="receiptinvoiceID">

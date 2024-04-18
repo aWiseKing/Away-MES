@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="materialID"    column="materialID"    />
         <result property="processingTechnologyID"    column="processingTechnologyID"    />
         <result property="name"    column="name"    />
-        <result property="notes"    column="notes"    />
+        <result property="materialPrice"    column="materialPrice"    />
         <result property="materialDensity"    column="materialDensity"    />
         <result property="typeName"    column="typeName"    />
         <result property="specificationsType"    column="specificationsType"    />
@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwMateriallistoftechnologyVo">
-        select id, materialID, processingTechnologyID, name, notes,materialDensity, typeName, specificationsType, specificationModel, cuttingSize, numberProducibleParts from aw_MaterialListOfTechnology
+        select id, materialID, processingTechnologyID, name, materialPrice,materialDensity, typeName, specificationsType, specificationModel, cuttingSize, numberProducibleParts from aw_MaterialListOfTechnology
     </sql>
 
     <select id="selectAwMateriallistoftechnologyList" parameterType="AwMateriallistoftechnology" resultMap="AwMateriallistoftechnologyResult">
@@ -29,7 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="materialID != null  and materialID != ''"> and materialID = #{materialID}</if>
             <if test="processingTechnologyID != null  and processingTechnologyID != ''"> and processingTechnologyID = #{processingTechnologyID}</if>
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
-            <if test="notes != null  and notes != ''"> and notes like concat('%', #{notes}, '%')</if>
+            <if test="materialPrice != null  and materialPrice != ''"> and materialPrice like concat('%', #{materialPrice}, '%')</if>
             <if test="materialDensity != null  and materialDensity != ''"> and materialDensity = #{materialDensity}</if>
             <if test="typeName != null  and typeName != ''"> and typeName like concat('%', #{typeName}, '%')</if>
             <if test="specificationsType != null  and specificationsType != ''"> and specificationsType = #{specificationsType}</if>
@@ -51,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="materialID != null and materialID != ''">materialID,</if>
             <if test="processingTechnologyID != null and processingTechnologyID != ''">processingTechnologyID,</if>
             <if test="name != null and name != ''">name,</if>
-            <if test="notes != null and notes != ''">notes,</if>
+            <if test="materialPrice != null and materialPrice != ''">materialPrice,</if>
             <if test="materialDensity != null and materialDensity != ''">materialDensity,</if>
             <if test="typeName != null">typeName,</if>
             <if test="specificationsType != null">specificationsType,</if>
@@ -64,7 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="materialID != null and materialID != ''">#{materialID},</if>
             <if test="processingTechnologyID != null and processingTechnologyID != ''">#{processingTechnologyID},</if>
             <if test="name != null and name != ''">#{name},</if>
-            <if test="notes != null and notes != ''">#{notes},</if>
+            <if test="materialPrice != null and materialPrice != ''">#{materialPrice},</if>
             <if test="materialDensity != null and materialDensity != ''">#{materialDensity},</if>
             <if test="typeName != null">#{typeName},</if>
             <if test="specificationsType != null">#{specificationsType},</if>
@@ -80,7 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="materialID != null and materialID != ''">materialID = #{materialID},</if>
             <if test="processingTechnologyID != null and processingTechnologyID != ''">processingTechnologyID = #{processingTechnologyID},</if>
             <if test="name != null and name != ''">name = #{name},</if>
-            <if test="notes != null and notes != ''">name = #{notes},</if>
+            <if test="materialPrice != null and materialPrice != ''">materialPrice = #{materialPrice},</if>
             <if test="materialDensity != null and materialDensity != ''">materialDensity = #{materialDensity},</if>
             <if test="typeName != null">typeName = #{typeName},</if>
             <if test="specificationsType != null">specificationsType = #{specificationsType},</if>

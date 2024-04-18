@@ -13,6 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="materialRequisition"    column="materialRequisition"    />
         <result property="notes"    column="notes"    />
         <result property="name"    column="name"    />
+        <result property="toolPrice"    column="toolPrice"    />
         <result property="typeName"    column="typeName"    />
         <result property="specificationsType"    column="specificationsType"    />
         <result property="specificationModel"    column="specificationModel"    />
@@ -56,6 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="materialRequisition != null and materialRequisition != ''">materialRequisition,</if>
             <if test="notes != null">notes,</if>
             <if test="name != null and name != ''">name,</if>
+            <if test="toolPrice != null and toolPrice != ''">toolPrice,</if>
             <if test="typeName != null">typeName,</if>
             <if test="specificationsType != null">specificationsType,</if>
             <if test="specificationModel != null">specificationModel,</if>
@@ -70,6 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="materialRequisition != null and materialRequisition != ''">#{materialRequisition},</if>
             <if test="notes != null">#{notes},</if>
             <if test="name != null and name != ''">#{name},</if>
+            <if test="toolPrice != null and toolPrice != ''">#{toolPrice},</if>
             <if test="typeName != null">#{typeName},</if>
             <if test="specificationsType != null">#{specificationsType},</if>
             <if test="specificationModel != null">#{specificationModel},</if>
@@ -87,6 +90,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="materialRequisition != null and materialRequisition != ''">materialRequisition = #{materialRequisition},</if>
             <if test="notes != null">notes = #{notes},</if>
             <if test="name != null and name != ''">name = #{name},</if>
+            <if test="toolPrice != null and toolPrice != ''">toolPrice = #{toolPrice},</if>
             <if test="typeName != null">typeName = #{typeName},</if>
             <if test="specificationsType != null">specificationsType = #{specificationsType},</if>
             <if test="specificationModel != null">specificationModel = #{specificationModel},</if>
