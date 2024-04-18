@@ -44,9 +44,7 @@ public class AwDetailproductmanhour extends BaseEntity
     @Excel(name = "机台号")
     private String PlatformNumber;
 
-    /** 投产数量 */
-    @Excel(name = "投产数量")
-    private Long ProductionQuantity;
+
 
     /** 合格数量 */
     @Excel(name = "合格数量")
@@ -69,13 +67,6 @@ public class AwDetailproductmanhour extends BaseEntity
     @Excel(name = "制定者名字")
     private String formulateName1;
 
-    /** 工序名称 */
-    @Excel(name = "工序名称")
-    private String processName1;
-
-    /** 工艺制定工时 */
-    @Excel(name = "工艺制定工时")
-    private String craftdevelopmentHours1;
 
     /** 操作者 */
     @Excel(name = "操作者")
@@ -99,13 +90,6 @@ public class AwDetailproductmanhour extends BaseEntity
     @Excel(name = "制定者名字")
     private String formulateName2;
 
-    /** 工序名称 */
-    @Excel(name = "工序名称")
-    private String processName2;
-
-    /** 工艺制定工时 */
-    @Excel(name = "工艺制定工时")
-    private String craftdevelopmentHours2;
 
     /** 操作者 */
     @Excel(name = "操作者")
@@ -204,15 +188,7 @@ public class AwDetailproductmanhour extends BaseEntity
     {
         return PlatformNumber;
     }
-    public void setProductionQuantity(Long ProductionQuantity) 
-    {
-        this.ProductionQuantity = ProductionQuantity;
-    }
 
-    public Long getProductionQuantity() 
-    {
-        return ProductionQuantity;
-    }
     public void setQualifiedQuantity(Long qualifiedQuantity) 
     {
         this.qualifiedQuantity = qualifiedQuantity;
@@ -258,24 +234,8 @@ public class AwDetailproductmanhour extends BaseEntity
     {
         return formulateName1;
     }
-    public void setProcessName1(String processName1) 
-    {
-        this.processName1 = processName1;
-    }
 
-    public String getProcessName1() 
-    {
-        return processName1;
-    }
-    public void setCraftdevelopmentHours1(String craftdevelopmentHours1) 
-    {
-        this.craftdevelopmentHours1 = craftdevelopmentHours1;
-    }
 
-    public String getCraftdevelopmentHours1() 
-    {
-        return craftdevelopmentHours1;
-    }
     public void setHandlers1(String handlers1) 
     {
         this.handlers1 = handlers1;
@@ -321,24 +281,8 @@ public class AwDetailproductmanhour extends BaseEntity
     {
         return formulateName2;
     }
-    public void setProcessName2(String processName2) 
-    {
-        this.processName2 = processName2;
-    }
 
-    public String getProcessName2() 
-    {
-        return processName2;
-    }
-    public void setCraftdevelopmentHours2(String craftdevelopmentHours2) 
-    {
-        this.craftdevelopmentHours2 = craftdevelopmentHours2;
-    }
 
-    public String getCraftdevelopmentHours2() 
-    {
-        return craftdevelopmentHours2;
-    }
     public void setHandlers2(String handlers2) 
     {
         this.handlers2 = handlers2;
@@ -422,21 +366,16 @@ public class AwDetailproductmanhour extends BaseEntity
             .append("manhourName", getManhourName())
             .append("workClass", getWorkClass())
             .append("PlatformNumber", getPlatformNumber())
-            .append("ProductionQuantity", getProductionQuantity())
             .append("qualifiedQuantity", getQualifiedQuantity())
             .append("scrapQuantity", getScrapQuantity())
             .append("lotNumber", getLotNumber())
             .append("manhoursTime", getManhoursTime())
             .append("formulateName1", getFormulateName1())
-            .append("processName1", getProcessName1())
-            .append("craftdevelopmentHours1", getCraftdevelopmentHours1())
             .append("handlers1", getHandlers1())
             .append("beginTime1", getBeginTime1())
             .append("endTime1", getEndTime1())
             .append("actualTime1", getActualTime1())
             .append("formulateName2", getFormulateName2())
-            .append("processName2", getProcessName2())
-            .append("craftdevelopmentHours2", getCraftdevelopmentHours2())
             .append("handlers2", getHandlers2())
             .append("beginTime2", getBeginTime2())
             .append("endTime2", getEndTime2())
