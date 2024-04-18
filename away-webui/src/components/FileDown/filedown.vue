@@ -5,11 +5,6 @@
       </el-image>
       <div v-else  @click="item.fileDown()">{{ item.getFileName() }}</div>
     </el-carousel-item>
-
-
-
-
-    
   </el-carousel>
 </template>
 

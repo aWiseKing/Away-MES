@@ -105,11 +105,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="lotNumber != null">#{lotNumber},</if>
             <if test="manhoursTime != null">#{manhoursTime},</if>
             <if test="formulateName1 != null">#{formulateName1},</if>
+
             <if test="handlers1 != null">#{handlers1},</if>
             <if test="beginTime1 != null">#{beginTime1},</if>
             <if test="endTime1 != null">#{endTime1},</if>
             <if test="actualTime1 != null">#{actualTime1},</if>
             <if test="formulateName2 != null">#{formulateName2},</if>
+
             <if test="handlers2 != null">#{handlers2},</if>
             <if test="beginTime2 != null">#{beginTime2},</if>
             <if test="endTime2 != null">#{endTime2},</if>
