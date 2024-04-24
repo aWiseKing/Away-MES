@@ -36,8 +36,8 @@ public class AwBasicinformationofmaterials extends BaseEntity
     private String materialDensity;
 
     /** 备注信息 */
-    @Excel(name = "备注信息")
-    private String notes;
+    @Excel(name = "材料价格")
+    private String materialPrice;
 
     /** 类别名称 */
     @Excel(name = "类别名称")
@@ -96,16 +96,16 @@ public class AwBasicinformationofmaterials extends BaseEntity
     {
         return materialDensity;
     }
-    public void setNotes(String notes) 
-    {
-        this.notes = notes;
+
+    public String getMaterialPrice() {
+        return materialPrice;
     }
 
-    public String getNotes() 
-    {
-        return notes;
+    public void setMaterialPrice(String materialPrice) {
+        this.materialPrice = materialPrice;
     }
-    public void setTypeName(String typeName) 
+
+    public void setTypeName(String typeName)
     {
         this.typeName = typeName;
     }
@@ -141,7 +141,7 @@ public class AwBasicinformationofmaterials extends BaseEntity
             .append("typeID", getTypeID())
             .append("specificationsID", getSpecificationsID())
             .append("materialDensity", getMaterialDensity())
-            .append("notes", getNotes())
+            .append("notes", getMaterialPrice())
             .append("typeName", getTypeName())
             .append("specificationsType", getSpecificationsType())
             .append("specificationModel", getSpecificationModel())

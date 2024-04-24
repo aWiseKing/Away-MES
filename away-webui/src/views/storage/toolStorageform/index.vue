@@ -497,10 +497,13 @@ export default {
 
     //入库完成
 
-      handleFinish(row) {
+     async handleFinish(row) {
       let warehouseEntryID = row.warehouseEntryID;
       this.loading = true;
-      listDetailsOfToolStorage({ warehouseEntryID: warehouseEntryID }).then((response) => {
+
+          let total= (await listDetailsOfToolStorage()['total']);
+
+      listDetailsOfToolStorage({ pageSize:total,warehouseEntryID: warehouseEntryID }).then((response) => {
           this.DetailsOfToolStoragesList = response.rows;
           if (this.DetailsOfToolStoragesList.length > 0) {
             let lmlist = [];

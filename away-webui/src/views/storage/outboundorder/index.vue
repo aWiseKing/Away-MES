@@ -473,11 +473,12 @@ export default {
       this.setStatus(row,"0");
     },
     /** 完成按钮操作 */
-    handleFinish(row) {
+   async handleFinish(row) {
       let deliveryNoteID = row.deliveryNoteID
       this.loading=true;
       // 出库材料列表
-      listMatloutbounddet({deliveryNoteID:deliveryNoteID}).then((response)=>{
+      let total= (await listMatloutbounddet()['total'])
+      listMatloutbounddet({pageSize:total,deliveryNoteID:deliveryNoteID}).then((response)=>{
         this.matloutbounddetlist=response.rows;
         if(this.matloutbounddetlist.length > 0){
           let lmlist = []

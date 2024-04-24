@@ -195,9 +195,7 @@
     <!-- 添加或修改本地材料出库对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <!-- <el-form-item label="出库单编号" prop="deliveryNoteID">
-          <el-input v-model="form.deliveryNoteID" placeholder="请输入出库单编号" />
-        </el-form-item> -->
+  
 
         <el-row :gutter="12">
           <el-col :span="12">
@@ -214,9 +212,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <!-- <el-form-item label="材料基础信息编号" prop="materialID">
-          <el-input v-model="form.materialID" placeholder="请输入材料基础信息编号" />
-        </el-form-item> -->
+  
         <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="材料基础信息编号" prop="materialID">
@@ -235,9 +231,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <!-- <el-form-item label="任务编号" prop="productionTasksID">
-          <el-input v-model="form.productionTasksID" placeholder="请输入任务编号" />
-        </el-form-item> -->
+ 
         <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="任务编号" prop="productionTasksID">
@@ -256,9 +250,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <!-- <el-form-item label="工艺编号" prop="processingTechnologyID">
-          <el-input v-model="form.processingTechnologyID" placeholder="请输入工艺编号" />
-        </el-form-item> -->
+ 
         <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="工艺编号" prop="processingTechnologyID">

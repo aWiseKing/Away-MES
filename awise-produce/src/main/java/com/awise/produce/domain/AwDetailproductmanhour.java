@@ -44,8 +44,6 @@ public class AwDetailproductmanhour extends BaseEntity
     @Excel(name = "机台号")
     private String PlatformNumber;
 
-
-
     /** 合格数量 */
     @Excel(name = "合格数量")
     private Long qualifiedQuantity;

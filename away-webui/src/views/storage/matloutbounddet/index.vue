@@ -454,7 +454,7 @@ export default {
       getMatloutbounddet(id).then(response => {
         this.matloutbounddet = response.data;
         this.view_open = true;
-        getProductiontasks(row.productionTasksID).then((response) => {
+    getProductiontasks(row.productionTasksID).then((response) => {
         let productionTasksFormID = response.data.productionTasksFormID;
         listProductiontasklist().then((response) => {
         this.productiontasklistlist = response.rows;

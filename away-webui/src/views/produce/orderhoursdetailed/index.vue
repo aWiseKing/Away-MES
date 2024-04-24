@@ -308,6 +308,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
+        state:1,
         id: null,
         createTime: null,
         orderDate: null,

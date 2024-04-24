@@ -454,10 +454,12 @@ export default {
       this.setStatus(row,"0");
     },
     /** 入库按钮操作 */
-    handleWarehousing(row) {
+   async handleWarehousing(row) {
+
+    let total= (await listMatlwarehousingdet()['total']);
       this.loading=true;
       let warehouseEntryID = row.warehouseEntryID
-      listMatlwarehousingdet({warehouseEntryID:warehouseEntryID}).then((response)=>{
+      listMatlwarehousingdet({pageSize:total,warehouseEntryID:warehouseEntryID}).then((response)=>{
         this.matlwarehousingdetlist=response.rows;
         if(this.matlwarehousingdetlist.length > 0){
           this.setStatus(row,"2");

@@ -381,13 +381,15 @@
               /> </el-form-item></el-col
         ></el-row>
         <el-row :gutter="12"
-          ><el-col :span="12"
+          >
+          <el-col :span="12"
             ><el-form-item label="附样" prop="sampleURL">
               <image-upload
               disabled
                 v-model="detailmaterialsubscription.sampleURL"
               /> </el-form-item></el-col
-        ></el-row>
+        >
+        </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>

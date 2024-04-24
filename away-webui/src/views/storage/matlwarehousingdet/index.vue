@@ -379,18 +379,18 @@
                 disabled
                 v-model="matlwarehousingdet.purchaseUnitPriceIncludingTax"
                 placeholder="请输入含税采购单价"
-              /> </el-form-item></el-col
+              /> </el-form-item
+          ></el-col>
 
-        >
-
-        <el-col :span="12">
-               <el-form-item label="材料价格" prop="specificationsType">
+          <el-col :span="12">
+            <el-form-item label="材料价格" prop="specificationsType">
               <el-input
                 disabled
                 v-model="matlwarehousingdet.materialPrice"
                 placeholder="请输入材料价格"
-              /> </el-form-item>
-        </el-col>
+              />
+            </el-form-item>
+          </el-col>
         </el-row>
         <!-- 其他信息 -->
         <el-row :gutter="12"
@@ -601,7 +601,7 @@ export default {
         };
         setIntersectionObj(this.tmp, this.detailmaterialsubscription);
         setIntersectionObj(this.matlwarehousingdet, this.tmp);
-         this.loading = false;
+        this.loading = false;
       });
     },
     /** 查询材料信息列表 */
@@ -738,7 +738,7 @@ export default {
       const id = row.id || this.ids;
       getMatlwarehousingdet(id).then((response) => {
         this.matlwarehousingdet = response.data;
-        console.log(response.data)
+        console.log(response.data);
         if (this.matlwarehousingdet.materialSubscription != null) {
           getDetailmaterialsubscription(
             this.matlwarehousingdet.materialSubscription
@@ -754,7 +754,6 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
-
       this.isadd = true;
       this.open = true;
       this.view_open = false;

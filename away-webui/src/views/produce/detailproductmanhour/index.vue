@@ -1083,7 +1083,6 @@ export default {
         getSaleorder(row.saleorderID).then((response) => {
           this.number = response.data.number;
         });
-
         //生产工艺下拉框回显
         getProcessingprocess(this.form.processingprocess).then((response) => {
           this.processingprocess = response.data;

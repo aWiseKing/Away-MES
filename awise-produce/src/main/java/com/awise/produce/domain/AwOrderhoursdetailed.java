@@ -21,6 +21,14 @@ public class AwOrderhoursdetailed extends BaseEntity
     /** 订单id#日期+编号# */
     private String id;
 
+    @Excel(name = "订单状态")
+    private String state;
+
+
+    @Excel(name = "是否客供")
+    private String iscustomersuppliedmaterials;
+
+
     /** 下单日期 */
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "下单日期", width = 30, dateFormat = "yyyy-MM-dd")
@@ -109,6 +117,23 @@ public class AwOrderhoursdetailed extends BaseEntity
         return productID;
     }
 
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getIscustomersuppliedmaterials() {
+        return iscustomersuppliedmaterials;
+    }
+
+    public void setIscustomersuppliedmaterials(String iscustomersuppliedmaterials) {
+        this.iscustomersuppliedmaterials = iscustomersuppliedmaterials;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -117,6 +142,8 @@ public class AwOrderhoursdetailed extends BaseEntity
             .append("orderDate", getOrderDate())
             .append("number", getNumber())
             .append("name", getName())
+            .append("state", getState())
+            .append("iscustomersuppliedmaterials", getIscustomersuppliedmaterials())
             .append("unifiedCreditCode", getUnifiedCreditCode())
             .append("productName", getProductName())
             .append("productID", getProductID())

@@ -184,7 +184,7 @@ public class AwLocaltoolServiceImpl implements IAwLocaltoolService {
                         flag = 1;
                         awLocaltool = value;
                         if (value.getNumber()<num){
-                            throw  new RuntimeException("库存不足，入库失败");
+                            throw  new RuntimeException("库存不足，出库失败");
                         }
                         awLocaltool.setNumber(value.getNumber() - num);
                         break;
@@ -193,7 +193,7 @@ public class AwLocaltoolServiceImpl implements IAwLocaltoolService {
                 if (flag>0){
                     this.updateAwLocaltool(awLocaltool);
                 }else {
-                    throw  new RuntimeException("入库失败");//抛出异常回滚，不能return false;
+                    throw  new RuntimeException("出库失败");//抛出异常回滚，不能return false;
                 }
             } else {
                return false;

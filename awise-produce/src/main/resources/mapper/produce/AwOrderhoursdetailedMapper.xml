@@ -9,6 +9,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="createTime"    column="createTime"    />
         <result property="orderDate"    column="orderDate"    />
         <result property="number"    column="number"    />
+        <result property="state"    column="state"    />
+        <result property="iscustomersuppliedmaterials"    column="iscustomersuppliedmaterials"    />
         <result property="name"    column="name"    />
         <result property="unifiedCreditCode"    column="unifiedCreditCode"    />
         <result property="productName"    column="productName"    />
@@ -16,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwOrderhoursdetailedVo">
-        select id, createTime, orderDate, number, name, unifiedCreditCode, productName, productID from aw_orderhoursdetailed
+        select id, createTime, orderDate, number,state,iscustomersuppliedmaterials, name, unifiedCreditCode, productName, productID from aw_orderhoursdetailed
     </sql>
 
     <select id="selectAwOrderhoursdetailedList" parameterType="AwOrderhoursdetailed" resultMap="AwOrderhoursdetailedResult">
@@ -26,6 +28,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createTime != null "> and createTime = #{createTime}</if>
             <if test="orderDate != null "> and orderDate = #{orderDate}</if>
             <if test="number != null "> and number = #{number}</if>
+            <if test="state != null "> and state = #{state}</if>
+            <if test="iscustomersuppliedmaterials != null "> and iscustomersuppliedmaterials = #{iscustomersuppliedmaterials}</if>
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="unifiedCreditCode != null  and unifiedCreditCode != ''"> and unifiedCreditCode = #{unifiedCreditCode}</if>
             <if test="productID != null  and productID != ''"> and  productID= #{productID}</if>
@@ -44,6 +48,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createTime != null">createTime,</if>
             <if test="orderDate != null">orderDate,</if>
             <if test="number != null">number,</if>
+            <if test="state != null">state,</if>
+            <if test="iscustomersuppliedmaterials != iscustomersuppliedmaterials">iscustomersuppliedmaterials,</if>
             <if test="name != null and name != ''">name,</if>
             <if test="unifiedCreditCode != null and unifiedCreditCode != ''">unifiedCreditCode,</if>
             <if test="productName != null">productName,</if>
@@ -54,6 +60,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createTime != null">#{createTime},</if>
             <if test="orderDate != null">#{orderDate},</if>
             <if test="number != null">#{number},</if>
+            <if test="state != null">#{state},</if>
+            <if test="iscustomersuppliedmaterials != null">#{iscustomersuppliedmaterials},</if>
             <if test="name != null and name != ''">#{name},</if>
             <if test="unifiedCreditCode != null and unifiedCreditCode != ''">#{unifiedCreditCode},</if>
             <if test="productName != null">#{productName},</if>
@@ -67,6 +75,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createTime != null">createTime = #{createTime},</if>
             <if test="orderDate != null">orderDate = #{orderDate},</if>
             <if test="number != null">number = #{number},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="iscustomersuppliedmaterials != null">iscustomersuppliedmaterials = #{iscustomersuppliedmaterials},</if>
             <if test="name != null and name != ''">name = #{name},</if>
             <if test="unifiedCreditCode != null and unifiedCreditCode != ''">unifiedCreditCode = #{unifiedCreditCode},</if>
             <if test="productName != null">productName = #{productName},</if>

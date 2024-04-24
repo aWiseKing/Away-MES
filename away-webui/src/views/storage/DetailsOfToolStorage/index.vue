@@ -299,9 +299,9 @@
 
            <el-row :gutter="12">
             <el-col :span="12">
-              <el-form-item label="材料价格" >
+              <el-form-item label="刀具价格" >
                 <el-input
-                  placeholder="请输入材料价格"
+                  placeholder="请输入刀具价格"
                   v-model="BasicToolInformation.toolPrice"
                   :disabled="true"
                 /> </el-form-item
@@ -516,9 +516,11 @@ export default {
     },
 
     //刀具基本信息的下拉框
-    gettoolinformations() {
+  async  gettoolinformations() {
+       let total=  await listToolinformation()['total'];
+
       this.loading = true;
-      listToolinformation().then((res) => {
+      listToolinformation({pageSize:total}).then((res) => {
         this.toolinformations = res.rows;
         this.loading = false;
       });
@@ -532,9 +534,11 @@ export default {
       });
     },
     //发票信息
-    getreceiptinvoice() {
+   async getreceiptinvoice() {
+
+   let total=  await listReceiptinvoice()['total'];
       this.loading = true;
-      listReceiptinvoice().then((res) => {
+      listReceiptinvoice({pageSize:total}).then((res) => {
         this.receiptinvoices = res.rows;
         this.loading = false;
       });
@@ -594,7 +598,7 @@ export default {
       getToolStorage(id).then((response) => {
         this.form = response.data;
         this.view_open = true;
-      getBasicToolInformation(row.toolInformationID).then((res) => {
+       getBasicToolInformation(row.toolInformationID).then((res) => {
           this.BasicToolInformation = res.data;
         });
       getReceiptinvoice(row.receiptInvoiceID).then((res) => {

@@ -125,9 +125,6 @@ public  Map<AwMaterial,AwLocalmaterials> getmap(){
     @Override
     @Transactional
     public boolean reduceByNumber(List<Map<String,String>> lmlist){
-        List<AwLocalmaterials> cache_awLocalmaterials = new ArrayList<AwLocalmaterials>();
-
-
         for(Map<String, String> line : lmlist) {
             String materialID = line.get("key");
             Integer num = Integer.valueOf(line.get("value"));
@@ -147,7 +144,7 @@ public  Map<AwMaterial,AwLocalmaterials> getmap(){
                         awLocalmaterials=value;
 
                         if (value.getNumber()<num){
-                            throw  new RuntimeException("库存不足，入库失败");
+                            throw  new RuntimeException("库存不足，出库失败");
                         }
                         awLocalmaterials.setNumber(value.getNumber()-num);
                         break;
@@ -156,7 +153,7 @@ public  Map<AwMaterial,AwLocalmaterials> getmap(){
                 if (flag>0){
                     this.updateAwLocalmaterials(awLocalmaterials);
                 }else {
-                    throw  new RuntimeException("入库失败");//抛出异常回滚，不能return false;
+                    throw  new RuntimeException("出库失败");//抛出异常回滚，不能return false;
 
                 }
             }else {

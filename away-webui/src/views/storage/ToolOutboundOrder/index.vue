@@ -445,11 +445,14 @@ export default {
     },
 
     /** 完成出库按钮操作 */
-    handleFinish(row) {
+   async handleFinish(row) {
       let deliveryNoteID = row.deliveryNoteID
       this.loading=true;
+
+                let total= (await listDetailsOfToolDelivery()['total']);
+
       // 出库材料列表
-      listDetailsOfToolDelivery({deliveryNoteID:deliveryNoteID}).then((response)=>{
+      listDetailsOfToolDelivery({pageSize:total,deliveryNoteID:deliveryNoteID}).then((response)=>{
         this.DetailsOfToolDeliveryList=response.rows;
         if(this.DetailsOfToolDeliveryList.length > 0){
           let lmlist = []
