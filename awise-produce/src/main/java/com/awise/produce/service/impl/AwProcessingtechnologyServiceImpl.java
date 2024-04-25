@@ -1,12 +1,14 @@
 package com.awise.produce.service.impl;
 
-import java.util.List;
 import com.away.common.utils.DateUtils;
+import com.awise.produce.domain.AwProcessingtechnology;
+import com.awise.produce.domain.Vo.AwProcessingtechnologyVo;
+import com.awise.produce.mapper.AwProcessingtechnologyMapper;
+import com.awise.produce.service.IAwProcessingtechnologyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.awise.produce.mapper.AwProcessingtechnologyMapper;
-import com.awise.produce.domain.AwProcessingtechnology;
-import com.awise.produce.service.IAwProcessingtechnologyService;
+
+import java.util.List;
 
 /**
  * 加工工艺信息Service业务层处理
@@ -92,4 +94,6 @@ public class AwProcessingtechnologyServiceImpl implements IAwProcessingtechnolog
     {
         return awProcessingtechnologyMapper.deleteAwProcessingtechnologyById(id);
     }
+
+
 }

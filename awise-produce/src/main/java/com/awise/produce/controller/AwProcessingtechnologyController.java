@@ -2,6 +2,9 @@ package com.awise.produce.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.awise.produce.domain.Vo.AwProcessingtechnologyVo;
+import com.awise.produce.service.IAwProcessingtechnologyServiceVo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +36,9 @@ public class AwProcessingtechnologyController extends BaseController
 {
     @Autowired
     private IAwProcessingtechnologyService awProcessingtechnologyService;
+
+    @Autowired
+    private IAwProcessingtechnologyServiceVo  awProcessingtechnologyServiceVo;
 
     /**
      * 查询加工工艺信息列表
@@ -66,7 +72,10 @@ public class AwProcessingtechnologyController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") String id)
     {
-        return success(awProcessingtechnologyService.selectAwProcessingtechnologyById(id));
+
+
+        AwProcessingtechnology awProcessingtechnology = awProcessingtechnologyService.selectAwProcessingtechnologyById(id);
+        return success(awProcessingtechnology);
     }
 
     /**
@@ -101,4 +110,35 @@ public class AwProcessingtechnologyController extends BaseController
     {
         return toAjax(awProcessingtechnologyService.deleteAwProcessingtechnologyByIds(ids));
     }
+
+
+
+    /**
+     * 获取加工工艺信息扩展详细信息
+     */
+    @PreAuthorize("@ss.hasPermi('produce:processingtechnology:query')")
+    @GetMapping(value = "/vo/{id}")
+    public AjaxResult getInfoVo(@PathVariable("id") String id)
+    {
+
+
+
+        AwProcessingtechnologyVo awProcessingtechnologyVo = awProcessingtechnologyServiceVo.selectAwProcessingtechnologyByIdVO(id);
+        return success(awProcessingtechnologyVo);
+    }
+
+
+    /**
+     * 查询加工工艺信息列表
+     */
+    @PreAuthorize("@ss.hasPermi('produce:processingtechnology:list')")
+    @GetMapping("/vo/list")
+    public TableDataInfo listVo(AwProcessingtechnology awProcessingtechnology)
+    {
+        startPage();
+        List<AwProcessingtechnologyVo> list = awProcessingtechnologyServiceVo.selectAwProcessingtechnologyListVO(awProcessingtechnology);
+        return getDataTable(list);
+    }
+
+
 }

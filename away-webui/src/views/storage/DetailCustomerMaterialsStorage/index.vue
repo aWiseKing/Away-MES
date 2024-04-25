@@ -131,7 +131,7 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5"  v-if="upper_status == '0'">
+      <el-col :span="1.5" v-if="upper_status == '0'">
         <el-button
           type="primary"
           plain
@@ -142,7 +142,7 @@
           >新增</el-button
         >
       </el-col>
-      <el-col :span="1.5"  v-if="upper_status == '0'">
+      <el-col :span="1.5" v-if="upper_status == '0'">
         <el-button
           type="success"
           plain
@@ -154,7 +154,7 @@
           >修改</el-button
         >
       </el-col>
-      <el-col :span="1.5"  v-if="upper_status == '0'">
+      <el-col :span="1.5" v-if="upper_status == '0'">
         <el-button
           type="danger"
           plain
@@ -267,7 +267,7 @@
       >
         <el-row :gutter="12">
           <el-col :span="12">
-            <el-form-item label="入库单编号" prop="warehouseEntryID" dis>
+            <el-form-item label="入库单编号" prop="warehouseEntryID">
               <el-input
                 disabled
                 v-model="form.warehouseEntryID"
@@ -290,6 +290,7 @@
           <el-col :span="12">
             <el-form-item label="订单编号" prop="saleorderID">
               <el-select
+                filterable
                 v-model="form.saleorderID"
                 placeholder="请选择订单信息"
                 @focus="getOrderList()"
@@ -321,6 +322,7 @@
           <el-col :span="12">
             <el-form-item label="材料编号" prop="materialID">
               <el-select
+                filterable
                 v-model="form.materialID"
                 placeholder="请选材料编号"
                 @focus="getBasicInformationOfMaterialsList()"

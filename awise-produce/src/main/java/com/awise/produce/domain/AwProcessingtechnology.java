@@ -1,9 +1,13 @@
 package com.awise.produce.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.away.common.annotation.Excel;
 import com.away.common.core.domain.BaseEntity;
+
+import javax.xml.crypto.Data;
+import java.util.Date;
 
 /**
  * 加工工艺信息对象 aw_processingtechnology
@@ -25,6 +29,13 @@ public class AwProcessingtechnology extends BaseEntity
     /** 状态 */
     @Excel(name = "状态")
     private String status;
+
+    @Excel(name = "产品图号")
+    private String productID;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "创建日期", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date createTime;
 
     public void setId(String id) 
     {
@@ -54,6 +65,17 @@ public class AwProcessingtechnology extends BaseEntity
         return status;
     }
 
+
+    public String getProductID() {
+        return productID;
+    }
+
+    public void setProductID(String productID) {
+        this.productID = productID;
+    }
+
+
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -61,6 +83,7 @@ public class AwProcessingtechnology extends BaseEntity
             .append("createTime", getCreateTime())
             .append("founder", getFounder())
             .append("status", getStatus())
+            .append("productID", getProductID())
             .toString();
     }
 }

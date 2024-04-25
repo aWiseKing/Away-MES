@@ -231,6 +231,7 @@
             <el-col :span="12">
               <el-form-item label="刀具基本信息" prop="toolInformationID">
                 <el-select
+                filterable
                   v-model="form.toolInformationID"
                   placeholder="请选刀具信息"
                   @focus="gettoolinformations()"
@@ -316,6 +317,7 @@
             <el-col :span="12">
               <el-form-item label="发票" prop="receiptinvoiceID">
                 <el-select
+                  filterable
                   v-model="form.receiptInvoiceID"
                   placeholder="请选刀具信息"
                   @focus="getreceiptinvoice()"

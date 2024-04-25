@@ -2,6 +2,7 @@ package com.awise.produce.service;
 
 import java.util.List;
 import com.awise.produce.domain.AwProcessingtechnology;
+import com.awise.produce.domain.Vo.AwProcessingtechnologyVo;
 
 /**
  * 加工工艺信息Service接口
@@ -58,4 +59,5 @@ public interface IAwProcessingtechnologyService
      * @return 结果
      */
     public int deleteAwProcessingtechnologyById(String id);
+
 }

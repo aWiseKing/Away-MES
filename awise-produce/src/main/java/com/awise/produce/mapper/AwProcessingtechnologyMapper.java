@@ -2,6 +2,7 @@ package com.awise.produce.mapper;
 
 import java.util.List;
 import com.awise.produce.domain.AwProcessingtechnology;
+import com.awise.produce.domain.Vo.AwProcessingtechnologyVo;
 
 /**
  * 加工工艺信息Mapper接口
@@ -58,4 +59,6 @@ public interface AwProcessingtechnologyMapper
      * @return 结果
      */
     public int deleteAwProcessingtechnologyByIds(String[] ids);
+
+
 }

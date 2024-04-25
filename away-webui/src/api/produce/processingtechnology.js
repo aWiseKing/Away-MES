@@ -9,6 +9,14 @@ export function listProcessingtechnology(query) {
   })
 }
 
+export function listProcessingtechnologyVo(query) {
+  return request({
+    url: '/produce/processingtechnology/vo/list',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询加工工艺信息详细
 export function getProcessingtechnology(id) {
   return request({
@@ -40,5 +48,14 @@ export function delProcessingtechnology(id) {
   return request({
     url: '/produce/processingtechnology/' + id,
     method: 'delete'
+  })
+}
+
+
+// 查询加工工艺信息详细
+export function getProcessingtechnologyVo(id) {
+  return request({
+    url: '/produce/processingtechnology/vo/' + id,
+    method: 'get'
   })
 }

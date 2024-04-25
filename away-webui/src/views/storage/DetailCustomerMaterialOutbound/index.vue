@@ -121,7 +121,7 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-      <el-col     :span="1.5" v-if="upper_status == '0'" >
+      <el-col :span="1.5" v-if="upper_status == '0'">
         <el-button
           type="primary"
           plain
@@ -264,7 +264,7 @@
         label-width="80px"
         :disabled="view_open"
       >
-        <el-rwo :gutter="12">
+        <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="出库单编号" prop="deliveryNoteID">
               <el-input
@@ -278,6 +278,7 @@
           <el-col :span="12">
             <el-form-item label="生产任务单编号">
               <el-select
+              filterable
                 placeholder="请输入生产任务单编号"
                 @focus="getListProductiontasklist()"
                 v-model="productiontasklist.id"
@@ -293,12 +294,13 @@
               </el-select>
             </el-form-item>
           </el-col>
-        </el-rwo>
+        </el-row>
 
-        <el-rwo :gutter="12">
+        <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="任务编号" prop="productionTasksID">
               <el-select
+              filterable
                 :disabled="productiontasklist.id == null"
                 v-model="form.productionTasksID"
                 placeholder="请输入任务编号"
@@ -319,6 +321,7 @@
           <el-col :span="12">
             <el-form-item label="工艺编号" prop="processingTechnologyID">
               <el-select
+              filterable
                 :disabled="productiontasklist.id == null"
                 @focus="
                   getprocessingtechnologyList(
@@ -339,9 +342,9 @@
               </el-select>
             </el-form-item>
           </el-col>
-        </el-rwo>
+        </el-row>
 
-        <el-rwo :gutter="12">
+        <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="出库数量" prop="outboundQuantity">
               <el-input
@@ -354,6 +357,7 @@
           <el-col :span="12">
             <el-form-item label="材料基础信息编号">
               <el-select
+                filterable
                 :disabled="processingtechnology.id == null"
                 v-model="form.materialID"
                 placeholder="请输入材料基础信息编号"
@@ -372,9 +376,9 @@
               </el-select>
             </el-form-item>
           </el-col>
-        </el-rwo>
+        </el-row>
 
-        <el-rwo :gutter="12">
+        <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="材料名称">
               <el-input
@@ -394,9 +398,9 @@
               />
             </el-form-item>
           </el-col>
-        </el-rwo>
+        </el-row>
 
-        <el-rwo :gutter="12">
+        <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="材料密度">
               <el-input
@@ -416,9 +420,9 @@
               />
             </el-form-item>
           </el-col>
-        </el-rwo>
+        </el-row>
 
-        <el-rwo :gutter="12">
+        <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="规格型号">
               <el-input
@@ -433,20 +437,20 @@
             <el-form-item label="规格类型">
               <el-input
                 disabled
-                v-model="form.specificationsType"
+                v-model="MaterialListOfTechnology.specificationsType"
                 placeholder="请输入备注"
               />
             </el-form-item>
           </el-col>
-        </el-rwo>
+        </el-row>
 
-        <el-rwo :gutter="12">
+        <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="备注">
               <el-input v-model="form.notes" placeholder="请输入备注" />
             </el-form-item>
           </el-col>
-        </el-rwo>
+        </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer" v-if="!view_open">
         <el-button type="primary" @click="submitForm">确 定</el-button>
