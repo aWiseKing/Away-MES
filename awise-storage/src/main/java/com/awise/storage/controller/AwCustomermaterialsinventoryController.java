@@ -68,10 +68,10 @@ public class AwCustomermaterialsinventoryController extends BaseController
     @PreAuthorize("@ss.hasPermi('storage:CustomerMaterialsInventory:export')")
     @Log(title = "客供材料实时库存", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, AwCustomermaterialsinventory awCustomermaterialsinventory)
+    public void export(HttpServletResponse response, AwCustomermaterialsinventoryEn awCustomermaterialsinventoryen)
     {
-        List<AwCustomermaterialsinventory> list = awCustomermaterialsinventoryService.selectAwCustomermaterialsinventoryList(awCustomermaterialsinventory);
-        ExcelUtil<AwCustomermaterialsinventory> util = new ExcelUtil<AwCustomermaterialsinventory>(AwCustomermaterialsinventory.class);
+        List<AwCustomermaterialsinventoryEn> list = awCustomermaterialsinventoryEnService.selectAwCustomermaterialsinventoryEnList(awCustomermaterialsinventoryen);
+        ExcelUtil<AwCustomermaterialsinventoryEn> util = new ExcelUtil<AwCustomermaterialsinventoryEn>(AwCustomermaterialsinventoryEn.class);
         util.exportExcel(response, list, "客供材料实时库存数据");
     }
 

@@ -16,6 +16,11 @@
             <groupId>com.away</groupId>
             <artifactId>away-common</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.away</groupId>
+            <artifactId>awise-order</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

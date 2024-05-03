@@ -68,10 +68,10 @@ public class AwLocaltoolController extends BaseController
     @PreAuthorize("@ss.hasPermi('storage:LocalTool:export')")
     @Log(title = "刀具库存", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, AwLocaltool awLocaltool)
+    public void export(HttpServletResponse response, AwLocaltoolEn awLocaltoolen)
     {
-        List<AwLocaltool> list = awLocaltoolService.selectAwLocaltoolList(awLocaltool);
-        ExcelUtil<AwLocaltool> util = new ExcelUtil<AwLocaltool>(AwLocaltool.class);
+        List<AwLocaltoolEn>  list= awLocaltoolEnService.selectAwLocaltoolEnList(awLocaltoolen);
+        ExcelUtil<AwLocaltoolEn> util = new ExcelUtil<AwLocaltoolEn>(AwLocaltoolEn.class);
         util.exportExcel(response, list, "刀具库存数据");
     }
 

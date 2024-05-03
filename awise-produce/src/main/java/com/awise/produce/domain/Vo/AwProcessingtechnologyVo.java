@@ -5,10 +5,13 @@ import com.away.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+
+
 public class AwProcessingtechnologyVo  extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /** 加工工艺编号 */
+    @Excel(name = "加工工艺编号")
     private String id;
 
     /** 创建人 */
@@ -29,6 +32,7 @@ public class AwProcessingtechnologyVo  extends BaseEntity {
     /** 产品图纸附件地址URL */
     @Excel(name = "产品图纸附件地址URL")
     private String drawingURL;
+
 
 
     public String getProductID() {

@@ -66,10 +66,11 @@ public class AwLocalmaterialsController extends BaseController
     @PreAuthorize("@ss.hasPermi('storage:localmaterials:export')")
     @Log(title = "本地材料实时库存", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, AwLocalmaterials awLocalmaterials)
+    public void export(HttpServletResponse response, AwLocalmaterialsEn awLocalmaterialsEn)
     {
-        List<AwLocalmaterials> list = awLocalmaterialsService.selectAwLocalmaterialsList(awLocalmaterials);
-        ExcelUtil<AwLocalmaterials> util = new ExcelUtil<AwLocalmaterials>(AwLocalmaterials.class);
+        List<AwLocalmaterialsEn> list = awLocalmaterialsEnService.selectAwLocalmaterialsEnList(awLocalmaterialsEn);
+
+        ExcelUtil<AwLocalmaterialsEn> util = new ExcelUtil<AwLocalmaterialsEn>(AwLocalmaterialsEn.class);
         util.exportExcel(response, list, "本地材料实时库存数据");
     }
 

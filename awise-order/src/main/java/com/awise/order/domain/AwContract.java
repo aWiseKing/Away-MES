@@ -16,6 +16,8 @@ public class AwContract extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 合同编号 */
+
+    @Excel(name = "合同编号")
     private String id;
 
     /** 合同金额 */

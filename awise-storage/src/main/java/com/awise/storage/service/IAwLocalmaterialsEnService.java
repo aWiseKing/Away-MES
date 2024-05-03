@@ -21,4 +21,5 @@ public interface IAwLocalmaterialsEnService
      */
     public List<AwLocalmaterialsEn> selectAwLocalmaterialsEnList(AwLocalmaterialsEn awLocalmaterialsEn);
 
+
 }

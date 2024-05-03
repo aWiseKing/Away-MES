@@ -189,7 +189,7 @@
             >查看</el-button
           >
           <el-button
-            size="mini"
+            size="mini" 
             type="text"
             icon="el-icon-view"
             @click="handleRelease(scope.row)"

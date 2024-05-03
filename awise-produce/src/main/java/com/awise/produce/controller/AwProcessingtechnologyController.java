@@ -60,8 +60,8 @@ public class AwProcessingtechnologyController extends BaseController
     @PostMapping("/export")
     public void export(HttpServletResponse response, AwProcessingtechnology awProcessingtechnology)
     {
-        List<AwProcessingtechnology> list = awProcessingtechnologyService.selectAwProcessingtechnologyList(awProcessingtechnology);
-        ExcelUtil<AwProcessingtechnology> util = new ExcelUtil<AwProcessingtechnology>(AwProcessingtechnology.class);
+        List<AwProcessingtechnologyVo> list = awProcessingtechnologyServiceVo.selectAwProcessingtechnologyListVO(awProcessingtechnology);
+        ExcelUtil<AwProcessingtechnologyVo> util = new ExcelUtil<AwProcessingtechnologyVo>(AwProcessingtechnologyVo.class);
         util.exportExcel(response, list, "加工工艺信息数据");
     }
 

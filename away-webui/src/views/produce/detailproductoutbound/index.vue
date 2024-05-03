@@ -13,7 +13,6 @@
           <div
             style="overflow-x: auto; scrollbar-width: none; white-space: nowrap"
           >
-    
             <el-form-item label="产品图号" prop="productID">
               <el-input
                 v-model="queryParams.productID"
@@ -73,6 +72,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
+           v-if="status == '0'"
           v-hasPermi="['produce:detailproductoutbound:add']"
           >新增</el-button
         >
@@ -85,6 +85,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
+           v-if="status == '0'"
           v-hasPermi="['produce:detailproductoutbound:edit']"
           >修改</el-button
         >
@@ -98,6 +99,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['produce:detailproductoutbound:remove']"
+           v-if="status == '0'"
           >删除</el-button
         >
       </el-col>
@@ -157,6 +159,7 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
+           v-if="status == '0'"
             v-hasPermi="['produce:detailproductoutbound:edit']"
             >修改</el-button
           >
@@ -165,6 +168,8 @@
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
+                        v-if="status == '0'"
+
             v-hasPermi="['produce:detailproductoutbound:remove']"
             >删除</el-button
           >
@@ -182,7 +187,13 @@
 
     <!-- 添加或修改产品出库详单对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="900px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" :disabled="view_open" label-width="80px">
+      <el-form
+        ref="form"
+        :model="form"
+        :rules="rules"
+        :disabled="view_open"
+        label-width="80px"
+      >
         <el-row :gutter="12"
           ><el-col :span="12">
             <el-form-item label="出库单编号" prop="deliveryNoteID">
@@ -204,7 +215,7 @@
           ><el-col :span="12">
             <el-form-item label="产品图号" prop="productID">
               <el-select
-              filterable
+                filterable
                 v-model="form.productID"
                 placeholder="请选择产品图号"
                 @focus="getListproduct()"
@@ -230,7 +241,7 @@
           <el-col :span="12">
             <el-form-item label="客户编号" prop="contractID">
               <el-select
-              filterable
+                filterable
                 v-model="form.contractID"
                 placeholder="请选择客户编号"
                 @focus="getListcustom()"
@@ -257,7 +268,7 @@
           ><el-col :span="12">
             <el-form-item label="出货检验编号" prop="shippingInspectionID">
               <el-select
-              filterable
+                filterable
                 v-model="form.shippingInspectionID"
                 placeholder="请选择出货检验编号"
                 @focus="getListshippinginspection()"
@@ -362,7 +373,7 @@ import {
   updateProductoutbound,
   delProductoutbound,
 } from "@/api/produce/productoutbound.js";
-import '@/assets/styles/away-element-ui-disabled.scss' // away css
+import "@/assets/styles/away-element-ui-disabled.scss"; // away css
 
 export default {
   name: "Detailproductoutbound",
@@ -431,6 +442,8 @@ export default {
       customlist: [],
       // 出货检验单列表
       shippinginspectionlist: [],
+
+      status: "",
     };
   },
   created() {
@@ -439,8 +452,9 @@ export default {
   methods: {
     async getExist() {
       this.deliveryNoteID = this.$route.query.id;
+      this.status = this.$route.query.status;
       this.queryParams.deliveryNoteID = this.deliveryNoteID;
-      console.log()
+      console.log();
       this.getList();
     },
     /** 查询产品出库详单列表 */
@@ -453,29 +467,32 @@ export default {
       });
     },
     /** 查询产品列表 */
-   async getListproduct() {
+    async getListproduct() {
       this.loading = true;
-        let total= (await listProduct())["total"];
-      listProduct({pageSize:total}).then((response) => {
+      let total = (await listProduct())["total"];
+      listProduct({ pageSize: total }).then((response) => {
         this.productlist = response.rows;
         this.loading = false;
       });
     },
     /** 查询客户信息 */
-   async getListcustom() {
+    async getListcustom() {
       this.loading = true;
-       let total= (await listCustom())["total"];
-      listCustom({pageSize:total}).then((response) => {
+      let total = (await listCustom())["total"];
+      listCustom({ pageSize: total }).then((response) => {
         this.customlist = response.rows;
         this.loading = false;
       });
     },
     /** 查询出货检验单 */
-   async getListshippinginspection() {
+    async getListshippinginspection() {
       this.loading = true;
-      let total= (await listShippinginspection())["total"];
+      let total = (await listShippinginspection())["total"];
 
-      listShippinginspection({productID:this.form.productID,pageSize:total}).then((response) => {
+      listShippinginspection({
+        productID: this.form.productID,
+        pageSize: total,
+      }).then((response) => {
         this.shippinginspectionlist = response.rows;
         this.loading = false;
       });
@@ -495,7 +512,6 @@ export default {
     /** 自动回显出货检验单信息 */
     setDeliveryNoteOfShippinginspection(id) {
       getShippinginspection(id).then((response) => {
-
         let data = response.data;
         let value = {
           shipmentQuantity: data.shipmentQuantity,
@@ -507,7 +523,7 @@ export default {
           testingPersonnel: data.testingPersonnel,
         };
         let deliveryNote = this.deliveryNote;
-        this.deliveryNote = { ...deliveryNote,...value };
+        this.deliveryNote = { ...deliveryNote, ...value };
       });
     },
     // 取消按钮
@@ -526,7 +542,7 @@ export default {
         contractID: null,
         notes: null,
       };
-      this.deliveryNote = {}
+      this.deliveryNote = {};
       this.resetForm("form");
     },
     /** 搜索按钮操作 */

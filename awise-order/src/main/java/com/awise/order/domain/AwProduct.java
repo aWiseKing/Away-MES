@@ -16,6 +16,7 @@ public class AwProduct extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 产品图号 */
+    @Excel(name = "产品图号")
     private String id;
 
     /** 产品名称 */
