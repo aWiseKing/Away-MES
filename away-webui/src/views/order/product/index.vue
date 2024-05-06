@@ -257,6 +257,7 @@ export default {
     /** 文件上传 */
     async fileUpdate() {
       let file_list = this.$refs.upload.uploadFiles;
+      console.log(file_list)
       if (file_list.length > 0) {
         let num = 0;
         let formData = new FormData();
@@ -284,7 +285,6 @@ export default {
         name: null,
         drawingURL: null,
       };
-
       this.fileList=[]
       this.resetForm("form");
     },

@@ -85,7 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteAwMaterialsubscriptionByMaterialSubscriptions" parameterType="String">
-        delete from aw_materialsubscription where aw_MaterialSubscription in
+        delete from aw_MaterialSubscription where materialSubscription in
         <foreach item="materialSubscription" collection="array" open="(" separator="," close=")">
             #{materialSubscription}
         </foreach>

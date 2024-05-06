@@ -113,7 +113,6 @@ public class AwProductinventoryServiceImpl implements IAwProductinventoryService
         for(Map<String, String> line : lmlist) {
             String productID = line.get("key");
             Integer num = Integer.valueOf(line.get("value"));
-
             AwProductinventory awProductinventory = new AwProductinventory();
             awProductinventory.setProductID(productID);
             List<AwProductinventory> list = this.selectAwProductinventoryList(awProductinventory);
@@ -121,7 +120,6 @@ public class AwProductinventoryServiceImpl implements IAwProductinventoryService
                 awProductinventory = list.get(0);
                 awProductinventory.setNumber(awProductinventory.getNumber()+num);
                 cache_awProductinventoryList.add(awProductinventory);
-
             }else {
                 try {
                     awProductinventory.setNumber(Long.valueOf(0));
@@ -134,8 +132,6 @@ public class AwProductinventoryServiceImpl implements IAwProductinventoryService
                     return false;
                 }
             }
-
-
         }
         for (AwProductinventory awProductinventory : cache_awProductinventoryList) {
             this.updateAwProductinventory(awProductinventory);

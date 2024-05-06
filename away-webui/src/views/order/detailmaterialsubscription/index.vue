@@ -257,10 +257,10 @@
             ><el-col :span="12">
               <el-form-item label="任务单" prop="productionTasksFormID">
                 <el-select
-                  v-model="productionTasksFormID"
+                  v-model="productiontasklist.referred"
                   placeholder="请选择任务单"
                   @focus="getListproductiontasklist()"
-                    filterable
+                  filterable
                 >
                   <el-option
                     v-for="(item, index) in productiontasklistlist"
@@ -280,11 +280,7 @@
                   v-model="form.productionTasksID"
                   :disabled="productiontasklist.id == null"
                   placeholder="请选择任务编号"
-                  @focus="
-                    getListproductiontasks(
-                      productiontasklist.id
-                    )
-                  "
+                  @focus="getListproductiontasks(productiontasklist.id)"
                 >
                   <el-option
                     v-for="(item, index) in productiontaskslist"
@@ -323,17 +319,16 @@
                     @click.native="setMaterialListOfTechnology(item.id)"
                   >
                   </el-option>
-                </el-select> </el-form-item></el-col
-          >
-          <el-col :span="12">
+                </el-select> </el-form-item
+            ></el-col>
+            <el-col :span="12">
               <el-form-item label="材料价格" prop="materialDensity">
                 <el-input
                   v-model="materiallistoftechnology.materialPrice"
                   placeholder="请输入材料价格"
                   disabled
-                /> </el-form-item></el-col
-          >
-
+                /> </el-form-item
+            ></el-col>
           </el-row>
           <el-row :gutter="12"
             ><el-col :span="12">
@@ -365,9 +360,7 @@
                   placeholder="请输入规格型号"
                   disabled
                 /> </el-form-item></el-col></el-row
-          ><el-row :gutter="12"
-            >
-          </el-row>
+          ><el-row :gutter="12"> </el-row>
           <el-row :gutter="12"
             ><el-col :span="12"
               ><el-form-item label="申购数量" prop="subscriptionQuantity">
@@ -389,10 +382,22 @@
           <el-row :gutter="12"
             ><el-col :span="24"
               ><el-form-item label="附样" prop="sampleURL">
-                <image-upload
-                  v-model="form.sampleURL"
-                /> </el-form-item></el-col
-          ></el-row>
+                <el-upload
+                  ref="upload"
+                  :file-list="fileList"
+                  action="String"
+                  :http-request="fileUpdate"
+                  :auto-upload="false"
+                  list-type="picture"
+                >
+                  <el-button size="small" type="primary">点击上传</el-button>
+                  <div slot="tip" class="el-upload__tip">
+                    只能上传jpg/png文件，且不超过500kb
+                  </div>
+                </el-upload>
+              </el-form-item></el-col
+            ></el-row
+          >
           <el-row :gutter="12"
             ><el-col :span="24">
               <el-form-item label="备注" prop="note">
@@ -407,6 +412,67 @@
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
+    </el-dialog>
+
+    <!-- 预览材料申购详细 -->
+    <el-dialog
+      :title="view_form.id"
+      :visible.sync="view_open"
+      width="800px"
+      append-to-body
+    >
+      <el-descriptions :column="2" border>
+        <el-descriptions-item label="申购单编号">{{
+          view_form.subscribeID
+        }}</el-descriptions-item>
+        <el-descriptions-item label="申购材料编号">{{
+          view_form.materialSubscription
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="任务单">{{
+          productiontasklist.referred
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="任务编号">{{
+          view_form.productionTasksID
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="工艺编号">{{
+          view_form.processingTechnologyID
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="材料编号">{{
+          view_form.materialID
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="材料价格">{{
+          materiallistoftechnology.materialPrice
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="材料名称">{{
+          materiallistoftechnology.name
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="规格类型">{{
+          materiallistoftechnology.typeName
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="规格型号">{{
+          materiallistoftechnology.specificationsType
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="申购数量">{{
+          view_form.subscriptionQuantity
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="需用日期">{{
+          view_form.requiredDate
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="产品图纸附件" :span="2">
+          <filedown :files="view_form.files" />
+        </el-descriptions-item>
+      </el-descriptions>
     </el-dialog>
   </div>
 </template>
@@ -438,8 +504,13 @@ import {
 } from "@/api/order/materialsubscription.js";
 import "@/assets/styles/away-element-ui-disabled.scss"; // away css
 
+import { fileDownload, fileUpdate } from "@/api/file/file";
+import filedown from "@/components/FileDown/filedown.vue";
+import Filedown from "../../../components/FileDown/filedown.vue";
+
 export default {
   name: "Detailmaterialsubscription",
+  components: { filedown: Filedown },
   data() {
     return {
       // 遮罩层
@@ -474,6 +545,11 @@ export default {
         processingTechnologyID: null,
         requiredDate: null,
       },
+
+      //文件列表
+      fileList: [],
+      //表单详细列表
+      view_form: [],
       // 表单参数
       form: {},
       // 表单校验
@@ -510,7 +586,6 @@ export default {
       purchaserequisition: {},
       // 任务单信息
       productiontasklistlist: [],
-      productionTasksFormID: null,
       // 当前选中任务单
       productiontasklist: {},
       // 任务信息
@@ -521,8 +596,6 @@ export default {
       materiallistoftechnologylist: [],
       // 工艺所需材料详细信息
       materiallistoftechnology: {},
-
-
     };
   },
   created() {
@@ -538,21 +611,40 @@ export default {
       });
       this.getList();
     },
+
+    /** 文件上传 */
+    async fileUpdate() {
+      let file_list = this.$refs.upload.uploadFiles;
+      if (file_list.length > 0) {
+        let num = 0;
+        let formData = new FormData();
+        for (num in file_list) {
+          formData.append("files", file_list[num].raw);
+        }
+        let response = await fileUpdate(formData);
+        this.form.sampleURL = response;
+      }
+    },
+    /** 文件下载 */
+    async fileDown(file_name) {
+      let tmp = await fileDownload(file_name);
+      this.view_form.files.push(tmp);
+    },
+
     /** 查询申购材料详细列表 */
     getList() {
       this.loading = true;
       listDetailmaterialsubscription(this.queryParams).then((response) => {
-        console.log(this.queryParams)
         this.detailmaterialsubscriptionList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
     },
     /** 查询任务单信息 */
-  async  getListproductiontasklist() {
+    async getListproductiontasklist() {
       this.loading = true;
-       let total=  (await listProductiontasklist())["total"];
-      listProductiontasklist({pageSize:total}).then((response) => {
+      let total = (await listProductiontasklist())["total"];
+      listProductiontasklist({ pageSize: total }).then((response) => {
         this.productiontasklistlist = response.rows;
         this.loading = false;
       });
@@ -564,17 +656,16 @@ export default {
       getProductiontasklist(id).then((response) => {
         this.productiontasklist = response.data;
 
-
         this.loading = false;
       });
     },
     /** 查询任务信息 */
- async   getListproductiontasks(productionTasksFormID) {
-
+    async getListproductiontasks(productionTasksFormID) {
       this.loading = true;
-       let total= (await listProductiontasks())["total"];
+      let total = (await listProductiontasks())["total"];
       listProductiontasks({
-        productionTasksFormID: productionTasksFormID,pageSize:total
+        productionTasksFormID: productionTasksFormID,
+        pageSize: total,
       }).then((response) => {
         this.productiontaskslist = response.rows;
         this.loading = false;
@@ -583,7 +674,6 @@ export default {
     /** 选中任务 */
     setProductiontasks(id) {
       this.loading = true;
-
       getProductiontasks(id).then((response) => {
         this.productiontasks = response.data;
         this.form.processingTechnologyID =
@@ -592,12 +682,13 @@ export default {
       });
     },
     /** 工艺所需材料详细信息 */
-   async getListmateriallistoftechnology(processingTechnologyID) {
+    async getListmateriallistoftechnology(processingTechnologyID) {
       this.loading = true;
-             let total= (await listMaterialListOfTechnology())["total"];
+      let total = (await listMaterialListOfTechnology())["total"];
 
       listMaterialListOfTechnology({
-        processingTechnologyID: processingTechnologyID, pageSize:total
+        processingTechnologyID: processingTechnologyID,
+        pageSize: total,
       }).then((response) => {
         this.materiallistoftechnologylist = response.rows;
         this.loading = false;
@@ -607,7 +698,7 @@ export default {
     setMaterialListOfTechnology(id) {
       this.loading = true;
       getMaterialListOfTechnology(id).then((response) => {
-             this.materiallistoftechnology = response.data;
+        this.materiallistoftechnology = response.data;
         this.loading = false;
       });
     },
@@ -629,6 +720,8 @@ export default {
         sampleURL: null,
         note: null,
       };
+      this.fileList = [];
+
       this.productiontasklistlist = [];
       // 当前选中任务单
       this.productiontasklist = {};
@@ -659,23 +752,41 @@ export default {
       this.single = selection.length !== 1;
       this.multiple = !selection.length;
     },
-    handleView(row) {
+    async handleView(row) {
+      this.view_form = row;
+      this.view_form.files = [];
+      if (row.sampleURL != null) {
+        let urls = row.sampleURL.split(";");
+        urls.pop();
+        let num = 0;
+        for (num in urls) {
+          let tmp = await fileDownload(urls[num]);
+          this.view_form.files.push(tmp);
+        }
+      }
+
       this.reset();
       this.isadd = false;
       const materialSubscription = row.materialSubscription || this.ids;
       getMaterialsubscription(materialSubscription).then((response) => {
         this.form = response.data;
         this.view_open = true;
+        getProductiontasks(row.productionTasksID).then((response) => {
+          this.productiontasks = response.data;
+          //根据任务拿到任务单
+          getProductiontasklist(
+            this.productiontasks.productionTasksFormID
+          ).then((response) => {
+            this.productiontasklist = response.data;
+          });
+        });
         listMaterialListOfTechnology({
           processingTechnologyID: this.form.processingTechnologyID,
           materialID: this.form.materialID,
         }).then((response) => {
           this.materiallistoftechnology = response.rows[0];
         });
-        getProductiontasks(this.form.productionTasksID).then((response) => {
-          this.productionTasksFormID = response.data.id;
-        });
-        this.open = true;
+
         this.title = "查看申购材料详细";
       });
     },
@@ -692,35 +803,54 @@ export default {
       this.reset();
       this.isadd = false;
       const materialSubscription = row.materialSubscription || this.ids;
-      getMaterialsubscription(materialSubscription).then((response) => {
+      getMaterialsubscription(materialSubscription).then(async (response) => {
         this.form = response.data;
+        getProductiontasks(row.productionTasksID).then((response) => {
+          this.productiontasks = response.data;
+          //根据任务拿到任务单
+          getProductiontasklist(
+            this.productiontasks.productionTasksFormID
+          ).then((response) => {
+            this.productiontasklist = response.data;
+          });
+        });
+
         listMaterialListOfTechnology({
           processingTechnologyID: this.form.processingTechnologyID,
           materialID: this.form.materialID,
         }).then((response) => {
           this.materiallistoftechnology = response.rows[0];
         });
-        getProductiontasks(this.form.productionTasksID).then((response) => {
-          this.productionTasksFormID = response.data.id;
-        });
+
+        if (response.data.sampleURL != null) {
+          let num = 0;
+          let urls = response.data.sampleURL.split(";");
+          urls.pop();
+          for (num in urls) {
+            let tmp = await fileDownload(urls[num]);
+            this.fileList.push({ url: tmp.getUrl(), raw: tmp.getFile() });
+          }
+        }
+
         this.view_open = false;
         this.open = true;
         this.title = "修改申购材料详细";
       });
     },
     /** 提交按钮 */
-    submitForm() {
-      this.$refs["form"].validate((valid) => {
+    async submitForm() {
+      await this.fileUpdate();
+
+      this.$refs["form"].validate(async (valid) => {
         if (valid) {
           if (!this.isadd) {
-            updateMaterialsubscription(this.form).then((response) => {
+            await updateMaterialsubscription(this.form).then((response) => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-
-            addMaterialsubscription(this.form).then((response) => {
+            await addMaterialsubscription(this.form).then((response) => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.awise.produce.domain.AwProductinventory;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 产品库存Service接口
@@ -61,7 +62,12 @@ public interface IAwProductinventoryService
      */
     public int deleteAwProductinventoryById(Long id);
 
+    @Transactional
+
     boolean addByNumber(List<Map<String, String>> lmlist);
+
+
+    @Transactional
 
     boolean reduceByNumber(List<Map<String, String>> lmlist);
 

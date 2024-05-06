@@ -8,15 +8,10 @@
       v-show="showSearch"
       label-width="68px"
     >
-      <el-row :gutter="1">
-        <el-col :span="21">
-          <div
-            style="overflow-x: auto; scrollbar-width: none; white-space: nowrap"
-          >
-            <el-form-item label="订单id#日期+编号#" prop="id">
+            <el-form-item label="订单编号" prop="id">
               <el-input
                 v-model="queryParams.id"
-                placeholder="请输入订单id#日期+编号#"
+                placeholder="请输入订单编号"
                 clearable
                 @keyup.enter.native="handleQuery"
               />
@@ -41,10 +36,10 @@
               >
               </el-date-picker>
             </el-form-item>
-            <el-form-item label="需求数量#要求大于0#" prop="number">
+            <el-form-item label="需求数量" prop="number">
               <el-input
                 v-model="queryParams.number"
-                placeholder="请输入需求数量#要求大于0#"
+                placeholder="请输入需求数量"
                 clearable
                 @keyup.enter.native="handleQuery"
               />
@@ -73,9 +68,7 @@
                 @keyup.enter.native="handleQuery"
               />
             </el-form-item>
-          </div>
-        </el-col>
-        <el-col :span="3">
+      
           <el-form-item>
             <el-button
               type="primary"
@@ -88,8 +81,7 @@
               >重置</el-button
             >
           </el-form-item>
-        </el-col>
-      </el-row>
+    
     </el-form>
 
     <el-row :gutter="10" class="mb8">
