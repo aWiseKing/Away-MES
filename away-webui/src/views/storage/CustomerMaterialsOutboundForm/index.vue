@@ -1,15 +1,21 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-    <el-row :gutter="1">
-            <el-col :span="21">
-              <div style="overflow-x: auto;scrollbar-width: none; white-space: nowrap;">
+    <el-form
+      :model="queryParams"
+      ref="queryForm"
+      size="small"
+      :inline="true"
+      v-show="showSearch"
+      label-width="68px"
+    >
       <el-form-item label="出库日期" prop="deliveryDate">
-        <el-date-picker clearable
+        <el-date-picker
+          clearable
           v-model="queryParams.deliveryDate"
           type="date"
           value-format="yyyy-MM-dd"
-          placeholder="请选择出库日期">
+          placeholder="请选择出库日期"
+        >
         </el-date-picker>
       </el-form-item>
       <el-form-item label="制单人" prop="creator">
@@ -45,7 +51,11 @@
         />
       </el-form-item>
       <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable>
+        <el-select
+          v-model="queryParams.status"
+          placeholder="请选择状态"
+          clearable
+        >
           <el-option
             v-for="dict in dict.type.aw_storage_outboundorder_status"
             :key="dict.value"
@@ -54,15 +64,19 @@
           />
         </el-select>
       </el-form-item>
- </div>
-        </el-col>
-        <el-col :span="3">
+
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          size="mini"
+          @click="handleQuery"
+          >搜索</el-button
+        >
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
+          >重置</el-button
+        >
       </el-form-item>
-      </el-col>
-    </el-row>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -74,7 +88,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['storage:CustomerMaterialsOutboundForm:add']"
-        >新增</el-button>
+          >新增</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -85,7 +100,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['storage:CustomerMaterialsOutboundForm:edit']"
-        >修改</el-button>
+          >修改</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -96,7 +112,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['storage:CustomerMaterialsOutboundForm:remove']"
-        >删除</el-button>
+          >删除</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -106,17 +123,34 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['storage:CustomerMaterialsOutboundForm:export']"
-        >导出</el-button>
+          >导出</el-button
+        >
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar
+        :showSearch.sync="showSearch"
+        @queryTable="getList"
+      ></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="CustomerMaterialsOutboundFormList" @selection-change="handleSelectionChange">
+    <el-table
+      v-loading="loading"
+      :data="CustomerMaterialsOutboundFormList"
+      @selection-change="handleSelectionChange"
+    >
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="出库单编号" align="center" prop="deliveryNoteID" />
-      <el-table-column label="出库日期" align="center" prop="deliveryDate" width="180">
+      <el-table-column
+        label="出库单编号"
+        align="center"
+        prop="deliveryNoteID"
+      />
+      <el-table-column
+        label="出库日期"
+        align="center"
+        prop="deliveryDate"
+        width="180"
+      >
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.deliveryDate, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.deliveryDate, "{y}-{m}-{d}") }}</span>
         </template>
       </el-table-column>
       <el-table-column label="制单人" align="center" prop="creator" />
@@ -125,19 +159,27 @@
       <el-table-column label="备注" align="center" prop="notes" />
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.aw_storage_outboundorder_status" :value="scope.row.status"/>
+          <dict-tag
+            :options="dict.type.aw_storage_outboundorder_status"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column
+        label="操作"
+        align="center"
+        class-name="small-padding fixed-width"
+      >
         <template slot-scope="scope">
-        <el-button
+          <el-button
             size="mini"
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
             v-hasPermi="['storage:CustomerMaterialsOutboundForm:edit']"
-          >查看</el-button>
-         <el-button
+            >查看</el-button
+          >
+          <el-button
             size="mini"
             type="text"
             icon="el-icon-view"
@@ -212,9 +254,9 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
-      v-show="total>0"
+      v-show="total > 0"
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
@@ -224,19 +266,18 @@
     <!-- 添加或修改客供材料出库单对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-
-
-           <el-form-item label="出库单编号" prop="deliveryNoteID">
-          <el-input  v-model="form.deliveryNoteID" placeholder="出库单编号" />
+        <el-form-item label="出库单编号" prop="deliveryNoteID">
+          <el-input v-model="form.deliveryNoteID" placeholder="出库单编号" />
         </el-form-item>
 
-
         <el-form-item label="出库日期" prop="deliveryDate">
-          <el-date-picker clearable
+          <el-date-picker
+            clearable
             v-model="form.deliveryDate"
             type="date"
             value-format="yyyy-MM-dd"
-            placeholder="请选择出库日期">
+            placeholder="请选择出库日期"
+          >
           </el-date-picker>
         </el-form-item>
         <el-form-item label="制单人" prop="creator">
@@ -246,7 +287,10 @@
           <el-input v-model="form.warehouseKeeper" placeholder="请输入库管员" />
         </el-form-item>
         <el-form-item label="领料人" prop="materialReceiver">
-          <el-input v-model="form.materialReceiver" placeholder="请输入领料人" />
+          <el-input
+            v-model="form.materialReceiver"
+            placeholder="请输入领料人"
+          />
         </el-form-item>
         <el-form-item label="备注" prop="notes">
           <el-input v-model="form.notes" placeholder="请输入备注" />
@@ -271,9 +315,15 @@
 </template>
 
 <script>
-import { listCustomerMaterialsOutboundForm, getCustomerMaterialsOutboundForm, delCustomerMaterialsOutboundForm, addCustomerMaterialsOutboundForm, updateCustomerMaterialsOutboundForm } from "@/api/storage/CustomerMaterialsOutboundForm";
-import { listCustomerMaterialsOutbound} from "@/api/storage/CustomerMaterialsOutbound";
-import {reduceByNumber} from "@/api/storage/CustomerMaterialsInventory"
+import {
+  listCustomerMaterialsOutboundForm,
+  getCustomerMaterialsOutboundForm,
+  delCustomerMaterialsOutboundForm,
+  addCustomerMaterialsOutboundForm,
+  updateCustomerMaterialsOutboundForm,
+} from "@/api/storage/CustomerMaterialsOutboundForm";
+import { listCustomerMaterialsOutbound } from "@/api/storage/CustomerMaterialsOutbound";
+import { reduceByNumber } from "@/api/storage/CustomerMaterialsInventory";
 import {
   listDetailCustomerMaterialOutbound,
   getDetailCustomerMaterialOutbound,
@@ -284,7 +334,7 @@ import {
 
 export default {
   name: "CustomerMaterialsOutboundForm",
-  dicts: ['aw_storage_outboundorder_status'],
+  dicts: ["aw_storage_outboundorder_status"],
   data() {
     return {
       // 遮罩层
@@ -318,35 +368,34 @@ export default {
         warehouseKeeper: null,
         materialReceiver: null,
         notes: null,
-        status: null
+        status: null,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-       deliveryNoteID: [
-          { required: true, message: "出库单编号不能为空", trigger: "blur" }
+        deliveryNoteID: [
+          { required: true, message: "出库单编号不能为空", trigger: "blur" },
         ],
         deliveryDate: [
-          { required: true, message: "出库日期不能为空", trigger: "blur" }
+          { required: true, message: "出库日期不能为空", trigger: "blur" },
         ],
         creator: [
-          { required: true, message: "制单人不能为空", trigger: "blur" }
+          { required: true, message: "制单人不能为空", trigger: "blur" },
         ],
         warehouseKeeper: [
-          { required: true, message: "库管员不能为空", trigger: "blur" }
+          { required: true, message: "库管员不能为空", trigger: "blur" },
         ],
         materialReceiver: [
-          { required: true, message: "领料人不能为空", trigger: "blur" }
+          { required: true, message: "领料人不能为空", trigger: "blur" },
         ],
         status: [
-          { required: true, message: "状态不能为空", trigger: "change" }
-        ]
+          { required: true, message: "状态不能为空", trigger: "change" },
+        ],
       },
 
       //出库材料列表
-      DetailCustomerMaterialsOutbound:[],
-
+      DetailCustomerMaterialsOutbound: [],
     };
   },
   created() {
@@ -356,21 +405,21 @@ export default {
     /** 查询客供材料出库单列表 */
     getList() {
       this.loading = true;
-      listCustomerMaterialsOutboundForm(this.queryParams).then(response => {
+      listCustomerMaterialsOutboundForm(this.queryParams).then((response) => {
         this.CustomerMaterialsOutboundFormList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
     },
 
-     setStatus(row,status){
+    setStatus(row, status) {
       this.reset();
       this.loading = true;
-      const deliveryNoteID  = row.deliveryNoteID || this.ids
-      getCustomerMaterialsOutboundForm(deliveryNoteID).then(response => {
+      const deliveryNoteID = row.deliveryNoteID || this.ids;
+      getCustomerMaterialsOutboundForm(deliveryNoteID).then((response) => {
         this.form = response.data;
-        this.form.status=status;
-        updateCustomerMaterialsOutboundForm(this.form).then(response => {
+        this.form.status = status;
+        updateCustomerMaterialsOutboundForm(this.form).then((response) => {
           this.$modal.msgSuccess("状态变更成功");
           this.open = false;
           this.getList();
@@ -378,51 +427,54 @@ export default {
         });
       });
     },
-     /** 发布按钮操作 */
-     handleRelease(row) {
-      this.setStatus(row,"1");
+    /** 发布按钮操作 */
+    handleRelease(row) {
+      this.setStatus(row, "1");
     },
     /** 撤销发布按钮操作 */
-    handleUnpublish(row){
-      this.setStatus(row,"0");
+    handleUnpublish(row) {
+      this.setStatus(row, "0");
     },
     /** 完成按钮操作 */
-    handleFinish(row) {   
-      let deliveryNoteID = row.deliveryNoteID
-      this.loading=true;
+    handleFinish(row) {
+      let deliveryNoteID = row.deliveryNoteID;
+      this.loading = true;
       // 出库材料列表
-      listDetailCustomerMaterialOutbound({deliveryNoteID:deliveryNoteID}).then((response)=>{
-        this.DetailCustomerMaterialsOutbound=response.rows;
-        if(this.DetailCustomerMaterialsOutbound.length > 0){
-          let lmlist = []
-          for(let num in this.DetailCustomerMaterialsOutbound){
-            let materialID = this.DetailCustomerMaterialsOutbound[num].materialID;
-            let value = this.DetailCustomerMaterialsOutbound[num].outboundQuantity;
-            lmlist.push({"key":materialID,"value":value})
+      listDetailCustomerMaterialOutbound({
+        deliveryNoteID: deliveryNoteID,
+      }).then((response) => {
+        this.DetailCustomerMaterialsOutbound = response.rows;
+        if (this.DetailCustomerMaterialsOutbound.length > 0) {
+          let lmlist = [];
+          for (let num in this.DetailCustomerMaterialsOutbound) {
+            let materialID =
+              this.DetailCustomerMaterialsOutbound[num].materialID;
+            let value =
+              this.DetailCustomerMaterialsOutbound[num].outboundQuantity;
+            lmlist.push({ key: materialID, value: value });
           }
-          reduceByNumber(JSON.stringify(lmlist)).then(response=>{
-              if (response.code == '200'){
-                this.setStatus(row,"2");
-              }
-            })
+          reduceByNumber(JSON.stringify(lmlist)).then((response) => {
+            if (response.code == "200") {
+              this.setStatus(row, "2");
+            }
+          });
         }
-        this.loading=false;
+        this.loading = false;
       });
     },
 
     /** 暂停按钮操作 */
     handlePause(row) {
-      this.setStatus(row,"3");
+      this.setStatus(row, "3");
     },
     /** 取消暂停按钮操作 */
     handleCancelPause(row) {
-      this.setStatus(row,"1");
+      this.setStatus(row, "1");
     },
     /** 废弃按钮操作 */
     handleDiscard(row) {
-      this.setStatus(row,"4");
+      this.setStatus(row, "4");
     },
-
 
     // 取消按钮
     cancel() {
@@ -438,7 +490,7 @@ export default {
         warehouseKeeper: null,
         materialReceiver: null,
         notes: null,
-        status: "0"
+        status: "0",
       };
       this.resetForm("form");
     },
@@ -454,9 +506,9 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.deliveryNoteID)
-      this.single = selection.length!==1
-      this.multiple = !selection.length
+      this.ids = selection.map((item) => item.deliveryNoteID);
+      this.single = selection.length !== 1;
+      this.multiple = !selection.length;
     },
     handleView(row) {
       this.view_open = true;
@@ -477,8 +529,8 @@ export default {
     handleUpdate(row) {
       this.reset();
       this.isadd = false;
-      const deliveryNoteID = row.deliveryNoteID || this.ids
-      getCustomerMaterialsOutboundForm(deliveryNoteID).then(response => {
+      const deliveryNoteID = row.deliveryNoteID || this.ids;
+      getCustomerMaterialsOutboundForm(deliveryNoteID).then((response) => {
         this.form = response.data;
         this.open = true;
         this.title = "修改客供材料出库单";
@@ -486,16 +538,16 @@ export default {
     },
     /** 提交按钮 */
     submitForm() {
-      this.$refs["form"].validate(valid => {
+      this.$refs["form"].validate((valid) => {
         if (valid) {
           if (!this.isadd) {
-            updateCustomerMaterialsOutboundForm(this.form).then(response => {
+            updateCustomerMaterialsOutboundForm(this.form).then((response) => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addCustomerMaterialsOutboundForm(this.form).then(response => {
+            addCustomerMaterialsOutboundForm(this.form).then((response) => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -507,19 +559,29 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const deliveryNoteIDs = row.deliveryNoteID || this.ids;
-      this.$modal.confirm('是否确认删除客供材料出库单编号为"' + deliveryNoteIDs + '"的数据项？').then(function() {
-        return delCustomerMaterialsOutboundForm(deliveryNoteIDs);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      this.$modal
+        .confirm(
+          '是否确认删除客供材料出库单编号为"' + deliveryNoteIDs + '"的数据项？'
+        )
+        .then(function () {
+          return delCustomerMaterialsOutboundForm(deliveryNoteIDs);
+        })
+        .then(() => {
+          this.getList();
+          this.$modal.msgSuccess("删除成功");
+        })
+        .catch(() => {});
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('storage/CustomerMaterialsOutboundForm/export', {
-        ...this.queryParams
-      }, `CustomerMaterialsOutboundForm_${new Date().getTime()}.xlsx`)
-    }
-  }
+      this.download(
+        "storage/CustomerMaterialsOutboundForm/export",
+        {
+          ...this.queryParams,
+        },
+        `CustomerMaterialsOutboundForm_${new Date().getTime()}.xlsx`
+      );
+    },
+  },
 };
 </script>

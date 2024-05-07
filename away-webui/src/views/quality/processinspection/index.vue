@@ -8,11 +8,7 @@
       v-show="showSearch"
       label-width="68px"
     >
-      <el-row :gutter="1">
-        <el-col :span="21">
-          <div
-            style="overflow-x: auto; scrollbar-width: none; white-space: nowrap"
-          >
+
             <el-form-item label="质检名称" prop="nameOfQualityInspection">
               <el-input
                 v-model="queryParams.nameOfQualityInspection"
@@ -87,9 +83,7 @@
                 @keyup.enter.native="handleQuery"
               />
             </el-form-item>
-          </div>
-        </el-col>
-        <el-col :span="3">
+      
           <el-form-item>
             <el-button
               type="primary"
@@ -102,8 +96,7 @@
               >重置</el-button
             >
           </el-form-item>
-        </el-col>
-      </el-row>
+    
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -312,7 +305,6 @@
           <el-col :span="12">
             <el-form-item label="任务单">
               <el-select
-              
                 v-model="productiontasklist"
                 placeholder="请选择任务单"
                 filterable
@@ -500,7 +492,10 @@ import {
   updateProcessinspection,
 } from "@/api/quality/processinspection";
 import { listProductiontasklist } from "@/api/produce/productiontasklist";
-import { listProductiontasks ,getProductiontasks} from "@/api/produce/productiontasks";
+import {
+  listProductiontasks,
+  getProductiontasks,
+} from "@/api/produce/productiontasks";
 import { listProcessingprocess } from "@/api/produce/processingprocess";
 import { getValue } from "@/utils/utils.js";
 
@@ -529,7 +524,7 @@ export default {
       open: false,
       // 是否查看详情
       open_view: false,
-      view_open:false,
+      view_open: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -627,21 +622,23 @@ export default {
       });
     },
     /** 查询任务单列表 */
-   async getListProductiontasklist() {
+    async getListProductiontasklist() {
       this.loading = true;
-          let total= (await listProductiontasklist())["total"];
+      let total = (await listProductiontasklist())["total"];
 
-      listProductiontasklist({ status: "1",pageSize:total }).then((response) => {
-        this.productiontasklist_list = response.rows;
-        this.loading = false;
-      });
+      listProductiontasklist({ status: "1", pageSize: total }).then(
+        (response) => {
+          this.productiontasklist_list = response.rows;
+          this.loading = false;
+        }
+      );
     },
     /** 查询任务列表 */
-   async getListProductiontasks() {
+    async getListProductiontasks() {
       this.loading = true;
-      let total= (await listProductiontasks())["total"];
+      let total = (await listProductiontasks())["total"];
       listProductiontasks({
-        pageSize:total,
+        pageSize: total,
         status: "1",
         productionTasksFormID: String(this.productiontasklist),
       }).then((response) => {
@@ -650,11 +647,11 @@ export default {
       });
     },
     /** 查询工序列表 */
-  async  getListProcessingprocess() {
+    async getListProcessingprocess() {
       this.loading = true;
-      let total= (await listProcessingprocess())["total"];
+      let total = (await listProcessingprocess())["total"];
       listProcessingprocess({
-        pageSize:total,
+        pageSize: total,
         processingTechnologyID: String(this.processingTechnologyID),
       }).then((response) => {
         this.processingprocess_list = response.rows;

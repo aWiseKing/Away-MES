@@ -8,68 +8,58 @@
       v-show="showSearch"
       label-width="68px"
     >
-      <el-row :gutter="1">
-        <el-col :span="21">
-          <div
-            style="overflow-x: auto; scrollbar-width: none; white-space: nowrap"
-          >
-            <el-form-item label="材料名称" prop="name">
-              <el-input
-                v-model="queryParams.name"
-                placeholder="请输入材料名称"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="类别名称" prop="typeName">
-              <el-input
-                v-model="queryParams.typeName"
-                placeholder="请输入类别名称"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="规格类型" prop="specificationsType">
-              <el-input
-                v-model="queryParams.specificationsType"
-                placeholder="请输入规格类型"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="规格型号" prop="specificationModel">
-              <el-input
-                v-model="queryParams.specificationModel"
-                placeholder="请输入规格型号"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="材料密度" prop="materialDensity">
-              <el-input
-                v-model="queryParams.materialDensity"
-                placeholder="请输入材料密度"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-          </div>
-        </el-col>
-        <el-col :span="3">
-          <el-form-item>
-            <el-button
-              type="primary"
-              icon="el-icon-search"
-              size="mini"
-              @click="handleQuery"
-              >搜索</el-button
-            >
-            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
-              >重置</el-button
-            >
-          </el-form-item>
-        </el-col>
-      </el-row>
+      <el-form-item label="材料名称" prop="name">
+        <el-input
+          v-model="queryParams.name"
+          placeholder="请输入材料名称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="类别名称" prop="typeName">
+        <el-input
+          v-model="queryParams.typeName"
+          placeholder="请输入类别名称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="规格类型" prop="specificationsType">
+        <el-input
+          v-model="queryParams.specificationsType"
+          placeholder="请输入规格类型"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="规格型号" prop="specificationModel">
+        <el-input
+          v-model="queryParams.specificationModel"
+          placeholder="请输入规格型号"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="材料密度" prop="materialDensity">
+        <el-input
+          v-model="queryParams.materialDensity"
+          placeholder="请输入材料密度"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          size="mini"
+          @click="handleQuery"
+          >搜索</el-button
+        >
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
+          >重置</el-button
+        >
+      </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -394,12 +384,22 @@
         </el-row>
         <!-- 其他信息 -->
         <el-row :gutter="12"
-          ><el-col :span="12"
-            ><el-form-item label="附样" prop="sampleURL">
-              <image-upload
-                v-model="matlwarehousingdet.sampleURL"
-              /> </el-form-item></el-col
-        ></el-row>
+          ><el-form-item label="附样" prop="sampleURL">
+            <el-upload
+              ref="upload"
+              :file-list="fileList"
+              action="String"
+              :http-request="fileUpdate"
+              :auto-upload="false"
+              list-type="picture"
+            >
+              <el-button size="small" type="primary">点击上传</el-button>
+              <div slot="tip" class="el-upload__tip">
+                只能上传jpg/png文件，且不超过500kb
+              </div>
+            </el-upload>
+          </el-form-item></el-row
+        >
         <el-row :gutter="12"
           ><el-col :span="24"
             ><el-form-item label="备注" prop="notes">
@@ -413,6 +413,84 @@
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
+    </el-dialog>
+
+    <el-dialog
+      :title="'入库单编号:' + view_form.warehouseEntryID"
+      :visible.sync="view_open"
+      width="800px"
+      append-to-body
+    >
+      <el-descriptions :column="2" border>
+        <el-descriptions-item label="入库单编号">{{
+          view_form.warehouseEntryID
+        }}</el-descriptions-item>
+        <el-descriptions-item label="入库数量">{{
+          view_form.receiptQuantity
+        }}</el-descriptions-item>
+        <el-descriptions-item label="订单编号">{{
+          view_form.warehouseEntryID
+        }}</el-descriptions-item>
+        <el-descriptions-item label="申购单">{{
+          purchaserequisition.subscribeID
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="申购材料编号">{{
+          view_form.materialSubscription
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="材料编号">{{
+          view_form.materialID
+        }}</el-descriptions-item>
+        <el-descriptions-item label="材料名称">{{
+          view_form.name
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="类别名称">{{
+          view_form.typeName
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="规格类型">{{
+          view_form.specificationsType
+        }}</el-descriptions-item>
+        <el-descriptions-item label="材料密度">{{
+          view_form.materialDensity
+        }}</el-descriptions-item>
+        <el-descriptions-item label="材料价格">{{
+          view_form.materialPrice
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="规格型号">{{
+          view_form.specificationModel
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="发票信息">{{
+          view_form.receiptInvoiceID
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="发票类型">{{
+          view_form.invoiceType
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="发票税率">{{
+          view_form.invoiceTaxRate
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="不含税采购单价">{{
+          view_form.purchaseUnitPriceExcludingTax
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="含税采购单价">{{
+          view_form.purchaseUnitPriceIncludingTax
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="备注">{{
+          view_form.warehouseEntryID
+        }}</el-descriptions-item>
+        <el-descriptions-item label="产品图纸附件" :span="2">
+          <filedown :files="view_form.files" />
+        </el-descriptions-item>
+      </el-descriptions>
     </el-dialog>
   </div>
 </template>
@@ -445,8 +523,13 @@ import {
 import { setIntersectionObj } from "@/utils/utils.js";
 import "@/assets/styles/away-element-ui-disabled.scss"; // away css
 
+import { fileDownload, fileUpdate } from "@/api/file/file";
+
+import Filedown from "../../../components/FileDown/filedown.vue";
 export default {
   name: "Matlwarehousingdet",
+  components: { filedown: Filedown },
+
   data() {
     return {
       // 遮罩层
@@ -483,6 +566,11 @@ export default {
       },
       // 表单参数
       form: {},
+      // 文件列表
+      fileList: [],
+      // 订单详细查看
+      view_form: [],
+
       // 表单校验
       rules: {
         id: [{ required: true, message: "id不能为空", trigger: "blur" }],
@@ -540,6 +628,25 @@ export default {
     this.getExist();
   },
   methods: {
+    /** 文件上传 */
+    async fileUpdate() {
+      let file_list = this.$refs.upload.uploadFiles;
+      if (file_list.length > 0) {
+        let num = 0;
+        let formData = new FormData();
+        for (num in file_list) {
+          formData.append("files", file_list[num].raw);
+        }
+        let response = await fileUpdate(formData);
+        this.form.sampleURL = response;
+      }
+    },
+    /** 文件下载 */
+    async fileDown(file_name) {
+      let tmp = await fileDownload(file_name);
+      this.view_form.files.push(tmp);
+    },
+
     getExist() {
       this.warehouseEntryID = this.$route.query.id;
       this.queryParams.warehouseEntryID = this.warehouseEntryID;
@@ -715,6 +822,7 @@ export default {
       // 选中发票信息
       this.receiptinvoice = {};
       this.resetForm("form");
+      this.fileList = [];
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -732,13 +840,27 @@ export default {
       this.single = selection.length !== 1;
       this.multiple = !selection.length;
     },
-    handleView(row) {
+    async handleView(row) {
+      this.view_form = row;
+      this.view_form.files = [];
+      if (row.sampleURL != null) {
+        let urls = row.sampleURL.split(";");
+        urls.pop();
+        console.log(row.sampleURL.split(";"));
+        let num = 0;
+        for (num in urls) {
+          let tmp = await fileDownload(urls[num]);
+          this.view_form.files.push(tmp);
+          console.log(tmp);
+        }
+        console.log(this.view_form);
+      }
+
       this.reset();
       this.isadd = false;
       const id = row.id || this.ids;
       getMatlwarehousingdet(id).then((response) => {
         this.matlwarehousingdet = response.data;
-        console.log(response.data);
         if (this.matlwarehousingdet.materialSubscription != null) {
           getDetailmaterialsubscription(
             this.matlwarehousingdet.materialSubscription
@@ -746,7 +868,7 @@ export default {
             this.setPurchaserequisition(response.data.subscribeID);
           });
         }
-        this.open = true;
+
         this.view_open = true;
         this.title = "材料入库详细";
       });
@@ -764,8 +886,18 @@ export default {
       this.reset();
       this.isadd = false;
       const id = row.id || this.ids;
-      getMatlwarehousingdet(id).then((response) => {
+      getMatlwarehousingdet(id).then(async (response) => {
         this.matlwarehousingdet = response.data;
+
+        if (response.data.sampleURL != null) {
+          let num = 0;
+          let urls = response.data.sampleURL.split(";");
+          urls.pop();
+          for (num in urls) {
+            let tmp = await fileDownload(urls[num]);
+            this.fileList.push({ url: tmp.getUrl(), raw: tmp.getFile() });
+          }
+        }
         if (this.matlwarehousingdet.materialSubscription != null) {
           getDetailmaterialsubscription(
             this.matlwarehousingdet.materialSubscription
@@ -779,10 +911,12 @@ export default {
       });
     },
     /** 提交按钮 */
-    submitForm() {
-      this.$refs["matlwarehousingdet"].validate((valid) => {
+    async submitForm() {
+      this.$refs["matlwarehousingdet"].validate(async (valid) => {
         if (valid) {
           setIntersectionObj(this.form, this.matlwarehousingdet);
+          await this.fileUpdate();
+
           if (!this.isadd) {
             updateMatlwarehousingdet(this.form).then((response) => {
               this.$modal.msgSuccess("修改成功");

@@ -8,126 +8,62 @@
       v-show="showSearch"
       label-width="68px"
     >
-      <el-row :gutter="1">
-        <el-col :span="21">
-          <div
-            style="overflow-x: auto; scrollbar-width: none; white-space: nowrap"
-          >
-            <el-form-item label="订单编号" prop="saleorderID">
-              <el-input
-                v-model="queryParams.saleorderID"
-                placeholder="请输入订单编号"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="材料基础信息编号" prop="materialID">
-              <el-input
-                v-model="queryParams.materialID"
-                placeholder="请输入材料基础信息编号"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
+      <el-form-item label="订单编号" prop="saleorderID">
+        <el-input
+          v-model="queryParams.saleorderID"
+          placeholder="请输入订单编号"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
 
-            <el-form-item label="入库数量" prop="receiptQuantity">
-              <el-input
-                v-model="queryParams.receiptQuantity"
-                placeholder="请输入入库数量"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
+      <el-form-item label="入库数量" prop="receiptQuantity">
+        <el-input
+          v-model="queryParams.receiptQuantity"
+          placeholder="请输入入库数量"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
 
-            <el-form-item label="备注" prop="notes">
-              <el-input
-                v-model="queryParams.notes"
-                placeholder="请输入备注"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="材料名称" prop="materialName">
-              <el-input
-                v-model="queryParams.materialName"
-                placeholder="请输入材料名称"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="材料分类" prop="typeID">
-              <el-input
-                v-model="queryParams.typeID"
-                placeholder="请输入材料分类"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="规格类型" prop="specificationsID">
-              <el-input
-                v-model="queryParams.specificationsID"
-                placeholder="请输入规格类型"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="材料密度" prop="materialDensity">
-              <el-input
-                v-model="queryParams.materialDensity"
-                placeholder="请输入材料密度"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="材料价格" prop="materialPrice">
-              <el-input
-                v-model="queryParams.materialPrice"
-                placeholder="请输入材料价格"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="类别名称" prop="typeName">
-              <el-input
-                v-model="queryParams.typeName"
-                placeholder="请输入类别名称"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="规格型号" prop="specificationModel">
-              <el-input
-                v-model="queryParams.specificationModel"
-                placeholder="请输入规格型号"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="实体姓名" prop="partnerName">
-              <el-input
-                v-model="queryParams.partnerName"
-                placeholder="请输入实体姓名"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-          </div>
-        </el-col>
-        <el-col :span="3">
-          <el-form-item>
-            <el-button
-              type="primary"
-              icon="el-icon-search"
-              size="mini"
-              @click="handleQuery"
-              >搜索</el-button
-            >
-            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
-              >重置</el-button
-            >
-          </el-form-item>
-        </el-col>
-      </el-row>
+      <el-form-item label="备注" prop="notes">
+        <el-input
+          v-model="queryParams.notes"
+          placeholder="请输入备注"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="材料名称" prop="materialName">
+        <el-input
+          v-model="queryParams.materialName"
+          placeholder="请输入材料名称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+
+      <el-form-item label="实体姓名" prop="partnerName">
+        <el-input
+          v-model="queryParams.partnerName"
+          placeholder="请输入实体姓名"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+
+      <el-form-item>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          size="mini"
+          @click="handleQuery"
+          >搜索</el-button
+        >
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
+          >重置</el-button
+        >
+      </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -229,6 +165,7 @@
             >查看</el-button
           >
           <el-button
+            v-if="upper_status == '0'"
             size="mini"
             type="text"
             icon="el-icon-edit"
@@ -237,6 +174,7 @@
             >修改</el-button
           >
           <el-button
+            v-if="upper_status == '0'"
             size="mini"
             type="text"
             icon="el-icon-delete"
@@ -415,17 +353,79 @@
         </el-row>
 
         <el-row :gutter="12">
-          <el-col :span="12">
-            <el-form-item label="附样" prop="sampleURL">
-              <image-upload v-model="form.sampleURL" />
-            </el-form-item>
-          </el-col>
+          <el-form-item label="附样" prop="sampleURL">
+            <el-upload
+              ref="upload"
+              :file-list="fileList"
+              action="String"
+              :http-request="fileUpdate"
+              :auto-upload="false"
+              list-type="picture"
+            >
+              <el-button size="small" type="primary">点击上传</el-button>
+              <div slot="tip" class="el-upload__tip">
+                只能上传jpg/png文件，且不超过500kb
+              </div>
+            </el-upload>
+          </el-form-item>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer" v-if="!view_open">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
+    </el-dialog>
+
+    <el-dialog
+      :title="'入库单编号:' + view_form.warehouseEntryID"
+      :visible.sync="view_open"
+      width="800px"
+      append-to-body
+    >
+      <el-descriptions :column="2" border>
+        <el-descriptions-item label="入库单编号">{{
+          view_form.warehouseEntryID
+        }}</el-descriptions-item>
+        <el-descriptions-item label="入库数量">{{
+          view_form.receiptQuantity
+        }}</el-descriptions-item>
+        <el-descriptions-item label="订单编号">{{
+          view_form.warehouseEntryID
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="实体姓名">{{
+          Order.name
+        }}</el-descriptions-item>
+        <el-descriptions-item label="材料编号">{{
+          view_form.materialID
+        }}</el-descriptions-item>
+        <el-descriptions-item label="材料名称">{{
+          BasicInformationOfMaterials.name
+        }}</el-descriptions-item>
+        <el-descriptions-item label="规格类型">{{
+          BasicInformationOfMaterials.specificationsType
+        }}</el-descriptions-item>
+        <el-descriptions-item label="材料密度">{{
+          BasicInformationOfMaterials.materialDensity
+        }}</el-descriptions-item>
+        <el-descriptions-item label="材料价格">{{
+          BasicInformationOfMaterials.materialPrice
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="材料价格">{{
+          BasicInformationOfMaterials.typeName
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="规格型号">{{
+          BasicInformationOfMaterials.specificationModel
+        }}</el-descriptions-item>
+        <el-descriptions-item label="备注">{{
+          view_form.warehouseEntryID
+        }}</el-descriptions-item>
+        <el-descriptions-item label="产品图纸附件" :span="2">
+          <filedown :files="view_form.files" />
+        </el-descriptions-item>
+      </el-descriptions>
     </el-dialog>
   </div>
 </template>
@@ -456,7 +456,6 @@ import {
 import { fileDownload, fileUpdate } from "@/api/file/file";
 
 import Filedown from "../../../components/FileDown/filedown.vue";
-
 export default {
   name: "DetailCustomerMaterialsStorage",
   components: { filedown: Filedown },
@@ -523,7 +522,10 @@ export default {
           { required: true, message: "入库单编号不能为空", trigger: "blur" },
         ],
       },
+      // 文件列表
       fileList: [],
+      // 订单详细查看
+      view_form: [],
       //父单状态
       upper_status: null,
       //父单编号
@@ -542,6 +544,26 @@ export default {
     this.getExist();
   },
   methods: {
+    /** 文件上传 */
+    async fileUpdate() {
+      let file_list = this.$refs.upload.uploadFiles;
+      console.log(file_list);
+      if (file_list.length > 0) {
+        let num = 0;
+        let formData = new FormData();
+        for (num in file_list) {
+          formData.append("files", file_list[num].raw);
+        }
+        let response = await fileUpdate(formData);
+        this.form.sampleURL = response;
+      }
+    },
+    /** 文件下载 */
+    async fileDown(file_name) {
+      let tmp = await fileDownload(file_name);
+      this.view_form.files.push(tmp);
+    },
+
     /** 查询客供材料入库详细列表 */
 
     getExist() {
@@ -569,13 +591,11 @@ export default {
       });
     },
     //选择订单
-
     setOrder(id) {
       getOrderhoursdetailed(id).then((response) => {
         this.Order = response.data;
       });
     },
-
     //拿到材料
     async getBasicInformationOfMaterialsList() {
       let total = (await listBasicinformationofmaterials())["total"];
@@ -633,7 +653,18 @@ export default {
       this.single = selection.length !== 1;
       this.multiple = !selection.length;
     },
-    handleView(row) {
+    async handleView(row) {
+      this.view_form = row;
+      this.view_form.files = [];
+      if (row.sampleURL != null) {
+        let urls = row.sampleURL.split(";");
+        urls.pop();
+        let num = 0;
+        for (num in urls) {
+          let tmp = await fileDownload(urls[num]);
+          this.view_form.files.push(tmp);
+        }
+      }
       this.view_open = true;
       this.reset();
       getCustomerMaterialsStorage(row.id).then((response) => {
@@ -649,7 +680,6 @@ export default {
         });
       });
 
-      this.open = true;
       this.title = "查看客供材料入库详细";
     },
 
@@ -687,8 +717,17 @@ export default {
       this.reset();
       this.isadd = false;
       const id = row.id || this.ids;
-      getDetailCustomerMaterialsStorage(id).then((response) => {
+      getDetailCustomerMaterialsStorage(id).then(async (response) => {
         this.form = response.data;
+        if (response.data.sampleURL != null) {
+          let num = 0;
+          let urls = response.data.sampleURL.split(";");
+          urls.pop();
+          for (num in urls) {
+            let tmp = await fileDownload(urls[num]);
+            this.fileList.push({ url: tmp.getUrl(), raw: tmp.getFile() });
+          }
+        }
 
         getOrderhoursdetailed(row.saleorderID).then((response) => {
           this.Order = response.data;
@@ -705,6 +744,8 @@ export default {
     },
     /** 提交按钮 */
     async submitForm() {
+      await this.fileUpdate();
+
       this.$refs["form"].validate((valid) => {
         if (valid) {
           if (!this.isadd) {

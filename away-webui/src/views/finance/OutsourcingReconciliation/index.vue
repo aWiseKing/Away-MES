@@ -8,123 +8,114 @@
       v-show="showSearch"
       label-width="68px"
     >
-      <el-row :gutter="1">
-        <el-col :span="21">
-          <div
-            style="overflow-x: auto; scrollbar-width: none; white-space: nowrap"
-          >
-            <el-form-item label="外协完成数量" prop="completedQuantity">
-              <el-input
-                v-model="queryParams.completedQuantity"
-                placeholder="请输入外协完成数量"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="未完成数量" prop="unfinishedQuantity">
-              <el-input
-                v-model="queryParams.unfinishedQuantity"
-                placeholder="请输入未完成数量"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="应付金额" prop="amountDue">
-              <el-input
-                v-model="queryParams.amountDue"
-                placeholder="请输入应付金额"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="实付金额" prop="outOfPocketAmount">
-              <el-input
-                v-model="queryParams.outOfPocketAmount"
-                placeholder="请输入实付金额"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="未付金额" prop="unpaidAmount">
-              <el-input
-                v-model="queryParams.unpaidAmount"
-                placeholder="请输入未付金额"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="客户价格" prop="customerPrice">
-              <el-input
-                v-model="queryParams.customerPrice"
-                placeholder="请输入客户价格"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="发票价格" prop="invoicePrice">
-              <el-input
-                v-model="queryParams.invoicePrice"
-                placeholder="请输入发票价格"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="外协价格" prop="outsourcingPrice">
-              <el-input
-                v-model="queryParams.outsourcingPrice"
-                placeholder="请输入外协价格"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="工艺价格" prop="processPrice">
-              <el-input
-                v-model="queryParams.processPrice"
-                placeholder="请输入工艺价格"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="备注" prop="notes">
-              <el-input
-                v-model="queryParams.notes"
-                placeholder="请输入备注"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
+      <el-form-item label="外协完成数量" prop="completedQuantity">
+        <el-input
+          v-model="queryParams.completedQuantity"
+          placeholder="请输入外协完成数量"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="未完成数量" prop="unfinishedQuantity">
+        <el-input
+          v-model="queryParams.unfinishedQuantity"
+          placeholder="请输入未完成数量"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="应付金额" prop="amountDue">
+        <el-input
+          v-model="queryParams.amountDue"
+          placeholder="请输入应付金额"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="实付金额" prop="outOfPocketAmount">
+        <el-input
+          v-model="queryParams.outOfPocketAmount"
+          placeholder="请输入实付金额"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="未付金额" prop="unpaidAmount">
+        <el-input
+          v-model="queryParams.unpaidAmount"
+          placeholder="请输入未付金额"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="客户价格" prop="customerPrice">
+        <el-input
+          v-model="queryParams.customerPrice"
+          placeholder="请输入客户价格"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="发票价格" prop="invoicePrice">
+        <el-input
+          v-model="queryParams.invoicePrice"
+          placeholder="请输入发票价格"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="外协价格" prop="outsourcingPrice">
+        <el-input
+          v-model="queryParams.outsourcingPrice"
+          placeholder="请输入外协价格"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="工艺价格" prop="processPrice">
+        <el-input
+          v-model="queryParams.processPrice"
+          placeholder="请输入工艺价格"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="备注" prop="notes">
+        <el-input
+          v-model="queryParams.notes"
+          placeholder="请输入备注"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
 
-            <el-form-item label="状态" prop="status">
-              <el-select
-                v-model="queryParams.status"
-                placeholder="请选择状态"
-                clearable
-              >
-                <el-option
-                  v-for="dict in dict.type.aw_finance_reconciliation"
-                  :key="dict.value"
-                  :label="dict.label"
-                  :value="dict.value"
-                />
-              </el-select>
-            </el-form-item>
-          </div>
-        </el-col>
-        <el-col :span="3">
-          <el-form-item>
-            <el-button
-              type="primary"
-              icon="el-icon-search"
-              size="mini"
-              @click="handleQuery"
-              >搜索</el-button
-            >
-            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
-              >重置</el-button
-            >
-          </el-form-item>
-        </el-col>
-      </el-row>
+      <el-form-item label="状态" prop="status">
+        <el-select
+          v-model="queryParams.status"
+          placeholder="请选择状态"
+          clearable
+        >
+          <el-option
+            v-for="dict in dict.type.aw_finance_reconciliation"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
+      </el-form-item>
+
+      <el-form-item>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          size="mini"
+          @click="handleQuery"
+          >搜索</el-button
+        >
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
+          >重置</el-button
+        >
+      </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -174,7 +165,6 @@
           >导出</el-button
         >
       </el-col>
-         
 
       <right-toolbar
         :showSearch.sync="showSearch"
@@ -303,7 +293,7 @@
           <el-col :span="12">
             <el-form-item label="外协订单id" prop="outsourcingOrderID">
               <el-select
-              filterable
+                filterable
                 v-model="form.outsourcingOrderID"
                 placeholder="请输入外协订单id"
                 @focus="getoutsourcingOrderList()"
@@ -423,7 +413,6 @@
               />
             </el-form-item>
           </el-col>
-        
         </el-row>
 
         <el-row :gutter="12">
@@ -436,13 +425,13 @@
             </el-form-item>
           </el-col>
 
-          <el-col :span="12"> 
-              <el-form-item label="外协价格" prop="outsourcingPrice">
-            <el-input
-              v-model="form.outsourcingPrice"
-              placeholder="请输入外协价格"
-            />
-          </el-form-item>
+          <el-col :span="12">
+            <el-form-item label="外协价格" prop="outsourcingPrice">
+              <el-input
+                v-model="form.outsourcingPrice"
+                placeholder="请输入外协价格"
+              />
+            </el-form-item>
           </el-col>
         </el-row>
 
@@ -580,10 +569,10 @@ export default {
       this.getList();
     },
     //获取外协订单列表
-async    getoutsourcingOrderList() {
+    async getoutsourcingOrderList() {
       this.loading = true;
-         let total= (await listOutsourcingorder())["total"];
-      listOutsourcingorder({pageSize:total}).then((response) => {
+      let total = (await listOutsourcingorder())["total"];
+      listOutsourcingorder({ pageSize: total }).then((response) => {
         this.outsourcingOrderList = response.rows;
         this.loading = false;
       });
@@ -722,8 +711,6 @@ async    getoutsourcingOrderList() {
         `OutsourcingReconciliation_${new Date().getTime()}.xlsx`
       );
     },
-
-
   },
   watch: {
     "$route.query.id": {

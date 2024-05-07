@@ -8,70 +8,60 @@
       v-show="showSearch"
       label-width="68px"
     >
-      <el-row :gutter="1">
-        <el-col :span="21">
-          <div
-            style="overflow-x: auto; scrollbar-width: none; white-space: nowrap"
-          >
-            <el-form-item label="材料名称" prop="name">
-              <el-input
-                v-model="queryParams.name"
-                placeholder="请输入材料名称"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="类别名称" prop="typeName">
-              <el-input
-                v-model="queryParams.typeName"
-                placeholder="请输入类别名称"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="规格型号" prop="specificationModel">
-              <el-input
-                v-model="queryParams.specificationModel"
-                placeholder="请输入规格型号"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="工艺编号" prop="processingTechnologyID">
-              <el-input
-                v-model="queryParams.processingTechnologyID"
-                placeholder="请输入工艺编号"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="需用日期" prop="requiredDate">
-              <el-date-picker
-                clearable
-                v-model="queryParams.requiredDate"
-                type="date"
-                value-format="yyyy-MM-dd"
-                placeholder="请选择需用日期"
-              >
-              </el-date-picker>
-            </el-form-item>
-          </div>
-        </el-col>
-        <el-col :span="3">
-          <el-form-item>
-            <el-button
-              type="primary"
-              icon="el-icon-search"
-              size="mini"
-              @click="handleQuery"
-              >搜索</el-button
-            >
-            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
-              >重置</el-button
-            >
-          </el-form-item>
-        </el-col>
-      </el-row>
+      <el-form-item label="材料名称" prop="name">
+        <el-input
+          v-model="queryParams.name"
+          placeholder="请输入材料名称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="类别名称" prop="typeName">
+        <el-input
+          v-model="queryParams.typeName"
+          placeholder="请输入类别名称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="规格型号" prop="specificationModel">
+        <el-input
+          v-model="queryParams.specificationModel"
+          placeholder="请输入规格型号"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="工艺编号" prop="processingTechnologyID">
+        <el-input
+          v-model="queryParams.processingTechnologyID"
+          placeholder="请输入工艺编号"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="需用日期" prop="requiredDate">
+        <el-date-picker
+          clearable
+          v-model="queryParams.requiredDate"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="请选择需用日期"
+        >
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          size="mini"
+          @click="handleQuery"
+          >搜索</el-button
+        >
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
+          >重置</el-button
+        >
+      </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -380,23 +370,21 @@
                 </el-date-picker> </el-form-item></el-col
           ></el-row>
           <el-row :gutter="12"
-            ><el-col :span="24"
-              ><el-form-item label="附样" prop="sampleURL">
-                <el-upload
-                  ref="upload"
-                  :file-list="fileList"
-                  action="String"
-                  :http-request="fileUpdate"
-                  :auto-upload="false"
-                  list-type="picture"
-                >
-                  <el-button size="small" type="primary">点击上传</el-button>
-                  <div slot="tip" class="el-upload__tip">
-                    只能上传jpg/png文件，且不超过500kb
-                  </div>
-                </el-upload>
-              </el-form-item></el-col
-            ></el-row
+            ><el-form-item label="附样" prop="sampleURL">
+              <el-upload
+                ref="upload"
+                :file-list="fileList"
+                action="String"
+                :http-request="fileUpdate"
+                :auto-upload="false"
+                list-type="picture"
+              >
+                <el-button size="small" type="primary">点击上传</el-button>
+                <div slot="tip" class="el-upload__tip">
+                  只能上传jpg/png文件，且不超过500kb
+                </div>
+              </el-upload>
+            </el-form-item></el-row
           >
           <el-row :gutter="12"
             ><el-col :span="24">

@@ -1167,7 +1167,7 @@ export default {
       this.$refs["form"].validate((valid) => {
         this.setTime();
         if (valid) {
-           console.log(this.form)
+          console.log(this.form);
           if (!this.isadd) {
             updateProductmanhour(this.form).then((response) => {
               this.$modal.msgSuccess("修改成功");

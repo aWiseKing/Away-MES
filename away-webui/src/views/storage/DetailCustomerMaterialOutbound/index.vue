@@ -8,122 +8,90 @@
       v-show="showSearch"
       label-width="68px"
     >
-      <el-row :gutter="1">
-        <el-col :span="21">
-          <div
-            style="overflow-x: auto; scrollbar-width: none; white-space: nowrap"
-          >
-            <el-form-item label="材料基础信息编号" prop="materialID">
-              <el-input
-                v-model="queryParams.materialID"
-                placeholder="请输入材料基础信息编号"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="任务编号" prop="productionTasksID">
-              <el-input
-                v-model="queryParams.productionTasksID"
-                placeholder="请输入任务编号"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="工艺编号" prop="processingTechnologyID">
-              <el-input
-                v-model="queryParams.processingTechnologyID"
-                placeholder="请输入工艺编号"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="出库数量" prop="outboundQuantity">
-              <el-input
-                v-model="queryParams.outboundQuantity"
-                placeholder="请输入出库数量"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="备注" prop="notes">
-              <el-input
-                v-model="queryParams.notes"
-                placeholder="请输入备注"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="生产任务单编号" prop="productionTasksFormID">
-              <el-input
-                v-model="queryParams.productionTasksFormID"
-                placeholder="请输入生产任务单编号"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="材料名称" prop="name">
-              <el-input
-                v-model="queryParams.name"
-                placeholder="请输入材料名称"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="备注信息" prop="materialPrice">
-              <el-input
-                v-model="queryParams.materialPrice"
-                placeholder="请输入备注信息"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="材料密度" prop="materialDensity">
-              <el-input
-                v-model="queryParams.materialDensity"
-                placeholder="请输入材料密度"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="类别名称" prop="typeName">
-              <el-input
-                v-model="queryParams.typeName"
-                placeholder="请输入类别名称"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="规格型号" prop="specificationModel">
-              <el-input
-                v-model="queryParams.specificationModel"
-                placeholder="请输入规格型号"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-          </div>
-        </el-col>
-        <el-col :span="3">
-          <el-form-item>
-            <el-button
-              type="primary"
-              icon="el-icon-search"
-              size="mini"
-              @click="handleQuery"
-              >搜索</el-button
-            >
-            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
-              >重置</el-button
-            >
-          </el-form-item>
-        </el-col>
-      </el-row>
+      <el-form-item label="材料基础信息编号" prop="materialID">
+        <el-input
+          v-model="queryParams.materialID"
+          placeholder="请输入材料基础信息编号"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="任务编号" prop="productionTasksID">
+        <el-input
+          v-model="queryParams.productionTasksID"
+          placeholder="请输入任务编号"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="工艺编号" prop="processingTechnologyID">
+        <el-input
+          v-model="queryParams.processingTechnologyID"
+          placeholder="请输入工艺编号"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="出库数量" prop="outboundQuantity">
+        <el-input
+          v-model="queryParams.outboundQuantity"
+          placeholder="请输入出库数量"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="备注" prop="notes">
+        <el-input
+          v-model="queryParams.notes"
+          placeholder="请输入备注"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="生产任务单编号" prop="productionTasksFormID">
+        <el-input
+          v-model="queryParams.productionTasksFormID"
+          placeholder="请输入生产任务单编号"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="材料名称" prop="name">
+        <el-input
+          v-model="queryParams.name"
+          placeholder="请输入材料名称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="备注信息" prop="materialPrice">
+        <el-input
+          v-model="queryParams.materialPrice"
+          placeholder="请输入备注信息"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+
+      <el-form-item>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          size="mini"
+          @click="handleQuery"
+          >搜索</el-button
+        >
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
+          >重置</el-button
+        >
+      </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5" v-if="upper_status == '0'">
+      <el-col :span="1.5">
         <el-button
           type="primary"
+          v-if="upper_status == '0'"
           plain
           icon="el-icon-plus"
           size="mini"
@@ -228,6 +196,7 @@
             >查看</el-button
           >
           <el-button
+            v-if="upper_status == '0'"
             size="mini"
             type="text"
             icon="el-icon-edit"
@@ -236,6 +205,7 @@
             >修改</el-button
           >
           <el-button
+            v-if="upper_status == '0'"
             size="mini"
             type="text"
             icon="el-icon-delete"
@@ -278,7 +248,7 @@
           <el-col :span="12">
             <el-form-item label="生产任务单编号">
               <el-select
-              filterable
+                filterable
                 placeholder="请输入生产任务单编号"
                 @focus="getListProductiontasklist()"
                 v-model="productiontasklist.id"
@@ -300,7 +270,7 @@
           <el-col :span="12">
             <el-form-item label="任务编号" prop="productionTasksID">
               <el-select
-              filterable
+                filterable
                 :disabled="productiontasklist.id == null"
                 v-model="form.productionTasksID"
                 placeholder="请输入任务编号"
@@ -321,7 +291,7 @@
           <el-col :span="12">
             <el-form-item label="工艺编号" prop="processingTechnologyID">
               <el-select
-              filterable
+                filterable
                 :disabled="productiontasklist.id == null"
                 @focus="
                   getprocessingtechnologyList(

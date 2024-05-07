@@ -8,11 +8,7 @@
       v-show="showSearch"
       label-width="68px"
     >
-      <el-row :gutter="1">
-        <el-col :span="21">
-          <div
-            style="overflow-x: auto; scrollbar-width: none; white-space: nowrap"
-          >
+
             <el-form-item label="联系人姓名" prop="name">
               <el-input
                 v-model="queryParams.name"
@@ -66,9 +62,7 @@
             </el-option>
           </el-select>
             </el-form-item>
-          </div>
-        </el-col>
-        <el-col :span="3">
+  
           <el-form-item>
             <el-button
               type="primary"
@@ -81,8 +75,7 @@
               >重置</el-button
             >
           </el-form-item>
-        </el-col>
-      </el-row>
+
     </el-form>
 
     <el-row :gutter="10" class="mb8">

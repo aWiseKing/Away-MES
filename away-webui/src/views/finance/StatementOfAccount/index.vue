@@ -1,9 +1,13 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-    <el-row :gutter="1">
-            <el-col :span="21">
-              <div style="overflow-x: auto;scrollbar-width: none; white-space: nowrap;">
+    <el-form
+      :model="queryParams"
+      ref="queryForm"
+      size="small"
+      :inline="true"
+      v-show="showSearch"
+      label-width="68px"
+    >
       <el-form-item label="制单人" prop="creator">
         <el-input
           v-model="queryParams.creator"
@@ -21,11 +25,13 @@
         />
       </el-form-item>
       <el-form-item label="对账日期" prop="statementOfAccountDate">
-        <el-date-picker clearable
+        <el-date-picker
+          clearable
           v-model="queryParams.statementOfAccountDate"
           type="date"
           value-format="yyyy-MM-dd"
-          placeholder="请选择对账日期">
+          placeholder="请选择对账日期"
+        >
         </el-date-picker>
       </el-form-item>
       <el-form-item label="备注" prop="notes">
@@ -37,7 +43,11 @@
         />
       </el-form-item>
       <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable>
+        <el-select
+          v-model="queryParams.status"
+          placeholder="请选择状态"
+          clearable
+        >
           <el-option
             v-for="dict in dict.type.aw_finance_statementofaccount_status"
             :key="dict.value"
@@ -46,15 +56,19 @@
           />
         </el-select>
       </el-form-item>
- </div>
-        </el-col>
-        <el-col :span="3">
+
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          size="mini"
+          @click="handleQuery"
+          >搜索</el-button
+        >
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
+          >重置</el-button
+        >
       </el-form-item>
-      </el-col>
-    </el-row>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -66,7 +80,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['finance:StatementOfAccount:add']"
-        >新增</el-button>
+          >新增</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -77,7 +92,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['finance:StatementOfAccount:edit']"
-        >修改</el-button>
+          >修改</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -88,7 +104,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['finance:StatementOfAccount:remove']"
-        >删除</el-button>
+          >删除</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -98,56 +115,85 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['finance:StatementOfAccount:export']"
-        >导出</el-button>
+          >导出</el-button
+        >
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar
+        :showSearch.sync="showSearch"
+        @queryTable="getList"
+      ></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="StatementOfAccountList" @selection-change="handleSelectionChange">
+    <el-table
+      v-loading="loading"
+      :data="StatementOfAccountList"
+      @selection-change="handleSelectionChange"
+    >
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="对账单Id" align="center" prop="statementOfAccountID" />
+      <el-table-column
+        label="对账单Id"
+        align="center"
+        prop="statementOfAccountID"
+      />
       <el-table-column label="制单人" align="center" prop="creator" />
       <el-table-column label="对账人" align="center" prop="reconciler" />
-      <el-table-column label="对账日期" align="center" prop="statementOfAccountDate" width="180">
+      <el-table-column
+        label="对账日期"
+        align="center"
+        prop="statementOfAccountDate"
+        width="180"
+      >
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.statementOfAccountDate, '{y}-{m}-{d}') }}</span>
+          <span>{{
+            parseTime(scope.row.statementOfAccountDate, "{y}-{m}-{d}")
+          }}</span>
         </template>
       </el-table-column>
       <el-table-column label="备注" align="center" prop="notes" />
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.aw_finance_statementofaccount_status" :value="scope.row.status"/>
+          <dict-tag
+            :options="dict.type.aw_finance_statementofaccount_status"
+            :value="scope.row.status"
+          />
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column
+        label="操作"
+        align="center"
+        class-name="small-padding fixed-width"
+      >
         <template slot-scope="scope">
-        <el-button
+          <el-button
             size="mini"
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
             v-hasPermi="['finance:StatementOfAccount:edit']"
-          >查看</el-button>
+            >查看</el-button
+          >
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['finance:StatementOfAccount:edit']"
-          >修改</el-button>
+            >修改</el-button
+          >
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['finance:StatementOfAccount:remove']"
-          >删除</el-button>
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
 
     <pagination
-      v-show="total>0"
+      v-show="total > 0"
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
@@ -157,9 +203,11 @@
     <!-- 添加或修改对账单对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-
-           <el-form-item label="对账单编号" prop="statementOfAccountID">
-          <el-input v-model="form.statementOfAccountID" placeholder="请输入对账单编号" />
+        <el-form-item label="对账单编号" prop="statementOfAccountID">
+          <el-input
+            v-model="form.statementOfAccountID"
+            placeholder="请输入对账单编号"
+          />
         </el-form-item>
 
         <el-form-item label="制单人" prop="creator">
@@ -169,11 +217,13 @@
           <el-input v-model="form.reconciler" placeholder="请输入对账人" />
         </el-form-item>
         <el-form-item label="对账日期" prop="statementOfAccountDate">
-          <el-date-picker clearable
+          <el-date-picker
+            clearable
             v-model="form.statementOfAccountDate"
             type="date"
             value-format="yyyy-MM-dd"
-            placeholder="请选择对账日期">
+            placeholder="请选择对账日期"
+          >
           </el-date-picker>
         </el-form-item>
         <el-form-item label="备注" prop="notes">
@@ -199,12 +249,18 @@
 </template>
 
 <script>
-import { listStatementOfAccount, getStatementOfAccount, delStatementOfAccount, addStatementOfAccount, updateStatementOfAccount } from "@/api/finance/StatementOfAccount";
+import {
+  listStatementOfAccount,
+  getStatementOfAccount,
+  delStatementOfAccount,
+  addStatementOfAccount,
+  updateStatementOfAccount,
+} from "@/api/finance/StatementOfAccount";
 import { listReconciliation } from "@/api/finance/Reconciliation";
 
 export default {
   name: "StatementOfAccount",
-  dicts: ['aw_finance_statementofaccount_status'],
+  dicts: ["aw_finance_statementofaccount_status"],
   data() {
     return {
       // 遮罩层
@@ -237,22 +293,29 @@ export default {
         reconciler: null,
         statementOfAccountDate: null,
         notes: null,
-        status: null
+        status: null,
       },
       // 表单参数
-      form: {
-
-      },
+      form: {},
       // 表单校验
 
-
       rules: {
-        statementOfAccountID: [{ required: true, message: "对账单编号不能位空", trigger: "blur" }],
-         creator: [{ required: true, message: "制单人不能为空", trigger: "blur" }],
-          reconciler: [{ required: true, message: "对账单人不能为空", trigger: "blur" }],
-           statementOfAccountDate: [{ required: true, message: "对账日期不能为空", trigger: "blur" }],
-            status: [{ required: true, message: "对账状态不能为空", trigger: "blur" }],
-      }
+        statementOfAccountID: [
+          { required: true, message: "对账单编号不能位空", trigger: "blur" },
+        ],
+        creator: [
+          { required: true, message: "制单人不能为空", trigger: "blur" },
+        ],
+        reconciler: [
+          { required: true, message: "对账单人不能为空", trigger: "blur" },
+        ],
+        statementOfAccountDate: [
+          { required: true, message: "对账日期不能为空", trigger: "blur" },
+        ],
+        status: [
+          { required: true, message: "对账状态不能为空", trigger: "blur" },
+        ],
+      },
     };
   },
   created() {
@@ -262,7 +325,7 @@ export default {
     /** 查询对账单列表 */
     getList() {
       this.loading = true;
-      listStatementOfAccount(this.queryParams).then(response => {
+      listStatementOfAccount(this.queryParams).then((response) => {
         this.StatementOfAccountList = response.rows;
         this.total = response.total;
         this.loading = false;
@@ -282,7 +345,7 @@ export default {
         reconciler: null,
         statementOfAccountDate: null,
         notes: null,
-        status: null
+        status: null,
       };
       this.resetForm("form");
     },
@@ -298,16 +361,15 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.statementOfAccountID)
-      this.single = selection.length!==1
-      this.multiple = !selection.length
+      this.ids = selection.map((item) => item.statementOfAccountID);
+      this.single = selection.length !== 1;
+      this.multiple = !selection.length;
     },
     handleView(row) {
-         this.$router.push({
+      this.$router.push({
         path: "DetailReconciliation",
-        query: {id: row.statementOfAccountID},
+        query: { id: row.statementOfAccountID },
       });
-
     },
     /** 新增按钮操作 */
     handleAdd() {
@@ -320,8 +382,8 @@ export default {
     handleUpdate(row) {
       this.reset();
       this.isadd = false;
-      const statementOfAccountID = row.statementOfAccountID || this.ids
-      getStatementOfAccount(statementOfAccountID).then(response => {
+      const statementOfAccountID = row.statementOfAccountID || this.ids;
+      getStatementOfAccount(statementOfAccountID).then((response) => {
         this.form = response.data;
         this.open = true;
         this.title = "修改对账单";
@@ -329,16 +391,16 @@ export default {
     },
     /** 提交按钮 */
     submitForm() {
-      this.$refs["form"].validate(valid => {
+      this.$refs["form"].validate((valid) => {
         if (valid) {
           if (!this.isadd) {
-            updateStatementOfAccount(this.form).then(response => {
+            updateStatementOfAccount(this.form).then((response) => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addStatementOfAccount(this.form).then(response => {
+            addStatementOfAccount(this.form).then((response) => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -350,20 +412,29 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const statementOfAccountIDs = row.statementOfAccountID || this.ids;
-      this.$modal.confirm('是否确认删除对账单编号为"' + statementOfAccountIDs + '"的数据项？').then(function() {
-        return delStatementOfAccount(statementOfAccountIDs);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      this.$modal
+        .confirm(
+          '是否确认删除对账单编号为"' + statementOfAccountIDs + '"的数据项？'
+        )
+        .then(function () {
+          return delStatementOfAccount(statementOfAccountIDs);
+        })
+        .then(() => {
+          this.getList();
+          this.$modal.msgSuccess("删除成功");
+        })
+        .catch(() => {});
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('finance/StatementOfAccount/export', {
-        ...this.queryParams
-      }, `StatementOfAccount_${new Date().getTime()}.xlsx`)
-    }
+      this.download(
+        "finance/StatementOfAccount/export",
+        {
+          ...this.queryParams,
+        },
+        `StatementOfAccount_${new Date().getTime()}.xlsx`
+      );
+    },
   },
-
 };
 </script>

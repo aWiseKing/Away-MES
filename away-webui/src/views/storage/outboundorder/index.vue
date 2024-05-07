@@ -8,84 +8,75 @@
       v-show="showSearch"
       label-width="68px"
     >
-      <el-row :gutter="1">
-        <el-col :span="21">
-          <div
-            style="overflow-x: auto; scrollbar-width: none; white-space: nowrap"
-          >
-            <el-form-item label="出库日期" prop="deliveryDate">
-              <el-date-picker
-                clearable
-                v-model="queryParams.deliveryDate"
-                type="date"
-                value-format="yyyy-MM-dd"
-                placeholder="请选择出库日期"
-              >
-              </el-date-picker>
-            </el-form-item>
-            <el-form-item label="制单人" prop="creator">
-              <el-input
-                v-model="queryParams.creator"
-                placeholder="请输入制单人"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="库管员" prop="warehouseKeeper">
-              <el-input
-                v-model="queryParams.warehouseKeeper"
-                placeholder="请输入库管员"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="领料人" prop="materialReceiver">
-              <el-input
-                v-model="queryParams.materialReceiver"
-                placeholder="请输入领料人"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="备注" prop="notes">
-              <el-input
-                v-model="queryParams.notes"
-                placeholder="请输入备注"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="状态" prop="status">
-              <el-select
-                v-model="queryParams.status"
-                placeholder="请选择状态"
-                clearable
-              >
-                <el-option
-                  v-for="dict in dict.type.aw_storage_outboundorder_status"
-                  :key="dict.value"
-                  :label="dict.label"
-                  :value="dict.value"
-                />
-              </el-select>
-            </el-form-item>
-          </div>
-        </el-col>
-        <el-col :span="3">
-          <el-form-item>
-            <el-button
-              type="primary"
-              icon="el-icon-search"
-              size="mini"
-              @click="handleQuery"
-              >搜索</el-button
-            >
-            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
-              >重置</el-button
-            >
-          </el-form-item>
-        </el-col>
-      </el-row>
+      <el-form-item label="出库日期" prop="deliveryDate">
+        <el-date-picker
+          clearable
+          v-model="queryParams.deliveryDate"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="请选择出库日期"
+        >
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="制单人" prop="creator">
+        <el-input
+          v-model="queryParams.creator"
+          placeholder="请输入制单人"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="库管员" prop="warehouseKeeper">
+        <el-input
+          v-model="queryParams.warehouseKeeper"
+          placeholder="请输入库管员"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="领料人" prop="materialReceiver">
+        <el-input
+          v-model="queryParams.materialReceiver"
+          placeholder="请输入领料人"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="备注" prop="notes">
+        <el-input
+          v-model="queryParams.notes"
+          placeholder="请输入备注"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="状态" prop="status">
+        <el-select
+          v-model="queryParams.status"
+          placeholder="请选择状态"
+          clearable
+        >
+          <el-option
+            v-for="dict in dict.type.aw_storage_outboundorder_status"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
+      </el-form-item>
+
+      <el-form-item>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          size="mini"
+          @click="handleQuery"
+          >搜索</el-button
+        >
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
+          >重置</el-button
+        >
+      </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -189,7 +180,7 @@
             >查看</el-button
           >
           <el-button
-            size="mini" 
+            size="mini"
             type="text"
             icon="el-icon-view"
             @click="handleRelease(scope.row)"
@@ -334,8 +325,8 @@ import {
   addOutboundorder,
   updateOutboundorder,
 } from "@/api/storage/outboundorder";
-import { listMatloutbounddet } from "@/api/storage/matloutbounddet.js"
-import { reduceByNumber } from "@/api/storage/localmaterials.js"
+import { listMatloutbounddet } from "@/api/storage/matloutbounddet.js";
+import { reduceByNumber } from "@/api/storage/localmaterials.js";
 export default {
   name: "Outboundorder",
   dicts: ["aw_storage_outboundorder_status"],
@@ -398,7 +389,7 @@ export default {
         ],
       },
       // 出库材料单材料列表
-      matloutbounddetlist:[]
+      matloutbounddetlist: [],
     };
   },
   created() {
@@ -449,14 +440,14 @@ export default {
       this.multiple = !selection.length;
     },
     /** 状态调整 */
-    setStatus(row,status){
+    setStatus(row, status) {
       this.reset();
       this.loading = true;
-      const deliveryNoteID  = row.deliveryNoteID || this.ids
-      getOutboundorder(deliveryNoteID).then(response => {
+      const deliveryNoteID = row.deliveryNoteID || this.ids;
+      getOutboundorder(deliveryNoteID).then((response) => {
         this.form = response.data;
-        this.form.status=status;
-        updateOutboundorder(this.form).then(response => {
+        this.form.status = status;
+        updateOutboundorder(this.form).then((response) => {
           this.$modal.msgSuccess("状态变更成功");
           this.open = false;
           this.getList();
@@ -464,61 +455,67 @@ export default {
         });
       });
     },
-     /** 发布按钮操作 */
-     handleRelease(row) {
-      this.setStatus(row,"1");
+    /** 发布按钮操作 */
+    handleRelease(row) {
+      this.setStatus(row, "1");
     },
     /** 撤销发布按钮操作 */
-    handleUnpublish(row){
-      this.setStatus(row,"0");
+    handleUnpublish(row) {
+      this.setStatus(row, "0");
     },
     /** 完成按钮操作 */
-   async handleFinish(row) {
-      let deliveryNoteID = row.deliveryNoteID
-      this.loading=true;
+    async handleFinish(row) {
+      let deliveryNoteID = row.deliveryNoteID;
+      this.loading = true;
       // 出库材料列表
-      let total= (await listMatloutbounddet()['total'])
-      listMatloutbounddet({pageSize:total,deliveryNoteID:deliveryNoteID}).then((response)=>{
-        this.matloutbounddetlist=response.rows;
-        if(this.matloutbounddetlist.length > 0){
-          let lmlist = []
-          for(let num in this.matloutbounddetlist){
+      let total = await listMatloutbounddet()["total"];
+      listMatloutbounddet({
+        pageSize: total,
+        deliveryNoteID: deliveryNoteID,
+      }).then((response) => {
+        this.matloutbounddetlist = response.rows;
+        if (this.matloutbounddetlist.length > 0) {
+          let lmlist = [];
+          for (let num in this.matloutbounddetlist) {
             let materialID = this.matloutbounddetlist[num].materialID;
             let value = this.matloutbounddetlist[num].outboundQuantity;
-            lmlist.push({"key":materialID,"value":value})
+            lmlist.push({ key: materialID, value: value });
           }
-          reduceByNumber(JSON.stringify(lmlist)).then(response=>{
-              if (response.code == '200'){
-                this.setStatus(row,"2");
-              }
-            })
+          reduceByNumber(JSON.stringify(lmlist)).then((response) => {
+            if (response.code == "200") {
+              this.setStatus(row, "2");
+            }
+          });
         }
-        this.loading=false;
+        this.loading = false;
       });
     },
 
     /** 暂停按钮操作 */
     handlePause(row) {
-      this.setStatus(row,"3");
+      this.setStatus(row, "3");
     },
     /** 取消暂停按钮操作 */
     handleCancelPause(row) {
-      this.setStatus(row,"1");
+      this.setStatus(row, "1");
     },
     /** 废弃按钮操作 */
     handleDiscard(row) {
-      this.setStatus(row,"4");
+      this.setStatus(row, "4");
     },
     handleView(row) {
       this.view_open = true;
-      this.$router.push({path:"/storage/inandoutofstorage/matloutbounddet",query:{id:row.deliveryNoteID,status:row.status}})
+      this.$router.push({
+        path: "/storage/inandoutofstorage/matloutbounddet",
+        query: { id: row.deliveryNoteID, status: row.status },
+      });
     },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
       this.isadd = true;
       this.open = true;
-      this.title = "添加出库单";
+      this.title = "添加材料出库单";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -528,7 +525,7 @@ export default {
       getOutboundorder(deliveryNoteID).then((response) => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改出库单";
+        this.title = "修改出材料库单";
       });
     },
     /** 提交按钮 */
