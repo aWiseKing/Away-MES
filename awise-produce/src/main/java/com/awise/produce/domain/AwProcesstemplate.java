@@ -47,11 +47,11 @@ public class AwProcesstemplate extends BaseEntity
     private String laborCost;
 
     /** 工序外协#0为不外协1为外协# */
-    @Excel(name = "工序外协#0为不外协1为外协#")
+    @Excel(name = "工序外协#0为不外协1为外协#",dictType = "aw_produce_outsourcing")
     private String outsourcing;
 
     /** 状态 */
-    @Excel(name = "状态")
+    @Excel(name = "状态",dictType = "aw_produce_template")
     private String status;
 
     public void setId(Long id) 

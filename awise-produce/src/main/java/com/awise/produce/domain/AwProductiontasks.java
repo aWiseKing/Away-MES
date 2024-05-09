@@ -35,7 +35,7 @@ public class AwProductiontasks extends BaseEntity
     private String saleOrderID;
 
     /** 外协 */
-    @Excel(name = "外协")
+    @Excel(name = "外协",dictType ="aw_produce_outsourcing" )
     private String outsourced;
 
     /** 备注 */
@@ -43,7 +43,7 @@ public class AwProductiontasks extends BaseEntity
     private String notes;
 
     /** 任务状态 */
-    @Excel(name = "任务状态")
+    @Excel(name = "任务状态",dictType = "aw_produce_status")
     private String status;
 
     public void setId(Long id) 

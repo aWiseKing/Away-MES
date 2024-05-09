@@ -2,6 +2,11 @@ package com.awise.finance.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.away.common.utils.bean.BeanCopyUtils;
+import com.awise.finance.domain.AwOutsourcingreconciliation;
+import com.awise.finance.domain.Vo.AwOutsourcingstatementsVo;
+import com.awise.finance.service.IAwOutsourcingreconciliationService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +39,10 @@ public class AwOutsourcingstatementsController extends BaseController
     @Autowired
     private IAwOutsourcingstatementsService awOutsourcingstatementsService;
 
+    @Autowired
+    private IAwOutsourcingreconciliationService awOutsourcingreconciliationService;
+
+
     /**
      * 查询外协对账列表
      */
@@ -59,6 +68,28 @@ public class AwOutsourcingstatementsController extends BaseController
         util.exportExcel(response, list, "外协对账数据");
     }
 
+
+
+    /**
+     * 导出外协对账列表
+     */
+    @PreAuthorize("@ss.hasPermi('finance:OutsourcingStatements:export')")
+    @Log(title = "外协对账", businessType = BusinessType.EXPORT)
+    @PostMapping("/export/all")
+    public void exportAll(HttpServletResponse response, AwOutsourcingstatements awOutsourcingstatements)
+    {
+        List<AwOutsourcingstatements> list = awOutsourcingstatementsService.selectAwOutsourcingstatementsList(awOutsourcingstatements);
+
+        List<AwOutsourcingstatementsVo> awOutsourcingstatementsVos = BeanCopyUtils.copyBeanList(list, AwOutsourcingstatementsVo.class);
+        for (AwOutsourcingstatementsVo awOutsourcingstatementsVo : awOutsourcingstatementsVos) {
+            AwOutsourcingreconciliation awOutsourcingreconciliation = new AwOutsourcingreconciliation();
+            awOutsourcingreconciliation.setOutsourcingStatementsID(awOutsourcingstatementsVo.getOutsourcingStatementsID());
+            List<AwOutsourcingreconciliation> awOutsourcingreconciliations = awOutsourcingreconciliationService.selectAwOutsourcingreconciliationList(awOutsourcingreconciliation);
+            awOutsourcingstatementsVo.setAwOutsourcingreconciliationsList(awOutsourcingreconciliations);
+        }
+        ExcelUtil<AwOutsourcingstatementsVo> util = new ExcelUtil<AwOutsourcingstatementsVo>(AwOutsourcingstatementsVo.class);
+        util.exportExcel(response, awOutsourcingstatementsVos, "外协对账数据");
+    }
     /**
      * 获取外协对账详细信息
      */

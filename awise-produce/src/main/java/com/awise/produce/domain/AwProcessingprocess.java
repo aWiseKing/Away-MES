@@ -55,7 +55,7 @@ public class AwProcessingprocess extends BaseEntity
     private String laborCost;
 
     /** 工序外协#0为不外协1为外协# */
-    @Excel(name = "工序外协#0为不外协1为外协#")
+    @Excel(name = "工序外协#0为不外协1为外协#",dictType = "aw_produce_outsource_status")
     private String outsourcing;
 
     /** 状态 */

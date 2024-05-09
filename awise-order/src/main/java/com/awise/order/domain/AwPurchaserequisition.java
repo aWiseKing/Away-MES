@@ -38,7 +38,7 @@ public class AwPurchaserequisition extends BaseEntity
     private String note;
 
     /** 状态 */
-    @Excel(name = "状态")
+    @Excel(name = "状态" ,dictType = "aw_order_purchaserequisition_status")
     private String status;
 
     public void setSubscribeID(String subscribeID) 

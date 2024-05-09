@@ -50,7 +50,7 @@ public class AwFinishedproductinspection extends BaseEntity
     private Date testDate;
 
     /** 检测结果 */
-    @Excel(name = "检测结果")
+    @Excel(name = "检测结果",dictType = "aw_quality_finishedproductinspection_status")
     private String testResult;
 
     /** 检测人员 */

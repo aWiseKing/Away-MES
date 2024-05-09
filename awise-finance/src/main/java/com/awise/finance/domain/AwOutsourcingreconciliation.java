@@ -76,7 +76,7 @@ public class AwOutsourcingreconciliation extends BaseEntity
     private String notes;
 
     /** 状态 */
-    @Excel(name = "状态")
+    @Excel(name = "状态",dictType = "aw_finance_reconciliation")
     private String status;
 
     public void setId(Long id) 

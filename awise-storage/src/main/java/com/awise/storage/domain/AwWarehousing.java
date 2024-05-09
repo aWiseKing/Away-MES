@@ -46,7 +46,7 @@ public class AwWarehousing extends BaseEntity
     private String notes;
 
     /** 状态 */
-    @Excel(name = "状态")
+    @Excel(name = "状态" ,dictType="aw_storage_warehousing_status")
     private String status;
 
     public void setWarehouseEntryID(String warehouseEntryID) 

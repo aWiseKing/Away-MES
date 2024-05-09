@@ -119,17 +119,7 @@
           >导出</el-button
         >
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleAllExport"
-          v-hasPermi="['finance:OutsourcingReconciliation:export']"
-          >导出全部</el-button
-        >
-      </el-col>
+
       <right-toolbar
         :showSearch.sync="showSearch"
         @queryTable="getList"
@@ -443,7 +433,7 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       this.download(
-        "finance/OutsourcingStatements/export",
+        "finance/OutsourcingStatements/export/all",
         {
           ...this.queryParams,
         },
@@ -451,15 +441,7 @@ export default {
       );
     },
 
-    handleAllExport() {
-      this.download(
-        "finance/OutsourcingReconciliation/exportAll",
-        {
-          ...this.queryParams,
-        },
-        `OutsourcingReconciliation_${new Date().getTime()}.xlsx`
-      );
-    },
+
   },
 };
 </script>

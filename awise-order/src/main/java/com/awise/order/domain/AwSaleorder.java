@@ -51,13 +51,11 @@ public class AwSaleorder extends BaseEntity
     private String invoiceID;
 
     /** 客供材料否 */
-    @Excel(name = "客供材料否")
+    @Excel(name = "客供材料否",dictType = "aw_produce_outsourcing")
     private Long iscustomersuppliedmaterials;
 
-
-
     /** 当前订单状态 */
-    @Excel(name = "当前订单状态")
+    @Excel(name = "当前订单状态",dictType = "aw_order_saleoder_options")
     private String state;
 
     /** 备注 */

@@ -34,7 +34,7 @@ public class AwOutsourcingorder extends BaseEntity
     private Long processingprocessID;
 
     /** 委外类型 */
-    @Excel(name = "委外类型")
+    @Excel(name = "委外类型",dictType = "aw_order_outsourcingorder_type")
     private String outsourcingType;
 
     /** 下单时间 */

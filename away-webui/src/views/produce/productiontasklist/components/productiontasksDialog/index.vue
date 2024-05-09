@@ -35,7 +35,6 @@
             v-model="scope.row.saleOrderID"
             placeholder="请选择销售订单"
             filterable
-          
           >
             <el-option
               v-for="item in saleorder_list"
@@ -68,11 +67,10 @@
         <template slot-scope="scope">
           <el-radio-group v-model="scope.row.outsourced">
             <el-radio
-              v-for="item in isoutsourced"
-              :key="item.key"
-              :label="item.key"
-              >{{ item.value }}</el-radio
-            >
+              v-for="dict in dict.type.aw_produce_outsourcing"
+              :key="dict.value"
+              :label="dict.value"
+            >{{dict.label}}</el-radio>
           </el-radio-group>
         </template>
       </el-table-column>
@@ -83,11 +81,12 @@
             :disabled="scope.row.processingTechnologyID != null ? false : true"
           >
             <el-option
-              v-for="(item, index) in state_options"
-              :key="index"
-              :label="item.value"
-              :value="item.key"
-            ></el-option>
+              v-for="dict in dict.type.aw_produce_status"
+              :key="dict.value"
+              :label="dict.label"
+              :value="dict.value"
+            >
+            </el-option>
           </el-select>
         </template>
       </el-table-column>
@@ -145,6 +144,8 @@ import { listProcessingtechnology } from "@/api/produce/processingtechnology";
 
 export default {
   name: "ProductiontasksDialog",
+  dicts: ["aw_produce_status", "aw_produce_outsourcing"],
+
   props: ["proformid"],
   data() {
     return {
@@ -190,23 +191,25 @@ export default {
     async getListSaleorder() {
       this.loading = true;
 
-    let total=  (await listSaleorder({ state: "1" }))["total"];
+      let total = (await listSaleorder({ state: "1" }))["total"];
 
-      listSaleorder({ state: "1" ,pageSize:total}).then((response) => {
+      listSaleorder({ state: "1", pageSize: total }).then((response) => {
         this.saleorder_list = response.rows;
         this.loading = false;
       });
     },
     /** 查询生产工艺列表 */
-   async getListProcessingtechnology() {
+    async getListProcessingtechnology() {
       this.loading = true;
 
-    let total= (await listProcessingtechnology({ state: "1"}))["total"];
+      let total = (await listProcessingtechnology({ state: "1" }))["total"];
 
-      listProcessingtechnology({ state: "1" ,pageSize:total}).then((response) => {
-        this.processingtechnology_list = response.rows;
-        this.loading = false;
-      });
+      listProcessingtechnology({ state: "1", pageSize: total }).then(
+        (response) => {
+          this.processingtechnology_list = response.rows;
+          this.loading = false;
+        }
+      );
     },
     /** 跳转详情页面 */
     async jumpDetailPage(row) {
@@ -272,13 +275,15 @@ export default {
       }
     },
     /** 获取生成任务单对应任务 */
- async  getListProductiontasks(id) {
-  let total= (await listProductiontasks())["total"];
-
+    async getListProductiontasks(id) {
+      let total = (await listProductiontasks())["total"];
 
       if (id == null) {
       } else {
-        listProductiontasks({ productionTasksFormID: id,pageSize:total }).then((response) => {
+        listProductiontasks({
+          productionTasksFormID: id,
+          pageSize: total,
+        }).then((response) => {
           this.productiontasks_list = response.rows;
         });
       }

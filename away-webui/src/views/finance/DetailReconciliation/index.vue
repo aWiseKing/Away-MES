@@ -133,17 +133,6 @@
         >
       </el-col>
 
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleAllExport"
-          v-hasPermi="['finance:DetailReconciliation:export']"
-          >导出全部</el-button
-        >
-      </el-col>
 
       <right-toolbar
         :showSearch.sync="showSearch"

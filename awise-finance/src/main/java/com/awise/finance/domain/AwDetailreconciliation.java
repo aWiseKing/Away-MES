@@ -79,7 +79,7 @@ public class AwDetailreconciliation extends BaseEntity
     private String notes;
 
     /** 是否通过 */
-    @Excel(name = "是否通过",readConverterExp = "0=通过,1=不通过,2=暂未对账")
+    @Excel(name = "是否通过",dictType = "aw_finance_reconciliation")
     private String status;
 
     public void setId(Long id) 

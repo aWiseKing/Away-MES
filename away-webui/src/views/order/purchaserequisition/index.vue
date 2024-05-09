@@ -246,8 +246,28 @@
               <el-input
                 v-model="form.note"
                 placeholder="请输入备注"
-              /> </el-form-item></el-col
-        ></el-row>
+              /> </el-form-item
+          ></el-col>
+
+          <el-col :span="12">
+            <el-form-item label="状态" prop="status">
+              <el-select
+                disabled
+                v-model="form.status"
+                value-key="value"
+                placeholder="请选择订单状态"
+              >
+                <el-option
+                  v-for="dict in dict.type.aw_order_purchaserequisition_status"
+                  :key="dict.value"
+                  :label="dict.label"
+                  :value="dict.value"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>

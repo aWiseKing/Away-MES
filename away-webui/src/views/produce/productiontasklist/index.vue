@@ -108,6 +108,7 @@
     >
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="生产任务单编号" align="center" prop="id" />
+      <el-table-column label="生产任务单简称" align="center" prop="referred" />
       <el-table-column label="制单人" align="center" prop="founder" />
       <el-table-column
         label="创建日期"
@@ -273,7 +274,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        id:"",
+        id: "",
         founder: null,
         createTime: null,
         notes: null,
@@ -421,14 +422,14 @@ export default {
         .catch(() => {});
     },
     /** 导出按钮操作 */
-    handleExport( ) {      
+    handleExport() {
       this.download(
         "produce/productiontasklist/export",
         {
           ...this.queryParams,
         },
         `productiontasklist_${new Date().getTime()}.xlsx`
-      );   
+      );
     },
   },
 };

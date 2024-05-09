@@ -39,7 +39,7 @@ public class AwOutsourcingstatements extends BaseEntity
     private String notes;
 
     /** 状态 */
-    @Excel(name = "状态")
+    @Excel(name = "状态" ,dictType = "aw_finance_statementofaccount_status")
     private String status;
 
     public void setOutsourcingStatementsID(String outsourcingStatementsID) 

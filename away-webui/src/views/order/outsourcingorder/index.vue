@@ -449,7 +449,7 @@ export default {
     },
     /** 查询任务信息 */
     getListproductiontasks(productionTasksFormID) {
-      let tasksQues = {productionTasksFormID: productionTasksFormID,}
+      let tasksQues = {productionTasksFormID: productionTasksFormID}
       if(this.form.outsourcingType == "0"){
         tasksQues.outsourced = "1"
       }else{
@@ -469,10 +469,10 @@ export default {
   async  getListprocessingprocess(processingTechnologyID) {
 
       this.loading = true;
-  let total= (await listProcessingprocess({processingTechnologyID: processingTechnologyID, outsourcing: "外协"}))["total"];
+  let total= (await listProcessingprocess({processingTechnologyID: processingTechnologyID, outsourcing: 1}))["total"];
       listProcessingprocess({
         processingTechnologyID: processingTechnologyID,
-        outsourcing: "外协",
+        outsourcing: 1,
         pageSize:total
       }).then((response) => {
         this.processingprocesslist = response.rows;

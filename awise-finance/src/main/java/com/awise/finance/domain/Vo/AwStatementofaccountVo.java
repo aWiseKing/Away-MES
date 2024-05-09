@@ -1,6 +1,9 @@
-package com.awise.finance.domain;
+package com.awise.finance.domain.Vo;
 
 import java.util.Date;
+import java.util.List;
+
+import com.awise.finance.domain.AwDetailreconciliation;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -13,37 +16,49 @@ import com.away.common.core.domain.BaseEntity;
  * @author awise
  * @date 2023-12-22
  */
-public class AwStatementofaccount extends BaseEntity
+public class AwStatementofaccountVo extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** 对账单Id */
-    @Excel(name = "对账单Id")
+    @Excel(name = "对账单Id",needMerge=true)
     private String statementOfAccountID;
 
     /** 制单人 */
-    @Excel(name = "制单人")
+    @Excel(name = "制单人",needMerge=true)
     private String creator;
 
     /** 对账人 */
-    @Excel(name = "对账人")
+    @Excel(name = "对账人",needMerge=true)
     private String reconciler;
 
     /** 对账时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "对账时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @Excel(name = "对账时间", width = 30, dateFormat = "yyyy-MM-dd",needMerge=true)
     private Date statementOfAccountDate;
 
     /** 备注 */
-    @Excel(name = "备注")
+    @Excel(name = "备注",needMerge=true)
     private String notes;
 
 
     /** 状态 */
-    @Excel(name = "状态",dictType = "aw_finance_statementofaccount_status")
+    @Excel(name = "状态",dictType = "aw_finance_statementofaccount_status",needMerge=true)
     private String status;
 
-    public void setStatementOfAccountID(String statementOfAccountID) 
+    @Excel(name = "对账单列表")
+
+    private List<AwDetailreconciliation> detailreconciliationList;
+
+    public List<AwDetailreconciliation> getDetailreconciliationList() {
+        return detailreconciliationList;
+    }
+
+    public void setDetailreconciliationList(List<AwDetailreconciliation> detailreconciliationList) {
+        this.detailreconciliationList = detailreconciliationList;
+    }
+
+    public void setStatementOfAccountID(String statementOfAccountID)
     {
         this.statementOfAccountID = statementOfAccountID;
     }

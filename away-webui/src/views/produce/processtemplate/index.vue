@@ -196,15 +196,22 @@
         <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="状态" prop="status">
-              <el-select v-model="form.status" placeholder="请选择状态">
-                <el-option
-                  v-for="(item, index) in state_options"
-                  :key="index"
-                  :label="item.value"
-                  :value="item.key"
-                ></el-option>
-              </el-select>
+              <el-select
+            v-model="form.status" placeholder="请选择状态"
+          >
+            <el-option
+              v-for="dict in dict.type.aw_produce_template"
+              :key="dict.value"
+              :label="dict.label"
+              :value="dict.value"
+            >
+            </el-option>
+          </el-select>
             </el-form-item>
+
+  
+
+
           </el-col>
         </el-row>
         <el-row :gutter="12">
@@ -249,10 +256,10 @@
             <el-form-item label="工序外协" prop="outsourcing">
               <el-radio-group v-model="form.outsourcing">
                 <el-radio
-                  v-for="item in isoutsourced"
-                  :key="item.key"
-                  :label="item.key"
-                  >{{ item.value }}</el-radio
+                  v-for="dict in dict.type.aw_produce_outsourcing"
+                  :key="dict.value"
+                  :label="dict.value"
+                  >{{ dict.label }}</el-radio
                 >
               </el-radio-group>
             </el-form-item>
@@ -349,6 +356,7 @@ import Filedown from "../../../components/FileDown/filedown.vue";
 export default {
   name: "Processtemplate",
   components: { filedown: Filedown },
+  dicts: ["aw_produce_outsourcing","aw_produce_template"],
   data() {
     return {
       // 遮罩层

@@ -259,6 +259,7 @@
                   v-for="dict in dict.type.aw_produce_outsource_status"
                   :key="dict.value"
                   :label="dict.label"
+                  :value="dict.value"
                   >{{ dict.label }}
                 </el-radio>
               </el-radio-group>

@@ -2,6 +2,11 @@ package com.awise.finance.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.away.common.utils.bean.BeanCopyUtils;
+import com.awise.finance.domain.AwDetailreconciliation;
+import com.awise.finance.domain.Vo.AwStatementofaccountVo;
+import com.awise.finance.service.IAwDetailreconciliationService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +39,9 @@ public class AwStatementofaccountController extends BaseController
     @Autowired
     private IAwStatementofaccountService awStatementofaccountService;
 
+    @Autowired
+    private IAwDetailreconciliationService awDetailreconciliationService;
+
     /**
      * 查询对账单列表
      */
@@ -58,6 +66,31 @@ public class AwStatementofaccountController extends BaseController
         ExcelUtil<AwStatementofaccount> util = new ExcelUtil<AwStatementofaccount>(AwStatementofaccount.class);
         util.exportExcel(response, list, "对账单数据");
     }
+
+
+//    导出全部
+
+    @PreAuthorize("@ss.hasPermi('finance:StatementOfAccount:export')")
+    @Log(title = "对账单", businessType = BusinessType.EXPORT)
+    @PostMapping("/export/all")
+    public void exportAll(HttpServletResponse response, AwStatementofaccount awStatementofaccount)
+    {
+        List<AwStatementofaccount> list = awStatementofaccountService.selectAwStatementofaccountList(awStatementofaccount);
+        List<AwStatementofaccountVo> awStatementofaccountVos = BeanCopyUtils.copyBeanList(list, AwStatementofaccountVo.class);
+        for (AwStatementofaccountVo awStatementofaccountVo : awStatementofaccountVos) {
+            AwDetailreconciliation awDetailreconciliation = new AwDetailreconciliation();
+            awDetailreconciliation.setStatementOfAccountID(awStatementofaccountVo.getStatementOfAccountID());
+            List<AwDetailreconciliation> awDetailreconciliations = awDetailreconciliationService.selectAwDetailreconciliationList(awDetailreconciliation);
+            awStatementofaccountVo.setDetailreconciliationList(awDetailreconciliations);
+        }
+        ExcelUtil<AwStatementofaccountVo> util = new ExcelUtil<AwStatementofaccountVo>(AwStatementofaccountVo.class);
+        util.exportExcel(response, awStatementofaccountVos, "对账单数据");
+    }
+
+
+
+
+
 
     /**
      * 获取对账单详细信息

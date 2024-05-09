@@ -54,18 +54,6 @@ public class AwOutsourcingreconciliationController extends BaseController
     }
 
 
-    /**
-     * 导出外协对账详细列表
-     */
-    @PreAuthorize("@ss.hasPermi('finance:OutsourcingReconciliation:export')")
-    @Log(title = "外协对账详细", businessType = BusinessType.EXPORT)
-    @PostMapping("/exportAll")
-    public void exportAll(HttpServletResponse response, AwOutsourcingreconciliation awOutsourcingreconciliation)
-    {
-        List<AwOutsourcingreconciliation> list = awOutsourcingreconciliationService.selectOne();
-        ExcelUtil<AwOutsourcingreconciliation> util = new ExcelUtil<AwOutsourcingreconciliation>(AwOutsourcingreconciliation.class);
-        util.exportExcel(response, list, "外协对账详细数据");
-    }
 
 
 

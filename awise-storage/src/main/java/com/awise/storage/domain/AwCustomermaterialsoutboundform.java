@@ -43,7 +43,7 @@ public class AwCustomermaterialsoutboundform extends BaseEntity
     private String notes;
 
     /** 状态 */
-    @Excel(name = "状态")
+    @Excel(name = "状态",dictType = "aw_storage_outboundorder_status")
     private String status;
 
     public void setDeliveryNoteID(String deliveryNoteID) 

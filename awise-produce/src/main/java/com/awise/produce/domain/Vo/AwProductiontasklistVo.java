@@ -20,19 +20,20 @@ public class AwProductiontasklistVo extends BaseEntity
     private Long id;
 
     /** 简称 */
-    @Excel(name = "简称")
+
+    @Excel(name = "简称",needMerge=true)
     private String referred;
 
     /** 制单人 */
-    @Excel(name = "制单人")
+    @Excel(name = "制单人",needMerge=true)
     private String founder;
 
     /** 备注信息 */
-    @Excel(name = "备注信息")
+    @Excel(name = "备注信息",needMerge=true)
     private String notes;
 
     /** 状态 */
-    @Excel(name = "状态")
+    @Excel(name = "状态" ,dictType = "aw_produce_form_status",needMerge=true)
     private String status;
 
     @Excel(name = "生产任务列表")

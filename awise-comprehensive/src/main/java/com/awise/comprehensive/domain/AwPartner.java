@@ -47,7 +47,7 @@ public class AwPartner extends BaseEntity
     private String notes;
 
     /** 实体类型 */
-    @Excel(name = "实体类型")
+    @Excel(name = "实体类型" ,dictType = "aw_contract_location")
     private Long type;
 
     /** 是否删除 */

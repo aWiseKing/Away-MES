@@ -118,6 +118,7 @@
           >导出</el-button
         >
       </el-col>
+
       <right-toolbar
         :showSearch.sync="showSearch"
         @queryTable="getList"
@@ -428,7 +429,7 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       this.download(
-        "finance/StatementOfAccount/export",
+        "finance/StatementOfAccount/export/all",
         {
           ...this.queryParams,
         },

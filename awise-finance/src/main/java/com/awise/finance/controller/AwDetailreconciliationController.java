@@ -53,15 +53,7 @@ public class AwDetailreconciliationController extends BaseController
         util.exportExcel(response, list, "对账详细数据");
     }
 
-    @PreAuthorize("@ss.hasPermi('finance:DetailReconciliation:export')")
-    @Log(title = "对账详细", businessType = BusinessType.EXPORT)
-    @PostMapping("/exportAll")
-    public void exportAll(HttpServletResponse response)
-    {
-        List<AwDetailreconciliation> list = awDetailreconciliationService.selectAll();
-        ExcelUtil<AwDetailreconciliation> util = new ExcelUtil<AwDetailreconciliation>(AwDetailreconciliation.class);
-        util.exportExcel(response, list, "对账详细数据");
-    }
+
 
     /**
      * 获取对账详细详细信息

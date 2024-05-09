@@ -1,6 +1,9 @@
-package com.awise.finance.domain;
+package com.awise.finance.domain.Vo;
 
 import java.util.Date;
+import java.util.List;
+
+import com.awise.finance.domain.AwOutsourcingreconciliation;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -8,49 +11,60 @@ import com.away.common.annotation.Excel;
 import com.away.common.core.domain.BaseEntity;
 
 /**
- * 对账单对象 aw_StatementOfAccount
+ * 外协对账对象 aw_OutsourcingStatements
  * 
  * @author awise
- * @date 2023-12-22
+ * @date 2023-12-26
  */
-public class AwStatementofaccount extends BaseEntity
+public class AwOutsourcingstatementsVo extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 对账单Id */
-    @Excel(name = "对账单Id")
-    private String statementOfAccountID;
+    /** 外协对账单编号 */
+    @Excel(name = "外协对账单编号",needMerge = true)
+    private String outsourcingStatementsID;
 
     /** 制单人 */
-    @Excel(name = "制单人")
+    @Excel(name = "制单人",needMerge = true)
     private String creator;
 
     /** 对账人 */
-    @Excel(name = "对账人")
+    @Excel(name = "对账人",needMerge = true)
     private String reconciler;
 
     /** 对账时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "对账时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @Excel(name = "对账时间", width = 30, dateFormat = "yyyy-MM-dd",needMerge = true)
     private Date statementOfAccountDate;
 
     /** 备注 */
-    @Excel(name = "备注")
+    @Excel(name = "备注",needMerge = true)
     private String notes;
 
-
     /** 状态 */
-    @Excel(name = "状态",dictType = "aw_finance_statementofaccount_status")
+    @Excel(name = "状态" ,dictType = "aw_finance_statementofaccount_status",needMerge = true)
     private String status;
 
-    public void setStatementOfAccountID(String statementOfAccountID) 
-    {
-        this.statementOfAccountID = statementOfAccountID;
+
+    @Excel(name="外协对账列表")
+    private List<AwOutsourcingreconciliation> awOutsourcingreconciliationsList;
+
+    public List<AwOutsourcingreconciliation> getAwOutsourcingreconciliationsList() {
+        return awOutsourcingreconciliationsList;
     }
 
-    public String getStatementOfAccountID() 
+    public void setAwOutsourcingreconciliationsList(List<AwOutsourcingreconciliation> awOutsourcingreconciliationsList) {
+        this.awOutsourcingreconciliationsList = awOutsourcingreconciliationsList;
+    }
+
+    public void setOutsourcingStatementsID(String outsourcingStatementsID)
     {
-        return statementOfAccountID;
+        this.outsourcingStatementsID = outsourcingStatementsID;
+    }
+
+    public String getOutsourcingStatementsID() 
+    {
+        return outsourcingStatementsID;
     }
     public void setCreator(String creator) 
     {
@@ -101,7 +115,7 @@ public class AwStatementofaccount extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("statementOfAccountID", getStatementOfAccountID())
+            .append("outsourcingStatementsID", getOutsourcingStatementsID())
             .append("creator", getCreator())
             .append("reconciler", getReconciler())
             .append("statementOfAccountDate", getStatementOfAccountDate())

@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where statementOfAccountID = #{statementOfAccountID}
     </select>
         
-    <insert id="insertAwStatementofaccount" parameterType="AwStatementofaccount">
+    <insert id="insertAwStatementofaccount" parameterType="AwStatementofaccountVo">
         insert into aw_StatementOfAccount
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="statementOfAccountID != null">statementOfAccountID,</if>
@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 
-    <update id="updateAwStatementofaccount" parameterType="AwStatementofaccount">
+    <update id="updateAwStatementofaccount" parameterType="AwStatementofaccountVo">
         update aw_StatementOfAccount
         <trim prefix="SET" suffixOverrides=",">
             <if test="creator != null and creator != ''">creator = #{creator},</if>
