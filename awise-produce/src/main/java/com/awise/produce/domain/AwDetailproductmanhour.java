@@ -54,7 +54,7 @@ public class AwDetailproductmanhour extends BaseEntity
 
     /** 批次号 */
     @Excel(name = "批次号")
-    private Long lotNumber;
+    private String lotNumber;
 
     /** 工时时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -205,12 +205,12 @@ public class AwDetailproductmanhour extends BaseEntity
     {
         return scrapQuantity;
     }
-    public void setLotNumber(Long lotNumber) 
+    public void setLotNumber(String lotNumber)
     {
         this.lotNumber = lotNumber;
     }
 
-    public Long getLotNumber() 
+    public String getLotNumber()
     {
         return lotNumber;
     }

@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwSaleorderVo">
-        select id, createTime, createUserName, orderDate, number, requiredDeliveryTime, customerID, productID, contractID, invoiceID, iscustomersuppliedmaterials, state, note, isDel from aw_saleorder
+        select id, createTime, createUserName, lotNumber,orderDate, number, requiredDeliveryTime, customerID, productID, contractID, invoiceID, iscustomersuppliedmaterials, state, note, isDel from aw_saleorder
     </sql>
 
     <select id="selectAwSaleorderList" parameterType="AwSaleorder" resultMap="AwSaleorderResult">
@@ -31,6 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="createTime != null "> and createTime = #{createTime}</if>
             <if test="requiredDeliveryTime != null  and requiredDeliveryTime != ''"> and requiredDeliveryTime = #{requiredDeliveryTime}</if>
+            <if test="lotNumber != null  and lotNumber != ''"> and lotNumber = #{lotNumber}</if>
         </where>
     </select>
     
@@ -47,6 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createUserName != null and createUserName != ''">createUserName,</if>
             <if test="orderDate != null">orderDate,</if>
             <if test="number != null">number,</if>
+            <if test="lotNumber != null and lotNumber!='' ">lotNumber,</if>
             <if test="requiredDeliveryTime != null and requiredDeliveryTime != ''">requiredDeliveryTime,</if>
             <if test="customerID != null and customerID != ''">customerID,</if>
             <if test="productID != null and productID != ''">productID,</if>
@@ -64,7 +66,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createUserName != null and createUserName != ''">#{createUserName},</if>
             <if test="orderDate != null">#{orderDate},</if>
             <if test="number != null">#{number},</if>
+            <if test="lotNumber != null and lotNumber != ''">#{lotNumber},</if>
             <if test="requiredDeliveryTime != null and requiredDeliveryTime != ''">#{requiredDeliveryTime},</if>
+
             <if test="customerID != null and customerID != ''">#{customerID},</if>
             <if test="productID != null and productID != ''">#{productID},</if>
             <if test="contractID != null">#{contractID},</if>
@@ -84,6 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createUserName != null and createUserName != ''">createUserName = #{createUserName},</if>
             <if test="orderDate != null">orderDate = #{orderDate},</if>
             <if test="number != null">number = #{number},</if>
+            <if test="lotNumber != null and lotNumber != ''">lotNumber = #{lotNumber},</if>
             <if test="requiredDeliveryTime != null and requiredDeliveryTime != ''">requiredDeliveryTime = #{requiredDeliveryTime},</if>
             <if test="customerID != null and customerID != ''">customerID = #{customerID},</if>
             <if test="productID != null and productID != ''">productID = #{productID},</if>

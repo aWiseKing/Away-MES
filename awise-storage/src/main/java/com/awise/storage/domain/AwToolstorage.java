@@ -26,6 +26,13 @@ public class AwToolstorage extends BaseEntity
     @Excel(name = "发票信息编号")
     private String receiptInvoiceID;
 
+
+    //厂商
+
+    @Excel(name = "厂商")
+
+    private  String manufacturers;
+
     /** 刀具基本信息 */
     @Excel(name = "刀具基本信息")
     private String toolInformationID;
@@ -93,6 +100,15 @@ public class AwToolstorage extends BaseEntity
         return notes;
     }
 
+
+    public String getManufacturers() {
+        return manufacturers;
+    }
+
+    public void setManufacturers(String manufacturers) {
+        this.manufacturers = manufacturers;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -100,6 +116,7 @@ public class AwToolstorage extends BaseEntity
             .append("warehouseEntryID", getWarehouseEntryID())
             .append("receiptInvoiceID", getReceiptInvoiceID())
             .append("toolInformationID", getToolInformationID())
+                .append("manufacturers",getManufacturers())
             .append("receiptQuantity", getReceiptQuantity())
             .append("notes", getNotes())
             .toString();

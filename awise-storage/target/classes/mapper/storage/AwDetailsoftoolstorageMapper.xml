@@ -13,6 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="notes"    column="notes"    />
         <result property="name"    column="name"    />
         <result property="toolPrice"    column="toolPrice"    />
+        <result property="manufacturers"    column="manufacturers"    />
         <result property="typeName"    column="typeName"    />
         <result property="specificationsType"    column="specificationsType"    />
         <result property="specificationModel"    column="specificationModel"    />
@@ -20,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwDetailsoftoolstorageVo">
-        select id, warehouseEntryID, receiptInvoiceID, toolInformationID, receiptQuantity, notes, name,toolPrice, typeName, specificationsType, specificationModel, uint from aw_DetailsOfToolStorage
+        select id, warehouseEntryID, receiptInvoiceID, toolInformationID,manufacturers, receiptQuantity, notes, name,toolPrice, typeName, specificationsType, specificationModel, uint from aw_DetailsOfToolStorage
     </sql>
 
     <select id="selectAwDetailsoftoolstorageList" parameterType="AwDetailsoftoolstorage" resultMap="AwDetailsoftoolstorageResult">
@@ -30,12 +31,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="warehouseEntryID != null  and warehouseEntryID != ''"> and warehouseEntryID = #{warehouseEntryID}</if>
             <if test="receiptInvoiceID != null  and receiptInvoiceID != ''"> and receiptInvoiceID = #{receiptInvoiceID}</if>
             <if test="toolInformationID != null  and toolInformationID != ''"> and toolInformationID = #{toolInformationID}</if>
+            <if test="manufacturers != null  and manufacturers != ''"> and manufacturers = #{manufacturers}</if>
             <if test="receiptQuantity != null "> and receiptQuantity = #{receiptQuantity}</if>
             <if test="notes != null  and notes != ''"> and notes = #{notes}</if>
-
-
-
-
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="typeName != null  and typeName != ''"> and typeName like concat('%', #{typeName}, '%')</if>
             <if test="specificationsType != null  and specificationsType != ''"> and specificationsType = #{specificationsType}</if>
@@ -58,12 +56,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="toolInformationID != null and toolInformationID != ''">toolInformationID,</if>
             <if test="receiptQuantity != null">receiptQuantity,</if>
             <if test="notes != null">notes,</if>
-
-
-
-
             <if test="name != null and name != ''">name,</if>
             <if test="toolPrice != null and toolPrice != ''">toolPrice,</if>
+            <if test="manufacturers != null and manufacturers != ''">manufacturers,</if>
             <if test="typeName != null">typeName,</if>
             <if test="specificationsType != null">specificationsType,</if>
             <if test="specificationModel != null">specificationModel,</if>
@@ -76,12 +71,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="toolInformationID != null and toolInformationID != ''">#{toolInformationID},</if>
             <if test="receiptQuantity != null">#{receiptQuantity},</if>
             <if test="notes != null">#{notes},</if>
-
-
-
-
             <if test="name != null and name != ''">#{name},</if>
             <if test="toolPrice != null and toolPrice != ''">#{toolPrice},</if>
+            <if test="manufacturers != null and manufacturers != ''">#{manufacturers},</if>
             <if test="typeName != null">#{typeName},</if>
             <if test="specificationsType != null">#{specificationsType},</if>
             <if test="specificationModel != null">#{specificationModel},</if>
@@ -97,9 +89,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="toolInformationID != null and toolInformationID != ''">toolInformationID = #{toolInformationID},</if>
             <if test="receiptQuantity != null">receiptQuantity = #{receiptQuantity},</if>
             <if test="notes != null">notes = #{notes},</if>
-
             <if test="name != null and name != ''">name = #{name},</if>
             <if test="toolPrice != null and toolPrice != ''">toolPrice = #{toolPrice},</if>
+            <if test="manufacturers != null and manufacturers != ''">manufacturers = #{manufacturers},</if>
             <if test="typeName != null">typeName = #{typeName},</if>
             <if test="specificationsType != null">specificationsType = #{specificationsType},</if>
             <if test="specificationModel != null">specificationModel = #{specificationModel},</if>

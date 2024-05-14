@@ -22,6 +22,11 @@ public class AwProcessingprocess extends BaseEntity
     @Excel(name = "加工工艺信息")
     private String processingTechnologyID;
 
+// 工序简称
+
+
+
+
     /** 同一生产任务下工序序号 */
     @Excel(name = "同一生产任务下工序序号")
     private Long number;
@@ -71,7 +76,10 @@ public class AwProcessingprocess extends BaseEntity
     {
         return id;
     }
-    public void setProcessingTechnologyID(String processingTechnologyID) 
+
+
+
+    public void setProcessingTechnologyID(String processingTechnologyID)
     {
         this.processingTechnologyID = processingTechnologyID;
     }

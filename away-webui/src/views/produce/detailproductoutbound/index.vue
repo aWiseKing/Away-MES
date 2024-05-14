@@ -29,17 +29,10 @@
                 @keyup.enter.native="handleQuery"
               />
             </el-form-item>
-            <el-form-item label="出货检验编号" prop="shippingInspectionID">
+
+            <el-form-item label="客户编号" prop="contractID">
               <el-input
-                v-model="queryParams.shippingInspectionID"
-                placeholder="请输入出货检验编号"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="客户姓名" prop="customname">
-              <el-input
-                v-model="queryParams.customname"
+                v-model="queryParams.contractID"
                 placeholder="请输入客户姓名"
                 clearable
                 @keyup.enter.native="handleQuery"
@@ -72,7 +65,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-           v-if="status == '0'"
+          v-if="status == '0'"
           v-hasPermi="['produce:detailproductoutbound:add']"
           >新增</el-button
         >
@@ -85,7 +78,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-           v-if="status == '0'"
+          v-if="status == '0'"
           v-hasPermi="['produce:detailproductoutbound:edit']"
           >修改</el-button
         >
@@ -99,7 +92,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['produce:detailproductoutbound:remove']"
-           v-if="status == '0'"
+          v-if="status == '0'"
           >删除</el-button
         >
       </el-col>
@@ -132,14 +125,10 @@
         prop="deliveryNoteID"
       />
       <el-table-column label="产品图号" align="center" prop="productID" />
-      <el-table-column label="产品名称" align="center" prop="productname" />
-      <el-table-column
-        label="出货检验编号"
-        align="center"
-        prop="shippingInspectionID"
-      />
+
       <el-table-column label="出库数量" align="center" prop="receiptQuantity" />
-      <el-table-column label="客户姓名" align="center" prop="customname" />
+
+      <el-table-column label="客户编号" align="center" prop="contractID" />
       <el-table-column
         label="操作"
         align="center"
@@ -159,7 +148,7 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-           v-if="status == '0'"
+            v-if="status == '0'"
             v-hasPermi="['produce:detailproductoutbound:edit']"
             >修改</el-button
           >
@@ -168,8 +157,7 @@
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-                        v-if="status == '0'"
-
+            v-if="status == '0'"
             v-hasPermi="['produce:detailproductoutbound:remove']"
             >删除</el-button
           >
@@ -200,16 +188,17 @@
               <el-input
                 v-model="form.deliveryNoteID"
                 placeholder="请输入出库单编号"
-              /> </el-form-item></el-col
-        ></el-row>
-        <el-row :gutter="12"
-          ><el-col :span="12">
+              /> </el-form-item
+          ></el-col>
+          <el-col :span="12">
             <el-form-item label="出库数量" prop="receiptQuantity">
               <el-input
                 v-model="form.receiptQuantity"
                 placeholder="请输入出库数量"
-              /> </el-form-item></el-col
-        ></el-row>
+              /> </el-form-item
+          ></el-col>
+        </el-row>
+        <el-row :gutter="12"></el-row>
 
         <el-row :gutter="12"
           ><el-col :span="12">
@@ -218,21 +207,21 @@
                 filterable
                 v-model="form.productID"
                 placeholder="请选择产品图号"
-                @focus="getListproduct()"
+                @focus="getListProduct()"
               >
                 <el-option
                   v-for="(item, index) in productlist"
                   :key="index"
                   :label="item.id"
                   :value="item.id"
-                  @click.native="setDeliveryNoteOfProduct(item.id)"
+                  @click.native="setProduct(item.id)"
                 >
                 </el-option>
               </el-select> </el-form-item></el-col
           ><el-col :span="12">
-            <el-form-item label="产品名称" prop="productname">
+            <el-form-item label="产品名称">
               <el-input
-                v-model="deliveryNote.productname"
+                v-model="product.name"
                 placeholder="请输入产品名称"
                 disabled
               /> </el-form-item></el-col
@@ -244,14 +233,14 @@
                 filterable
                 v-model="form.contractID"
                 placeholder="请选择客户编号"
-                @focus="getListcustom()"
+                @focus="getListCustom()"
               >
                 <el-option
                   v-for="(item, index) in customlist"
                   :key="index"
-                  :label="item.name"
+                  :label="item.id"
                   :value="item.id"
-                  @click.native="setDeliveryNoteOfCustom(item.id)"
+                  @click.native="setCustom(item.id)"
                 >
                 </el-option>
               </el-select> </el-form-item
@@ -259,92 +248,18 @@
           <el-col :span="12">
             <el-form-item label="客户姓名" prop="customname">
               <el-input
-                v-model="deliveryNote.customname"
+                v-model="custom.name"
                 placeholder="请输入客户姓名"
                 disabled
               /> </el-form-item></el-col
         ></el-row>
+
         <el-row :gutter="12"
           ><el-col :span="12">
-            <el-form-item label="出货检验编号" prop="shippingInspectionID">
-              <el-select
-                filterable
-                v-model="form.shippingInspectionID"
-                placeholder="请选择出货检验编号"
-                @focus="getListshippinginspection()"
-              >
-                <el-option
-                  v-for="(item, index) in shippinginspectionlist"
-                  :key="index"
-                  :label="item.id"
-                  :value="item.id"
-                  @click.native="setDeliveryNoteOfShippinginspection(item.id)"
-                >
-                </el-option>
-              </el-select> </el-form-item
-          ></el-col>
-          <el-col :span="12">
-            <el-form-item label="出货数量" prop="shipmentQuantity">
+            <el-form-item label="备注" prop="notes">
               <el-input
-                v-model="deliveryNote.shipmentQuantity"
-                placeholder="请输入出货数量"
-                disabled
-              /> </el-form-item></el-col></el-row
-        ><el-row :gutter="12"
-          ><el-col :span="12">
-            <el-form-item label="检测数量" prop="detectionQuantity">
-              <el-input
-                v-model="deliveryNote.detectionQuantity"
-                placeholder="请输入检测数量"
-                disabled
-              /> </el-form-item></el-col
-          ><el-col :span="12">
-            <el-form-item label="合格数量" prop="qualifiedQuantity">
-              <el-input
-                v-model="deliveryNote.qualifiedQuantity"
-                placeholder="请输入合格数量"
-                disabled
-              /> </el-form-item></el-col></el-row
-        ><el-row :gutter="12"
-          ><el-col :span="12">
-            <el-form-item label="不合格数量" prop="unqualifiedQuantity">
-              <el-input
-                v-model="deliveryNote.unqualifiedQuantity"
-                placeholder="请输入不合格数量"
-                disabled
-              /> </el-form-item></el-col
-          ><el-col :span="12">
-            <el-form-item label="检测结果" prop="testResult">
-              <el-select
-                v-model="deliveryNote.testResult"
-                placeholder="请选择检测结果"
-                disabled
-              >
-                <el-option
-                  v-for="dict in dict.type.aw_quality_shippinginspection_status"
-                  :key="dict.value"
-                  :label="dict.label"
-                  :value="dict.value"
-                ></el-option>
-              </el-select> </el-form-item></el-col></el-row
-        ><el-row :gutter="12"
-          ><el-col :span="12">
-            <el-form-item label="检测日期" prop="testDate">
-              <el-date-picker
-                clearable
-                v-model="deliveryNote.testDate"
-                type="date"
-                value-format="yyyy-MM-dd"
-                placeholder="请选择检测日期"
-                disabled
-              >
-              </el-date-picker> </el-form-item></el-col
-          ><el-col :span="12">
-            <el-form-item label="检测人员" prop="testingPersonnel">
-              <el-input
-                v-model="deliveryNote.testingPersonnel"
-                placeholder="请输入检测人员"
-                disabled
+                v-model="form.notes"
+                placeholder="请输入备注"
               /> </el-form-item></el-col
         ></el-row>
       </el-form>
@@ -362,10 +277,6 @@ import {
   getDetailproductoutbound,
 } from "@/api/produce/detailproductoutbound";
 import { listProduct, getProduct } from "@/api/order/product";
-import {
-  listShippinginspection,
-  getShippinginspection,
-} from "@/api/quality/shippinginspection.js";
 import { listCustom, getCustom } from "@/api/comprehensive/custom.js";
 import {
   getProductoutbound,
@@ -410,7 +321,7 @@ export default {
         productID: null,
         productname: null,
         shippingInspectionID: null,
-        customname: null,
+        contractID: null,
       },
       // 表单参数
       form: {},
@@ -434,16 +345,15 @@ export default {
       },
       // 当前选中出货单id
       deliveryNoteID: null,
-      // 当前选中出库单详情
-      deliveryNote: {},
-      // 产品列表
-      productlist: [],
-      // 客户信息列表
-      customlist: [],
-      // 出货检验单列表
-      shippinginspectionlist: [],
-
       status: "",
+      //产品列表
+      productlist: [],
+      //产品
+      product: {},
+      //客户列表
+      customlist: [],
+      //客户
+      custom: {},
     };
   },
   created() {
@@ -454,7 +364,6 @@ export default {
       this.deliveryNoteID = this.$route.query.id;
       this.status = this.$route.query.status;
       this.queryParams.deliveryNoteID = this.deliveryNoteID;
-      console.log();
       this.getList();
     },
     /** 查询产品出库详单列表 */
@@ -466,66 +375,42 @@ export default {
         this.loading = false;
       });
     },
-    /** 查询产品列表 */
-    async getListproduct() {
-      this.loading = true;
+
+    //拿到产品列表
+    async getListProduct() {
       let total = (await listProduct())["total"];
       listProduct({ pageSize: total }).then((response) => {
         this.productlist = response.rows;
-        this.loading = false;
       });
     },
-    /** 查询客户信息 */
-    async getListcustom() {
-      this.loading = true;
+
+    //选中产品
+    setProduct(id) {
+      getProduct(id).then((response) => {
+        this.product = response.data;
+        console.log(this.product);
+      });
+    },
+
+    //拿到客户列表
+
+    async getListCustom() {
       let total = (await listCustom())["total"];
+
       listCustom({ pageSize: total }).then((response) => {
         this.customlist = response.rows;
-        this.loading = false;
       });
     },
-    /** 查询出货检验单 */
-    async getListshippinginspection() {
-      this.loading = true;
-      let total = (await listShippinginspection())["total"];
 
-      listShippinginspection({
-        productID: this.form.productID,
-        pageSize: total,
-      }).then((response) => {
-        this.shippinginspectionlist = response.rows;
-        this.loading = false;
-      });
-    },
-    /** 自动回显产品信息 */
-    setDeliveryNoteOfProduct(id) {
-      getProduct(id).then((response) => {
-        this.deliveryNote["productname"] = response.data.name;
-      });
-    },
-    /** 自动回显客户信息 */
-    setDeliveryNoteOfCustom(id) {
+    //设置客户
+
+    setCustom(id) {
       getCustom(id).then((response) => {
-        this.deliveryNote["customname"] = response.data.name;
+        this.custom = response.data;
+        console.log(this.custom);
       });
     },
-    /** 自动回显出货检验单信息 */
-    setDeliveryNoteOfShippinginspection(id) {
-      getShippinginspection(id).then((response) => {
-        let data = response.data;
-        let value = {
-          shipmentQuantity: data.shipmentQuantity,
-          detectionQuantity: data.detectionQuantity,
-          qualifiedQuantity: data.qualifiedQuantity,
-          unqualifiedQuantity: data.unqualifiedQuantity,
-          testResult: data.testResult,
-          testDate: data.testDate,
-          testingPersonnel: data.testingPersonnel,
-        };
-        let deliveryNote = this.deliveryNote;
-        this.deliveryNote = { ...deliveryNote, ...value };
-      });
-    },
+
     // 取消按钮
     cancel() {
       this.open = false;
@@ -537,13 +422,20 @@ export default {
         id: null,
         deliveryNoteID: this.$route.query.id,
         productID: null,
-        shippingInspectionID: null,
         receiptQuantity: null,
         contractID: null,
         notes: null,
       };
-      this.deliveryNote = {};
-      this.resetForm("form");
+
+      //产品列表
+      (this.productlist = []),
+        //产品
+        (this.product = {}),
+        //客户列表
+        (this.customlist = []),
+        //客户
+        (this.custom = {}),
+        this.resetForm("form");
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -567,8 +459,15 @@ export default {
       const id = row.id || this.ids;
       getProductoutbound(id).then((response) => {
         this.form = response.data;
-        getDetailproductoutbound(id).then((response) => {
-          this.deliveryNote = response.data;
+
+        getProduct(row.productID).then((response) => {
+          this.product = response.data;
+          console.log(this.product);
+        });
+
+        getCustom(row.contractID).then((response) => {
+          this.custom = response.data;
+          console.log(this.custom);
         });
         this.view_open = true;
         this.open = true;
@@ -590,9 +489,6 @@ export default {
       const id = row.id || this.ids;
       getProductoutbound(id).then((response) => {
         this.form = response.data;
-        getDetailproductoutbound(id).then((response) => {
-          this.deliveryNote = response.data;
-        });
         this.view_open = false;
         this.open = true;
         this.title = "修改产品出库详单";

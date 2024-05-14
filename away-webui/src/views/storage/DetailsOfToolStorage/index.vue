@@ -297,7 +297,7 @@
                 /> </el-form-item
             ></el-col>
           </el-row>
-
+          
            <el-row :gutter="12">
             <el-col :span="12">
               <el-form-item label="刀具价格" >
@@ -305,6 +305,14 @@
                   placeholder="请输入刀具价格"
                   v-model="BasicToolInformation.toolPrice"
                   :disabled="true"
+                /> </el-form-item
+            ></el-col>
+
+            <el-col :span="12">
+              <el-form-item label="厂商" >
+                <el-input
+                  placeholder="请输入厂商"
+                  v-model="form.manufacturers"
                 /> </el-form-item
             ></el-col>
           </el-row>
@@ -567,6 +575,7 @@ export default {
         warehouseEntryID: this.$route.query.id,
         receiptInvoiceID: null,
         toolInformationID: null,
+        manufacturers:null,
         receiptQuantity: null,
         notes: null,
       };

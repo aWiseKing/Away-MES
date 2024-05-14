@@ -1,25 +1,19 @@
 package com.awise.produce.controller;
 
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.away.common.annotation.Log;
 import com.away.common.core.controller.BaseController;
 import com.away.common.core.domain.AjaxResult;
+import com.away.common.core.page.TableDataInfo;
 import com.away.common.enums.BusinessType;
+import com.away.common.utils.poi.ExcelUtil;
 import com.awise.produce.domain.Detailproductoutbound;
 import com.awise.produce.service.IDetailproductoutboundService;
-import com.away.common.utils.poi.ExcelUtil;
-import com.away.common.core.page.TableDataInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 产品出库详单Controller

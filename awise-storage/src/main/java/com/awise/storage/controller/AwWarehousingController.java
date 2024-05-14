@@ -2,6 +2,13 @@ package com.awise.storage.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.away.common.utils.bean.BeanCopyUtils;
+import com.awise.storage.domain.AwMatlwarehousingdet;
+import com.awise.storage.domain.MaterialWarehousingDetailed;
+import com.awise.storage.domain.Vo.AwWarehousingVo;
+import com.awise.storage.service.IAwMatlwarehousingdetService;
+import com.awise.storage.service.IMaterialWarehousingDetailedService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +41,9 @@ public class AwWarehousingController extends BaseController
     @Autowired
     private IAwWarehousingService awWarehousingService;
 
+    @Autowired
+    private IAwMatlwarehousingdetService awMatlwarehousingdetService;
+
     /**
      * 查询入库单列表
      */
@@ -57,6 +67,27 @@ public class AwWarehousingController extends BaseController
         List<AwWarehousing> list = awWarehousingService.selectAwWarehousingList(awWarehousing);
         ExcelUtil<AwWarehousing> util = new ExcelUtil<AwWarehousing>(AwWarehousing.class);
         util.exportExcel(response, list, "入库单数据");
+    }
+
+
+    /**
+     * 导出全部入库单列表
+     */
+    @PreAuthorize("@ss.hasPermi('storage:warehousing:export')")
+    @Log(title = "入库单", businessType = BusinessType.EXPORT)
+    @PostMapping("/export/all")
+    public void exportAll(HttpServletResponse response, AwWarehousing awWarehousing)
+    {
+        List<AwWarehousing> list = awWarehousingService.selectAwWarehousingList(awWarehousing);
+        List<AwWarehousingVo> awWarehousingVos = BeanCopyUtils.copyBeanList(list, AwWarehousingVo.class);
+        for (AwWarehousingVo awWarehousingVo : awWarehousingVos) {
+            AwMatlwarehousingdet awMatlwarehousingdet = new AwMatlwarehousingdet();
+            awMatlwarehousingdet.setWarehouseEntryID(awWarehousingVo.getWarehouseEntryID());
+            List<AwMatlwarehousingdet> awMatlwarehousingdets = awMatlwarehousingdetService.selectAwMatlwarehousingdetList(awMatlwarehousingdet);
+            awWarehousingVo.setAwMatlwarehousingdetList(awMatlwarehousingdets);
+        }
+        ExcelUtil<AwWarehousingVo> util = new ExcelUtil<AwWarehousingVo>(AwWarehousingVo.class);
+        util.exportExcel(response, awWarehousingVos, "入库单数据");
     }
 
     /**

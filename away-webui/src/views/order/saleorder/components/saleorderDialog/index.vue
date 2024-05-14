@@ -16,6 +16,7 @@
         <filedown :files = "view_form.productfiles"/>
       </el-descriptions-item>
       <el-descriptions-item label="需求数量">{{ view_form.number }}</el-descriptions-item>
+      <el-descriptions-item label="批次号">{{ view_form.lotNumber }}</el-descriptions-item>
       <el-descriptions-item label="要求交期">{{ view_form.requiredDeliveryTime }}</el-descriptions-item>
       <el-descriptions-item label="客供材料">{{ view_form.iscustomersuppliedmaterials == 0 ? "否" : "是" }}</el-descriptions-item>
       <el-descriptions-item label="合同编号">{{ view_form.contractID }}</el-descriptions-item>

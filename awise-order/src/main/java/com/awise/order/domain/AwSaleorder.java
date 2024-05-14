@@ -30,6 +30,10 @@ public class AwSaleorder extends BaseEntity
     @Excel(name = "需求数量")
     private Long number;
 
+    @Excel(name = "批次号")
+
+    private String lotNumber;
+
     /** 要求交期 */
     @Excel(name = "要求交期")
     private String requiredDeliveryTime;
@@ -65,6 +69,14 @@ public class AwSaleorder extends BaseEntity
     /** 删除否 */
     @Excel(name = "删除否")
     private String isDel;
+
+    public String getLotNumber() {
+        return lotNumber;
+    }
+
+    public void setLotNumber(String lotNumber) {
+        this.lotNumber = lotNumber;
+    }
 
     public String getId() {
         return id;
@@ -181,6 +193,7 @@ public class AwSaleorder extends BaseEntity
             .append("createUserName", getCreateUserName())
             .append("orderDate", getOrderDate())
             .append("number", getNumber())
+            .append("lotNumber", getLotNumber())
             .append("requiredDeliveryTime", getRequiredDeliveryTime())
             .append("customerID", getCustomerID())
             .append("productID", getProductID())

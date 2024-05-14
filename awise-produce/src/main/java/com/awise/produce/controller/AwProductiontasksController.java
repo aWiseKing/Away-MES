@@ -115,4 +115,6 @@ public class AwProductiontasksController extends BaseController
         awProductiontasksService.deleteAwProductiontasksByProductionTasksFormIDs(productionTasksFormIDs);
         return AjaxResult.success();
     }
+
+    //根据生产任务id拿到
 }

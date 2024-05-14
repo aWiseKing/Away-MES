@@ -26,9 +26,6 @@ public class AwProductoutbound extends BaseEntity
     @Excel(name = "产品图号")
     private String productID;
 
-    /** 出货检验编号 */
-    @Excel(name = "出货检验编号")
-    private String shippingInspectionID;
 
     /** 出库数量 */
     @Excel(name = "出库数量")
@@ -42,68 +39,53 @@ public class AwProductoutbound extends BaseEntity
     @Excel(name = "备注")
     private String notes;
 
-    public void setId(Long id) 
-    {
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getId() 
-    {
-        return id;
+    public String getDeliveryNoteID() {
+        return deliveryNoteID;
     }
-    public void setDeliveryNoteID(String deliveryNoteID) 
-    {
+
+    public void setDeliveryNoteID(String deliveryNoteID) {
         this.deliveryNoteID = deliveryNoteID;
     }
 
-    public String getDeliveryNoteID() 
-    {
-        return deliveryNoteID;
+    public String getProductID() {
+        return productID;
     }
-    public void setProductID(String productID) 
-    {
+
+    public void setProductID(String productID) {
         this.productID = productID;
     }
 
-    public String getProductID() 
-    {
-        return productID;
-    }
-    public void setShippingInspectionID(String shippingInspectionID) 
-    {
-        this.shippingInspectionID = shippingInspectionID;
+    public Long getReceiptQuantity() {
+        return receiptQuantity;
     }
 
-    public String getShippingInspectionID() 
-    {
-        return shippingInspectionID;
-    }
-    public void setReceiptQuantity(Long receiptQuantity) 
-    {
+    public void setReceiptQuantity(Long receiptQuantity) {
         this.receiptQuantity = receiptQuantity;
     }
 
-    public Long getReceiptQuantity() 
-    {
-        return receiptQuantity;
+    public String getContractID() {
+        return contractID;
     }
-    public void setContractID(String contractID) 
-    {
+
+    public void setContractID(String contractID) {
         this.contractID = contractID;
     }
 
-    public String getContractID() 
-    {
-        return contractID;
-    }
-    public void setNotes(String notes) 
-    {
-        this.notes = notes;
+    public String getNotes() {
+        return notes;
     }
 
-    public String getNotes() 
-    {
-        return notes;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     @Override
@@ -112,7 +94,6 @@ public class AwProductoutbound extends BaseEntity
             .append("id", getId())
             .append("deliveryNoteID", getDeliveryNoteID())
             .append("productID", getProductID())
-            .append("shippingInspectionID", getShippingInspectionID())
             .append("receiptQuantity", getReceiptQuantity())
             .append("contractID", getContractID())
             .append("notes", getNotes())

@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
-    <file url="file://D:/dowload3/away (1)/DetailCustomerMaterialsStorageMenu.sql" dialect="MySQL" />
-    <file url="file://D:/dowload3/away (2)/CustomerMaterialsInventoryMenu.sql" dialect="MySQL" />
-    <file url="file://D:/dowload3/away (3)/CustomerMaterialsOutboundFormMenu.sql" dialect="MySQL" />
-    <file url="file://D:/dowload3/away (3)/CustomerMaterialsOutboundMenu.sql" dialect="MySQL" />
-    <file url="file://D:/dowload3/away (3)/DetailCustomerMaterialOutboundMenu.sql" dialect="MySQL" />
-    <file url="file://D:/dowload3/away (4)/ProductInventoryMenu.sql" dialect="MySQL" />
-    <file url="file://D:/dowload3/away/CustomerMaterialsStorageFormMenu.sql" dialect="MySQL" />
-    <file url="file://D:/dowload3/away/CustomerMaterialsStorageMenu.sql" dialect="MySQL" />
-    <file url="file://D:/dowload3/away/CustomerMaterialsStorageViewMenu.sql" dialect="MySQL" />
     <file url="file://E:/sql/dz.sql" dialect="MySQL" />
     <file url="file://E:/sql/dzdetail.sql" dialect="MySQL" />
     <file url="file://E:/sql/s1.sql" dialect="MySQL" />

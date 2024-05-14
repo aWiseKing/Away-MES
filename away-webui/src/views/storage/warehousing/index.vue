@@ -629,7 +629,7 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       this.download(
-        "system/warehousing/export",
+        "system/warehousing/export/all",
         {
           ...this.queryParams,
         },

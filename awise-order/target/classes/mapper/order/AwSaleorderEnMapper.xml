@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="createUserName"    column="createUserName"    />
         <result property="orderDate"    column="orderDate"    />
         <result property="number"    column="number"    />
+        <result property="lotNumber"    column="lotNumber"    />
         <result property="requiredDeliveryTime"    column="requiredDeliveryTime"    />
         <result property="customerID"    column="customerID"    />
         <result property="customername"    column="customername"    />
@@ -46,6 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         aw_saleorder.createUserName,
         aw_saleorder.orderDate,
         aw_saleorder.number,
+        aw_saleorder.lotNumber,
         aw_saleorder.requiredDeliveryTime,
         aw_saleorder.iscustomersuppliedmaterials,
         aw_saleorder.note,

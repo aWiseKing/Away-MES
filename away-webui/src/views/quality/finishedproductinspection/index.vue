@@ -251,8 +251,8 @@
           ><el-col :span="12">
             <el-form-item label="任务单号">
               <el-select
-              filterable
-                v-model="productiontasklist.productionTasksFormID"
+                filterable
+                v-model="productiontasklist.id"
                 placeholder="请选择任务单"
                 @focus="getListproductiontasklist()"
               >
@@ -269,13 +269,14 @@
           <el-col :span="12">
             <el-form-item label="任务编号" prop="productionTasksID">
               <el-select
-              filterable
+                filterable
                 v-model="form.productionTasksID"
                 placeholder="请选择任务编号"
                 @focus="getListproductiontasks(productiontasklist.id)"
                 :disabled="productiontasklist.id == null"
               >
                 <el-option
+                  @click.native="setProductiontasks(item.id)"
                   v-for="(item, index) in productiontaskslist"
                   :key="index"
                   :label="item.id"
@@ -287,7 +288,7 @@
           ><el-col :span="12">
             <el-form-item label="产品图号" prop="productID">
               <el-select
-              filterable
+                filterable
                 v-model="form.productID"
                 placeholder="请选择产品图号"
                 @focus="getListproduct()"
@@ -295,7 +296,7 @@
                 <el-option
                   v-for="(item, index) in productlist"
                   :key="index"
-                  :label="item.name"
+                  :label="item.id"
                   :value="item.id"
                 >
                 </el-option>
@@ -444,12 +445,17 @@ export default {
           { required: true, message: "检测人员不能为空", trigger: "blur" },
         ],
       },
+
+      // 任务单列表
+      productiontasklistlist: [],
       // 当前选中任务单
       productiontasklist: {},
-      // 任务单列表
-      productiontasklistlist: {},
       // 任务列表
-      productiontaskslist: {},
+      productiontaskslist: [],
+
+      //选中的任务
+      productiontasks: {},
+
       // 产品列表
       productlist: {},
     };
@@ -467,43 +473,55 @@ export default {
         this.loading = false;
       });
     },
-    /** 查找产品信息 */
-   async  getListproduct() {
-      this.loading = true;
-        let total= (await listProduct())["total"];
-      listProduct({pageSize:total}).then((response) => {
-        this.productlist = response.rows;
-        this.loading = false;
-      });
-    },
-    /** 查找任务单信息 */
-  async  getListproductiontasklist() {
-      this.loading = true;
-        let total= (await listProductiontasklist())["total"];
 
-      listProductiontasklist({pageSize:total}).then((response) => {
+    /** 查找任务单信息 */
+    async getListproductiontasklist() {
+      this.loading = true;
+      let total = (await listProductiontasklist())["total"];
+      listProductiontasklist({ pageSize: total }).then((response) => {
         this.productiontasklistlist = response.rows;
         this.loading = false;
       });
     },
+
+    /** 选中任务单 */
+    setProductiontasklist(id) {
+      getProductiontasklist(id).then((response) => {
+        this.productiontasklist = response.data;
+        console.log(this.productiontasklist);
+      });
+    },
+
     /** 查找任务信息 */
- async   getListproductiontasks(productionTasksFormID) {
+    async getListproductiontasks(productionTasksFormID) {
       this.loading = true;
-       let total= (await listProductiontasks())["total"];
+      let total = (await listProductiontasks())["total"];
       listProductiontasks({
         productionTasksFormID: productionTasksFormID,
-        pageSize: total
+        pageSize: total,
       }).then((response) => {
         this.productiontaskslist = response.rows;
+
         this.loading = false;
       });
     },
-    /** 选中任务 */
-    setProductiontasklist(id) {
+    //设置任务信息
+    setProductiontasks(id) {
       getProductiontasks(id).then((response) => {
-        this.productiontasklist = response.data;
+        this.productiontasks = response.rows;
       });
     },
+
+    /** 查找产品信息 */
+    async getListproduct() {
+      this.loading = true;
+      let total = (await listProduct())["total"];
+      listProduct({ pageSize: total }).then((response) => {
+        this.productlist = response.rows;
+        this.loading = false;
+      });
+    },
+
     // 取消按钮
     cancel() {
       this.open = false;
@@ -524,8 +542,18 @@ export default {
         testingPersonnel: null,
         notes: null,
       };
-      this.productiontasklist = {};
-      this.resetForm("form");
+
+      // 任务单列表
+      (this.productiontasklistlist = []),
+        // 当前选中任务单
+        (this.productiontasklist = {}),
+        // 任务列表
+        (this.productiontaskslist = []),
+        //选中的任务
+        (this.productiontasks = {}),
+        // 产品列表
+        (this.productlist = {}),
+        this.resetForm("form");
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -550,10 +578,15 @@ export default {
       getFinishedproductinspection(id).then((response) => {
         this.form = response.data;
         this.view_open = true;
+        this.getListproductiontasklist();
+        this.getListproductiontasks();
+        getProductiontasks(row.productionTasksID).then((response) => {
+          this.productiontasks = response.data;
+          console.log(this.productiontasks);
 
-        listProductiontasklist().then((response) => {
-          this.productiontasklistlist = response.rows;
-          getProductiontasks(row.productionTasksID).then((response) => {
+          getProductiontasklist(
+            this.productiontasks.productionTasksFormID
+          ).then((response) => {
             this.productiontasklist = response.data;
           });
         });
@@ -578,12 +611,19 @@ export default {
       getFinishedproductinspection(id).then((response) => {
         this.form = response.data;
         this.view_open = false;
-        listProductiontasklist().then((response) => {
-          this.productiontasklistlist = response.rows;
-          getProductiontasks(row.productionTasksID).then((response) => {
+        this.getListproductiontasklist();
+        this.getListproductiontasks();
+        getProductiontasks(row.productionTasksID).then((response) => {
+          this.productiontasks = response.data;
+          console.log(this.productiontasks);
+
+          getProductiontasklist(
+            this.productiontasks.productionTasksFormID
+          ).then((response) => {
             this.productiontasklist = response.data;
           });
         });
+
         this.open = true;
         this.title = "修改成品检验";
       });

@@ -8,95 +8,93 @@
       v-show="showSearch"
       label-width="68px"
     >
+      <el-form-item label="质检名称" prop="nameOfQualityInspection">
+        <el-input
+          v-model="queryParams.nameOfQualityInspection"
+          placeholder="请输入质检名称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="质检类别" prop="qualityInspectionCategory">
+        <el-select
+          v-model="queryParams.qualityInspectionCategory"
+          placeholder="请选择质检类别"
+          clearable
+          @keyup.enter.native="handleQuery"
+        >
+          <el-option
+            v-for="item in qualityInspectionCategory_dict"
+            :key="item.key"
+            :label="item.value"
+            :value="item.key"
+          >
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="任务编号" prop="productionTasksID">
+        <el-input
+          v-model="queryParams.productionTasksID"
+          placeholder="请输入任务编号"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="工序编号" prop="processingprocessID">
+        <el-input
+          v-model="queryParams.processingprocessID"
+          placeholder="请输入工序编号"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="检测日期" prop="testDate">
+        <el-date-picker
+          clearable
+          v-model="queryParams.testDate"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="请选择检测日期"
+        >
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="检测结果" prop="testResult">
+        <el-select
+          v-model="queryParams.testResult"
+          placeholder="请选择检测结果"
+          clearable
+          @keyup.enter.native="handleQuery"
+        >
+          <el-option
+            v-for="item in testResult_option"
+            :key="item.key"
+            :label="item.value"
+            :value="item.key"
+          >
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="检测人员" prop="testingPersonnel">
+        <el-input
+          v-model="queryParams.testingPersonnel"
+          placeholder="请输入检测人员"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
 
-            <el-form-item label="质检名称" prop="nameOfQualityInspection">
-              <el-input
-                v-model="queryParams.nameOfQualityInspection"
-                placeholder="请输入质检名称"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="质检类别" prop="qualityInspectionCategory">
-              <el-select
-                v-model="queryParams.qualityInspectionCategory"
-                placeholder="请选择质检类别"
-                clearable
-                @keyup.enter.native="handleQuery"
-              >
-                <el-option
-                  v-for="item in qualityInspectionCategory_dict"
-                  :key="item.key"
-                  :label="item.value"
-                  :value="item.key"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="任务编号" prop="productionTasksID">
-              <el-input
-                v-model="queryParams.productionTasksID"
-                placeholder="请输入任务编号"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="工序编号" prop="processingprocessID">
-              <el-input
-                v-model="queryParams.processingprocessID"
-                placeholder="请输入工序编号"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="检测日期" prop="testDate">
-              <el-date-picker
-                clearable
-                v-model="queryParams.testDate"
-                type="date"
-                value-format="yyyy-MM-dd"
-                placeholder="请选择检测日期"
-              >
-              </el-date-picker>
-            </el-form-item>
-            <el-form-item label="检测结果" prop="testResult">
-              <el-select
-                v-model="queryParams.testResult"
-                placeholder="请选择检测结果"
-                clearable
-                @keyup.enter.native="handleQuery"
-              >
-                <el-option
-                  v-for="item in testResult_option"
-                  :key="item.key"
-                  :label="item.value"
-                  :value="item.key"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="检测人员" prop="testingPersonnel">
-              <el-input
-                v-model="queryParams.testingPersonnel"
-                placeholder="请输入检测人员"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-      
-          <el-form-item>
-            <el-button
-              type="primary"
-              icon="el-icon-search"
-              size="mini"
-              @click="handleQuery"
-              >搜索</el-button
-            >
-            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
-              >重置</el-button
-            >
-          </el-form-item>
-    
+      <el-form-item>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          size="mini"
+          @click="handleQuery"
+          >搜索</el-button
+        >
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
+          >重置</el-button
+        >
+      </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -334,14 +332,42 @@
                   :key="item.id"
                   :label="item.id"
                   :value="item.id"
-                  @click.native="
-                    setProcessingTechnologyID(item.processingTechnologyID)
-                  "
+                  @click.native="setProcessingTechnologyID(item)"
                 >
                 </el-option>
               </el-select>
             </el-form-item>
           </el-col>
+        </el-row>
+
+        <el-row :gutter="12">
+          <el-col :span="12">
+            <el-form-item label="订单编号">
+              <el-input v-model="order.id" placeholder="订单编号" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="订单批次号">
+              <el-input
+                v-model="order.lotNumber"
+                placeholder="请输入订单批次号"
+                disabled
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :gutter="12">
+          <el-col :span="12">
+            <el-form-item label="产品图号">
+              <el-input
+                v-model="product.id"
+                placeholder="请输入产品图号"
+                disabled
+              />
+            </el-form-item>
+          </el-col>
+
           <el-col :span="12">
             <el-form-item label="工序" prop="processingprocessID">
               <el-select
@@ -451,11 +477,20 @@
         </el-row>
 
         <el-row :gutter="12">
-          <el-col :span="8">
+          <el-col :span="12">
             <el-form-item label="检测人员" prop="testingPersonnel">
               <el-input
                 v-model="form.testingPersonnel"
                 placeholder="请输入检测人员"
+              />
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12">
+            <el-form-item label="加工人员" prop="processingPersonnel">
+              <el-input
+                v-model="form.processingPersonnel"
+                placeholder="请输入加工人员"
               />
             </el-form-item>
           </el-col>
@@ -499,6 +534,15 @@ import {
 import { listProcessingprocess } from "@/api/produce/processingprocess";
 import { getValue } from "@/utils/utils.js";
 
+import {
+  getSaleorder,
+
+} from "@/api/order/saleorder";
+
+import {
+  getProduct,
+} from "@/api/order/product";
+
 export default {
   name: "Processinspection",
   dicts: ["aw_quality_shippinginspection_status"],
@@ -541,6 +585,7 @@ export default {
         testDate: null,
         testResult: null,
         testingPersonnel: null,
+        processingPersonnel:null,
         note: null,
       },
       // 表单参数
@@ -583,6 +628,9 @@ export default {
         testingPersonnel: [
           { required: true, message: "检测人员不能为空", trigger: "blur" },
         ],
+        processingPersonnel: [
+          { required: true, message: "加工人员不能为空", trigger: "blur" },
+        ],
       },
       // 任务单列表
       productiontasklist_list: [],
@@ -606,6 +654,11 @@ export default {
         { key: "1", value: "检验不通过" },
         { key: "2", value: "检验完毕" },
       ],
+
+      //订单对象
+
+      order: {},
+      product: {},
     };
   },
   created() {
@@ -659,8 +712,21 @@ export default {
       });
     },
     /** 选中工艺 */
-    setProcessingTechnologyID(value) {
+    setProcessingTechnologyID(item) {
+      let value = item.processingTechnologyID;
       this.processingTechnologyID = value;
+
+      //根据任务拿到订单
+
+      getSaleorder(item.saleOrderID).then((response) => {
+        this.order = response.data;
+
+        console.log(this.order.id);
+        getProduct(this.order.productID).then((response) => {
+          this.product = response.data;
+          console.log(this.product.id);
+        });
+      });
     },
     // 取消按钮
     cancel() {
@@ -683,6 +749,7 @@ export default {
         testDate: null,
         testResult: null,
         testingPersonnel: null,
+        processingPersonnel:null,
         note: null,
       };
       // 任务单子列表
@@ -697,6 +764,10 @@ export default {
       this.productiontask = null;
       // 当前创建检验选中工序
       this.processingTechnologyID = null;
+      //当前订单
+      this.order = {};
+      //当前产品
+      this.product = {};
       this.resetForm("form");
     },
     /** 搜索按钮操作 */
@@ -725,6 +796,18 @@ export default {
         getProductiontasks(row.productionTasksID).then((response) => {
           let productionTasksFormID = response.data.productionTasksFormID;
 
+          //查出订单和图号
+
+          getSaleorder(response.data.saleOrderID).then((response) => {
+            this.order = response.data;
+
+            console.log(this.order.id);
+            getProduct(this.order.productID).then((response) => {
+              this.product = response.data;
+              console.log(this.product.id);
+            });
+          });
+
           listProductiontasklist().then((response) => {
             this.productiontasklist_list = response.rows;
             this.productiontasklist = productionTasksFormID;
@@ -750,6 +833,18 @@ export default {
         this.open = true;
         getProductiontasks(row.productionTasksID).then((response) => {
           let productionTasksFormID = response.data.productionTasksFormID;
+
+          //查出订单和图号
+
+          getSaleorder(response.data.saleOrderID).then((response) => {
+            this.order = response.data;
+
+            console.log(this.order.id);
+            getProduct(this.order.productID).then((response) => {
+              this.product = response.data;
+              console.log(this.product.id);
+            });
+          });
 
           listProductiontasklist().then((response) => {
             this.productiontasklist_list = response.rows;

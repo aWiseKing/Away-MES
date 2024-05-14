@@ -40,6 +40,10 @@ public class AwSaleorderEn extends BaseEntity
     /** 客户信息 */
     @Excel(name = "客户信息")
     private String customerID;
+//    批次号
+
+    @Excel(name = "批次号")
+    private  String lotNumber;
 
     /** 客户姓名 */
     @Excel(name = "客户姓名")
@@ -142,6 +146,14 @@ public class AwSaleorderEn extends BaseEntity
     @Excel(name = "删除否")
     private String isDel;
 
+
+    public String getLotNumber(){
+        return lotNumber;
+    }
+
+    public void setLotNumber( String lotNumber){
+        this.lotNumber=lotNumber;
+    }
     public String getId() {
         return id;
     }
@@ -390,6 +402,7 @@ public class AwSaleorderEn extends BaseEntity
                 ", createUserName='" + createUserName + '\'' +
                 ", orderDate='" + orderDate + '\'' +
                 ", number=" + number +
+                ", lotNumber=" + lotNumber +
                 ", requiredDeliveryTime='" + requiredDeliveryTime + '\'' +
                 ", customerID='" + customerID + '\'' +
                 ", customername='" + customername + '\'' +

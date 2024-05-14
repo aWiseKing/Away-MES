@@ -27,7 +27,7 @@ public class AwProcessrequirementmateriallist extends BaseEntity
 
     /** 下料尺寸 */
     @Excel(name = "下料尺寸")
-    private Long cuttingSize;
+    private String cuttingSize;
 
     /** 可制件数 */
     @Excel(name = "可制件数")
@@ -60,12 +60,12 @@ public class AwProcessrequirementmateriallist extends BaseEntity
     {
         return processingTechnologyID;
     }
-    public void setCuttingSize(Long cuttingSize) 
+    public void setCuttingSize(String cuttingSize)
     {
         this.cuttingSize = cuttingSize;
     }
 
-    public Long getCuttingSize() 
+    public String getCuttingSize()
     {
         return cuttingSize;
     }

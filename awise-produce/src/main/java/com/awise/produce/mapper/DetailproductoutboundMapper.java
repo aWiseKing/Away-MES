@@ -1,7 +1,8 @@
 package com.awise.produce.mapper;
 
-import java.util.List;
 import com.awise.produce.domain.Detailproductoutbound;
+
+import java.util.List;
 
 /**
  * 产品出库详单Mapper接口

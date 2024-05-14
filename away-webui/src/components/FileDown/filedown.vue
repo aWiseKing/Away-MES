@@ -21,7 +21,7 @@
 
 
 <script>
-import pdf from 'vue-pdf';
+import pdf from  'vue-pdf';
 export default {
   name:"filedown",
   components: {

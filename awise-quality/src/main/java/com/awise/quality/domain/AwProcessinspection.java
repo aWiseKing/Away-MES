@@ -69,6 +69,10 @@ public class AwProcessinspection extends BaseEntity
     @Excel(name = "检测人员")
     private String testingPersonnel;
 
+    /** 加工人员 */
+    @Excel(name = "检测人员")
+    private String processingPersonnel;
+
     /** 备注 */
     @Excel(name = "备注")
     private String note;
@@ -200,6 +204,15 @@ public class AwProcessinspection extends BaseEntity
         return note;
     }
 
+
+    public String getProcessingPersonnel() {
+        return processingPersonnel;
+    }
+
+    public void setProcessingPersonnel(String processingPersonnel) {
+        this.processingPersonnel = processingPersonnel;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -216,6 +229,7 @@ public class AwProcessinspection extends BaseEntity
             .append("testDate", getTestDate())
             .append("testResult", getTestResult())
             .append("testingPersonnel", getTestingPersonnel())
+            .append("processingPersonnel", getProcessingPersonnel())
             .append("note", getNote())
             .toString();
     }

@@ -1,11 +1,12 @@
 package com.awise.produce.service.impl;
 
-import java.util.List;
+import com.awise.produce.domain.Detailproductoutbound;
+import com.awise.produce.mapper.DetailproductoutboundMapper;
+import com.awise.produce.service.IDetailproductoutboundService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.awise.produce.mapper.DetailproductoutboundMapper;
-import com.awise.produce.domain.Detailproductoutbound;
-import com.awise.produce.service.IDetailproductoutboundService;
+
+import java.util.List;
 
 /**
  * 产品出库详单Service业务层处理

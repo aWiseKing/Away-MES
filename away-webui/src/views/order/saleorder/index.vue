@@ -242,6 +242,15 @@
             </el-form-item>
           </el-col>
         </el-row>
+
+        <el-row :gutter="12">
+          <el-col :span="12">
+            <el-form-item label="批次号">
+              <el-input v-model="form.lotNumber" placeholder="请输入批次号">
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <!-- 第三行 客户信息 产品信息 -->
         <el-row :gutter="12">
           <el-col :span="12">
@@ -289,11 +298,12 @@
             >
               <el-radio-group v-model="form.iscustomersuppliedmaterials">
                 <el-radio
-                  v-for="dict in dict.type.aw_produce_outsourcing"
+                  v-for="dict in dict.type.aw_oder_customer_status"
                   :key="dict.value"
                   :label="dict.value"
-                  >{{ dict.label }}</el-radio
                 >
+                  {{ dict.label }}
+                </el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -339,21 +349,6 @@
         <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="订单状态" prop="state">
-              <el-select
-                disabled
-                v-model="form.state"
-                value-key="value"
-                placeholder="请选择订单状态"
-              >
-                <el-option
-                  v-for="item in state_options"
-                  :key="item.key"
-                  :label="item.value"
-                  :value="item.key"
-                >
-                </el-option>
-              </el-select>
-
               <el-select
                 disabled
                 v-model="form.state"
@@ -671,6 +666,7 @@ export default {
         contractID: null,
         invoiceID: null,
         iscustomersuppliedmaterials: 0,
+        lotNumber: null,
         state: "0",
       };
       this.resetForm("form");

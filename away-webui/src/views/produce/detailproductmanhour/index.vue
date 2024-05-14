@@ -1209,5 +1209,14 @@ export default {
       );
     },
   },
+
+  watch: {
+    "$route.query.id": {
+      immediate: true,
+      handler() {
+        this.getExist();
+      },
+    },
+  },
 };
 </script>
