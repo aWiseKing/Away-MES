@@ -18,11 +18,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="testDate"    column="testDate"    />
         <result property="testResult"    column="testResult"    />
         <result property="testingPersonnel"    column="testingPersonnel"    />
+        <result property="processingPersonnel"    column="processingPersonnel"    />
         <result property="note"    column="note"    />
     </resultMap>
 
     <sql id="selectAwProcessinspectionVo">
-        select id, nameOfQualityInspection, qualityInspectionCategory, productionTasksID, processingprocessID, detectionQuantity, qualifiedQuantity, unqualifiedQuantity, numberOfRepairs, scrappedQuantity, testDate, testResult, testingPersonnel, note from aw_processInspection
+        select id, nameOfQualityInspection, qualityInspectionCategory, productionTasksID, processingprocessID, detectionQuantity, qualifiedQuantity, unqualifiedQuantity, numberOfRepairs, scrappedQuantity, testDate, testResult, testingPersonnel,processingPersonnel, note from aw_processInspection
     </sql>
 
     <select id="selectAwProcessinspectionList" parameterType="AwProcessinspection" resultMap="AwProcessinspectionResult">
@@ -40,6 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="testDate != null "> and testDate = #{testDate}</if>
             <if test="testResult != null  and testResult != ''"> and testResult = #{testResult}</if>
             <if test="testingPersonnel != null  and testingPersonnel != ''"> and testingPersonnel = #{testingPersonnel}</if>
+            <if test="processingPersonnel != null  and processingPersonnel != ''"> and processingPersonnel = #{processingPersonnel}</if>
             <if test="note != null  and note != ''"> and note = #{note}</if>
         </where>
     </select>
@@ -64,6 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="testDate != null">testDate,</if>
             <if test="testResult != null and testResult != ''">testResult,</if>
             <if test="testingPersonnel != null and testingPersonnel != ''">testingPersonnel,</if>
+            <if test="processingPersonnel != null and processingPersonnel != ''">processingPersonnel,</if>
             <if test="note != null">note,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -79,6 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="testDate != null">#{testDate},</if>
             <if test="testResult != null and testResult != ''">#{testResult},</if>
             <if test="testingPersonnel != null and testingPersonnel != ''">#{testingPersonnel},</if>
+            <if test="processingPersonnel != null and processingPersonnel != ''">#{processingPersonnel},</if>
             <if test="note != null">#{note},</if>
          </trim>
     </insert>
@@ -98,6 +102,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="testDate != null">testDate = #{testDate},</if>
             <if test="testResult != null and testResult != ''">testResult = #{testResult},</if>
             <if test="testingPersonnel != null and testingPersonnel != ''">testingPersonnel = #{testingPersonnel},</if>
+            <if test="processingPersonnel != null and processingPersonnel != ''">processingPersonnel = #{processingPersonnel},</if>
             <if test="note != null">note = #{note},</if>
         </trim>
         where id = #{id}
