@@ -2,6 +2,7 @@ package com.awise.produce.service;
 
 import java.util.List;
 import com.awise.produce.domain.AwProductiontasks;
+import com.awise.produce.domain.Vo.AwProductiontasksVo;
 
 /**
  * 生产任务Service接口
@@ -66,4 +67,9 @@ public interface IAwProductiontasksService
      * @return 结果
      */
     public int deleteAwProductiontasksByProductionTasksFormIDs(Long[] productionTasksFormIDs);
+
+
+    //导出时，查出订单和客户相关信息
+
+    public List<AwProductiontasksVo> selectAwProductiontasksVo(AwProductiontasksVo awProductiontasksVo);
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.awise.quality.mapper.AwProcessinspectionMapper">
-    
+
     <resultMap type="AwProcessinspection" id="AwProcessinspectionResult">
         <result property="id"    column="id"    />
         <result property="nameOfQualityInspection"    column="nameOfQualityInspection"    />
@@ -23,12 +23,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAwProcessinspectionVo">
-        select id, nameOfQualityInspection, qualityInspectionCategory, productionTasksID, processingprocessID, detectionQuantity, qualifiedQuantity, unqualifiedQuantity, numberOfRepairs, scrappedQuantity, testDate, testResult, testingPersonnel,processingPersonnel, note from aw_processInspection
+        select id, nameOfQualityInspection, qualityInspectionCategory, productionTasksID, processingprocessID, detectionQuantity, qualifiedQuantity, unqualifiedQuantity, numberOfRepairs, scrappedQuantity, testDate, testResult, testingPersonnel, processingPersonnel,note from aw_processInspection
     </sql>
 
     <select id="selectAwProcessinspectionList" parameterType="AwProcessinspection" resultMap="AwProcessinspectionResult">
         <include refid="selectAwProcessinspectionVo"/>
-        <where>  
+        <where>
             <if test="nameOfQualityInspection != null  and nameOfQualityInspection != ''"> and nameOfQualityInspection = #{nameOfQualityInspection}</if>
             <if test="qualityInspectionCategory != null  and qualityInspectionCategory != ''"> and qualityInspectionCategory = #{qualityInspectionCategory}</if>
             <if test="productionTasksID != null "> and productionTasksID = #{productionTasksID}</if>
@@ -45,12 +45,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="note != null  and note != ''"> and note = #{note}</if>
         </where>
     </select>
-    
+
     <select id="selectAwProcessinspectionById" parameterType="Long" resultMap="AwProcessinspectionResult">
         <include refid="selectAwProcessinspectionVo"/>
         where id = #{id}
     </select>
-        
+
+    <select id="selectAwProcessinspectionVoList" parameterType="AwProcessinspectionVo"  resultType="com.awise.quality.domain.Vo.AwProcessinspectionVo" >
+        select  aw_processInspection.id, aw_processInspection.nameOfQualityInspection, aw_processInspection.qualityInspectionCategory,
+        aw_processInspection. productionTasksID,aw_processInspection. processingprocessID, aw_processInspection.detectionQuantity, aw_processInspection.qualifiedQuantity,
+        aw_processInspection.unqualifiedQuantity, aw_processInspection.numberOfRepairs, aw_processInspection.scrappedQuantity,
+        aw_processInspection.testDate, aw_processInspection.testResult, aw_processInspection.testingPersonnel,aw_processInspection.processingPersonnel, aw_processInspection.note,
+        aw_saleorder.id as orderId,aw_saleorder.productID,aw_saleorder.lotNumber
+        from aw_processInspection
+        left join aw_ProductionTasks on aw_processInspection.productionTasksID = aw_ProductionTasks.id  left join aw_saleorder on aw_ProductionTasks.saleOrderID = aw_saleorder.id
+        <where>
+            <if test="nameOfQualityInspection != null  and nameOfQualityInspection != ''"> and nameOfQualityInspection = #{nameOfQualityInspection}</if>
+            <if test="qualityInspectionCategory != null  and qualityInspectionCategory != ''"> and qualityInspectionCategory = #{qualityInspectionCategory}</if>
+            <if test="productionTasksID != null "> and productionTasksID = #{productionTasksID}</if>
+            <if test="processingprocessID != null "> and processingprocessID = #{processingprocessID}</if>
+            <if test="detectionQuantity != null "> and detectionQuantity = #{detectionQuantity}</if>
+            <if test="qualifiedQuantity != null "> and qualifiedQuantity = #{qualifiedQuantity}</if>
+            <if test="unqualifiedQuantity != null "> and unqualifiedQuantity = #{unqualifiedQuantity}</if>
+            <if test="numberOfRepairs != null "> and numberOfRepairs = #{numberOfRepairs}</if>
+            <if test="scrappedQuantity != null "> and scrappedQuantity = #{scrappedQuantity}</if>
+            <if test="testDate != null "> and testDate = #{testDate}</if>
+            <if test="testResult != null  and testResult != ''"> and testResult = #{testResult}</if>
+            <if test="testingPersonnel != null  and testingPersonnel != ''"> and testingPersonnel = #{testingPersonnel}</if>
+            <if test="processingPersonnel != null  and processingPersonnel != ''"> and processingPersonnel = #{processingPersonnel}</if>
+            <if test="note != null  and note != ''"> and note = #{note}</if>
+        </where>
+
+
+</select>
+
     <insert id="insertAwProcessinspection" parameterType="AwProcessinspection" useGeneratedKeys="true" keyProperty="id">
         insert into aw_processInspection
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -68,7 +96,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="testingPersonnel != null and testingPersonnel != ''">testingPersonnel,</if>
             <if test="processingPersonnel != null and processingPersonnel != ''">processingPersonnel,</if>
             <if test="note != null">note,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="nameOfQualityInspection != null and nameOfQualityInspection != ''">#{nameOfQualityInspection},</if>
             <if test="qualityInspectionCategory != null and qualityInspectionCategory != ''">#{qualityInspectionCategory},</if>
@@ -84,7 +112,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="testingPersonnel != null and testingPersonnel != ''">#{testingPersonnel},</if>
             <if test="processingPersonnel != null and processingPersonnel != ''">#{processingPersonnel},</if>
             <if test="note != null">#{note},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateAwProcessinspection" parameterType="AwProcessinspection">

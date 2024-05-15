@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.away.common.utils.bean.BeanCopyUtils;
 import com.awise.produce.domain.AwProductiontasks;
 import com.awise.produce.domain.Vo.AwProductiontasklistVo;
+import com.awise.produce.domain.Vo.AwProductiontasksVo;
 import com.awise.produce.service.IAwProductiontasksService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,11 +66,13 @@ public class AwProductiontasklistController extends BaseController
         List<AwProductiontasklist> list = awProductiontasklistService.selectAwProductiontasklistList(awProductiontasklist);
         List<AwProductiontasklistVo>  listvo = BeanCopyUtils.copyBeanList(list,AwProductiontasklistVo.class);
         for (AwProductiontasklistVo awProductiontasklistVo : listvo) {
-            AwProductiontasks awProductiontasks = new AwProductiontasks();
-            awProductiontasks.setProductionTasksFormID(awProductiontasklistVo.getId());
-            List<AwProductiontasks> list1 = awProductiontasksService.selectAwProductiontasksList(awProductiontasks);
 
-            awProductiontasklistVo.setAwProductiontaskslist(list1);
+            AwProductiontasksVo awProductiontasksVo = new AwProductiontasksVo();
+            awProductiontasksVo.setProductionTasksFormID(awProductiontasklistVo.getId());
+
+            List<AwProductiontasksVo> awProductiontasksVos = awProductiontasksService.selectAwProductiontasksVo(awProductiontasksVo);
+
+            awProductiontasklistVo.setAwProductiontasksVolist(awProductiontasksVos);
         }
 
         ExcelUtil<AwProductiontasklistVo> util = new ExcelUtil<AwProductiontasklistVo>(AwProductiontasklistVo.class);

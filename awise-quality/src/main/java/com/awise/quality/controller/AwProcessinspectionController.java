@@ -2,6 +2,12 @@ package com.awise.quality.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.away.common.utils.bean.BeanCopyUtils;
+
+import com.awise.quality.domain.Vo.AwProcessinspectionVo;
+import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +40,9 @@ public class AwProcessinspectionController extends BaseController
     @Autowired
     private IAwProcessinspectionService awProcessinspectionService;
 
+
+
+
     /**
      * 查询过程检验列表
      */
@@ -52,10 +61,10 @@ public class AwProcessinspectionController extends BaseController
     @PreAuthorize("@ss.hasPermi('quality:processinspection:export')")
     @Log(title = "过程检验", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, AwProcessinspection awProcessinspection)
+    public void export(HttpServletResponse response, AwProcessinspectionVo awProcessinspectionVo)
     {
-        List<AwProcessinspection> list = awProcessinspectionService.selectAwProcessinspectionList(awProcessinspection);
-        ExcelUtil<AwProcessinspection> util = new ExcelUtil<AwProcessinspection>(AwProcessinspection.class);
+        List<AwProcessinspectionVo> list = awProcessinspectionService.selectAwProcessinspectionVoList(awProcessinspectionVo);
+        ExcelUtil<AwProcessinspectionVo> util = new ExcelUtil<AwProcessinspectionVo>(AwProcessinspectionVo.class);
         util.exportExcel(response, list, "过程检验数据");
     }
 

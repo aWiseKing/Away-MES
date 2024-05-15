@@ -1,6 +1,8 @@
 package com.awise.produce.service.impl;
 
 import java.util.List;
+
+import com.awise.produce.domain.Vo.AwProductiontasksVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.awise.produce.mapper.AwProductiontasksMapper;
@@ -28,7 +30,8 @@ public class AwProductiontasksServiceImpl implements IAwProductiontasksService
     @Override
     public AwProductiontasks selectAwProductiontasksById(Long id)
     {
-        return awProductiontasksMapper.selectAwProductiontasksById(id);
+        AwProductiontasks awProductiontasks = awProductiontasksMapper.selectAwProductiontasksById(id);
+        return awProductiontasks;
     }
 
     /**
@@ -101,4 +104,15 @@ public class AwProductiontasksServiceImpl implements IAwProductiontasksService
     {
         return awProductiontasksMapper.deleteAwProductiontasksByProductionTasksFormIDs(ProductionTasksFormIDs);
     }
+
+
+    //导出时，查出订单和客户相关信息
+    @Override
+    public List<AwProductiontasksVo> selectAwProductiontasksVo(AwProductiontasksVo awProductiontasksVo) {
+        return awProductiontasksMapper.selectAwProductiontasksListVo(awProductiontasksVo);
+    }
+
+
+
+
 }

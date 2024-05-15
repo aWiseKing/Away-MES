@@ -1,6 +1,8 @@
 package com.awise.quality.service.impl;
 
 import java.util.List;
+
+import com.awise.quality.domain.Vo.AwProcessinspectionVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.awise.quality.mapper.AwProcessinspectionMapper;
@@ -89,5 +91,10 @@ public class AwProcessinspectionServiceImpl implements IAwProcessinspectionServi
     public int deleteAwProcessinspectionById(Long id)
     {
         return awProcessinspectionMapper.deleteAwProcessinspectionById(id);
+    }
+
+    @Override
+    public List<AwProcessinspectionVo> selectAwProcessinspectionVoList(AwProcessinspectionVo awProcessinspectionVo) {
+        return awProcessinspectionMapper.selectAwProcessinspectionVoList(awProcessinspectionVo);
     }
 }

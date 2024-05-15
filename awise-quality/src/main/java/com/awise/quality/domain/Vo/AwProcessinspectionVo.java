@@ -1,11 +1,12 @@
-package com.awise.quality.domain;
+package com.awise.quality.domain.Vo;
 
-import java.util.Date;
+import com.away.common.annotation.Excel;
+import com.away.common.core.domain.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import com.away.common.annotation.Excel;
-import com.away.common.core.domain.BaseEntity;
+
+import java.util.Date;
 
 /**
  * 过程检验对象 aw_processinspection
@@ -13,7 +14,7 @@ import com.away.common.core.domain.BaseEntity;
  * @author awise
  * @date 2023-09-27
  */
-public class AwProcessinspection extends BaseEntity
+public class AwProcessinspectionVo extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
@@ -76,6 +77,18 @@ public class AwProcessinspection extends BaseEntity
     /** 备注 */
     @Excel(name = "备注")
     private String note;
+
+    /** 订单编号 */
+    @Excel(name = "订单编号")
+    private String orderId;
+
+    @Excel(name="订单批次号")
+    private String lotNUmber;
+
+    @Excel(name="产品图号")
+
+    private String productID;
+
 
     public void setId(Long id) 
     {
@@ -211,6 +224,30 @@ public class AwProcessinspection extends BaseEntity
 
     public void setProcessingPersonnel(String processingPersonnel) {
         this.processingPersonnel = processingPersonnel;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getLotNUmber() {
+        return lotNUmber;
+    }
+
+    public void setLotNUmber(String lotNUmber) {
+        this.lotNUmber = lotNUmber;
+    }
+
+    public String getProductID() {
+        return productID;
+    }
+
+    public void setProductID(String productID) {
+        this.productID = productID;
     }
 
     @Override

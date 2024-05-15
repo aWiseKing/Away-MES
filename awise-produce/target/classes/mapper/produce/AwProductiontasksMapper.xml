@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.awise.produce.mapper.AwProductiontasksMapper">
-    
+
     <resultMap type="AwProductiontasks" id="AwProductiontasksResult">
         <result property="id"    column="id"    />
         <result property="productionTasksFormID"    column="productionTasksFormID"    />
@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectAwProductiontasksList" parameterType="AwProductiontasks" resultMap="AwProductiontasksResult">
         <include refid="selectAwProductiontasksVo"/>
-        <where>  
+        <where>
             <if test="productionTasksFormID != null "> and productionTasksFormID = #{productionTasksFormID}</if>
             <if test="serialNum != null "> and serialNum = #{serialNum}</if>
             <if test="processingTechnologyID != null  and processingTechnologyID != ''"> and processingTechnologyID = #{processingTechnologyID}</if>
@@ -31,12 +31,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="status != null  and status != ''"> and status = #{status}</if>
         </where>
     </select>
-    
+
     <select id="selectAwProductiontasksById" parameterType="Long" resultMap="AwProductiontasksResult">
         <include refid="selectAwProductiontasksVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertAwProductiontasks" parameterType="AwProductiontasks" useGeneratedKeys="true" keyProperty="id">
         insert into aw_ProductionTasks
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="outsourced != null and outsourced != ''">outsourced,</if>
             <if test="notes != null">notes,</if>
             <if test="status != null and status != ''">status,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="productionTasksFormID != null">#{productionTasksFormID},</if>
             <if test="serialNum != null">#{serialNum},</if>
@@ -56,7 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="outsourced != null and outsourced != ''">#{outsourced},</if>
             <if test="notes != null">#{notes},</if>
             <if test="status != null and status != ''">#{status},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateAwProductiontasks" parameterType="AwProductiontasks">
@@ -83,4 +83,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+    <select id="selectAwProductiontasksListVo" resultType="com.awise.produce.domain.Vo.AwProductiontasksVo">
+        select
+        aw_ProductionTasks.id,aw_ProductionTasks.productionTasksFormID,aw_ProductionTasks.serialNum, aw_ProductionTasks.processingTechnologyID, aw_ProductionTasks.saleOrderID, aw_ProductionTasks.outsourced, aw_ProductionTasks.notes, aw_ProductionTasks.status,
+        aw_saleorder.lotNumber,aw_partner.name as customername
+        from aw_ProductionTasks left join aw_saleorder on aw_ProductionTasks.saleOrderID =aw_saleorder.id left join aw_partner on aw_saleorder.customerID=aw_partner.id
+        <where>
+            <if test="productionTasksFormID != null "> and productionTasksFormID = #{productionTasksFormID}</if>
+            <if test="serialNum != null "> and serialNum = #{serialNum}</if>
+            <if test="processingTechnologyID != null and processingTechnologyID != ''"> and processingTechnologyID = #{processingTechnologyID}</if>
+            <if test="saleOrderID != null and saleOrderID != ''"> and saleOrderID = #{saleOrderID}</if>
+            <if test="outsourced != null and outsourced != ''"> and outsourced = #{outsourced}</if>
+            <if test="notes != null and notes != ''"> and notes = #{notes}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+
+
 </mapper>

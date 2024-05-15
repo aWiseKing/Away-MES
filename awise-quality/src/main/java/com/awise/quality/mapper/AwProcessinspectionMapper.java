@@ -2,6 +2,7 @@ package com.awise.quality.mapper;
 
 import java.util.List;
 import com.awise.quality.domain.AwProcessinspection;
+import com.awise.quality.domain.Vo.AwProcessinspectionVo;
 
 /**
  * 过程检验Mapper接口
@@ -58,4 +59,6 @@ public interface AwProcessinspectionMapper
      * @return 结果
      */
     public int deleteAwProcessinspectionByIds(Long[] ids);
+
+   public List<AwProcessinspectionVo> selectAwProcessinspectionVoList(AwProcessinspectionVo awProcessinspectionVo);
 }

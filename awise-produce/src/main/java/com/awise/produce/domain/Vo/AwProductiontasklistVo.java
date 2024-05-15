@@ -37,7 +37,7 @@ public class AwProductiontasklistVo extends BaseEntity
     private String status;
 
     @Excel(name = "生产任务列表")
-    private List<AwProductiontasks> AwProductiontaskslist;
+    private List<AwProductiontasksVo> AwProductiontasksVolist;
 
     
     public void setId(Long id)
@@ -86,13 +86,12 @@ public class AwProductiontasklistVo extends BaseEntity
         return status;
     }
 
-
-    public List<AwProductiontasks> getAwProductiontaskslist() {
-        return AwProductiontaskslist;
+    public List<AwProductiontasksVo> getAwProductiontasksVolist() {
+        return AwProductiontasksVolist;
     }
 
-    public void setAwProductiontaskslist(List<AwProductiontasks> awProductiontaskslist) {
-        AwProductiontaskslist = awProductiontaskslist;
+    public void setAwProductiontasksVolist(List<AwProductiontasksVo> awProductiontasksVolist) {
+        AwProductiontasksVolist = awProductiontasksVolist;
     }
 
     @Override
@@ -103,7 +102,7 @@ public class AwProductiontasklistVo extends BaseEntity
                 ", founder='" + founder + '\'' +
                 ", notes='" + notes + '\'' +
                 ", status='" + status + '\'' +
-                ", AwProductiontaskslist=" + AwProductiontaskslist +
+                ", AwProductiontasksVolist=" + getAwProductiontasksVolist() +
                 '}';
     }
 }

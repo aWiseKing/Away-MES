@@ -24,10 +24,10 @@
           @keyup.enter.native="handleQuery"
         >
           <el-option
-            v-for="item in qualityInspectionCategory_dict"
+            v-for="item in dict.type.aw_qualityinspectioncategory_dict"
             :key="item.key"
-            :label="item.value"
-            :value="item.key"
+            :label="item.label"
+            :value="item.value"
           >
           </el-option>
         </el-select>
@@ -66,10 +66,10 @@
           @keyup.enter.native="handleQuery"
         >
           <el-option
-            v-for="item in testResult_option"
+            v-for="item in dict.type.aw_quality_shippinginspection_status"
             :key="item.key"
-            :label="item.value"
-            :value="item.key"
+            :label="item.label"
+            :value="item.value"
           >
           </el-option>
         </el-select>
@@ -162,11 +162,20 @@
         align="center"
         prop="nameOfQualityInspection"
       />
+
       <el-table-column
         label="质检类别"
         align="center"
         prop="qualityInspectionCategory"
-      />
+      >
+        <template slot-scope="scope">
+          <dict-tag
+            :options="dict.type.aw_qualityinspectioncategory_dict"
+            :value="scope.row.qualityInspectionCategory"
+          />
+        </template>
+      </el-table-column>
+
       <el-table-column
         label="任务编号"
         align="center"
@@ -343,7 +352,7 @@
         <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="订单编号">
-              <el-input v-model="order.id" placeholder="订单编号" />
+              <el-input v-model="order.id" placeholder="订单编号" disabled />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -534,18 +543,16 @@ import {
 import { listProcessingprocess } from "@/api/produce/processingprocess";
 import { getValue } from "@/utils/utils.js";
 
-import {
-  getSaleorder,
+import { getSaleorder } from "@/api/order/saleorder";
 
-} from "@/api/order/saleorder";
-
-import {
-  getProduct,
-} from "@/api/order/product";
+import { getProduct } from "@/api/order/product";
 
 export default {
   name: "Processinspection",
-  dicts: ["aw_quality_shippinginspection_status"],
+  dicts: [
+    "aw_quality_shippinginspection_status",
+    "aw_qualityinspectioncategory_dict",
+  ],
   data() {
     return {
       // 遮罩层
@@ -585,7 +592,7 @@ export default {
         testDate: null,
         testResult: null,
         testingPersonnel: null,
-        processingPersonnel:null,
+        processingPersonnel: null,
         note: null,
       },
       // 表单参数
@@ -717,10 +724,9 @@ export default {
       this.processingTechnologyID = value;
 
       //根据任务拿到订单
-
+      console.log(item);
       getSaleorder(item.saleOrderID).then((response) => {
         this.order = response.data;
-
         console.log(this.order.id);
         getProduct(this.order.productID).then((response) => {
           this.product = response.data;
@@ -749,7 +755,7 @@ export default {
         testDate: null,
         testResult: null,
         testingPersonnel: null,
-        processingPersonnel:null,
+        processingPersonnel: null,
         note: null,
       };
       // 任务单子列表

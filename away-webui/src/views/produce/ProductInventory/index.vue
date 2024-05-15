@@ -13,10 +13,10 @@
           <div
             style="overflow-x: auto; scrollbar-width: none; white-space: nowrap"
           >
-            <el-form-item label="产品编号" prop="productID">
+            <el-form-item label="产品名称" prop="productID">
               <el-input
                 v-model="queryParams.productID"
-                placeholder="请输入产品编号"
+                placeholder="请输入产品名称"
                 clearable
                 @keyup.enter.native="handleQuery"
               />

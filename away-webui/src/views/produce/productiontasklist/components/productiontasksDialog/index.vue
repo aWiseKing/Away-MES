@@ -46,6 +46,26 @@
           </el-select>
         </template>
       </el-table-column>
+
+      <el-table-column label="销售批次号" align="center">
+        <template slot-scope="scope">
+          <el-select
+            disabled
+            v-model="scope.row.saleOrderID"
+            placeholder="请选择批次号"
+            filterable
+          >
+            <el-option
+              v-for="item in saleorder_list"
+              :key="item.id"
+              :label="item.lotNumber"
+              :value="item.id"
+            >
+            </el-option>
+          </el-select>
+        </template>
+      </el-table-column>
+
       <el-table-column label="生产工艺" align="center">
         <template slot-scope="scope">
           <el-select
@@ -70,7 +90,8 @@
               v-for="dict in dict.type.aw_produce_outsourcing"
               :key="dict.value"
               :label="dict.value"
-            >{{dict.label}}</el-radio>
+              >{{ dict.label }}</el-radio
+            >
           </el-radio-group>
         </template>
       </el-table-column>

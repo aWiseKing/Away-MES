@@ -2,6 +2,7 @@ package com.awise.quality.service;
 
 import java.util.List;
 import com.awise.quality.domain.AwProcessinspection;
+import com.awise.quality.domain.Vo.AwProcessinspectionVo;
 
 /**
  * 过程检验Service接口
@@ -58,4 +59,9 @@ public interface IAwProcessinspectionService
      * @return 结果
      */
     public int deleteAwProcessinspectionById(Long id);
+
+
+    //导出顺便获取到订单相关信息
+
+    public  List<AwProcessinspectionVo>  selectAwProcessinspectionVoList(AwProcessinspectionVo awProcessinspectionVo);
 }

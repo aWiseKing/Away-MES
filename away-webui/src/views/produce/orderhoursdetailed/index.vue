@@ -52,14 +52,7 @@
                 @keyup.enter.native="handleQuery"
               />
             </el-form-item>
-            <el-form-item label="社会统一信用代码" prop="unifiedCreditCode">
-              <el-input
-                v-model="queryParams.unifiedCreditCode"
-                placeholder="请输入社会统一信用代码"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
+
             <el-form-item label="产品名称" prop="productName">
               <el-input
                 v-model="queryParams.productName"

@@ -2,6 +2,7 @@ package com.awise.produce.mapper;
 
 import java.util.List;
 import com.awise.produce.domain.AwProductiontasks;
+import com.awise.produce.domain.Vo.AwProductiontasksVo;
 
 /**
  * 生产任务Mapper接口
@@ -66,4 +67,8 @@ public interface AwProductiontasksMapper
      * @return 结果
      */
     public int deleteAwProductiontasksByProductionTasksFormIDs(Long[] productionTasksFormIDs);
+
+
+    List<AwProductiontasksVo> selectAwProductiontasksListVo(AwProductiontasksVo awProductiontasksVo);
+
 }

@@ -33,6 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="unifiedCreditCode != null  and unifiedCreditCode != ''"> and unifiedCreditCode = #{unifiedCreditCode}</if>
             <if test="productID != null  and productID != ''"> and  productID= #{productID}</if>
+            <if test="productName != null  and productName != ''"> and  productName= #{productName}</if>
         </where>
     </select>
     
