@@ -489,6 +489,18 @@ export default {
       const id = row.id || this.ids;
       getProductoutbound(id).then((response) => {
         this.form = response.data;
+
+        getProduct(row.productID).then((response) => {
+          this.product = response.data;
+          console.log(this.product);
+        });
+
+        getCustom(row.contractID).then((response) => {
+          this.custom = response.data;
+          console.log(this.custom);
+        });
+
+        
         this.view_open = false;
         this.open = true;
         this.title = "修改产品出库详单";

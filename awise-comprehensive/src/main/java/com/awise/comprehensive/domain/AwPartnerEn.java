@@ -50,10 +50,6 @@ public class AwPartnerEn extends BaseEntity
     @Excel(name = "实体类型",dictType = "aw_contract_location")
     private Long type;
 
-    private String isdel;
-
-
-
     public Long getType() {
         return type;
     }
@@ -71,6 +67,7 @@ public class AwPartnerEn extends BaseEntity
     }
 
     /** 是否删除 */
+    private String isdel;
 
 
     public String getId() {
