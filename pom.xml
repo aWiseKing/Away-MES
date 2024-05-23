@@ -226,6 +226,15 @@
                 <version>${away.version}</version>
             </dependency>
 
+
+<!--            大屏-->
+
+            <dependency>
+                <groupId>com.away</groupId>
+                <artifactId>awise-visualize</artifactId>
+                <version>${away.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -244,6 +253,9 @@
         <module>awise-produce</module>
         <module>awise-qrcode</module>
         <module>awise-quality</module>
+        <module>awise-visualize</module>
+
+
     </modules>
     <packaging>pom</packaging>
 

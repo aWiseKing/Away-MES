@@ -245,7 +245,7 @@
 
         <el-row :gutter="12">
           <el-col :span="12">
-            <el-form-item label="批次号">
+            <el-form-item label="批次号" prop="lotNumber">
               <el-input v-model="form.lotNumber" placeholder="请输入批次号">
               </el-input>
             </el-form-item>
@@ -531,6 +531,9 @@ export default {
         ],
         iscustomersuppliedmaterials: [
           { required: true, message: "请选择是否客供材料", trigger: "blur" },
+        ],
+        lotNumber: [
+          { required: true, message: "批次号不能为空", trigger: "blur" },
         ],
         state: [
           {

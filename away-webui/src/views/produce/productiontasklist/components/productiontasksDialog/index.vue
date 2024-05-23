@@ -47,7 +47,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="销售批次号" align="center">
+      <el-table-column label="批次号" align="center">
         <template slot-scope="scope">
           <el-select
             disabled
@@ -183,6 +183,12 @@ export default {
         { key: "0", value: "否" },
         { key: "1", value: "是" },
       ],
+
+      rules: {
+      
+      },
+
+
       // 生产任务列表
       productiontasks_list: [],
       // 删除任务队列

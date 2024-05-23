@@ -29,7 +29,11 @@
     <file url="file://$PROJECT_DIR$/awise-quality/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/awise-storage/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/awise-storage/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/awise-visualize/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/awise-visualize/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/visualize/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/visualize/src/main/resources" charset="UTF-8" />
   </component>
 </project>

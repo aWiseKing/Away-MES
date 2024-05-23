@@ -102,6 +102,11 @@
             <artifactId>awise-quality</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.away</groupId>
+            <artifactId>awise-visualize</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

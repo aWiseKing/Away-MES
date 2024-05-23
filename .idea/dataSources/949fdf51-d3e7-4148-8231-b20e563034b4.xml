@@ -6477,7 +6477,7 @@ DYNAMIC</Options>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="1279" parent="307" name="id">
-      <AutoIncrement>25</AutoIncrement>
+      <AutoIncrement>26</AutoIncrement>
       <Comment>id</Comment>
       <DasType>int(11)|0s</DasType>
       <NotNull>1</NotNull>
@@ -6696,7 +6696,7 @@ DYNAMIC</Options>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="1318" parent="311" name="id">
-      <AutoIncrement>2</AutoIncrement>
+      <AutoIncrement>4</AutoIncrement>
       <Comment>id</Comment>
       <DasType>int(11)|0s</DasType>
       <NotNull>1</NotNull>
@@ -6892,7 +6892,7 @@ DYNAMIC</Options>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="1355" parent="314" name="id">
-      <AutoIncrement>40</AutoIncrement>
+      <AutoIncrement>42</AutoIncrement>
       <Comment>生产任务单编号</Comment>
       <DasType>int(255)|0s</DasType>
       <NotNull>1</NotNull>
@@ -6938,7 +6938,7 @@ DYNAMIC</Options>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="1363" parent="315" name="id">
-      <AutoIncrement>54</AutoIncrement>
+      <AutoIncrement>56</AutoIncrement>
       <Comment>任务编号</Comment>
       <DasType>int(11)|0s</DasType>
       <NotNull>1</NotNull>
@@ -8034,7 +8034,7 @@ DYNAMIC</Options>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="1564" parent="334" name="id">
-      <AutoIncrement>11</AutoIncrement>
+      <AutoIncrement>13</AutoIncrement>
       <Comment>编号</Comment>
       <DasType>int(11)|0s</DasType>
       <NotNull>1</NotNull>
@@ -8153,7 +8153,7 @@ DYNAMIC</Options>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="1585" parent="335" name="id">
-      <AutoIncrement>32</AutoIncrement>
+      <AutoIncrement>34</AutoIncrement>
       <Comment>工序编号</Comment>
       <DasType>int(11)|0s</DasType>
       <NotNull>1</NotNull>
@@ -9990,7 +9990,7 @@ job_group</ColNames>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="1915" parent="362" name="dict_code">
-      <AutoIncrement>120</AutoIncrement>
+      <AutoIncrement>123</AutoIncrement>
       <Comment>字典编码</Comment>
       <DasType>bigint(20)|0s</DasType>
       <NotNull>1</NotNull>
@@ -10080,7 +10080,7 @@ job_group</ColNames>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="1931" parent="363" name="dict_id">
-      <AutoIncrement>35</AutoIncrement>
+      <AutoIncrement>36</AutoIncrement>
       <Comment>字典主键</Comment>
       <DasType>bigint(20)|0s</DasType>
       <NotNull>1</NotNull>
@@ -10298,7 +10298,7 @@ job_group</ColNames>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="1969" parent="366" name="info_id">
-      <AutoIncrement>1805</AutoIncrement>
+      <AutoIncrement>1827</AutoIncrement>
       <Comment>访问ID</Comment>
       <DasType>bigint(20)|0s</DasType>
       <NotNull>1</NotNull>
@@ -10557,7 +10557,7 @@ job_group</ColNames>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="2015" parent="369" name="oper_id">
-      <AutoIncrement>5627</AutoIncrement>
+      <AutoIncrement>5706</AutoIncrement>
       <Comment>日志主键</Comment>
       <DasType>bigint(20)|0s</DasType>
       <NotNull>1</NotNull>
