@@ -486,6 +486,8 @@ export default {
               this.setStatus(row, "2");
             }
           });
+        } else {
+          this.$modal.msgWarning("材料出库中不存在材料");
         }
         this.loading = false;
       });

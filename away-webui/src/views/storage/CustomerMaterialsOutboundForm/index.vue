@@ -458,6 +458,8 @@ export default {
               this.setStatus(row, "2");
             }
           });
+        }else{
+          this.$modal.msgWarning("客供材料出库中不存在材料")
         }
         this.loading = false;
       });

@@ -48,14 +48,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="生产任务单编号" prop="productionTasksFormID">
-        <el-input
-          v-model="queryParams.productionTasksFormID"
-          placeholder="请输入生产任务单编号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item label="材料名称" prop="name">
         <el-input
           v-model="queryParams.name"

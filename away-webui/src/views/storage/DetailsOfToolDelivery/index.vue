@@ -136,7 +136,6 @@
       <el-table-column label="刀具名称" align="center" prop="name" />
       <el-table-column label="类别名称" align="center" prop="typeName" />
 
-
       <el-table-column label="新旧类型" align="center" prop="newAndOldTypes">
         <template slot-scope="scope">
           <dict-tag
@@ -203,7 +202,13 @@
 
     <!-- 添加或修改刀具出库详细对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="900px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px" :disabled="view_open">
+      <el-form
+        ref="form"
+        :model="form"
+        :rules="rules"
+        label-width="80px"
+        :disabled="view_open"
+      >
         <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="出库单编号" prop="deliveryNoteID">
@@ -214,14 +219,10 @@
               />
             </el-form-item>
           </el-col>
-
-
         </el-row>
 
-        <el-row :gutter="12"
-          >
-
-               <el-col :span="12">
+        <el-row :gutter="12">
+          <el-col :span="12">
             <el-form-item label="刀具基本信息编号" prop="toolInformationID">
               <el-select
                 v-model="form.toolInformationID"
@@ -231,7 +232,7 @@
                 <el-option
                   v-for="(item, index) in basicToolInfomations"
                   :key="index"
-                  :label="item.name"
+                  :label="item.id"
                   :value="item.id"
                   @click.native="setListbasicToolInfomations(item.id)"
                 >
@@ -326,9 +327,8 @@
           ></el-col>
         </el-row>
 
-        <el-row :gutter="12"
-          >
-                    <el-col :span="12">
+        <el-row :gutter="12">
+          <el-col :span="12">
             <el-form-item label="刀具价格" prop="uint">
               <el-input
                 disabled
@@ -345,7 +345,7 @@
           <el-col :span="12"> </el-col>
         </el-row>
       </el-form>
-      <div slot="footer" class="dialog-footer"  v-if="!view_open">
+      <div slot="footer" class="dialog-footer" v-if="!view_open">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
@@ -357,7 +357,6 @@
 import {
   listDetailsOfToolDelivery,
   getDetailsOfToolDelivery,
-
 } from "@/api/storage/DetailsOfToolDelivery";
 import {
   listBasicToolInformation,
@@ -465,10 +464,10 @@ export default {
       });
     },
     //查询刀具基本信息
-   async getListbasicToolInfomations() {
+    async getListbasicToolInfomations() {
       this.loading = true;
-       let total= (await listBasicToolInformation())["total"];
-      listBasicToolInformation({pageSize:total}).then((res) => {
+      let total = (await listBasicToolInformation())["total"];
+      listBasicToolInformation({ pageSize: total }).then((res) => {
         this.basicToolInfomations = res.rows;
         this.loading = false;
       });
@@ -499,9 +498,9 @@ export default {
         materialRequisition: null,
         notes: null,
       };
-      this.basicToolInfomations=[],
-      this.basicToolInfomation={},
-      this.resetForm("form");
+      (this.basicToolInfomations = []),
+        (this.basicToolInfomation = {}),
+        this.resetForm("form");
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -525,7 +524,7 @@ export default {
       const id = row.id || this.ids;
       getToolOutbound(id).then((res) => {
         this.form = res.data;
-         this.view_open = true;
+        this.view_open = true;
         listBasicToolInformation().then((res) => {
           this.basicToolInfomations = res.rows;
         });
@@ -553,7 +552,7 @@ export default {
       this.view_open = false;
       getDetailsOfToolDelivery(id).then((response) => {
         this.form = response.data;
-         listBasicToolInformation().then((res) => {
+        listBasicToolInformation().then((res) => {
           this.basicToolInfomations = res.rows;
         });
 
@@ -609,8 +608,6 @@ export default {
         `DetailsOfToolDelivery_${new Date().getTime()}.xlsx`
       );
     },
-
-
   },
 
   watch: {
@@ -620,14 +617,12 @@ export default {
         this.getExist();
       },
     },
-     "this.$route.query.status": {
+    "this.$route.query.status": {
       immediate: true,
       handler() {
         this.getExist();
       },
     },
   },
-
-
 };
 </script>

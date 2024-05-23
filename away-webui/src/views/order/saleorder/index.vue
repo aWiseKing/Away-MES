@@ -137,7 +137,14 @@
         </template>
       </el-table-column>
       <el-table-column label="客户名称" align="center" prop="customername" />
-      <el-table-column label="当前订单状态" align="center" prop="state" />
+      <el-table-column label="状态" align="center" prop="state">
+        <template slot-scope="scope">
+          <dict-tag
+            :options="dict.type.aw_order_saleoder_options"
+            :value="scope.row.state"
+          />
+        </template>
+      </el-table-column>
       <el-table-column
         label="操作"
         align="center"

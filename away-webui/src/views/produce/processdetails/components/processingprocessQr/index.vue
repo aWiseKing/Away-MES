@@ -186,7 +186,11 @@
             >模板选择</span
           >
           <div style="margin-bottom: 22px">
-            <el-select v-model="processtemplate_name" placeholder="模板工序" filterable>
+            <el-select
+              v-model="processtemplate_name"
+              placeholder="模板工序"
+              filterable
+            >
               <el-option
                 v-for="(item, index) in processtemplate_list"
                 :key="index"
@@ -485,9 +489,9 @@ export default {
       });
     },
     /** 查询模板工序列表 */
-  async  getListProcesstemplate() {
-      let total= (await  listProcesstemplate())["total"];
-      listProcesstemplate({ status: "1" ,pageSize:total}).then((response) => {
+    async getListProcesstemplate() {
+      let total = (await listProcesstemplate())["total"];
+      listProcesstemplate({ status: "1", pageSize: total }).then((response) => {
         this.processtemplate_list = response.rows;
       });
     },
@@ -599,22 +603,6 @@ export default {
       });
     },
 
-    // handleView(row) {
-    //   const id = row.id || this.ids
-    //   getProcessingprocess(id).then(async response => {
-    //     this.view_form = response.data;
-    //     this.view_form.files = [];
-    //     let num = 0;
-    //     if (response.data.diagramURL != null) {
-    //       let urls = response.data.diagramURL.split(";");
-    //       urls.pop();
-    //       for (num in urls) {
-    //         await this.fileDown(urls[num]);
-    //       }
-    //     }
-    //     this.view_open = true;
-    //   });
-    // },
     async handleView(row) {
       this.view_form = row;
       this.view_form.files = [];

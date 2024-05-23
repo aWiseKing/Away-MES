@@ -508,7 +508,7 @@ export default {
 
       let total = await listDetailsOfToolDelivery()["total"];
 
-      // 出库材料列表
+      // 出库刀具列表
       listDetailsOfToolDelivery({
         pageSize: total,
         deliveryNoteID: deliveryNoteID,
@@ -527,6 +527,8 @@ export default {
               this.setStatus(row, "2");
             }
           });
+        }else{
+          this.$modal.msgWarning("刀具出库单中不存在刀具");
         }
         this.loading = false;
       });

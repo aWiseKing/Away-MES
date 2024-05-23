@@ -8,81 +8,70 @@
       v-show="showSearch"
       label-width="68px"
     >
-      <el-row :gutter="1">
-        <el-col :span="21">
-          <div
-            style="overflow-x: auto; scrollbar-width: none; white-space: nowrap"
-          >
+      <el-form-item label="客户姓名" prop="name">
+        <el-input
+          v-model="queryParams.name"
+          placeholder="请输入客户姓名"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="产品名称" prop="productName">
+        <el-input
+          v-model="queryParams.productName"
+          placeholder="请输入产品名称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="应付金额" prop="amountDue">
+        <el-input
+          v-model="queryParams.amountDue"
+          placeholder="请输入应付金额"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
 
-          
-            <el-form-item label="客户姓名" prop="name">
-              <el-input
-                v-model="queryParams.name"
-                placeholder="请输入客户姓名"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="产品名称" prop="productName">
-              <el-input
-                v-model="queryParams.productName"
-                placeholder="请输入产品名称"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="应付金额" prop="amountDue">
-              <el-input
-                v-model="queryParams.amountDue"
-                placeholder="请输入应付金额"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
+      <el-form-item label="实付金额" prop="outOfPocketAmount">
+        <el-input
+          v-model="queryParams.outOfPocketAmount"
+          placeholder="请输入实付金额"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
 
-            <el-form-item label="实付金额" prop="outOfPocketAmount">
-              <el-input
-                v-model="queryParams.outOfPocketAmount"
-                placeholder="请输入实付金额"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
+      <el-form-item label="未付金额" prop="unpaidAmount">
+        <el-input
+          v-model="queryParams.unpaidAmount"
+          placeholder="请输入未付金额"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
 
-            <el-form-item label="未付金额" prop="unpaidAmount">
-              <el-input
-                v-model="queryParams.unpaidAmount"
-                placeholder="请输入未付金额"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
+      <el-form-item label="备注" prop="notes">
+        <el-input
+          v-model="queryParams.notes"
+          placeholder="请输入产品名称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
 
-            <el-form-item label="备注" prop="notes">
-              <el-input
-                v-model="queryParams.notes"
-                placeholder="请输入产品名称"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-          </div>
-        </el-col>
-        <el-col :span="3">
-          <el-form-item>
-            <el-button
-              type="primary"
-              icon="el-icon-search"
-              size="mini"
-              @click="handleQuery"
-              >搜索</el-button
-            >
-            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
-              >重置</el-button
-            >
-          </el-form-item>
-        </el-col>
-      </el-row>
+      <el-form-item>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          size="mini"
+          @click="handleQuery"
+          >搜索</el-button
+        >
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
+          >重置</el-button
+        >
+      </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -132,7 +121,6 @@
           >导出</el-button
         >
       </el-col>
-
 
       <right-toolbar
         :showSearch.sync="showSearch"
@@ -242,7 +230,7 @@
           <el-col :span="12">
             <el-form-item label="订单信息" prop="saleorderID">
               <el-select
-              filterable
+                filterable
                 v-model="form.saleorderID"
                 placeholder="请选择需要对账的订单"
                 @focus="getSaleorderList()"
@@ -281,7 +269,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        
+
         <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="产品名称" prop="productName">
@@ -363,12 +351,6 @@
           </el-col>
         </el-row>
 
-
-       
-       
-       
-
-        
         <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="客户价格" prop="customerPrice">
@@ -379,17 +361,23 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-          <el-form-item label="发票价格" prop="invoicePrice">
-          <el-input v-model="form.invoicePrice" placeholder="请输入发票价格" />
-        </el-form-item>
+            <el-form-item label="发票价格" prop="invoicePrice">
+              <el-input
+                v-model="form.invoicePrice"
+                placeholder="请输入发票价格"
+              />
+            </el-form-item>
           </el-col>
         </el-row>
 
         <el-row :gutter="12">
           <el-col :span="12">
-      <el-form-item label="工艺价格" prop="processPrice">
-          <el-input v-model="form.processPrice" placeholder="请输入工艺价格" />
-        </el-form-item>
+            <el-form-item label="工艺价格" prop="processPrice">
+              <el-input
+                v-model="form.processPrice"
+                placeholder="请输入工艺价格"
+              />
+            </el-form-item>
           </el-col>
 
           <el-col :span="12">
@@ -510,10 +498,10 @@ export default {
     },
     //查询订单列表
 
-  async  getSaleorderList() {
+    async getSaleorderList() {
       this.loading = true;
-       let total= (await listBasicOrderInformation())["total"];
-      listBasicOrderInformation({pageSize:total}).then((response) => {
+      let total = (await listBasicOrderInformation())["total"];
+      listBasicOrderInformation({ pageSize: total }).then((response) => {
         this.BasicOrderInformationList = response.rows;
         this.loading = false;
       });
@@ -552,7 +540,7 @@ export default {
         invoicePrice: null,
         processPrice: null,
         notes: null,
-        status: null
+        status: null,
       };
       (this.BasicOrderInformationList = []), (this.BasicOrderInformation = {});
 
@@ -660,8 +648,6 @@ export default {
         `DetailReconciliation_${new Date().getTime()}.xlsx`
       );
     },
-
-
   },
 
   watch: {

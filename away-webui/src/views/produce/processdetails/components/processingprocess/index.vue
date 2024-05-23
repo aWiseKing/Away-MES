@@ -180,7 +180,11 @@
             >模板选择</span
           >
           <div style="margin-bottom: 22px">
-            <el-select v-model="processtemplate_name" placeholder="模板工序" filterable>
+            <el-select
+              v-model="processtemplate_name"
+              placeholder="模板工序"
+              filterable
+            >
               <el-option
                 v-for="(item, index) in processtemplate_list"
                 :key="index"
@@ -252,10 +256,9 @@
                 <el-radio
                   v-for="dict in dict.type.aw_produce_outsource_status"
                   :key="dict.value"
-                  :label="dict.label"
-                  :value="dict.value"
-
-                  >{{ dict.label }}
+                  :label="dict.value"
+                >
+                  {{ dict.label }}
                 </el-radio>
               </el-radio-group>
             </el-form-item>
@@ -483,9 +486,9 @@ export default {
       });
     },
     /** 查询模板工序列表 */
-  async  getListProcesstemplate() {
-      let total= (await  listProcesstemplate())["total"];
-      listProcesstemplate({ status: "1" ,pageSize:total}).then((response) => {
+    async getListProcesstemplate() {
+      let total = (await listProcesstemplate())["total"];
+      listProcesstemplate({ status: "1", pageSize: total }).then((response) => {
         this.processtemplate_list = response.rows;
       });
     },

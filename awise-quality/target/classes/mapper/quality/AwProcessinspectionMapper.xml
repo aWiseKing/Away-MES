@@ -93,7 +93,7 @@
             <if test="scrappedQuantity != null">scrappedQuantity,</if>
             <if test="testDate != null">testDate,</if>
             <if test="testResult != null and testResult != ''">testResult,</if>
-            <if test="testingPersonnel != null and testingPersonnel != ''">tes tingPersonnel,</if>
+            <if test="testingPersonnel != null and testingPersonnel != ''">testingPersonnel,</if>
             <if test="processingPersonnel != null and processingPersonnel != ''">processingPersonnel,</if>
             <if test="note != null">note,</if>
         </trim>

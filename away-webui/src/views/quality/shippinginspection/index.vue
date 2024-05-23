@@ -424,17 +424,19 @@ export default {
       });
     },
     /** 查询产品信息 */
-    getListproduct() {
+  async  getListproduct() {
       this.loading = true;
-      listProduct().then((response) => {
+      let total = (await listProduct())["total"];
+      listProduct({pageSize:total}).then((response) => {
         this.productlist = response.rows;
         this.loading = false;
       });
     },
     /** 查询客户信息 */
-    getListcustom() {
+  async  getListcustom() {
       this.loading = true;
-      listCustom().then((response) => {
+      let total = (await listProduct())["total"];
+      listCustom({pageSize:total}).then((response) => {
         this.customlist = response.rows;
         this.loading = false;
       });

@@ -1,6 +1,6 @@
 <template>
   <div class="DateItem1">
-    <div class="header">已完成任务单</div>
+    <div class="header">当前任务</div>
     <div class="echars" ref="myChart">
       <dv-scroll-board :config="config" />
     </div>
@@ -12,17 +12,9 @@ import request from "@/utils/request";
 export default {
   data() {
     return {
-      ids: [],
       config: {
         header: ["订单号", "任务简称", "客户姓名"],
         data: [],
-        index: true,
-        columnWidth: [30, 160],
-        align: ["center", "center", "center"],
-        oddRowBGC: "rgba(12,48,65,0.4)",
-        evenRowBGC: "rgba(10, 32, 50, 0.3)",
-        headerBGC: "rgba(0,186,255,0.4)",
-        carousel: "page",
       },
     };
   },
