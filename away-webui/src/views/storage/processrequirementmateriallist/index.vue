@@ -107,7 +107,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['storage:processrequirementmateriallist:edit']"
+            v-hasPermi="['storage:processrequirementmateriallist:query']"
           >查看</el-button>
           <el-button
             size="mini"

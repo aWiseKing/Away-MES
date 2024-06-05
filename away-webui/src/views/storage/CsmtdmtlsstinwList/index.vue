@@ -101,7 +101,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['storage:CsmtdmtlsstinwList:edit']"
+            v-hasPermi="['storage:CsmtdmtlsstinwList:query']"
             >查看</el-button
           >
           <el-button

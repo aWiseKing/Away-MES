@@ -143,7 +143,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['storage:BasicToolInformation:edit']"
+            v-hasPermi="['storage:BasicToolInformation:query']"
           >查看</el-button>
           <el-button
             size="mini"

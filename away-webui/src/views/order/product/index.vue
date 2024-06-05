@@ -101,6 +101,7 @@
             size="mini"
             type="text"
             icon="el-icon-view"
+            v-hasPermi="['order:product:query']"
             @click="handleView(scope.row)"
             >查看</el-button
           >

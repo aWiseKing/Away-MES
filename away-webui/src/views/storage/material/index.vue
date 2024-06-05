@@ -136,6 +136,15 @@
           <el-button
             size="mini"
             type="text"
+            icon="el-icon-view"
+            @click="handleView(scope.row)"
+            v-hasPermi="['storage:material:query']"
+            >查看</el-button
+          >
+
+          <el-button
+            size="mini"
+            type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['storage:material:edit']"
@@ -163,7 +172,13 @@
 
     <!-- 添加或修改材料基本信息对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form
+        ref="form"
+        :model="form"
+        :rules="rules"
+        label-width="80px"
+        :disabled="view_open"
+      >
         <el-form-item v-if="isadd" label="材料编号" prop="id">
           <el-input v-model="form.id" placeholder="请输入材料编号" />
         </el-form-item>
@@ -205,7 +220,7 @@
           <el-input v-model="form.notes" placeholder="请输入价格" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <div slot="footer" class="dialog-footer" v-if="!view_open">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
@@ -248,6 +263,8 @@ export default {
       open: false,
       // 是否新建
       isadd: false,
+      view_open: false,
+
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -295,14 +312,16 @@ export default {
       });
     },
     /** 查询材料分类 */
-    getlistMaterialclassification() {
-      listMaterialclassification({}).then((response) => {
+    async getlistMaterialclassification() {
+      let total = (await listMaterialclassification())["total"];
+      listMaterialclassification({ pageSize: total }).then((response) => {
         this.formtypes = response.rows;
       });
     },
     /** 查询规格信息 **/
-    getlistSpecifications() {
-      listSpecifications({}).then((response) => {
+    async getlistSpecifications() {
+      let total = (await listSpecifications())["total"];
+      listSpecifications({ pageSize: total }).then((response) => {
         this.formspecifications = response.rows;
       });
     },
@@ -347,14 +366,29 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
+      this.view_open = false;
       this.getUnList();
       this.isadd = true;
       this.open = true;
       this.title = "添加材料基本信息";
     },
+
+    handleView(row) {
+      this.view_open = true;
+      this.reset();
+      this.getUnList();
+      this.isadd = false;
+      const id = row.id || this.ids;
+      getMaterial(id).then((response) => {
+        this.form = response.data;
+        this.open = true;
+        this.title = "查看材料基本信息";
+      });
+    },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
+      this.view_open = false;
       this.getUnList();
       this.isadd = false;
       const id = row.id || this.ids;

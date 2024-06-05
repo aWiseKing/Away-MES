@@ -167,7 +167,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['storage:DetailsOfToolDelivery:edit']"
+            v-hasPermi="['storage:DetailsOfToolDelivery:query']"
             >查看</el-button
           >
           <el-button

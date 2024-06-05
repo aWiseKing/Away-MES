@@ -170,7 +170,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['finance:StatementOfAccount:edit']"
+            v-hasPermi="['finance:StatementOfAccount:query']"
             >查看</el-button
           >
           <el-button

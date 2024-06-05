@@ -169,7 +169,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['produce:productdeliveryform:edit']"
+            v-hasPermi="['produce:productdeliveryform:query']"
             >查看</el-button
           >
 
@@ -179,7 +179,7 @@
             icon="el-icon-view"
             @click="handleRelease(scope.row)"
             v-if="scope.row.status == '0'"
-            v-hasPermi="['storage:productdeliveryform:edit']"
+            v-hasPermi="['produce:productdeliveryform:edit']"
             >发布</el-button
           >
           <el-button
@@ -188,7 +188,7 @@
             icon="el-icon-view"
             @click="handleUnpublish(scope.row)"
             v-if="scope.row.status == '1'"
-            v-hasPermi="['storage:productdeliveryform:edit']"
+            v-hasPermi="['produce:productdeliveryform:edit']"
             >撤销发布</el-button
           >
           <el-button
@@ -206,7 +206,7 @@
             icon="el-icon-view"
             @click="handlePause(scope.row)"
             v-if="scope.row.status == '1'"
-            v-hasPermi="['storage:productdeliveryform:edit']"
+            v-hasPermi="['produce:productdeliveryform:edit']"
             >暂停</el-button
           >
           <el-button
@@ -215,7 +215,7 @@
             icon="el-icon-view"
             @click="handleCancelPause(scope.row)"
             v-if="scope.row.status == '3'"
-            v-hasPermi="['storage:productdeliveryform:edit']"
+            v-hasPermi="['produce:productdeliveryform:edit']"
             >取消暂停</el-button
           >
           <el-button
@@ -224,7 +224,7 @@
             icon="el-icon-view"
             @click="handleDiscard(scope.row)"
             v-if="scope.row.status == '3'"
-            v-hasPermi="['storage:productdeliveryform:edit']"
+            v-hasPermi="['produce:productdeliveryform:edit']"
             >废弃</el-button
           >
           <el-button
@@ -233,7 +233,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-if="scope.row.status == '0'"
-            v-hasPermi="['storage:productdeliveryform:edit']"
+            v-hasPermi="['produce:productdeliveryform:edit']"
             >修改</el-button
           >
           <el-button
@@ -242,7 +242,7 @@
             icon="el-icon-delete"
             v-if="scope.row.status == '0'"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['storage:productdeliveryform:remove']"
+            v-hasPermi="['produce:productdeliveryform:remove']"
             >删除</el-button
           >
         </template>
@@ -262,6 +262,7 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="出库单编号" prop="deliveryNoteID">
           <el-input
+            :disabled="!isadd"
             v-model="form.deliveryNoteID"
             placeholder="请输入出库单编号"
           />

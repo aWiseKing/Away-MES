@@ -138,7 +138,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['produce:orderhoursdetailed:edit']"
+            v-hasPermi="['produce:orderhoursdetailed:query']"
             >查看</el-button
           >
 
@@ -469,7 +469,7 @@ export default {
         .catch(() => {});
     },
     /** 导出按钮操作 */
-    handleExport() {
+    handleAllExport() {
       this.download(
         "produce/orderhoursdetailed/export",
         {
@@ -479,17 +479,8 @@ export default {
       );
     },
 
-    // 导出全部
 
-    handleAllExport() {
-      this.download(
-        "produce/productmanhour/exportAll",
-        {
-          ...this.queryParams,
-        },
-        `productmanhour_${new Date().getTime()}.xlsx`
-      );
-    },
+  
   },
 };
 </script>

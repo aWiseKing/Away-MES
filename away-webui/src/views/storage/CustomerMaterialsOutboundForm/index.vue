@@ -176,7 +176,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['storage:CustomerMaterialsOutboundForm:edit']"
+            v-hasPermi="['storage:CustomerMaterialsOutboundForm:query']"
             >查看</el-button
           >
           <el-button
@@ -267,7 +267,7 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="出库单编号" prop="deliveryNoteID">
-          <el-input v-model="form.deliveryNoteID" placeholder="出库单编号" />
+          <el-input  :disabled="!isadd" v-model="form.deliveryNoteID" placeholder="出库单编号" />
         </el-form-item>
 
         <el-form-item label="出库日期" prop="deliveryDate">

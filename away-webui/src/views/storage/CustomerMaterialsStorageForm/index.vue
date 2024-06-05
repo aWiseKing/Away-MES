@@ -8,85 +8,83 @@
       v-show="showSearch"
       label-width="68px"
     >
-  
-            <el-form-item label="入库日期" prop="warehousingDate">
-              <el-date-picker
-                clearable
-                v-model="queryParams.warehousingDate"
-                type="date"
-                value-format="yyyy-MM-dd"
-                placeholder="请选择入库日期"
-              >
-              </el-date-picker>
-            </el-form-item>
-            <el-form-item label="制单人" prop="creator">
-              <el-input
-                v-model="queryParams.creator"
-                placeholder="请输入制单人"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="验收人" prop="acceptedBy">
-              <el-input
-                v-model="queryParams.acceptedBy"
-                placeholder="请输入验收人"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="库管员" prop="warehouseKeeper">
-              <el-input
-                v-model="queryParams.warehouseKeeper"
-                placeholder="请输入库管员"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="经办人" prop="operator">
-              <el-input
-                v-model="queryParams.operator"
-                placeholder="请输入经办人"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="备注" prop="notes">
-              <el-input
-                v-model="queryParams.notes"
-                placeholder="请输入备注"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="状态" prop="status">
-              <el-select
-                v-model="queryParams.status"
-                placeholder="请选择状态"
-                clearable
-              >
-                <el-option
-                  v-for="dict in dict.type.aw_storage_warehousing_status"
-                  :key="dict.value"
-                  :label="dict.label"
-                  :value="dict.value"
-                />
-              </el-select>
-            </el-form-item>
-   
-          <el-form-item>
-            <el-button
-              type="primary"
-              icon="el-icon-search"
-              size="mini"
-              @click="handleQuery"
-              >搜索</el-button
-            >
-            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
-              >重置</el-button
-            >
-          </el-form-item>
-     
+      <el-form-item label="入库日期" prop="warehousingDate">
+        <el-date-picker
+          clearable
+          v-model="queryParams.warehousingDate"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="请选择入库日期"
+        >
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="制单人" prop="creator">
+        <el-input
+          v-model="queryParams.creator"
+          placeholder="请输入制单人"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="验收人" prop="acceptedBy">
+        <el-input
+          v-model="queryParams.acceptedBy"
+          placeholder="请输入验收人"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="库管员" prop="warehouseKeeper">
+        <el-input
+          v-model="queryParams.warehouseKeeper"
+          placeholder="请输入库管员"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="经办人" prop="operator">
+        <el-input
+          v-model="queryParams.operator"
+          placeholder="请输入经办人"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="备注" prop="notes">
+        <el-input
+          v-model="queryParams.notes"
+          placeholder="请输入备注"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="状态" prop="status">
+        <el-select
+          v-model="queryParams.status"
+          placeholder="请选择状态"
+          clearable
+        >
+          <el-option
+            v-for="dict in dict.type.aw_storage_warehousing_status"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
+      </el-form-item>
+
+      <el-form-item>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          size="mini"
+          @click="handleQuery"
+          >搜索</el-button
+        >
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
+          >重置</el-button
+        >
+      </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -187,7 +185,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['storage:CustomerMaterialsStorageForm:edit']"
+            v-hasPermi="['storage:CustomerMaterialsStorageForm:query']"
             >查看</el-button
           >
           <el-button
@@ -196,7 +194,6 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-if="scope.row.status == '0'"
-
             v-hasPermi="['storage:CustomerMaterialsStorageForm:edit']"
             >修改</el-button
           >
@@ -205,8 +202,7 @@
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-             v-if="scope.row.status == '0'"
-
+            v-if="scope.row.status == '0'"
             v-hasPermi="['storage:CustomerMaterialsStorageForm:edit']"
             >删除</el-button
           >
@@ -292,6 +288,7 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="客供材料入库编号" prop="warehouseEntryID">
           <el-input
+            :disabled="!isadd"
             v-model="form.warehouseEntryID"
             placeholder="客供材料入库编号"
           />

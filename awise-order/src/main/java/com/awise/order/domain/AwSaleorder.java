@@ -55,8 +55,8 @@ public class AwSaleorder extends BaseEntity
     private String invoiceID;
 
     /** 客供材料否 */
-    @Excel(name = "客供材料否",dictType = "aw_produce_outsourcing")
-    private Long iscustomersuppliedmaterials;
+    @Excel(name = "客供材料否",dictType = "aw_oder_customer_status")
+    private String iscustomersuppliedmaterials;
 
     /** 当前订单状态 */
     @Excel(name = "当前订单状态",dictType = "aw_order_saleoder_options")
@@ -150,11 +150,11 @@ public class AwSaleorder extends BaseEntity
         this.invoiceID = invoiceID;
     }
 
-    public Long getIscustomersuppliedmaterials() {
+    public String getIscustomersuppliedmaterials() {
         return iscustomersuppliedmaterials;
     }
 
-    public void setIscustomersuppliedmaterials(Long iscustomersuppliedmaterials) {
+    public void setIscustomersuppliedmaterials(String iscustomersuppliedmaterials) {
         this.iscustomersuppliedmaterials = iscustomersuppliedmaterials;
     }
 

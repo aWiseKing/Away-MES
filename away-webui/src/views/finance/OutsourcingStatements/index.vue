@@ -34,10 +34,10 @@
         >
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="对账人" prop="notes">
+      <el-form-item label="备注" prop="notes">
         <el-input
           v-model="queryParams.notes"
-          placeholder="请输入对账人"
+          placeholder="请输入备注"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -171,7 +171,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['finance:OutsourcingStatements:edit']"
+            v-hasPermi="['finance:OutsourcingStatements:query']"
             >查看</el-button
           >
           <el-button
@@ -440,8 +440,6 @@ export default {
         `OutsourcingStatements_${new Date().getTime()}.xlsx`
       );
     },
-
-
   },
 };
 </script>

@@ -45,7 +45,6 @@
                 @keyup.enter.native="handleQuery"
               />
             </el-form-item>
-
           </div>
         </el-col>
         <el-col :span="3">
@@ -173,7 +172,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['order:outsourcingorder:edit']"
+            v-hasPermi="['order:outsourcingorder:query']"
             >查看</el-button
           >
           <el-button
@@ -256,7 +255,9 @@
             <el-form-item label="任务编号" prop="productionTasksID">
               <el-select
                 filterable
-                :disabled="productiontasklist.id == null || form.outsourcingType == null"
+                :disabled="
+                  productiontasklist.id == null || form.outsourcingType == null
+                "
                 v-model="form.productionTasksID"
                 placeholder="请选择任务"
                 @focus="getListproductiontasks(productiontasklist.id)"
@@ -382,7 +383,7 @@ export default {
         pageSize: 10,
         outsourcingType: null,
         orderTime: null,
-        notes:null
+        notes: null,
       },
       // 表单参数
       form: {},
@@ -435,9 +436,9 @@ export default {
     /** 查询任务单信息 */
     async getListproductiontasklist() {
       this.loading = true;
-          let total= (await listProductiontasklist())["total"];
+      let total = (await listProductiontasklist())["total"];
 
-      listProductiontasklist({pageSize:total}).then((response) => {
+      listProductiontasklist({ pageSize: total }).then((response) => {
         this.productiontasklistlist = response.rows;
         this.loading = false;
       });
@@ -449,10 +450,10 @@ export default {
     },
     /** 查询任务信息 */
     getListproductiontasks(productionTasksFormID) {
-      let tasksQues = {productionTasksFormID: productionTasksFormID}
-      if(this.form.outsourcingType == "0"){
-        tasksQues.outsourced = "1"
-      }else{
+      let tasksQues = { productionTasksFormID: productionTasksFormID };
+      if (this.form.outsourcingType == "0") {
+        tasksQues.outsourced = "1";
+      } else {
       }
       this.loading = true;
       listProductiontasks(tasksQues).then((response) => {
@@ -466,14 +467,18 @@ export default {
       });
     },
     /** 查询工序信息 */
-  async  getListprocessingprocess(processingTechnologyID) {
-
+    async getListprocessingprocess(processingTechnologyID) {
       this.loading = true;
-  let total= (await listProcessingprocess({processingTechnologyID: processingTechnologyID, outsourcing: 1}))["total"];
+      let total = (
+        await listProcessingprocess({
+          processingTechnologyID: processingTechnologyID,
+          outsourcing: 1,
+        })
+      )["total"];
       listProcessingprocess({
         processingTechnologyID: processingTechnologyID,
         outsourcing: 1,
-        pageSize:total
+        pageSize: total,
       }).then((response) => {
         this.processingprocesslist = response.rows;
         this.loading = false;
@@ -525,9 +530,9 @@ export default {
         this.form = response.data;
         this.view_open = true;
         listProductiontasklist().then((response) => {
-        this.productiontasklistlist = response.rows;
-        this.loading = false;
-      });
+          this.productiontasklistlist = response.rows;
+          this.loading = false;
+        });
         this.open = true;
         this.title = "修改外协";
       });

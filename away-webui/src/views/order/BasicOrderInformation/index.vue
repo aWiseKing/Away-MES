@@ -106,7 +106,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['order:BasicOrderInformation:edit']"
+            v-hasPermi="['order:BasicOrderInformation:query']"
           >查看</el-button>
           <el-button
             size="mini"

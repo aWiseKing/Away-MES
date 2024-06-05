@@ -176,7 +176,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['storage:outboundorder:edit']"
+            v-hasPermi="['storage:outboundorder:query']"
             >查看</el-button
           >
           <el-button
@@ -268,6 +268,7 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="出库单编号" prop="deliveryNoteID">
           <el-input
+            :disabled="!isadd"
             v-model="form.deliveryNoteID"
             placeholder="请输入出库单编号"
           />

@@ -140,7 +140,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['produce:detailproductoutbound:edit']"
+            v-hasPermi="['produce:detailproductoutbound:query']"
             >查看</el-button
           >
           <el-button
@@ -186,6 +186,7 @@
           ><el-col :span="12">
             <el-form-item label="出库单编号" prop="deliveryNoteID">
               <el-input
+              disabled
                 v-model="form.deliveryNoteID"
                 placeholder="请输入出库单编号"
               /> </el-form-item
@@ -500,7 +501,6 @@ export default {
           console.log(this.custom);
         });
 
-        
         this.view_open = false;
         this.open = true;
         this.title = "修改产品出库详单";

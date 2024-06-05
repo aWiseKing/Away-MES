@@ -178,7 +178,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['quality:shippinginspection:edit']"
+            v-hasPermi="['quality:shippinginspection:query']"
             >查看</el-button
           >
           <el-button
@@ -211,7 +211,13 @@
 
     <!-- 添加或修改成品出货检验对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="900px" append-to-body>
-      <el-form ref="form" :model="form" :disabled="view_open" :rules="rules" label-width="120px">
+      <el-form
+        ref="form"
+        :model="form"
+        :disabled="view_open"
+        :rules="rules"
+        label-width="120px"
+      >
         <el-row :gutter="12"
           ><el-col :span="12"
             ><el-form-item label="出货检验编号" prop="id">
@@ -229,7 +235,7 @@
           ><el-col :span="12">
             <el-form-item label="产品图号" prop="productID">
               <el-select
-              filterable
+                filterable
                 v-model="form.productID"
                 placeholder="请选择产品图号"
                 @focus="getListproduct()"
@@ -245,7 +251,7 @@
           ><el-col :span="12">
             <el-form-item label="客户编号" prop="contractID">
               <el-select
-              filterable
+                filterable
                 v-model="form.contractID"
                 placeholder="请选择客户编号"
                 @focus="getListcustom()"
@@ -332,7 +338,7 @@ import {
 } from "@/api/quality/shippinginspection";
 import { listProduct, getProduct } from "@/api/order/product.js";
 import { listCustom, getCustom } from "@/api/comprehensive/custom.js";
-import '@/assets/styles/away-element-ui-disabled.scss' // away css
+import "@/assets/styles/away-element-ui-disabled.scss"; // away css
 
 export default {
   name: "Shippinginspection",
@@ -424,19 +430,19 @@ export default {
       });
     },
     /** 查询产品信息 */
-  async  getListproduct() {
+    async getListproduct() {
       this.loading = true;
       let total = (await listProduct())["total"];
-      listProduct({pageSize:total}).then((response) => {
+      listProduct({ pageSize: total }).then((response) => {
         this.productlist = response.rows;
         this.loading = false;
       });
     },
     /** 查询客户信息 */
-  async  getListcustom() {
+    async getListcustom() {
       this.loading = true;
       let total = (await listProduct())["total"];
-      listCustom({pageSize:total}).then((response) => {
+      listCustom({ pageSize: total }).then((response) => {
         this.customlist = response.rows;
         this.loading = false;
       });

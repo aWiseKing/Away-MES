@@ -33,7 +33,7 @@
         />
       </el-form-item>
 
-      <el-form-item label="城市" prop="city">
+      <!-- <el-form-item label="城市" prop="city">
         <el-cascader
             v-model="queryParams.city"
             :options="city_options"
@@ -45,7 +45,7 @@
             filterable
           >
           </el-cascader>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="详细地址" prop="address">
         <el-input
           v-model="queryParams.address"
@@ -154,7 +154,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleShow(scope.row)"
-            v-hasPermi="['comprehensive:custom:view']"
+            v-hasPermi="['comprehensive:custom:query']"
             >查看</el-button
           >
           <el-button
@@ -352,6 +352,10 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        id:[{
+          required: true, message: "客户编号不能为空", trigger: "blur"
+
+        }],
         name: [
           { required: true, message: "客户姓名不能为空", trigger: "blur" },
         ],

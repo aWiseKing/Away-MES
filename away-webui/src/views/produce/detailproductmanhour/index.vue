@@ -13,22 +13,6 @@
           <div
             style="overflow-x: auto; scrollbar-width: none; white-space: nowrap"
           >
-            <el-form-item label="生产任务id" prop="productiontasksID">
-              <el-input
-                v-model="queryParams.productiontasksID"
-                placeholder="请输入生产任务id"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="加工工序" prop="processingprocess">
-              <el-input
-                v-model="queryParams.processingprocess"
-                placeholder="请输入加工工序"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
             <el-form-item label="工时名字" prop="manhourName">
               <el-input
                 v-model="queryParams.manhourName"
@@ -53,181 +37,11 @@
                 @keyup.enter.native="handleQuery"
               />
             </el-form-item>
-            <el-form-item label="投产数量" prop="number">
-              <el-input
-                v-model="queryParams.number"
-                placeholder="请输入投产数量"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="合格数量" prop="qualifiedQuantity">
-              <el-input
-                v-model="queryParams.qualifiedQuantity"
-                placeholder="请输入合格数量"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="报废数量" prop="scrapQuantity">
-              <el-input
-                v-model="queryParams.scrapQuantity"
-                placeholder="请输入报废数量"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
+
             <el-form-item label="批次号" prop="lotNumber">
               <el-input
                 v-model="queryParams.lotNumber"
                 placeholder="请输入批次号"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="工时时间" prop="manhoursTime">
-              <el-date-picker
-                clearable
-                v-model="queryParams.manhoursTime"
-                type="date"
-                value-format="yyyy-MM-dd"
-                placeholder="请选择工时时间"
-              >
-              </el-date-picker>
-            </el-form-item>
-            <el-form-item label="制定者名字" prop="formulateName1">
-              <el-input
-                v-model="queryParams.formulateName1"
-                placeholder="请输入制定者名字"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-
-            <el-form-item label="操作者" prop="handlers1">
-              <el-input
-                v-model="queryParams.handlers1"
-                placeholder="请输入操作者"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="开始时间" prop="beginTime1">
-              <el-date-picker
-                clearable
-                v-model="queryParams.beginTime1"
-                type="date"
-                value-format="yyyy-MM-dd"
-                placeholder="请选择开始时间"
-              >
-              </el-date-picker>
-            </el-form-item>
-            <el-form-item label="最后时间" prop="endTime1">
-              <el-date-picker
-                clearable
-                v-model="queryParams.endTime1"
-                type="date"
-                value-format="yyyy-MM-dd"
-                placeholder="请选择最后时间"
-              >
-              </el-date-picker>
-            </el-form-item>
-            <el-form-item label="实际时间" prop="actualTime1">
-              <el-input
-                v-model="queryParams.actualTime1"
-                placeholder="请输入实际时间"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="制定者名字" prop="formulateName2">
-              <el-input
-                v-model="queryParams.formulateName2"
-                placeholder="请输入制定者名字"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="工序名称" prop="processName2">
-              <el-input
-                v-model="queryParams.processName2"
-                placeholder="请输入工序名称"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="工艺制定工时" prop="craftdevelopmentHours2">
-              <el-input
-                v-model="queryParams.craftdevelopmentHours2"
-                placeholder="请输入工艺制定工时"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="操作者" prop="handlers2">
-              <el-input
-                v-model="queryParams.handlers2"
-                placeholder="请输入操作者"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="开始时间" prop="beginTime2">
-              <el-date-picker
-                clearable
-                v-model="queryParams.beginTime2"
-                type="date"
-                value-format="yyyy-MM-dd"
-                placeholder="请选择开始时间"
-              >
-              </el-date-picker>
-            </el-form-item>
-            <el-form-item label="最后时间" prop="endTime2">
-              <el-date-picker
-                clearable
-                v-model="queryParams.endTime2"
-                type="date"
-                value-format="yyyy-MM-dd"
-                placeholder="请选择最后时间"
-              >
-              </el-date-picker>
-            </el-form-item>
-            <el-form-item label="实际时间" prop="actualTime2">
-              <el-input
-                v-model="queryParams.actualTime2"
-                placeholder="请输入实际时间"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="需求数量#要求大于0#" prop="number">
-              <el-input
-                v-model="queryParams.number"
-                placeholder="请输入需求数量#要求大于0#"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="工序名称" prop="name">
-              <el-input
-                v-model="queryParams.name"
-                placeholder="请输入工序名称"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="准备工时" prop="preparationHours">
-              <el-input
-                v-model="queryParams.preparationHours"
-                placeholder="请输入准备工时"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="单件工时" prop="taktTime">
-              <el-input
-                v-model="queryParams.taktTime"
-                placeholder="请输入单件工时"
                 clearable
                 @keyup.enter.native="handleQuery"
               />
@@ -353,7 +167,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['produce:detailproductmanhour:edit']"
+            v-hasPermi="['produce:detailproductmanhour:query']"
             >查看</el-button
           >
           <el-button

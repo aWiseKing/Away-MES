@@ -1,6 +1,13 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form
+      :model="queryParams"
+      ref="queryForm"
+      size="small"
+      :inline="true"
+      v-show="showSearch"
+      label-width="68px"
+    >
       <el-form-item label="供货商姓名" prop="name">
         <el-input
           v-model="queryParams.name"
@@ -26,14 +33,14 @@
         />
       </el-form-item>
 
-      <el-form-item label="城市" prop="city">
+      <!-- <el-form-item label="城市" prop="city">
         <el-input
           v-model="queryParams.city"
           placeholder="请输入城市"
           clearable
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="详细地址" prop="address">
         <el-input
           v-model="queryParams.address"
@@ -51,8 +58,16 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          size="mini"
+          @click="handleQuery"
+          >搜索</el-button
+        >
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
+          >重置</el-button
+        >
       </el-form-item>
     </el-form>
 
@@ -65,7 +80,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['comprehensive:partner:add']"
-        >新增</el-button>
+          >新增</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -76,7 +92,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['comprehensive:partner:edit']"
-        >修改</el-button>
+          >修改</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -87,7 +104,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['comprehensive:partner:remove']"
-        >删除</el-button>
+          >删除</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -97,46 +115,69 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['comprehensive:partner:export']"
-        >导出</el-button>
+          >导出</el-button
+        >
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar
+        :showSearch.sync="showSearch"
+        @queryTable="getList"
+      ></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="customList" @selection-change="handleSelectionChange">
+    <el-table
+      v-loading="loading"
+      :data="customList"
+      @selection-change="handleSelectionChange"
+    >
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="供货商编号" align="center" prop="id" />
       <el-table-column label="供货商姓名" align="center" prop="name" />
-      <el-table-column label="供货商简称" align="center" prop="nameAbbrevation" />
-      <el-table-column label="社会统一信用代码" align="center" prop="unifiedCreditCode" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column
+        label="供货商简称"
+        align="center"
+        prop="nameAbbrevation"
+      />
+      <el-table-column
+        label="社会统一信用代码"
+        align="center"
+        prop="unifiedCreditCode"
+      />
+      <el-table-column
+        label="操作"
+        align="center"
+        class-name="small-padding fixed-width"
+      >
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
             icon="el-icon-view"
             @click="handleShow(scope.row)"
-            v-hasPermi="['comprehensive:partner:view']"
-          >查看</el-button>
+            v-hasPermi="['comprehensive:partner:query']"
+            >查看</el-button
+          >
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['comprehensive:partner:edit']"
-          >修改</el-button>
+            >修改</el-button
+          >
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['comprehensive:partner:remove']"
-          >删除</el-button>
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
 
     <pagination
-      v-show="total>0"
+      v-show="total > 0"
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
@@ -144,27 +185,43 @@
     />
 
     <!-- 查看供货商详细信息对话框 -->
-    <el-dialog title="供货商信息" :visible.sync="isshow" width="900px" append-to-body>
-        <el-descriptions :title="view_form.name" border>
-            <el-descriptions-item label="供货商编号">{{ view_form.id }}</el-descriptions-item>
-            <el-descriptions-item label="供货商姓名">{{ view_form.name }}</el-descriptions-item>
-            <el-descriptions-item label="供货商简称">{{ view_form.nameAbbrevation }}</el-descriptions-item>
-            <el-descriptions-item label="社会统一信用代码">{{ view_form.unifiedCreditCode }}</el-descriptions-item>
-            <el-descriptions-item label="城市地区">{{ view_form.city }}</el-descriptions-item>
-            <el-descriptions-item label="详细地址">{{ view_form.address }}</el-descriptions-item>
-            <el-descriptions-item label="联系人信息">
-              <el-table></el-table>
-            </el-descriptions-item>
-            <el-descriptions-item label="证照">
-                        <filedown :files="view_form.files"/>
-
-            </el-descriptions-item>
-        </el-descriptions>
+    <el-dialog
+      title="供货商信息"
+      :visible.sync="isshow"
+      width="900px"
+      append-to-body
+    >
+      <el-descriptions :title="view_form.name" border>
+        <el-descriptions-item label="供货商编号">{{
+          view_form.id
+        }}</el-descriptions-item>
+        <el-descriptions-item label="供货商姓名">{{
+          view_form.name
+        }}</el-descriptions-item>
+        <el-descriptions-item label="供货商简称">{{
+          view_form.nameAbbrevation
+        }}</el-descriptions-item>
+        <el-descriptions-item label="社会统一信用代码">{{
+          view_form.unifiedCreditCode
+        }}</el-descriptions-item>
+        <el-descriptions-item label="城市地区">{{
+          view_form.city
+        }}</el-descriptions-item>
+        <el-descriptions-item label="详细地址">{{
+          view_form.address
+        }}</el-descriptions-item>
+        <el-descriptions-item label="联系人信息">
+          <el-table></el-table>
+        </el-descriptions-item>
+        <el-descriptions-item label="证照">
+          <filedown :files="view_form.files" />
+        </el-descriptions-item>
+      </el-descriptions>
     </el-dialog>
 
     <!-- 添加或修改供货商信息对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="700px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="90px">
         <el-form-item v-if="isadd" label="供货商编号" prop="id">
           <el-input v-model="form.id" placeholder="请输入供货商编号" />
         </el-form-item>
@@ -172,14 +229,22 @@
           <el-input v-model="form.name" placeholder="请输入供货商姓名" />
         </el-form-item>
         <el-form-item label="供货商简称" prop="nameAbbrevation">
-          <el-input v-model="form.nameAbbrevation" placeholder="请输入供货商简称" />
+          <el-input
+            v-model="form.nameAbbrevation"
+            placeholder="请输入供货商简称"
+          />
         </el-form-item>
         <el-form-item label="社会统一信用代码" prop="unifiedCreditCode">
-          <el-input v-model="form.unifiedCreditCode" placeholder="请输入社会统一信用代码" minlength="18" maxlength="18"/>
+          <el-input
+            v-model="form.unifiedCreditCode"
+            placeholder="请输入社会统一信用代码"
+            minlength="18"
+            maxlength="18"
+          />
         </el-form-item>
         <el-form-item label="城市地区" prop="cityid">
           <el-cascader
-           v-model="form.cityid" 
+            v-model="form.cityid"
             :options="city_options"
             :props="{ expandTrigger: 'hover' }"
             placeholder="请选择城市地区"
@@ -193,7 +258,7 @@
           <el-input v-model="form.address" placeholder="请输入详细地址" />
         </el-form-item>
 
-        <el-form-item label="合同附件上传" prop="certificateURL">
+        <el-form-item label="证件" prop="certificateURL">
           <el-upload
             ref="upload"
             :file-list="fileList"
@@ -222,17 +287,23 @@
 </template>
 
 <script>
-import { listCustom, getCustom, delCustom, addCustom, updateCustom } from "@/api/comprehensive/partner";
+import {
+  listCustom,
+  getCustom,
+  delCustom,
+  addCustom,
+  updateCustom,
+} from "@/api/comprehensive/partner";
 
 import { jsonCity } from "@/api/city/city";
 
 import { fileDownload, fileUpdate } from "@/api/file/file";
 
-import Filedown from '../../../components/FileDown/filedown.vue';
+import Filedown from "../../../components/FileDown/filedown.vue";
 
 export default {
   name: "Custom",
- components:{"filedown":Filedown},
+  components: { filedown: Filedown },
 
   data() {
     return {
@@ -259,10 +330,10 @@ export default {
       // 是否新建
       isadd: true,
       // 城市地区选择器
-      city_options:[],
+      city_options: [],
       // 城市地区选择器值
-      cityid_value:[],
-            // 文件列表
+      cityid_value: [],
+      // 文件列表
       fileList: [],
       // 订单详细查看
       view_form: {},
@@ -283,24 +354,30 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        id: [
+          { required: true, message: "供货商编号不能为空", trigger: "blur" },
+        ],
         name: [
-          { required: true, message: "供货商姓名不能为空", trigger: "blur" }
+          { required: true, message: "供货商姓名不能为空", trigger: "blur" },
         ],
         nameAbbrevation: [
-          { required: true, message: "供货商简称不能为空", trigger: "blur" }
+          { required: true, message: "供货商简称不能为空", trigger: "blur" },
         ],
         unifiedCreditCode: [
-          { required: true, message: "社会统一信用代码不能为空", trigger: "blur"},
-          { min: 18, message: "社会统一信用代码不能少于18位", trigger: "blur"}
+          {
+            required: true,
+            message: "社会统一信用代码不能为空",
+            trigger: "blur",
+          },
+          { min: 18, message: "社会统一信用代码不能少于18位", trigger: "blur" },
         ],
         type: [
-          { required: true, message: "实体类型不能为空", trigger: "change" }
+          { required: true, message: "实体类型不能为空", trigger: "change" },
         ],
         isdel: [
-          { required: true, message: "是否删除不能为空", trigger: "blur" }
-        ]
+          { required: true, message: "是否删除不能为空", trigger: "blur" },
+        ],
       },
-
     };
   },
   created() {
@@ -310,19 +387,19 @@ export default {
     /** 查询供货商信息列表 */
     getList() {
       this.loading = true;
-      listCustom(this.queryParams).then(response => {
+      listCustom(this.queryParams).then((response) => {
         this.customList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
     },
     /** 查询城市地区json*/
-    getJsonCity(){
-      jsonCity({}).then(respones => {
-        this.city_options = respones
-      })
+    getJsonCity() {
+      jsonCity({}).then((respones) => {
+        this.city_options = respones;
+      });
     },
-        async fileUpdate() {
+    async fileUpdate() {
       let file_list = this.$refs.upload.uploadFiles;
       if (file_list.length > 0) {
         let num = 0;
@@ -356,13 +433,13 @@ export default {
         address: null,
         notes: null,
         type: 1,
-        isdel: 0
+        isdel: 0,
       };
-      this.fileList=[]
+      this.fileList = [];
       this.resetForm("form");
     },
-    setCityID(value){
-      this.form.cityid = value[2]
+    setCityID(value) {
+      this.form.cityid = value[2];
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -376,9 +453,9 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
-      this.multiple = !selection.length
+      this.ids = selection.map((item) => item.id);
+      this.single = selection.length !== 1;
+      this.multiple = !selection.length;
     },
     // 查看详细
     async handleShow(row) {
@@ -394,11 +471,10 @@ export default {
         for (num in urls) {
           let tmp = await fileDownload(urls[num]);
           this.view_form.files.push(tmp);
-          console.log(tmp)
+          console.log(tmp);
         }
       }
       this.isshow = true;
-
     },
     /** 新增按钮操作 */
     handleAdd() {
@@ -409,7 +485,7 @@ export default {
       this.title = "添加供货商信息";
     },
     /** 修改按钮操作 */
-  handleUpdate(row) {
+    handleUpdate(row) {
       this.reset();
       this.getJsonCity();
       this.isadd = false;
@@ -423,7 +499,7 @@ export default {
           for (num in urls) {
             let tmp = await fileDownload(urls[num]);
             this.fileList.push({ url: tmp.getUrl(), raw: tmp.getFile() });
-            console.log(tmp)
+            console.log(tmp);
           }
         }
         this.open = true;
@@ -454,19 +530,27 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除供货商信息编号为"' + ids + '"的数据项？').then(function() {
-        return delCustom(ids);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      this.$modal
+        .confirm('是否确认删除供货商信息编号为"' + ids + '"的数据项？')
+        .then(function () {
+          return delCustom(ids);
+        })
+        .then(() => {
+          this.getList();
+          this.$modal.msgSuccess("删除成功");
+        })
+        .catch(() => {});
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('comprehensive/custom/export', {
-        ...this.queryParams
-      }, `custom_${new Date().getTime()}.xlsx`)
-    }
-  }
+      this.download(
+        "comprehensive/custom/export",
+        {
+          ...this.queryParams,
+        },
+        `custom_${new Date().getTime()}.xlsx`
+      );
+    },
+  },
 };
 </script>

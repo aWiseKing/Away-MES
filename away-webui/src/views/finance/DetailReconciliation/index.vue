@@ -176,7 +176,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['finance:DetailReconciliation:edit']"
+            v-hasPermi="['finance:DetailReconciliation:query']"
             >查看</el-button
           >
           <el-button

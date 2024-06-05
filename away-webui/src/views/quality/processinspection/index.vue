@@ -241,6 +241,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
+            v-hasPermi="['quality:processinspection:query']"
             >查看</el-button
           >
           <el-button

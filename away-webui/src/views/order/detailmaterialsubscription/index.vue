@@ -175,7 +175,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['order:detailmaterialsubscription:edit']"
+            v-hasPermi="['order:detailmaterialsubscription:query']"
             >查看</el-button
           >
           <el-button

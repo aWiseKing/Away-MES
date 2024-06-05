@@ -1,6 +1,6 @@
 <template>
   <div class="DateItem1">
-    <div class="header">产品库存</div>
+    <div class="header">材料库存</div>
     <div class="echars" ref="myChart"></div>
   </div>
 </template>

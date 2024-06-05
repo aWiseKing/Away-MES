@@ -13,10 +13,10 @@
           <div
             style="overflow-x: auto; scrollbar-width: none; white-space: nowrap"
           >
-            <el-form-item label="刀具id" prop="toolInformationID">
+            <el-form-item label="刀具姓名" prop="name">
               <el-input
-                v-model="queryParams.toolInformationID"
-                placeholder="请输入刀具id"
+                v-model="queryParams.name"
+                placeholder="请输入刀具姓名"
                 clearable
                 @keyup.enter.native="handleQuery"
               />
@@ -116,7 +116,7 @@
     >
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="库存id" align="center" prop="id" />
-        <el-table-column label="刀具名称" align="center" prop="name" />
+      <el-table-column label="刀具名称" align="center" prop="name" />
       <el-table-column label="刀具价格" align="center" prop="notes" />
       <el-table-column label="数量" align="center" prop="number" />
       <el-table-column label="重量" align="center" prop="weight" />
@@ -126,6 +126,15 @@
         class-name="small-padding fixed-width"
       >
         <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-view"
+            @click="handleView(scope.row)"
+            v-hasPermi="['storage:LocalTool:query']"
+            >查看</el-button
+          >
+
           <el-button
             size="mini"
             type="text"
@@ -155,7 +164,13 @@
     />
     <!-- 添加或修改刀具库存对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form
+        ref="form"
+        :model="form"
+        :rules="rules"
+        label-width="80px"
+        :disabled="view_open"
+      >
         <el-form-item label="刀具基本信息" prop="toolInformationID">
           <el-select
             v-model="form.toolInformationID"
@@ -196,7 +211,7 @@
           <el-input v-model="form.weight" placeholder="请输入重量" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <div slot="footer" class="dialog-footer" v-if="!view_open">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
@@ -321,23 +336,45 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
+      this.view_open = false;
       this.isadd = true;
       this.open = true;
       this.title = "添加刀具库存";
     },
-    /** 修改按钮操作 */
-    handleUpdate(row) {
+
+    handleView(row) {
       this.reset();
+      this.view_open = true;
       this.isadd = false;
       const id = row.id || this.ids;
       getLocalTool(id).then((response) => {
         this.form = response.data;
-         console.log(row)
-        getToolinformation(row.toolInformationID).then((response)=>{
-          this.toolInformation=response.data;
+        console.log(row);
+        getToolinformation(row.toolInformationID).then((response) => {
+          this.toolInformation = response.data;
 
-          console.log(response)
-        })
+          console.log(response);
+        });
+
+        this.open = true;
+        this.title = "查看刀具库存";
+      });
+    },
+
+    /** 修改按钮操作 */
+    handleUpdate(row) {
+      this.reset();
+      this.view_open = false;
+      this.isadd = false;
+      const id = row.id || this.ids;
+      getLocalTool(id).then((response) => {
+        this.form = response.data;
+        console.log(row);
+        getToolinformation(row.toolInformationID).then((response) => {
+          this.toolInformation = response.data;
+
+          console.log(response);
+        });
 
         this.open = true;
         this.title = "修改刀具库存";

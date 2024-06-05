@@ -163,7 +163,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['storage:warehousing:edit']"
+            v-hasPermi="['storage:warehousing:query']"
             >查看</el-button
           >
           <el-button
@@ -266,6 +266,7 @@
           ><el-col :span="12"
             ><el-form-item label="入库单编号" prop="warehouseEntryID">
               <el-input
+                :disabled="!isadd"
                 v-model="form.warehouseEntryID"
                 placeholder="入库单编号"
               /> </el-form-item></el-col

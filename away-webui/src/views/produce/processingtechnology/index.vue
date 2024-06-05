@@ -127,6 +127,7 @@
             type="text"
             icon="el-icon-view"
             @click="jumpDetailPage(scope.row)"
+            v-hasPermi="['produce:processingtechnology:query']"
           >
             详细</el-button
           >

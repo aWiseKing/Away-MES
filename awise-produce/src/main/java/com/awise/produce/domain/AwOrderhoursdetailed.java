@@ -46,12 +46,16 @@ public class AwOrderhoursdetailed extends BaseEntity
     @Excel(name = "社会统一信用代码")
     private String unifiedCreditCode;
 
-    /** 产品名称 */
-    @Excel(name = "产品id")
-    private String productName;
+
 
     /** 产品图纸附件地址URL */
+    @Excel(name = "产品编号")
     private String productID;
+
+
+    /** 产品名称 */
+    @Excel(name = "产品名称")
+    private String productName;
 
     public void setId(String id) 
     {

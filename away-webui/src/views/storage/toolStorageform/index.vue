@@ -139,7 +139,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['storage:toolStorageform:edit']"
+            v-hasPermi="['storage:toolStorageform:query']"
           >查看</el-button>
 
                 <el-button
@@ -158,7 +158,7 @@
             icon="el-icon-s-promotion"
             v-if="scope.row.status == '0'"
             @click="handleRelease(scope.row)"
-            v-hasPermi="['order:toolStorageform:edit']"
+            v-hasPermi="['storage:toolStorageform:edit']"
             >发布</el-button
           >
 

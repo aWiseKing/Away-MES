@@ -133,7 +133,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['produce:detailproductwarehousing:edit']"
+            v-hasPermi="['produce:detailproductwarehousing:query']"
             >查看</el-button
           >
           <el-button
@@ -314,6 +314,9 @@ export default {
         ],
         receiptQuantity: [
           { required: true, message: "入库数量不能为空", trigger: "blur" },
+        ],
+        finishedProductInspectionID: [
+          { required: true, message: "成品检验不能为空", trigger: "blur" },
         ],
       },
       // 当前产品入库单

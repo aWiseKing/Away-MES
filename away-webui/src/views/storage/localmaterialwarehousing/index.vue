@@ -162,7 +162,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['storage:localmaterialwarehousing:edit']"
+            v-hasPermi="['storage:localmaterialwarehousing:query']"
             >查看</el-button
           >
           <el-button

@@ -240,7 +240,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['finance:OutsourcingReconciliation:edit']"
+            v-hasPermi="['finance:OutsourcingReconciliation:query']"
             >查看</el-button
           >
           <el-button

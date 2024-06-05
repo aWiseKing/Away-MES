@@ -128,11 +128,21 @@
           <el-button
             size="mini"
             type="text"
+            icon="el-icon-view"
+            @click="handleView(scope.row)"
+            v-hasPermi="['produce:ProductInventory:query']"
+            >查看</el-button
+          >
+
+          <el-button
+            size="mini"
+            type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['produce:ProductInventory:edit']"
             >修改</el-button
           >
+
           <el-button
             size="mini"
             type="text"
@@ -155,7 +165,13 @@
 
     <!-- 添加或修改产品库存对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form
+        ref="form"
+        :model="form"
+        :rules="rules"
+        label-width="80px"
+        :disabled="view_open"
+      >
         <el-form-item label="产品编号" prop="productID">
           <el-select
             v-model="form.productID"
@@ -188,7 +204,7 @@
           <el-input v-model="form.weight" placeholder="请输入产品库存" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <div slot="footer" class="dialog-footer" v-if="!view_open">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
@@ -303,18 +319,32 @@ export default {
     },
     handleView(row) {
       this.view_open = true;
+      this.reset();
+      this.isadd = false;
+      const id = row.id || this.ids;
+      getProductInventory(id).then((response) => {
+        this.form = response.data;
+        getProduct(row.productID).then((response) => {
+          this.product = response.data;
+        });
+        this.open = true;
+        this.title = "查看产品库存";
+      });
     },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
       this.isadd = true;
       this.open = true;
+      this.view_open = false;
       this.title = "添加产品库存";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       this.isadd = false;
+      this.view_open = false;
+
       const id = row.id || this.ids;
       getProductInventory(id).then((response) => {
         this.form = response.data;

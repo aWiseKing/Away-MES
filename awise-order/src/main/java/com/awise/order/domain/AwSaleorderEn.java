@@ -131,8 +131,8 @@ public class AwSaleorderEn extends BaseEntity
     private String customerReconciliationPersonnel;
 
     /** 客供材料否 */
-    @Excel(name = "客供材料否")
-    private Long iscustomersuppliedmaterials;
+    @Excel(name = "客供材料否",dictType = "aw_oder_customer_status")
+    private String iscustomersuppliedmaterials;
 
     /** 当前订单状态 */
     @Excel(name = "当前订单状态")
@@ -146,6 +146,14 @@ public class AwSaleorderEn extends BaseEntity
     @Excel(name = "删除否")
     private String isDel;
 
+
+    public String getIscustomersuppliedmaterials() {
+        return iscustomersuppliedmaterials;
+    }
+
+    public void setIscustomersuppliedmaterials(String iscustomersuppliedmaterials) {
+        this.iscustomersuppliedmaterials = iscustomersuppliedmaterials;
+    }
 
     public String getLotNumber(){
         return lotNumber;

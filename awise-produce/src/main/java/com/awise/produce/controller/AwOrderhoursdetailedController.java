@@ -3,11 +3,16 @@ package com.awise.produce.controller;
 import com.away.common.annotation.Log;
 import com.away.common.core.controller.BaseController;
 import com.away.common.core.domain.AjaxResult;
+import com.away.common.core.domain.BaseEntity;
 import com.away.common.core.page.TableDataInfo;
 import com.away.common.enums.BusinessType;
+import com.away.common.utils.bean.BeanCopyUtils;
 import com.away.common.utils.poi.ExcelUtil;
 import com.awise.produce.domain.AwOrderhoursdetailed;
+import com.awise.produce.domain.AwProductmanhour;
+import com.awise.produce.domain.Vo.AwOrderhoursdetailedVo;
 import com.awise.produce.service.IAwOrderhoursdetailedService;
+import com.awise.produce.service.IAwProductmanhourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +32,9 @@ public class AwOrderhoursdetailedController extends BaseController
 {
     @Autowired
     private IAwOrderhoursdetailedService awOrderhoursdetailedService;
+
+    @Autowired
+    private IAwProductmanhourService awProductmanhourService;
 
     /**
      * 查询工时统计列表
@@ -49,8 +57,15 @@ public class AwOrderhoursdetailedController extends BaseController
     public void export(HttpServletResponse response, AwOrderhoursdetailed awOrderhoursdetailed)
     {
         List<AwOrderhoursdetailed> list = awOrderhoursdetailedService.selectAwOrderhoursdetailedList(awOrderhoursdetailed);
-        ExcelUtil<AwOrderhoursdetailed> util = new ExcelUtil<AwOrderhoursdetailed>(AwOrderhoursdetailed.class);
-        util.exportExcel(response, list, "工时统计数据");
+        List<AwOrderhoursdetailedVo> awOrderhoursdetailedVos = BeanCopyUtils.copyBeanList(list, AwOrderhoursdetailedVo.class);
+        for (AwOrderhoursdetailedVo awOrderhoursdetailedVo : awOrderhoursdetailedVos) {
+            AwProductmanhour awProductmanhour = new AwProductmanhour();
+            awProductmanhour.setSaleorderID(awOrderhoursdetailedVo.getId());
+            List<AwProductmanhour> awProductmanhours = awProductmanhourService.selectAwProductmanhourList(awProductmanhour);
+            awOrderhoursdetailedVo.setAwProductmanhourList(awProductmanhours);
+        }
+        ExcelUtil<AwOrderhoursdetailedVo> util = new ExcelUtil<AwOrderhoursdetailedVo>(AwOrderhoursdetailedVo.class);
+        util.exportExcel(response, awOrderhoursdetailedVos, "工时统计数据");
     }
 
     /**

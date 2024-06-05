@@ -161,7 +161,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['storage:DetailCustomerMaterialsStorage:edit']"
+            v-hasPermi="['storage:DetailCustomerMaterialsStorage:query']"
             >查看</el-button
           >
           <el-button

@@ -77,7 +77,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['produce:productoutbound:edit']"
+            v-hasPermi="['produce:productoutbound:query']"
           >查看</el-button>
           <el-button
             size="mini"

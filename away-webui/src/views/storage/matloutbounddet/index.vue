@@ -66,7 +66,7 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)"
-            v-hasPermi="['storage:matloutbounddet:edit']">查看</el-button>
+            v-hasPermi="['storage:matloutbounddet:query']">查看</el-button>
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
           v-if="upper_status=='0'"
           v-hasPermi="['storage:matloutbounddet:edit']">修改</el-button>

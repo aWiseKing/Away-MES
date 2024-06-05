@@ -149,7 +149,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['finance:receiptinvoice:edit']"
+            v-hasPermi="['finance:receiptinvoice:query']"
             >查看</el-button
           >
           <el-button
@@ -334,7 +334,6 @@ export default {
       this.multiple = !selection.length;
     },
     handleView(row) {
-
       this.reset();
       this.isadd = false;
       const receiptInvoiceID = row.receiptInvoiceID || this.ids;
@@ -347,7 +346,7 @@ export default {
     },
     /** 新增按钮操作 */
     handleAdd() {
-    this.view_open=false
+      this.view_open = false;
 
       this.reset();
       this.isadd = true;
@@ -356,7 +355,7 @@ export default {
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      this.view_open=false
+      this.view_open = false;
       this.reset();
       this.isadd = false;
       const receiptInvoiceID = row.receiptInvoiceID || this.ids;

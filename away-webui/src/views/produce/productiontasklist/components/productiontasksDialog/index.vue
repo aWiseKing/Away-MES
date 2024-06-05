@@ -15,7 +15,7 @@
     </div>
     <el-table
       :data="productiontasks_list"
-      max-height="300px"
+      max-height="500px"
       v-if="productiontasks_list.length > 0"
     >
       <el-table-column label="序号" align="center">
@@ -59,6 +59,24 @@
               v-for="item in saleorder_list"
               :key="item.id"
               :label="item.lotNumber"
+              :value="item.id"
+            >
+            </el-option>
+          </el-select>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="产品编号" align="center">
+        <template slot-scope="scope">
+          <el-select
+            v-model="scope.row.saleOrderID"
+            placeholder="请选择销售订单"
+            filterable
+          >
+            <el-option
+              v-for="item in saleorder_list"
+              :key="item.id"
+              :label="item.productID"
               :value="item.id"
             >
             </el-option>
@@ -184,10 +202,7 @@ export default {
         { key: "1", value: "是" },
       ],
 
-      rules: {
-      
-      },
-
+      rules: {},
 
       // 生产任务列表
       productiontasks_list: [],

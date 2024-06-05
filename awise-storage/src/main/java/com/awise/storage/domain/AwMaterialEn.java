@@ -39,7 +39,7 @@ public class AwMaterialEn extends BaseEntity
     private String materialDensity;
 
     /** 备注信息 */
-    @Excel(name = "备注信息")
+    @Excel(name = "材料价格")
     private String notes;
 
     public String getId() {

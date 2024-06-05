@@ -8,74 +8,72 @@
       v-show="showSearch"
       label-width="68px"
     >
+      <el-form-item label="联系人姓名" prop="name">
+        <el-input
+          v-model="queryParams.name"
+          placeholder="请输入联系人姓名"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="联系人电话" prop="phone">
+        <el-input
+          v-model="queryParams.phone"
+          placeholder="请输入联系人电话"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="联系人部门" prop="department">
+        <el-input
+          v-model="queryParams.department"
+          placeholder="请输入联系人部门"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="联系人职位" prop="position">
+        <el-select
+          v-model="queryParams.location"
+          placeholder="请选择联系人所属的定位"
+        >
+          <el-option
+            v-for="dict in dict.type.aw_contract_location"
+            :key="dict.value"
+            :label="dict.label"
+            :value="parseInt(dict.value)"
+          ></el-option>
+        </el-select>
+      </el-form-item>
 
-            <el-form-item label="联系人姓名" prop="name">
-              <el-input
-                v-model="queryParams.name"
-                placeholder="请输入联系人姓名"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="联系人电话" prop="phone">
-              <el-input
-                v-model="queryParams.phone"
-                placeholder="请输入联系人电话"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="联系人部门" prop="department">
-              <el-input
-                v-model="queryParams.department"
-                placeholder="请输入联系人部门"
-                clearable
-                @keyup.enter.native="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="联系人职位" prop="position">
-              <el-select
-            v-model="queryParams.location"
-            placeholder="请选择联系人所属的定位"
+      <el-form-item label="联系人所属公司id" prop="companyID">
+        <el-select
+          v-model="queryParams.companyID"
+          placeholder="请选择联系人所属公司id"
+          @focus="getpartnearList()"
+        >
+          <el-option
+            v-for="(item, index) in partnearList"
+            :key="index"
+            :label="item.name"
+            :value="item.id"
           >
-            <el-option
-              v-for="dict in dict.type.aw_contract_location"
-              :key="dict.value"
-              :label="dict.label"
-              :value="parseInt(dict.value)"
-            ></el-option>
-          </el-select>
-            </el-form-item>
+          </el-option>
+        </el-select>
+      </el-form-item>
 
-            <el-form-item label="联系人所属公司id" prop="companyID">
-              <el-select
-            v-model="queryParams.companyID"
-            placeholder="请选择联系人所属公司id"
-            @focus="getpartnearList()"
-          >
-            <el-option
-              v-for="(item, index) in partnearList"
-              :key="index"
-              :label="item.name"
-              :value="item.id"
-            >
-            </el-option>
-          </el-select>
-            </el-form-item>
-  
-          <el-form-item>
-            <el-button
-              type="primary"
-              icon="el-icon-search"
-              size="mini"
-              @click="handleQuery"
-              >搜索</el-button
-            >
-            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
-              >重置</el-button
-            >
-          </el-form-item>
-
+      <el-form-item>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          size="mini"
+          @click="handleQuery"
+          >搜索</el-button
+        >
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
+          >重置</el-button
+        >
+      </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -167,7 +165,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['comprehensive:contacts:edit']"
+            v-hasPermi="['comprehensive:contacts:query']"
             >查看</el-button
           >
           <el-button
@@ -199,8 +197,14 @@
     />
 
     <!-- 添加或修改联系人信息对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px" :disabled="view_open">
+    <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
+      <el-form
+        ref="form"
+        :model="form"
+        :rules="rules"
+        label-width="100px"
+        :disabled="view_open"
+      >
         <el-form-item label="联系人姓名" prop="name">
           <el-input v-model="form.name" placeholder="请输入联系人姓名" />
         </el-form-item>
@@ -305,9 +309,16 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {},
+      rules: {
+        name: [
+          { required: true, message: "联系人姓名不为空", trigger: "blur" },
+        ],
+        companyID: [
+          { required: true, message: "联系人所属公司id", trigger: "blur" },
+        ],
+      },
       //合作方
-      partnearList:[],
+      partnearList: [],
     };
   },
   created() {
@@ -326,8 +337,8 @@ export default {
     //查询合作方
     async getpartnearList() {
       this.loading = true;
-       let total= (await listCustom())["total"];
-      listCustom({pageSize:total}).then((res) => {
+      let total = (await listCustom())["total"];
+      listCustom({ pageSize: total }).then((res) => {
         this.partnearList = res.rows;
         this.loading = false;
       });
@@ -352,7 +363,7 @@ export default {
         isDel: null,
       };
       this.resetForm("form");
-      this.partnearList=[]
+      this.partnearList = [];
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -372,22 +383,20 @@ export default {
     },
     handleView(row) {
       this.view_open = true;
-      this.getpartnearList()
+      this.getpartnearList();
       this.reset();
       this.isadd = false;
       const id = row.id || this.ids;
       getContacts(id).then((response) => {
-
         this.form = response.data;
         console.log(this.form);
         this.open = true;
         this.title = "查看详细";
       });
-
     },
     /** 新增按钮操作 */
     handleAdd() {
-      this.view_open=false
+      this.view_open = false;
       this.reset();
       this.isadd = true;
       this.open = true;
@@ -395,8 +404,8 @@ export default {
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      this.view_open=false
-      this.getpartnearList()
+      this.view_open = false;
+      this.getpartnearList();
       this.reset();
       this.isadd = false;
       const id = row.id || this.ids;

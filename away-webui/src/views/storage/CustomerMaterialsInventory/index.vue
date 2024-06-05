@@ -1,42 +1,59 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-    <el-row :gutter="1">
-            <el-col :span="21">
-              <div style="overflow-x: auto;scrollbar-width: none; white-space: nowrap;">
-      <el-form-item label="材料基本信息id" prop="materialID">
-        <el-input
-          v-model="queryParams.materialID"
-          placeholder="请输入材料基本信息id"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="材料库存数量" prop="number">
-        <el-input
-          v-model="queryParams.number"
-          placeholder="请输入材料库存数量"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="材料库存重量" prop="weight">
-        <el-input
-          v-model="queryParams.weight"
-          placeholder="请输入材料库存重量"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
- </div>
+    <el-form
+      :model="queryParams"
+      ref="queryForm"
+      size="small"
+      :inline="true"
+      v-show="showSearch"
+      label-width="68px"
+    >
+      <el-row :gutter="1">
+        <el-col :span="21">
+          <div
+            style="overflow-x: auto; scrollbar-width: none; white-space: nowrap"
+          >
+            <el-form-item label="材料姓名" prop="name">
+              <el-input
+                v-model="queryParams.name"
+                placeholder="请输入材料姓名"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
+            <el-form-item label="材料库存数量" prop="number">
+              <el-input
+                v-model="queryParams.number"
+                placeholder="请输入材料库存数量"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
+            <el-form-item label="材料库存重量" prop="weight">
+              <el-input
+                v-model="queryParams.weight"
+                placeholder="请输入材料库存重量"
+                clearable
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>
+          </div>
         </el-col>
         <el-col :span="3">
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-      </el-form-item>
-      </el-col>
-    </el-row>
+          <el-form-item>
+            <el-button
+              type="primary"
+              icon="el-icon-search"
+              size="mini"
+              @click="handleQuery"
+              >搜索</el-button
+            >
+            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
+              >重置</el-button
+            >
+          </el-form-item>
+        </el-col>
+      </el-row>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -48,7 +65,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['storage:CustomerMaterialsInventory:add']"
-        >新增</el-button>
+          >新增</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -59,7 +77,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['storage:CustomerMaterialsInventory:edit']"
-        >修改</el-button>
+          >修改</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -70,7 +89,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['storage:CustomerMaterialsInventory:remove']"
-        >删除</el-button>
+          >删除</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -80,46 +100,62 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['storage:CustomerMaterialsInventory:export']"
-        >导出</el-button>
+          >导出</el-button
+        >
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar
+        :showSearch.sync="showSearch"
+        @queryTable="getList"
+      ></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="CustomerMaterialsInventoryList" @selection-change="handleSelectionChange">
+    <el-table
+      v-loading="loading"
+      :data="CustomerMaterialsInventoryList"
+      @selection-change="handleSelectionChange"
+    >
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="材料库存id" align="center" prop="id" />
       <el-table-column label="材料基本信息id" align="center" prop="name" />
+      <el-table-column label="材料价格" align="center" prop="notes" />
       <el-table-column label="材料库存数量" align="center" prop="number" />
       <el-table-column label="材料库存重量" align="center" prop="weight" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column
+        label="操作"
+        align="center"
+        class-name="small-padding fixed-width"
+      >
         <template slot-scope="scope">
-        <el-button
+          <el-button
             size="mini"
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['storage:CustomerMaterialsInventory:edit']"
-          >查看</el-button>
+            v-hasPermi="['storage:CustomerMaterialsInventory:query']"
+            >查看</el-button
+          >
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['storage:CustomerMaterialsInventory:edit']"
-          >修改</el-button>
+            >修改</el-button
+          >
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['storage:CustomerMaterialsInventory:remove']"
-          >删除</el-button>
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
-      v-show="total>0"
+      v-show="total > 0"
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
@@ -128,27 +164,44 @@
 
     <!-- 添加或修改客供材料实时库存对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px" :disabled="view_open">
+      <el-form
+        ref="form"
+        :model="form"
+        :rules="rules"
+        label-width="80px"
+        :disabled="view_open"
+      >
         <el-form-item label="材料基本信息id" prop="materialID">
-
-          <el-select placeholder="请选择材料" v-model="form.materialID" @focus="getMaterialLIst()">
-            <el-option v-for="(item,index) in MaterialList "
-             :key ="index" 
-             :label="item.id"
+          <el-select
+            placeholder="请选择材料"
+            v-model="form.materialID"
+            @focus="getMaterialLIst()"
+          >
+            <el-option
+              v-for="(item, index) in MaterialList"
+              :key="index"
+              :label="item.id"
               :value="item.id"
               @click.native="setMaterial(item.id)"
-              >
-             
+            >
             </el-option>
           </el-select>
         </el-form-item>
 
-         <el-form-item label="材料名字" >
-          <el-input disabled v-model="Material.name" placeholder="请输入材料名字" />
+        <el-form-item label="材料名字">
+          <el-input
+            disabled
+            v-model="Material.name"
+            placeholder="请输入材料名字"
+          />
         </el-form-item>
 
-              <el-form-item label="材料价格" >
-          <el-input  disabled v-model="Material.notes" placeholder="请输入材料价格" />
+        <el-form-item label="材料价格">
+          <el-input
+            disabled
+            v-model="Material.notes"
+            placeholder="请输入材料价格"
+          />
         </el-form-item>
 
         <el-form-item label="材料库存数量" prop="number">
@@ -167,8 +220,14 @@
 </template>
 
 <script>
-import { listCustomerMaterialsInventory, getCustomerMaterialsInventory, delCustomerMaterialsInventory, addCustomerMaterialsInventory, updateCustomerMaterialsInventory } from "@/api/storage/CustomerMaterialsInventory";
-import { listMaterial,getMaterial } from "@/api/storage/material"
+import {
+  listCustomerMaterialsInventory,
+  getCustomerMaterialsInventory,
+  delCustomerMaterialsInventory,
+  addCustomerMaterialsInventory,
+  updateCustomerMaterialsInventory,
+} from "@/api/storage/CustomerMaterialsInventory";
+import { listMaterial, getMaterial } from "@/api/storage/material";
 
 export default {
   name: "CustomerMaterialsInventory",
@@ -202,26 +261,30 @@ export default {
         pageSize: 10,
         materialID: null,
         number: null,
-        weight: null
+        weight: null,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
         materialID: [
-          { required: true, message: "材料基本信息id不能为空", trigger: "blur" }
+          {
+            required: true,
+            message: "材料基本信息id不能为空",
+            trigger: "blur",
+          },
         ],
         number: [
-          { required: true, message: "材料库存数量不能为空", trigger: "blur" }
+          { required: true, message: "材料库存数量不能为空", trigger: "blur" },
         ],
         weight: [
-          { required: true, message: "材料库存重量不能为空", trigger: "blur" }
-        ]
+          { required: true, message: "材料库存重量不能为空", trigger: "blur" },
+        ],
       },
-          //材料集合
-    MaterialList:[],
+      //材料集合
+      MaterialList: [],
 
-    Material:{},
+      Material: {},
     };
   },
   created() {
@@ -231,35 +294,29 @@ export default {
     /** 查询客供材料实时库存列表 */
     getList() {
       this.loading = true;
-      listCustomerMaterialsInventory(this.queryParams).then(response => {
+      listCustomerMaterialsInventory(this.queryParams).then((response) => {
         this.CustomerMaterialsInventoryList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
     },
 
-
-
     //拿到材料列表
-      async  getMaterialLIst(){
-     let total= (await listMaterial())["total"];
-     listMaterial({pageSize:total}).then((response)=>{
-       this.MaterialList=response.rows
-      })
+    async getMaterialLIst() {
+      let total = (await listMaterial())["total"];
+      listMaterial({ pageSize: total }).then((response) => {
+        this.MaterialList = response.rows;
+      });
     },
 
     //设置材料
 
-    setMaterial(id){
-      getMaterial(id).then((response)=>{
-
-        this.Material=response.data
-      })
+    setMaterial(id) {
+      getMaterial(id).then((response) => {
+        this.Material = response.data;
+      });
     },
 
- 
-
-    
     // 取消按钮
     cancel() {
       this.open = false;
@@ -271,17 +328,15 @@ export default {
         id: null,
         materialID: null,
         number: null,
-        weight: null
+        weight: null,
       };
       this.resetForm("form");
 
-          //材料集合
-    this.MaterialList=[];
+      //材料集合
+      this.MaterialList = [];
 
-   this.Material={};
+      this.Material = {};
     },
-
-
 
     /** 搜索按钮操作 */
     handleQuery() {
@@ -295,30 +350,28 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
-      this.multiple = !selection.length
+      this.ids = selection.map((item) => item.id);
+      this.single = selection.length !== 1;
+      this.multiple = !selection.length;
     },
     handleView(row) {
-            this.open = true;
+      this.open = true;
       this.view_open = true;
-       getCustomerMaterialsInventory(row.id).then(response => {
+      getCustomerMaterialsInventory(row.id).then((response) => {
         this.form = response.data;
-      getMaterial(row.materialID).then((response)=>{
-        this.Material=response.data
-      })
+        getMaterial(row.materialID).then((response) => {
+          this.Material = response.data;
+        });
         this.open = true;
         this.title = "查看客供材料实时库存";
       });
-      
     },
-
 
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
       this.isadd = true;
-      this.view_open=false
+      this.view_open = false;
       this.open = true;
       this.title = "添加客供材料实时库存";
     },
@@ -327,31 +380,30 @@ export default {
     handleUpdate(row) {
       this.reset();
       this.isadd = false;
-        this.view_open=false
-      const id = row.id || this.ids
-      getCustomerMaterialsInventory(id).then(response => {
+      this.view_open = false;
+      const id = row.id || this.ids;
+      getCustomerMaterialsInventory(id).then((response) => {
         this.form = response.data;
-      getMaterial(row.materialID).then((response)=>{
-        this.Material=response.data
-      })
+        getMaterial(row.materialID).then((response) => {
+          this.Material = response.data;
+        });
         this.open = true;
         this.title = "修改客供材料实时库存";
       });
     },
 
-    
     /** 提交按钮 */
     submitForm() {
-      this.$refs["form"].validate(valid => {
+      this.$refs["form"].validate((valid) => {
         if (valid) {
           if (!this.isadd) {
-            updateCustomerMaterialsInventory(this.form).then(response => {
+            updateCustomerMaterialsInventory(this.form).then((response) => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addCustomerMaterialsInventory(this.form).then(response => {
+            addCustomerMaterialsInventory(this.form).then((response) => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -363,19 +415,27 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除客供材料实时库存编号为"' + ids + '"的数据项？').then(function() {
-        return delCustomerMaterialsInventory(ids);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      this.$modal
+        .confirm('是否确认删除客供材料实时库存编号为"' + ids + '"的数据项？')
+        .then(function () {
+          return delCustomerMaterialsInventory(ids);
+        })
+        .then(() => {
+          this.getList();
+          this.$modal.msgSuccess("删除成功");
+        })
+        .catch(() => {});
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('storage/CustomerMaterialsInventory/export', {
-        ...this.queryParams
-      }, `CustomerMaterialsInventory_${new Date().getTime()}.xlsx`)
-    }
-  }
+      this.download(
+        "storage/CustomerMaterialsInventory/export",
+        {
+          ...this.queryParams,
+        },
+        `CustomerMaterialsInventory_${new Date().getTime()}.xlsx`
+      );
+    },
+  },
 };
 </script>

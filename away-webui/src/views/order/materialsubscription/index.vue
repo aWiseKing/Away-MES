@@ -143,7 +143,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['order:materialsubscription:edit']"
+            v-hasPermi="['order:materialsubscription:query']"
           >查看</el-button>
           <el-button
             size="mini"

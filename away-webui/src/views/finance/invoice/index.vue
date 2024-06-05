@@ -183,7 +183,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['finance:invoice:edit']"
+            v-hasPermi="['finance:invoice:query']"
             >查看</el-button
           >
           <el-button

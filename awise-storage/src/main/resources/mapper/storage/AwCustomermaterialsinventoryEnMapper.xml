@@ -24,6 +24,14 @@
             aw_CustomerMaterialsInventory
                 LEFT JOIN aw_material ON aw_CustomerMaterialsInventory.materialID = aw_material.id
 
+
+        <where>
+            <if test="materialID != null  and materialID != ''"> and materialID = #{materialID}</if>
+            <if test="name != null  and name != ''"> and name = #{name}</if>
+            <if test="number != null "> and number = #{number}</if>
+            <if test="weight != null "> and weight = #{weight}</if>
+        </where>
+
     </select>
 
 

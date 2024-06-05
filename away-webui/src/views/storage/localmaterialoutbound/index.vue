@@ -161,7 +161,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['storage:localmaterialoutbound:edit']"
+            v-hasPermi="['storage:localmaterialoutbound:query']"
             >查看</el-button
           >
           <el-button

@@ -48,6 +48,9 @@ public class AwProductiontasksVo extends BaseEntity
 
     @Excel(name = "订单批次号")
      private  String lotNumber;
+    @Excel(name = "产品编号")
+    private  String productID;
+
 
     @Excel(name = "客户姓名")
     private  String customername;
@@ -140,6 +143,15 @@ public class AwProductiontasksVo extends BaseEntity
     public String getStatus() 
     {
         return status;
+    }
+
+
+    public String getProductID() {
+        return productID;
+    }
+
+    public void setProductID(String productID) {
+        this.productID = productID;
     }
 
     @Override

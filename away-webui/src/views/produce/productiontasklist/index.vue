@@ -140,6 +140,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
+            v-hasPermi="['produce:productiontasklist:query']"
             >查看</el-button
           >
           <el-button
@@ -174,7 +175,7 @@
     <el-dialog
       :title="title"
       :visible.sync="open"
-      width="1200px"
+      width="1400px"
       append-to-body
     >
       <el-form

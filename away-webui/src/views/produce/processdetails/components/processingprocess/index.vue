@@ -134,6 +134,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
+            v-hasPermi="['produce:processingprocess:query']"
             >详细</el-button
           >
           <el-button

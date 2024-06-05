@@ -156,7 +156,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['order:saleorder:edit']"
+            v-hasPermi="['order:saleorder:query']"
             >查看</el-button
           >
           <el-button
@@ -308,9 +308,8 @@
                   v-for="dict in dict.type.aw_oder_customer_status"
                   :key="dict.value"
                   :label="dict.value"
+                  >{{ dict.label }}</el-radio
                 >
-                  {{ dict.label }}
-                </el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>

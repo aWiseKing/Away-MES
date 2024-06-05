@@ -87,7 +87,7 @@
     <select id="selectAwProductiontasksListVo" resultType="com.awise.produce.domain.Vo.AwProductiontasksVo">
         select
         aw_ProductionTasks.id,aw_ProductionTasks.productionTasksFormID,aw_ProductionTasks.serialNum, aw_ProductionTasks.processingTechnologyID, aw_ProductionTasks.saleOrderID, aw_ProductionTasks.outsourced, aw_ProductionTasks.notes, aw_ProductionTasks.status,
-        aw_saleorder.lotNumber,aw_partner.name as customername
+        aw_saleorder.lotNumber,aw_saleorder.productID, aw_partner.name as customername
         from aw_ProductionTasks left join aw_saleorder on aw_ProductionTasks.saleOrderID =aw_saleorder.id left join aw_partner on aw_saleorder.customerID=aw_partner.id
         <where>
             <if test="productionTasksFormID != null "> and productionTasksFormID = #{productionTasksFormID}</if>

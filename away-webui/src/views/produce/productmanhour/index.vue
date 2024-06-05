@@ -414,7 +414,7 @@
             type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['produce:productmanhour:edit']"
+            v-hasPermi="['produce:productmanhour:query']"
             >查看</el-button
           >
           <el-button

@@ -22,5 +22,12 @@
 
     <select id="selectAwLocaltoolEnList" parameterType="AwLocaltoolEn" resultMap="AwLocaltoolEnResult">
         <include refid="selectAwLocaltoolEnVo"/>
+
+<where>
+    <if test="toolInformationID != null  and toolInformationID != ''"> and toolInformationID = #{toolInformationID}</if>
+    <if test="name != null  and name != ''"> and name = #{name}</if>
+    <if test="number != null "> and number = #{number}</if>
+    <if test="weight != null "> and weight = #{weight}</if>
+</where>
     </select>
 </mapper>
