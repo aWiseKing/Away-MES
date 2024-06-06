@@ -607,7 +607,6 @@ export default {
     /** 查询发票信息 */
     async getListInvoice() {
       let total = (await listInvoice())["total"];
-      console.log(total);
       listInvoice({ pageSize: total }).then((response) => {
         this.invoices = response.rows;
       });
@@ -645,7 +644,8 @@ export default {
     /** 获取订单对应附加信息 */
     async getListAdditional(id) {
       this.additionals = [];
-      let response = await listAdditional({ saleorderID: id });
+      let total = (await listAdditional())["total"];
+      let response = await listAdditional({ pageSize:total,saleorderID: id });
       let datas = response.rows;
       let num = 0;
       for (num in datas) {
@@ -674,7 +674,7 @@ export default {
         productID: null,
         contractID: null,
         invoiceID: null,
-        iscustomersuppliedmaterials: 0,
+        iscustomersuppliedmaterials: "0",
         lotNumber: null,
         state: "0",
       };

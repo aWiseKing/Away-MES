@@ -69,6 +69,7 @@
       <el-table-column label="产品编号" align="center">
         <template slot-scope="scope">
           <el-select
+            disabled
             v-model="scope.row.saleOrderID"
             placeholder="请选择销售订单"
             filterable

@@ -153,7 +153,7 @@ public class AwProductinventoryServiceImpl implements IAwProductinventoryService
             List<AwProductinventory> list = selectAwProductinventoryList(awProductinventory);
             if (!list.isEmpty()) {
                 awProductinventory = list.get(0);
-                if (awProductinventory.getNumber()-num>0){
+                if (awProductinventory.getNumber()-num>=0){
                     awProductinventory.setNumber(awProductinventory.getNumber()-num);
                     cache_awProductinventoryList.add(awProductinventory);
                 }else {

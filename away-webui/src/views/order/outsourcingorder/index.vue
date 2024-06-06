@@ -438,10 +438,13 @@ export default {
       this.loading = true;
       let total = (await listProductiontasklist())["total"];
 
-      listProductiontasklist({ pageSize: total }).then((response) => {
-        this.productiontasklistlist = response.rows;
-        this.loading = false;
-      });
+      listProductiontasklist({ pageSize: total, status: "1" }).then(
+        (response) => {
+          this.productiontasklistlist = response.rows;
+          console.log(this.productiontasklistlist);
+          this.loading = false;
+        }
+      );
     },
     setProductiontasklist(id) {
       getProductiontasklist(id).then((response) => {
@@ -529,10 +532,7 @@ export default {
       getOutsourcingorder(outsourcingOrderID).then((response) => {
         this.form = response.data;
         this.view_open = true;
-        listProductiontasklist().then((response) => {
-          this.productiontasklistlist = response.rows;
-          this.loading = false;
-        });
+        this.getListproductiontasklist();
         this.open = true;
         this.title = "修改外协";
       });
@@ -553,6 +553,7 @@ export default {
       getOutsourcingorder(outsourcingOrderID).then((response) => {
         this.form = response.data;
         this.view_open = false;
+        this.getListproductiontasklist();
         this.open = true;
         this.title = "修改外协";
       });
