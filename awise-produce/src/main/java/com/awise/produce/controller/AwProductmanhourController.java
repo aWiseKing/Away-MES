@@ -55,16 +55,6 @@ public class AwProductmanhourController extends BaseController
 
 
 
-    @PreAuthorize("@ss.hasPermi('produce:productmanhour:export')")
-    @Log(title = "生产工时", businessType = BusinessType.EXPORT)
-    @PostMapping("/exportAll")
-    public void exportAll(HttpServletResponse response)
-    {
-        List<AwProductmanhour> list = awProductmanhourService.SelectAll();
-        ExcelUtil<AwProductmanhour> util = new ExcelUtil<AwProductmanhour>(AwProductmanhour.class);
-        util.exportExcel(response, list, "生产工时数据");
-    }
-
 
 
     /**

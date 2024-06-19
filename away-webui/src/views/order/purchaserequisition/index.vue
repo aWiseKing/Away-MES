@@ -214,6 +214,7 @@
           ><el-col :span="12"
             ><el-form-item label="申购单编号" prop="subscribeID">
               <el-input
+                :disabled="!isadd"
                 v-model="form.subscribeID"
                 placeholder="请输入申购单编号"
               /> </el-form-item></el-col

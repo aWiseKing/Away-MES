@@ -239,6 +239,7 @@
             ><el-col :span="12">
               <el-form-item label="申购材料编号" prop="materialSubscription">
                 <el-input
+                  :disabled="!isadd"
                   v-model="form.materialSubscription"
                   placeholder="请输入申购材料编号"
                 /> </el-form-item></el-col

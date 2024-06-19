@@ -29,8 +29,8 @@
           {{ scope.row.id }}
         </template>
       </el-table-column>
-      <el-table-column label="销售订单" align="center">
-        <template slot-scope="scope">
+      <el-table-column label="销售订单" align="center"  >
+        <template slot-scope="scope" >
           <el-select
             v-model="scope.row.saleOrderID"
             placeholder="请选择销售订单"
@@ -39,7 +39,9 @@
             <el-option
               v-for="item in saleorder_list"
               :key="item.id"
-              :label="item.customername + '的' + item.id"
+              :label="
+                item.customername + '的' + item.id + '批-' + item.lotNumber
+              "
               :value="item.id"
             >
             </el-option>
@@ -47,7 +49,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="批次号" align="center">
+      <!-- <el-table-column label="批次号" align="center">
         <template slot-scope="scope">
           <el-select
             disabled
@@ -64,7 +66,7 @@
             </el-option>
           </el-select>
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
       <el-table-column label="产品编号" align="center">
         <template slot-scope="scope">

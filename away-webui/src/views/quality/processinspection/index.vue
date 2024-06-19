@@ -800,7 +800,7 @@ export default {
       getProcessinspection(id).then((response) => {
         this.form = response.data;
         this.open = true;
-        getProductiontasks(row.productionTasksID).then((response) => {
+        getProductiontasks(row.productionTasksID).then(async (response) => {
           let productionTasksFormID = response.data.productionTasksFormID;
 
           //查出订单和图号
@@ -815,7 +815,9 @@ export default {
             });
           });
 
-          listProductiontasklist().then((response) => {
+          let total = (await listProductiontasklist())["total"];
+
+          listProductiontasklist({ pageSize: total }).then((response) => {
             this.productiontasklist_list = response.rows;
             this.productiontasklist = productionTasksFormID;
           });
@@ -838,7 +840,7 @@ export default {
       getProcessinspection(id).then((response) => {
         this.form = response.data;
         this.open = true;
-        getProductiontasks(row.productionTasksID).then((response) => {
+        getProductiontasks(row.productionTasksID).then(async (response) => {
           let productionTasksFormID = response.data.productionTasksFormID;
 
           //查出订单和图号
@@ -853,7 +855,9 @@ export default {
             });
           });
 
-          listProductiontasklist().then((response) => {
+          let total = (await listProductiontasklist())["total"];
+
+          listProductiontasklist({ pageSize: total }).then((response) => {
             this.productiontasklist_list = response.rows;
             this.productiontasklist = productionTasksFormID;
           });

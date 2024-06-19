@@ -92,8 +92,7 @@ public class AwProductmanhourServiceImpl implements IAwProductmanhourService
         return awProductmanhourMapper.deleteAwProductmanhourById(id);
     }
 
-    @Override
-    public List<AwProductmanhour> SelectAll() {
-        return awProductmanhourMapper.selectAll();
-    }
+
+
+
 }

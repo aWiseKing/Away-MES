@@ -60,5 +60,6 @@ public interface AwProductmanhourMapper
      */
     public int deleteAwProductmanhourByIds(Long[] ids);
 
-    List<AwProductmanhour> selectAll();
+
+
 }

@@ -207,6 +207,7 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="外协对账编号" prop="outsourcingStatementsID">
           <el-input
+            :disabled="!isadd"
             v-model="form.outsourcingStatementsID"
             placeholder="请输入外协对账编号"
           >

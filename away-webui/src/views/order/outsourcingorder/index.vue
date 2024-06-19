@@ -216,6 +216,7 @@
           ><el-col :span="12">
             <el-form-item label="外协单编号" prop="outsourcingOrderID">
               <el-input
+                :disabled="!isadd"
                 v-model="form.outsourcingOrderID"
                 placeholder="请输入外协单编号"
               /> </el-form-item></el-col

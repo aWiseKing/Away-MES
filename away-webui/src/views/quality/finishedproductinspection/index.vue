@@ -231,6 +231,7 @@
           ><el-col :span="12"
             ><el-form-item label="质检编号" prop="id">
               <el-input
+                :disabled="!isadd"
                 v-model="form.id"
                 placeholder="请输入质检编号"
               /> </el-form-item></el-col></el-row

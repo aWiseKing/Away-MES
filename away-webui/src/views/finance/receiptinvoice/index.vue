@@ -190,7 +190,11 @@
         :disabled="view_open"
       >
         <el-form-item label="发票编号" prop="receiptInvoiceID">
-          <el-input v-model="form.receiptInvoiceID" placeholder="发票编号" />
+          <el-input
+            v-model="form.receiptInvoiceID"
+            placeholder="发票编号"
+            :disabled="!isadd"
+          />
         </el-form-item>
 
         <el-form-item label="发票类型" prop="invoiceType">

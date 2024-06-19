@@ -211,11 +211,13 @@
         <el-descriptions-item label="详细地址">{{
           view_form.address
         }}</el-descriptions-item>
-        <el-descriptions-item label="联系人信息">
-          <el-table></el-table>
-        </el-descriptions-item>
+
         <el-descriptions-item label="证件" :span="2">
-          <filedown :files="view_form.files"/>
+          <filedown :files="view_form.files" />
+        </el-descriptions-item>
+
+        <el-descriptions-item label="备注信息">
+          {{ view_form.notes }}
         </el-descriptions-item>
       </el-descriptions>
     </el-dialog>
@@ -257,7 +259,7 @@
           </el-cascader>
         </el-form-item>
         <el-form-item label="证件" prop="certificateURL">
-         <el-upload
+          <el-upload
             ref="upload"
             :file-list="fileList"
             action="String"
@@ -297,11 +299,11 @@ import {
 import { jsonCity } from "@/api/city/city";
 import { fileDownload, fileUpdate } from "@/api/file/file";
 
-import filedown from '../../../components/FileDown/filedown.vue';
+import filedown from "../../../components/FileDown/filedown.vue";
 
 export default {
   name: "Custom",
- components:{"filedown":filedown},
+  components: { filedown: filedown },
 
   data() {
     return {
@@ -352,10 +354,13 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        id:[{
-          required: true, message: "客户编号不能为空", trigger: "blur"
-
-        }],
+        id: [
+          {
+            required: true,
+            message: "客户编号不能为空",
+            trigger: "blur",
+          },
+        ],
         name: [
           { required: true, message: "客户姓名不能为空", trigger: "blur" },
         ],
@@ -436,7 +441,7 @@ export default {
         type: 0,
         isdel: 0,
       };
-        this.fileList = [];
+      this.fileList = [];
       this.resetForm("form");
     },
     setCityID(value) {
@@ -458,7 +463,7 @@ export default {
       this.single = selection.length !== 1;
       this.multiple = !selection.length;
     },
-// 查看详细
+    // 查看详细
     async handleShow(row) {
       this.view_form = row;
       this.view_form.files = [];
@@ -472,11 +477,10 @@ export default {
         for (num in urls) {
           let tmp = await fileDownload(urls[num]);
           this.view_form.files.push(tmp);
-          console.log(tmp)
+          console.log(tmp);
         }
       }
       this.isshow = true;
-
     },
     /** 新增按钮操作 */
     handleAdd() {
@@ -501,7 +505,7 @@ export default {
           for (num in urls) {
             let tmp = await fileDownload(urls[num]);
             this.fileList.push({ url: tmp.getUrl(), raw: tmp.getFile() });
-            console.log(tmp)
+            console.log(tmp);
           }
         }
         this.open = true;
@@ -509,7 +513,7 @@ export default {
       });
     },
     /** 提交按钮 */
-   async submitForm() {
+    async submitForm() {
       await this.fileUpdate();
       this.$refs["form"].validate((valid) => {
         if (valid) {

@@ -310,8 +310,11 @@
           </el-col>
 
           <el-col :span="12">
-            <el-form-item label="名称" prop="manhourName">
-              <el-input v-model="form.manhourName" placeholder="请输入名称" />
+            <el-form-item label="工时名称" prop="manhourName">
+              <el-input
+                v-model="form.manhourName"
+                placeholder="请输入工时名称"
+              />
             </el-form-item>
           </el-col>
         </el-row>
@@ -794,11 +797,6 @@ export default {
     },
 
     setTime() {
-      this.form.beginTime1 = this.parseTime(this.twoTime1[0]);
-      this.form.endTime1 = this.parseTime(this.twoTime1[1]);
-      this.form.beginTime2 = this.parseTime(this.twoTime2[0]);
-      this.form.endTime2 = this.parseTime(this.twoTime2[1]);
-
       if (this.form.actualTime1 == null) {
         //计算时间
         this.form.actualTime1 = this.getTim(this.twoTime1);
@@ -806,6 +804,19 @@ export default {
       if (this.form.actualTime2 == null) {
         //计算时间
 
+        this.form.actualTime2 = this.getTim(this.twoTime2);
+      }
+      console.log(this.twoTime2);
+
+      if (this.twoTime1.length != 0) {
+        this.form.beginTime1 = this.parseTime(this.twoTime1[0]);
+        this.form.endTime1 = this.parseTime(this.twoTime1[1]);
+        this.form.actualTime1 = this.getTim(this.twoTime1);
+      }
+
+      if (this.twoTime2.length != 0) {
+        this.form.beginTime2 = this.parseTime(this.twoTime2[0]);
+        this.form.endTime2 = this.parseTime(this.twoTime2[1]);
         this.form.actualTime2 = this.getTim(this.twoTime2);
       }
     },
@@ -887,12 +898,6 @@ export default {
       const id = row.id || this.ids;
       getProductmanhour(id).then((response) => {
         this.form = response.data;
-        const time1 = new Date(response.data.beginTime1);
-        const time2 = new Date(response.data.endTime1);
-        this.twoTime1 = [time1, time2];
-        const time3 = new Date(response.data.beginTime2);
-        const time4 = new Date(response.data.endTime2);
-        this.twoTime2 = [time3, time4];
         //订单回显
         getSaleorder(row.saleorderID).then((response) => {
           this.number = response.data.number;
@@ -919,6 +924,25 @@ export default {
             this.productiontasklist = response.rows[0];
           });
         });
+
+        if (
+          response.data.beginTime1 != null &&
+          response.data.endTime1 != null
+        ) {
+          const time1 = new Date(response.data.beginTime1);
+          const time2 = new Date(response.data.endTime1);
+          this.twoTime1 = [time1, time2];
+        }
+
+        if (
+          response.data.beginTime2 != null &&
+          response.data.endTime2 != null
+        ) {
+          const time3 = new Date(response.data.beginTime2);
+          const time4 = new Date(response.data.endTime2);
+          this.twoTime2 = [time3, time4];
+        }
+
         this.view_open = true;
         this.open = true;
         this.title = "查看生产工时详细";
@@ -939,18 +963,10 @@ export default {
       const id = row.id || this.ids;
       getProductmanhour(id).then((response) => {
         this.form = response.data;
-        const time1 = new Date(response.data.beginTime1);
-        const time2 = new Date(response.data.endTime1);
-        this.twoTime1 = [time1, time2];
-
-        const time3 = new Date(response.data.beginTime2);
-        const time4 = new Date(response.data.endTime2);
-        this.twoTime2 = [time3, time4];
         //订单回显
         getSaleorder(row.saleorderID).then((response) => {
           this.number = response.data.number;
         });
-
         //生产工艺下拉框回显
         getProcessingprocess(this.form.processingprocess).then((response) => {
           this.processingprocess = response.data;
@@ -961,9 +977,11 @@ export default {
             this.processingtechnology = response.rows[0];
           });
         });
+
         //任务回显
         getProductiontasks(this.form.productiontasksID).then((response) => {
           this.productiontasks = response.data;
+
           this.getListProductiontasklist();
           listProductiontasklist({
             id: this.productiontasks.productionTasksFormID,
@@ -971,9 +989,28 @@ export default {
             this.productiontasklist = response.rows[0];
           });
         });
+
+        if (
+          response.data.beginTime1 != null &&
+          response.data.endTime1 != null
+        ) {
+          const time1 = new Date(response.data.beginTime1);
+          const time2 = new Date(response.data.endTime1);
+          this.twoTime1 = [time1, time2];
+        }
+
+        if (
+          response.data.beginTime2 != null &&
+          response.data.endTime2 != null
+        ) {
+          const time3 = new Date(response.data.beginTime2);
+          const time4 = new Date(response.data.endTime2);
+          this.twoTime2 = [time3, time4];
+        }
+
         this.view_open = false;
         this.open = true;
-        this.title = "修改生产工时";
+        this.title = "修改生产工时详细";
       });
     },
     /** 提交按钮 */
@@ -981,7 +1018,6 @@ export default {
       this.$refs["form"].validate((valid) => {
         this.setTime();
         if (valid) {
-          console.log(this.form);
           if (!this.isadd) {
             updateProductmanhour(this.form).then((response) => {
               this.$modal.msgSuccess("修改成功");

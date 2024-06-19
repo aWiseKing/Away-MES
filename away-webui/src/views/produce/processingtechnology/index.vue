@@ -186,7 +186,7 @@
         <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="工艺编号" prop="id">
-              <el-input v-model="form.id" placeholder="请输入工艺编号" />
+              <el-input v-model="form.id" placeholder="请输入工艺编号" :disabled="!is_add"/>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -379,7 +379,7 @@ export default {
     },
 
     async getProductLIst() {
-      let total = await listProduct();
+      let total = (await listProduct())[`total`];
       listProduct({ pageSize: total }).then((response) => {
         this.productList = response.rows;
       });

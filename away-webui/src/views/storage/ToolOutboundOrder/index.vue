@@ -277,6 +277,7 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="刀具出库编号" prop="deliveryNoteID">
           <el-input
+            :disabled="!isadd"
             v-model="form.deliveryNoteID"
             placeholder="请输入刀具出库编号"
           />
@@ -527,7 +528,7 @@ export default {
               this.setStatus(row, "2");
             }
           });
-        }else{
+        } else {
           this.$modal.msgWarning("刀具出库单中不存在刀具");
         }
         this.loading = false;

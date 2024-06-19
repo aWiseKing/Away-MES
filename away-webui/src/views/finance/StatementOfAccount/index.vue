@@ -206,6 +206,7 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="对账单编号" prop="statementOfAccountID">
           <el-input
+            :disabled="!isadd"
             v-model="form.statementOfAccountID"
             placeholder="请输入对账单编号"
           />

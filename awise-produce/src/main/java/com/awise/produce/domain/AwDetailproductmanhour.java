@@ -108,7 +108,7 @@ public class AwDetailproductmanhour extends BaseEntity
     private String actualTime2;
 
     /** 需求数量#要求大于0# */
-    @Excel(name = "需求数量#要求大于0#")
+    @Excel(name = "需求数量")
     private Long number;
 
     /** 工序名称 */

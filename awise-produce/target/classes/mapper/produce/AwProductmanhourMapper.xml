@@ -63,9 +63,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectAwProductmanhourVo"/>
         where id = #{id}
     </select>
-    <select id="selectAll" resultType="com.awise.produce.domain.AwProductmanhour">
-        select * from  aw_productmanhour
-    </select>
+
+
+
 
     <insert id="insertAwProductmanhour" parameterType="AwProductmanhour" useGeneratedKeys="true" keyProperty="id">
         insert into aw_productmanhour

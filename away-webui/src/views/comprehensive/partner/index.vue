@@ -210,11 +210,13 @@
         <el-descriptions-item label="详细地址">{{
           view_form.address
         }}</el-descriptions-item>
-        <el-descriptions-item label="联系人信息">
-          <el-table></el-table>
-        </el-descriptions-item>
+
         <el-descriptions-item label="证照">
           <filedown :files="view_form.files" />
+        </el-descriptions-item>
+
+        <el-descriptions-item label="备注信息">
+          {{ view_form.notes }}
         </el-descriptions-item>
       </el-descriptions>
     </el-dialog>
