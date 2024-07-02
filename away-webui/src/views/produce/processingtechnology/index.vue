@@ -186,7 +186,11 @@
         <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="工艺编号" prop="id">
-              <el-input v-model="form.id" placeholder="请输入工艺编号" :disabled="!is_add"/>
+              <el-input
+                v-model="form.id"
+                placeholder="请输入工艺编号"
+                :disabled="!is_add"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -228,6 +232,23 @@
           </el-col>
         </el-row>
 
+        <el-row>
+          <el-col>
+            <el-form-item label="订单编号" prop="orderID">
+              <el-select @focus="getOrderList()" v-model="form.orderID">
+                <el-option
+                  @click="setOrder"
+                  v-for="(item, index) in orderList"
+                  :key="index"
+                  :value="item.id"
+                  :label="item.id"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
         <el-row :gutter="12">
           <el-form-item label="产品图纸附件" prop="drawingURL">
             <el-upload
@@ -264,6 +285,10 @@
           view_form.founder
         }}</el-descriptions-item>
 
+        <el-descriptions-item label="订单编号">{{
+          view_form.orderID
+        }}</el-descriptions-item>
+
         <el-descriptions-item label="产品图号">{{
           view_form.productID
         }}</el-descriptions-item>
@@ -291,6 +316,7 @@ import { listProduct, getProduct } from "@/api/order/product";
 import { fileDownload, fileUpdate } from "@/api/file/file";
 import Filedown from "../../../components/FileDown/filedown.vue";
 
+import { listSaleorder, getSaleorder } from "@/api/order/saleorder";
 export default {
   components: { filedown: Filedown },
   name: "Processingtechnology",
@@ -359,9 +385,12 @@ export default {
         productID: [
           { required: true, message: "图号不能为空", trigger: "blur" },
         ],
+        orderID: [{ required: true, message: "订单不能为空", trigger: "blur" }],
       },
       productList: [],
       product: {},
+      orderList: [],
+      order: {},
     };
   },
   created() {
@@ -404,6 +433,21 @@ export default {
       });
     },
 
+    async getOrderList() {
+      let total = (await listSaleorder())[`total`];
+
+      listSaleorder({ pageSize: total }).then((response) => {
+        this.orderList = response.rows;
+      });
+    },
+    setOrder(id) {
+      this.loading = true;
+      getSaleorder(id).then((response) => {
+        this.order = response.data;
+        this.loading = false;
+      });
+    },
+
     /** 文件上传 */
     async fileUpdate() {
       let file_list = this.$refs.upload.uploadFiles;
@@ -436,11 +480,14 @@ export default {
         founder: null,
         status: "0",
         productID: null,
+        orderId: null,
       };
       this.resetForm("form");
 
       this.product = {};
       this.productList = [];
+      this.orderList = [];
+      this.order = {};
 
       this.fileList = [];
     },
@@ -500,6 +547,8 @@ export default {
       const id = row.id || this.ids;
       getProcessingtechnologyVo(id).then((response) => {
         this.form = response.data;
+
+        this.getOrderList();
 
         getProduct(row.productID).then(async (response) => {
           this.product = response.data;

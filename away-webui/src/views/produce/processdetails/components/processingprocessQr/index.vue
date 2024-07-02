@@ -271,6 +271,14 @@
             </el-form-item>
           </el-col>
         </el-row>
+
+        <el-row :gutter="12">
+          <el-col :span="12">
+            <el-form-item label="可制件数" prop="quantity">
+              <el-input v-model="form.quantity" placeholder="请输入可制件数" />
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-row :gutter="12">
           <el-col :span="24">
             <el-form-item label="工序内容" prop="content">
@@ -346,6 +354,9 @@
             :value="view_form.outsourcing"
           />
         </el-descriptions-item>
+        <el-descriptions-item label="可制件数">{{
+          view_form.quantity
+        }}</el-descriptions-item>
 
         <el-descriptions-item label="工序内容" :span="2">
           <div v-html="view_form.content"></div>
@@ -412,6 +423,7 @@ export default {
         laborCost: null,
         status: null,
         outsourcing: null,
+        quantity: null,
       },
       // 表单参数
       form: {},
@@ -445,6 +457,9 @@ export default {
         ],
         laborCost: [
           { required: true, message: "工时成本不能为空", trigger: "blur" },
+        ],
+        quantity: [
+          { required: true, message: "可制件数不能为空", trigger: "blur" },
         ],
       },
       // 任务单编号
@@ -566,6 +581,7 @@ export default {
         laborCost: null,
         outsourcing: "0",
         status: "0",
+        quantity: null,
       };
       this.fileList = [];
       this.resetForm("form");

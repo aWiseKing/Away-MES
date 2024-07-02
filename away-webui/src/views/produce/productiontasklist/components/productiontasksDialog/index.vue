@@ -18,20 +18,21 @@
       max-height="500px"
       v-if="productiontasks_list.length > 0"
     >
-      <el-table-column label="序号" align="center">
+      <el-table-column label="序号" align="center" width="100">
         <template slot-scope="scope">
           {{ (scope.row.serialNum = scope.$index) }}
         </template>
       </el-table-column>
 
-      <el-table-column label="生产任务id" align="center">
+      <el-table-column label="生产任务id" align="center" width="100">
         <template slot-scope="scope">
           {{ scope.row.id }}
         </template>
       </el-table-column>
-      <el-table-column label="销售订单" align="center"  >
-        <template slot-scope="scope" >
+      <el-table-column label="销售订单" align="center" width="400">
+        <template slot-scope="scope">
           <el-select
+            style="width: 300px"
             v-model="scope.row.saleOrderID"
             placeholder="请选择销售订单"
             filterable
@@ -68,9 +69,10 @@
         </template>
       </el-table-column> -->
 
-      <el-table-column label="产品编号" align="center">
+      <el-table-column label="产品编号" align="center" width="200">
         <template slot-scope="scope">
           <el-select
+            style="width: 150px"
             disabled
             v-model="scope.row.saleOrderID"
             placeholder="请选择销售订单"

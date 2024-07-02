@@ -67,7 +67,19 @@ public class AwProcessingprocess extends BaseEntity
 //    @Excel(name = "状态",dictType = "aw_produce_productionprocess_status")
     private String status;
 
-    public void setId(Long id) 
+
+    @Excel(name = "可制件数")
+    private  int quantity;
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setId(Long id)
     {
         this.id = id;
     }

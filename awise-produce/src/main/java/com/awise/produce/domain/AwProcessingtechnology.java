@@ -33,11 +33,33 @@ public class AwProcessingtechnology extends BaseEntity
     @Excel(name = "产品图号")
     private String productID;
 
+    @Excel(name = "订单编号")
+    private  String orderID;
+
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "创建日期", width = 30, dateFormat = "yyyy-MM-dd")
     private Date createTime;
 
-    public void setId(String id) 
+
+    public String getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
+    }
+
+    @Override
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    @Override
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public void setId(String id)
     {
         this.id = id;
     }

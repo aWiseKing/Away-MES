@@ -11,10 +11,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="productID"    column="ProductID"    />
         <result property="name"    column="status"    />
         <result property="drawingURL"    column="drawingURL"    />
+        <result property="orderID"    column="orderID"    />
     </resultMap>
 
     <sql id="selectAwProcessingtechnologyVo">
-        select aw_processingtechnology. id, aw_processingtechnology.createTime, aw_processingtechnology.founder, aw_processingtechnology.status,aw_processingtechnology.productID,aw_product.name,aw_product.drawingURL from aw_processingtechnology left join aw_product on  aw_processingtechnology.productID=aw_product.id
+        select aw_processingtechnology. id, aw_processingtechnology. orderID, aw_processingtechnology.createTime, aw_processingtechnology.founder, aw_processingtechnology.status,aw_processingtechnology.productID,aw_product.name,aw_product.drawingURL from aw_processingtechnology left join aw_product on  aw_processingtechnology.productID=aw_product.id
     </sql>
 
 
@@ -27,7 +28,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectAwProcessingtechnologyListVo"
             parameterType="AwProcessingtechnology"
             resultType="com.awise.produce.domain.Vo.AwProcessingtechnologyVo">
-
         <include refid="selectAwProcessingtechnologyVo"/>
        <where>
             <if test="createTime != null "> and createTime = #{createTime}</if>

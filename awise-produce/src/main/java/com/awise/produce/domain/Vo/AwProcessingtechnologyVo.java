@@ -33,7 +33,17 @@ public class AwProcessingtechnologyVo  extends BaseEntity {
     @Excel(name = "产品图纸附件地址URL")
     private String drawingURL;
 
+    @Excel(name = "订单编号")
+    private  String orderID;
 
+
+    public String getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
+    }
 
     public String getProductID() {
         return productID;

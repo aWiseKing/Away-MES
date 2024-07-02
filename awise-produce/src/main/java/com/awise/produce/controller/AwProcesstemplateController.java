@@ -66,7 +66,8 @@ public class AwProcesstemplateController extends BaseController
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
-        return success(awProcesstemplateService.selectAwProcesstemplateById(id));
+        AwProcesstemplate awProcesstemplate = awProcesstemplateService.selectAwProcesstemplateById(id);
+        return success(awProcesstemplate);
     }
 
     /**

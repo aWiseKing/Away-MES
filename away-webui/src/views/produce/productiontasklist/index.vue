@@ -175,7 +175,7 @@
     <el-dialog
       :title="title"
       :visible.sync="open"
-      width="1400px"
+      width="1600px"
       append-to-body
     >
       <el-form

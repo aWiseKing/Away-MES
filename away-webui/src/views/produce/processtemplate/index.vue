@@ -55,7 +55,7 @@
         <el-select v-model="queryParams.outsourcing" placeholder="请选择状态">
           <el-option
             v-for="(item, index) in isoutsourced"
-            :key="item.index"
+            :key="index"
             :label="item.value"
             :value="item.key"
           ></el-option>
@@ -161,7 +161,6 @@
             icon="el-icon-view"
             @click="handleView(scope.row)"
             v-hasPermi="['produce:processtemplate:query']"
-
             >详细</el-button
           >
           <el-button
@@ -198,22 +197,16 @@
         <el-row :gutter="12">
           <el-col :span="12">
             <el-form-item label="状态" prop="status">
-              <el-select
-            v-model="form.status" placeholder="请选择状态"
-          >
-            <el-option
-              v-for="dict in dict.type.aw_produce_template"
-              :key="dict.value"
-              :label="dict.label"
-              :value="dict.value"
-            >
-            </el-option>
-          </el-select>
+              <el-select v-model="form.status" placeholder="请选择状态">
+                <el-option
+                  v-for="dict in dict.type.aw_produce_template"
+                  :key="dict.value"
+                  :label="dict.label"
+                  :value="dict.value"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
-
-  
-
-
           </el-col>
         </el-row>
         <el-row :gutter="12">
@@ -264,6 +257,14 @@
                   >{{ dict.label }}</el-radio
                 >
               </el-radio-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :gutter="12">
+          <el-col :span="12">
+            <el-form-item label="可制件数" prop="quantity">
+              <el-input v-model="form.quantity" placeholder="请输入可制件数" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -331,6 +332,9 @@
         <el-descriptions-item label="工序外协">{{
           getValue(isoutsourced, view_form.outsourcing)
         }}</el-descriptions-item>
+        <!-- <el-descriptions-item label="可制件数">{{
+          view_form.quantity
+        }}</el-descriptions-item> -->
 
         <el-descriptions-item label="工序内容" :span="2">
           <div v-html="view_form.content"></div>
@@ -358,7 +362,7 @@ import Filedown from "../../../components/FileDown/filedown.vue";
 export default {
   name: "Processtemplate",
   components: { filedown: Filedown },
-  dicts: ["aw_produce_outsourcing","aw_produce_template"],
+  dicts: ["aw_produce_outsourcing", "aw_produce_template"],
   data() {
     return {
       // 遮罩层
@@ -431,6 +435,9 @@ export default {
         status: [
           { required: true, message: "工序状态不能为空", trigger: "blur" },
         ],
+        quantity: [
+          { required: true, message: "可制件数不能为空", trigger: "blur" },
+        ],
       },
       // 文件列表
       fileList: [],
@@ -488,6 +495,7 @@ export default {
         preparationHours: null,
         taktTime: null,
         laborCost: null,
+        quantity: null,
         outsourcing: "0",
         status: "0",
       };
@@ -523,8 +531,12 @@ export default {
     //   });
     // },
     async handleView(row) {
+      console.log(row);
       this.view_form = row;
       this.view_form.files = [];
+      console.log(row.diagramURL);
+      this.view_open = true;
+
       if (row.diagramURL == null) {
         return 0;
       } else {
@@ -536,7 +548,6 @@ export default {
           this.view_form.files.push(tmp);
         }
       }
-      this.view_open = true;
     },
     handleSelectionChange(selection) {
       this.ids = selection.map((item) => item.id);
