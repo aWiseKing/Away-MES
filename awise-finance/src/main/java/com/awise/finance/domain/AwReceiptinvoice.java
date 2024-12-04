@@ -8,7 +8,7 @@ import com.away.common.core.domain.BaseEntity;
 /**
  * 入库发票信息对象 aw_receiptinvoice
  * 
- * @author ruoyi
+ * @author awise
  * @date 2023-10-14
  */
 public class AwReceiptinvoice extends BaseEntity
@@ -28,11 +28,11 @@ public class AwReceiptinvoice extends BaseEntity
 
     /** 不含税采购单价 */
     @Excel(name = "不含税采购单价")
-    private Long purchaseUnitPriceExcludingTax;
+    private float purchaseUnitPriceExcludingTax;
 
     /** 含税采购单价 */
     @Excel(name = "含税采购单价")
-    private Long purchaseUnitPriceIncludingTax;
+    private float purchaseUnitPriceIncludingTax;
 
     public void setReceiptInvoiceID(String receiptInvoiceID) 
     {
@@ -61,21 +61,21 @@ public class AwReceiptinvoice extends BaseEntity
     {
         return invoiceTaxRate;
     }
-    public void setPurchaseUnitPriceExcludingTax(Long purchaseUnitPriceExcludingTax) 
+    public void setPurchaseUnitPriceExcludingTax(float purchaseUnitPriceExcludingTax) 
     {
         this.purchaseUnitPriceExcludingTax = purchaseUnitPriceExcludingTax;
     }
 
-    public Long getPurchaseUnitPriceExcludingTax() 
+    public float getPurchaseUnitPriceExcludingTax() 
     {
         return purchaseUnitPriceExcludingTax;
     }
-    public void setPurchaseUnitPriceIncludingTax(Long purchaseUnitPriceIncludingTax) 
+    public void setPurchaseUnitPriceIncludingTax(float purchaseUnitPriceIncludingTax) 
     {
         this.purchaseUnitPriceIncludingTax = purchaseUnitPriceIncludingTax;
     }
 
-    public Long getPurchaseUnitPriceIncludingTax() 
+    public float getPurchaseUnitPriceIncludingTax() 
     {
         return purchaseUnitPriceIncludingTax;
     }
