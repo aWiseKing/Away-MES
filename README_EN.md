@@ -1,6 +1,3 @@
-<p align="center">
-  <img alt="logo" src="https://oscimg.oschina.net/oscnet/up-d3d3b6c4b4b4b4b4b4b4b4b4b4b4b4b4.png" width="120" style="margin-bottom: 10px;">
-</p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">AWAY-MES</h1>
 <h4 align="center">🏭 Intelligent Manufacturing Execution System (MES) based on Spring Boot + Vue</h4>
 
