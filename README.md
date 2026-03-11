@@ -7,6 +7,9 @@
     <img src="https://img.shields.io/badge/Element%20UI-2.15.12-blue.svg" alt="Element UI">
     <img src="https://img.shields.io/badge/License-MIT-orange.svg" alt="License">
 </p>
+<p align="center">
+    <a href="./README_EN.md">English</a> | <span>简体中文</span>
+</p>
 
 ---
 
