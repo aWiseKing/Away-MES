@@ -5,7 +5,7 @@
     <img src="https://img.shields.io/badge/Spring%20Boot-2.5.14-green.svg" alt="Spring Boot">
     <img src="https://img.shields.io/badge/Vue-2.6.12-brightgreen.svg" alt="Vue">
     <img src="https://img.shields.io/badge/Element%20UI-2.15.12-blue.svg" alt="Element UI">
-    <img src="https://img.shields.io/badge/License-MIT-orange.svg" alt="License">
+    <img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="License">
 </p>
 <p align="center">
     <a href="./README_EN.md">English</a> | <span>简体中文</span>
@@ -98,4 +98,4 @@
 ---
 
 ## 📄 开源协议 | License
-本项目采用 [MIT](https://opensource.org/licenses/MIT) 协议。
+本项目采用 [GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.html) 协议。

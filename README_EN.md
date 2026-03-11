@@ -98,4 +98,4 @@ Convenient scripts are provided in the `bin/` directory:
 ---
 
 ## 📄 License
-This project is licensed under the [MIT](https://opensource.org/licenses/MIT) License.
+This project is licensed under the [GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.html) License.
